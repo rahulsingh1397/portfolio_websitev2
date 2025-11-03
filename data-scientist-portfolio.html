@@ -44,18 +44,80 @@
         }
 
         .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #00f5ff, #0080ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            display: none; /* Hide logo to center nav links */
+        }
+
+        .nav-center {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            justify-content: center;
+        }
+
+        .work-with-me-btn {
+            padding: 0.8rem 1.8rem;
+            background: linear-gradient(135deg, #ff4444, #ff6b6b);
+            color: #fff;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 68, 68, 0.3);
+            white-space: nowrap;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .work-with-me-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .work-with-me-btn:active::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .work-with-me-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(255, 68, 68, 0.5);
+            background: linear-gradient(135deg, #ff5555, #ff7b7b);
+        }
+
+        .work-with-me-btn span,
+        .work-with-me-btn svg {
+            position: relative;
+            z-index: 1;
+        }
+
+        .work-with-me-btn svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.3s ease;
+        }
+
+        .work-with-me-btn:hover svg {
+            transform: translateX(3px);
         }
 
         .nav-links {
             display: flex;
             gap: 2.5rem;
             list-style: none;
+            margin: 0;
+            padding: 0;
         }
 
         .nav-links a {
@@ -237,6 +299,26 @@
             transition: all 0.3s ease;
             text-decoration: none;
             display: inline-block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:active::before {
+            width: 300px;
+            height: 300px;
         }
 
         .btn-primary {
@@ -274,9 +356,10 @@
         }
 
         .section-title {
-            font-size: 3rem;
-            margin-bottom: 1rem;
+            font-size: 3.5rem;
+            font-weight: 800;
             text-align: center;
+            margin-bottom: 1rem;
             background: linear-gradient(135deg, #fff, #00f5ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -287,12 +370,12 @@
             text-align: center;
             color: #b0b0b0;
             font-size: 1.2rem;
-            margin-bottom: 4rem;
+            margin-bottom: 3rem;
         }
 
         /* About Section */
         #about {
-            background: linear-gradient(180deg, #0a0a0a 0%, #0f1419 100%);
+            background: #0a0a0a;
         }
 
         .about-content {
@@ -300,12 +383,16 @@
             grid-template-columns: 1fr 1fr;
             gap: 4rem;
             align-items: center;
+            margin-top: 3rem;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #b0b0b0;
         }
 
         .about-text p {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: #d0d0d0;
             margin-bottom: 1.5rem;
         }
 
@@ -313,115 +400,36 @@
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 2rem;
-            margin-top: 3rem;
         }
 
-        .stat-card {
-            background: rgba(0, 245, 255, 0.05);
+        .stat-item {
+            text-align: center;
             padding: 2rem;
-            border-radius: 15px;
-            border: 1px solid rgba(0, 245, 255, 0.2);
+            background: rgba(0, 245, 255, 0.05);
+            border-radius: 20px;
+            border: 1px solid rgba(0, 245, 255, 0.1);
             transition: all 0.3s ease;
         }
 
-        .stat-card:hover {
+        .stat-item:hover {
+            background: rgba(0, 245, 255, 0.1);
+            border-color: rgba(0, 245, 255, 0.3);
             transform: translateY(-5px);
-            border-color: #00f5ff;
-            box-shadow: 0 10px 30px rgba(0, 245, 255, 0.2);
         }
 
         .stat-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #00f5ff;
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #00f5ff, #0080ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             margin-bottom: 0.5rem;
         }
 
         .stat-label {
             color: #b0b0b0;
             font-size: 1rem;
-        }
-
-        /* Skills Section */
-        #skills {
-            background: #0a0a0a;
-        }
-
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2.5rem;
-        }
-
-        .skill-card {
-            background: linear-gradient(135deg, rgba(0, 245, 255, 0.05), rgba(0, 128, 255, 0.05));
-            padding: 2.5rem;
-            border-radius: 20px;
-            border: 1px solid rgba(0, 245, 255, 0.2);
-            transition: all 0.3s ease;
-        }
-
-        .skill-card:hover {
-            transform: translateY(-10px);
-            border-color: #00f5ff;
-            box-shadow: 0 15px 40px rgba(0, 245, 255, 0.3);
-        }
-
-        .skill-icon {
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .skill-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: #00f5ff;
-        }
-
-        .skill-card p {
-            color: #b0b0b0;
-            line-height: 1.6;
-            margin-bottom: 1.5rem;
-        }
-
-        .skill-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .tag {
-            background: rgba(0, 245, 255, 0.1);
-            color: #00f5ff;
-            padding: 0.4rem 1rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            border: 1px solid rgba(0, 245, 255, 0.3);
-        }
-
-        /* Projects Section */
-        #projects {
-            background: linear-gradient(180deg, #0a0a0a 0%, #0f1419 100%);
-        }
-
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 3rem;
-        }
-
-        .project-card {
-            background: rgba(15, 20, 25, 0.8);
-            border-radius: 20px;
-            overflow: hidden;
-            border: 1px solid rgba(0, 245, 255, 0.2);
-            transition: all 0.3s ease;
-        }
-
-        .project-card:hover {
-            transform: translateY(-10px);
-            border-color: #00f5ff;
-            box-shadow: 0 20px 50px rgba(0, 245, 255, 0.3);
         }
 
         .project-image {
@@ -534,10 +542,254 @@
             color: #b0b0b0;
         }
 
+        /* Scroll Reveal Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Skill Progress Bars */
+        .skill-progress {
+            width: 100%;
+            height: 8px;
+            background: rgba(0, 245, 255, 0.1);
+            border-radius: 10px;
+            margin-top: 1rem;
+            overflow: hidden;
+        }
+
+        .skill-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #00f5ff, #0080ff);
+            border-radius: 10px;
+            width: 0;
+            transition: width 1.5s ease;
+            box-shadow: 0 0 20px rgba(0, 245, 255, 0.5);
+        }
+
+        .skill-progress-bar.animate {
+            animation: progressGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes progressGlow {
+            0%, 100% {
+                box-shadow: 0 0 10px rgba(0, 245, 255, 0.5);
+            }
+            50% {
+                box-shadow: 0 0 20px rgba(0, 245, 255, 0.8);
+            }
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #00f5ff, #0080ff);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 999;
+            box-shadow: 0 5px 20px rgba(0, 245, 255, 0.4);
+            transition: all 0.3s ease;
+            font-size: 1.5rem;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1) rotate(15deg);
+            box-shadow: 0 8px 30px rgba(0, 245, 255, 0.6);
+        }
+
+        /* Project Filter Buttons */
+        .project-filters {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.7rem 1.5rem;
+            background: rgba(0, 245, 255, 0.1);
+            border: 1px solid rgba(0, 245, 255, 0.3);
+            border-radius: 25px;
+            color: #00f5ff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: rgba(0, 245, 255, 0.2);
+            border-color: #00f5ff;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 245, 255, 0.3);
+        }
+
+        .project-card {
+            transition: all 0.5s ease;
+        }
+
+        .project-card.hidden {
+            opacity: 0;
+            transform: scale(0.8);
+            pointer-events: none;
+            height: 0;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        /* Floating Labels for Contact Form */
+        .form-group {
+            position: relative;
+        }
+
+        .form-group.floating label {
+            position: absolute;
+            left: 1rem;
+            top: 1rem;
+            transition: all 0.3s ease;
+            pointer-events: none;
+            color: #b0b0b0;
+        }
+
+        .form-group.floating input:focus ~ label,
+        .form-group.floating input:not(:placeholder-shown) ~ label,
+        .form-group.floating textarea:focus ~ label,
+        .form-group.floating textarea:not(:placeholder-shown) ~ label {
+            top: -10px;
+            left: 0.5rem;
+            font-size: 0.85rem;
+            color: #00f5ff;
+            background: #0a0a0a;
+            padding: 0 0.5rem;
+        }
+
+        /* Success Animation */
+        .success-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: rgba(0, 245, 255, 0.95);
+            color: #000;
+            padding: 2rem 3rem;
+            border-radius: 20px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            z-index: 9999;
+            box-shadow: 0 10px 40px rgba(0, 245, 255, 0.5);
+            transition: transform 0.3s ease;
+        }
+
+        .success-message.show {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        /* Parallax Effect for Particles */
+        .particles {
+            will-change: transform;
+        }
+
+        /* Skills Grid & Cards with Glassmorphism */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .skill-card {
+            background: rgba(20, 20, 20, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 245, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .skill-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 245, 255, 0.3);
+            background: rgba(20, 20, 20, 0.6);
+            border-color: rgba(0, 245, 255, 0.3);
+        }
+
+        .skill-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .skill-card h3 {
+            color: #00f5ff;
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+
+        .skill-card p {
+            color: #b0b0b0;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        /* Projects Grid with Glassmorphism */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        /* Skill & Project Tags */
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .tag {
+            padding: 0.4rem 1rem;
+            background: rgba(0, 245, 255, 0.1);
+            border: 1px solid rgba(0, 245, 255, 0.2);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: #00f5ff;
+            transition: all 0.3s ease;
+        }
+
+        .tag:hover {
+            background: rgba(0, 245, 255, 0.2);
+            border-color: #00f5ff;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .menu-toggle {
                 display: flex;
+            }
+
+            .work-with-me-btn {
+                display: none; /* Hide on mobile to save space */
+            }
+
+            .nav-center {
+                justify-content: flex-end;
             }
 
             .nav-links {
@@ -581,16 +833,17 @@
                 margin-top: 250px;
             }
 
+            .section-title {
+                font-size: 2rem;
+            }
+
             .about-content {
                 grid-template-columns: 1fr;
+                gap: 2rem;
             }
 
             .stats-grid {
                 grid-template-columns: 1fr;
-            }
-
-            .section-title {
-                font-size: 2rem;
             }
 
             .skills-grid,
@@ -605,13 +858,23 @@
     <nav id="navbar">
         <div class="nav-container">
             <div class="logo">DataSci.Pro</div>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
+            <div class="nav-center">
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <a href="#contact" class="work-with-me-btn">
+                <span>Work with Me</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 16 16 12 12 8"></polyline>
+                    <line x1="8" y1="12" x2="16" y2="12"></line>
+                </svg>
+            </a>
             <div class="menu-toggle" id="menuToggle">
                 <span></span>
                 <span></span>
@@ -627,7 +890,7 @@
         </div>
         <div class="particles" id="particles"></div>
         <div class="hero-content">
-            <div class="hero-subtitle">Data Scientist & ML Engineer</div>
+            <div class="hero-subtitle">Hey! I am Rahul Singh</div>
             <h1 class="hero-title">From Complex Data<br>To Clear Decisions</h1>
             <p class="hero-description">
                 Leveraging advanced analytics, machine learning, and AI to extract actionable insights 
@@ -966,20 +1229,14 @@
         // Load GLTF Model
         const loader = new GLTFLoader();
         let roboticEyeModel = null;
-        
-        // Load texture for emissive light
-        const textureLoader = new THREE.TextureLoader();
-        const emissiveTexture = textureLoader.load('./models/textures/Light_emissive.png');
-        emissiveTexture.wrapS = THREE.RepeatWrapping;
-        emissiveTexture.wrapT = THREE.RepeatWrapping;
-        emissiveTexture.repeat.set(1, 1);
+        let lightMaterial = null; // Store reference to light material for color cycling
         
         // Try to load the model from the reference path
         loader.load(
             './models/robotic_eye.glb',
             (gltf) => {
                 const model = gltf.scene;
-                model.scale.set(70, 70, 70);
+                model.scale.set(65, 65, 65);
                 model.position.set(0, 0, 0);
 
                 // Apply materials similar to reference
@@ -1005,15 +1262,19 @@
                     // Light material with emissive
                     if (child.name === 'Light_Low_Poly_0') {
                         materials.forEach((mat) => {
-                            mat.map = emissiveTexture;
-                            mat.emissiveMap = emissiveTexture;
-                            mat.emissive = new THREE.Color('#00f5ff');
-                            mat.emissiveIntensity = 9000.0;
-                            mat.metalness = 1.0;
-                            mat.roughness = 0.3;
+                            // Solid blue emissive color
+                            mat.map = null;
+                            mat.emissiveMap = null;
+                            mat.emissive = new THREE.Color(0x0080ff); // Blue #0080ff
+                            mat.color = new THREE.Color('#000000'); // Black base - only emissive will show
+                            mat.emissiveIntensity = 3000.0;
+                            mat.metalness = 0.0; // Non-metallic for pure emissive glow
+                            mat.roughness = 1.0; // Rough for diffuse appearance
                             mat.transparent = true;
                             mat.opacity = 1.0;
                             mat.side = THREE.DoubleSide;
+                            
+                            lightMaterial = mat;
                         });
                         return;
                     }
@@ -1043,9 +1304,7 @@
                                 mat.color = new THREE.Color("#ffffff");
                                 break;
                             case 'Light':
-                                mat.emissive = new THREE.Color('#00f5ff');
-                                mat.emissiveIntensity = 3000.0;
-                                mat.color = new THREE.Color('#00f5ff');
+                                // Skip - handled by Light_Low_Poly_0 above
                                 break;
                             case 'Camera_Lens':
                                 mat.color = new THREE.Color('#000000');
@@ -1187,14 +1446,15 @@
         window.addEventListener('resize', handleResize);
         handleResize();
 
-        // Particle animation
+        // Particle animation (reduced to 30 for performance)
         const particlesContainer = document.getElementById('particles');
-        for (let i = 0; i < 50; i++) {
+        for (let i = 0; i < 30; i++) {
             const particle = document.createElement('div');
             particle.className = 'particle';
             particle.style.left = Math.random() * 100 + '%';
             particle.style.animationDelay = Math.random() * 20 + 's';
             particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
+            particle.style.willChange = 'transform, opacity'; // Performance hint
             particlesContainer.appendChild(particle);
         }
 
@@ -1359,4 +1619,183 @@
         if (projectsGrid.children.length === 1) {
             // Keep the default project
         }
+
+        // ============================================
+        // SCROLL REVEAL ANIMATIONS (Intersection Observer)
+        // ============================================
+        const revealElements = document.querySelectorAll('section, .skill-card, .project-card, .stat-item');
+        
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('reveal', 'active');
+                } 
+            });
+        }, {
+            threshold: 0.15,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        revealElements.forEach(el => {
+            el.classList.add('reveal');
+            revealObserver.observe(el);
+        });
+
+        // ============================================
+        // PARALLAX EFFECT FOR PARTICLES
+        // ============================================
+        let scrollY = 0;
+        window.addEventListener('scroll', () => {
+            scrollY = window.scrollY;
+            if (particlesContainer) {
+                particlesContainer.style.transform = `translateY(${scrollY * 0.5}px)`;
+            }
+        });
+
+        // ============================================
+        // THEME TOGGLE (Dark Mode Only for Now)
+        // ============================================
+        const themeToggle = document.createElement('div');
+        themeToggle.className = 'theme-toggle';
+        themeToggle.innerHTML = '🌙';
+        themeToggle.title = 'Theme Toggle';
+        document.body.appendChild(themeToggle);
+
+        themeToggle.addEventListener('click', () => {
+            // Placeholder for future light mode implementation
+            themeToggle.style.transform = 'scale(1.2) rotate(360deg)';
+            setTimeout(() => {
+                themeToggle.style.transform = 'scale(1) rotate(0deg)';
+            }, 300);
+        });
+
+        // ============================================
+        // PROJECT FILTERING
+        // ============================================
+        const projectsSection = document.querySelector('#projects .section-container');
+        const filterContainer = document.createElement('div');
+        filterContainer.className = 'project-filters';
+        filterContainer.innerHTML = `
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="ai">AI/ML</button>
+            <button class="filter-btn" data-filter="data">Data Science</button>
+            <button class="filter-btn" data-filter="automation">Automation</button>
+        `;
+        projectsSection.insertBefore(filterContainer, projectsGrid);
+
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const projectCards = document.querySelectorAll('.project-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const filter = btn.dataset.filter;
+                
+                // Update active button
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // Filter projects
+                projectCards.forEach(card => {
+                    const cardText = card.textContent.toLowerCase();
+                    const shouldShow = filter === 'all' || 
+                        (filter === 'ai' && (cardText.includes('ai') || cardText.includes('machine learning') || cardText.includes('ml'))) ||
+                        (filter === 'data' && (cardText.includes('data') || cardText.includes('analytics'))) ||
+                        (filter === 'automation' && cardText.includes('automat'));
+                    
+                    if (shouldShow) {
+                        card.classList.remove('hidden');
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
+            });
+        });
+
+        // ============================================
+        // CONTACT FORM FLOATING LABELS & ANIMATION
+        // ============================================
+        const formGroups = document.querySelectorAll('.form-group');
+        formGroups.forEach(group => {
+            group.classList.add('floating');
+            const input = group.querySelector('input, textarea');
+            if (input) {
+                input.setAttribute('placeholder', ' ');
+            }
+        });
+
+        // Success message animation
+        const contactForm = document.querySelector('.contact-form');
+        const originalSubmitHandler = window.handleSubmit;
+        
+        window.handleSubmit = function(e) {
+            e.preventDefault();
+            
+            // Create success message
+            const successMsg = document.createElement('div');
+            successMsg.className = 'success-message';
+            successMsg.textContent = '✓ Message Sent Successfully!';
+            document.body.appendChild(successMsg);
+            
+            setTimeout(() => successMsg.classList.add('show'), 100);
+            setTimeout(() => {
+                successMsg.classList.remove('show');
+                setTimeout(() => successMsg.remove(), 300);
+            }, 2000);
+            
+            e.target.reset();
+        };
+
+        // ============================================
+        // LAZY LOADING FOR 3D MODEL
+        // ============================================
+        const modelObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Model already loads on page load, but this sets up future optimization
+                    modelObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        if (container) {
+            modelObserver.observe(container);
+        }
+
+        // ============================================
+        // SKILL PROGRESS BARS
+        // ============================================
+        const skillCards = document.querySelectorAll('.skill-card');
+        const skillLevels = [95, 90, 85, 88, 92, 87]; // Proficiency levels for each skill
+        
+        skillCards.forEach((card, index) => {
+            const progressContainer = document.createElement('div');
+            progressContainer.className = 'skill-progress';
+            const progressBar = document.createElement('div');
+            progressBar.className = 'skill-progress-bar';
+            progressBar.dataset.level = skillLevels[index] || 85;
+            progressContainer.appendChild(progressBar);
+            card.appendChild(progressContainer);
+        });
+
+        // Animate progress bars when they come into view
+        const progressObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const progressBar = entry.target.querySelector('.skill-progress-bar');
+                    if (progressBar && !progressBar.classList.contains('animate')) {
+                        setTimeout(() => {
+                            progressBar.style.width = progressBar.dataset.level + '%';
+                            progressBar.classList.add('animate');
+                        }, 300);
+                    }
+                    progressObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.3 });
+
+        skillCards.forEach(card => progressObserver.observe(card));
+
+        console.log('✨ All enhancements loaded successfully!');
     </script>
+</body>
+</html>
