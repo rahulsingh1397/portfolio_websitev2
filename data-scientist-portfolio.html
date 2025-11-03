@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Scientist Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1.5rem 5%;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            padding: 1rem 5%;
+            box-shadow: 0 4px 30px rgba(0, 255, 255, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00f5ff, #0080ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #00f5ff, #0080ff);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: #00f5ff;
+            transition: all 0.3s ease;
+        }
+
+        /* Hero Section with Spline 3D */
+        #home {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: 0 5%;
+        }
+
+        /* Hero Section with 3D Model */
+        #home {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: 0 5%;
+        }
+
+        .model-container {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+        }
+
+        .model-container canvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        .hero-content {
+            margin-top: 350px;
+        }
+
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: #00f5ff;
+            border-radius: 50%;
+            animation: float 20s infinite;
+            opacity: 0.6;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(50px);
+                opacity: 0;
+            }
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            z-index: 1;
+            text-align: center;
+            animation: fadeInUp 1s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: #00f5ff;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .hero-title {
+            font-size: 4.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            background: linear-gradient(135deg, #fff, #00f5ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        .hero-description {
+            font-size: 1.3rem;
+            color: #b0b0b0;
+            margin-bottom: 2.5rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeInUp 1s ease 0.6s both;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            animation: fadeInUp 1s ease 0.8s both;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #00f5ff, #0080ff);
+            color: #000;
+            box-shadow: 0 10px 30px rgba(0, 245, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 245, 255, 0.5);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #00f5ff;
+            border: 2px solid #00f5ff;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 245, 255, 0.1);
+            transform: translateY(-3px);
+        }
+
+        /* Section Styles */
+        section {
+            min-height: 100vh;
+            padding: 120px 5% 80px;
+            position: relative;
+        }
+
+        .section-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            background: linear-gradient(135deg, #fff, #00f5ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #b0b0b0;
+            font-size: 1.2rem;
+            margin-bottom: 4rem;
+        }
+
+        /* About Section */
+        #about {
+            background: linear-gradient(180deg, #0a0a0a 0%, #0f1419 100%);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #d0d0d0;
+            margin-bottom: 1.5rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .stat-card {
+            background: rgba(0, 245, 255, 0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(0, 245, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: #00f5ff;
+            box-shadow: 0 10px 30px rgba(0, 245, 255, 0.2);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #00f5ff;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #b0b0b0;
+            font-size: 1rem;
+        }
+
+        /* Skills Section */
+        #skills {
+            background: #0a0a0a;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .skill-card {
+            background: linear-gradient(135deg, rgba(0, 245, 255, 0.05), rgba(0, 128, 255, 0.05));
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 245, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-10px);
+            border-color: #00f5ff;
+            box-shadow: 0 15px 40px rgba(0, 245, 255, 0.3);
+        }
+
+        .skill-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .skill-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #00f5ff;
+        }
+
+        .skill-card p {
+            color: #b0b0b0;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            background: rgba(0, 245, 255, 0.1);
+            color: #00f5ff;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(0, 245, 255, 0.3);
+        }
+
+        /* Projects Section */
+        #projects {
+            background: linear-gradient(180deg, #0a0a0a 0%, #0f1419 100%);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+        }
+
+        .project-card {
+            background: rgba(15, 20, 25, 0.8);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 245, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            border-color: #00f5ff;
+            box-shadow: 0 20px 50px rgba(0, 245, 255, 0.3);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, #00f5ff, #0080ff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: rgba(0, 0, 0, 0.3);
+        }
+
+        .project-content {
+            padding: 2rem;
+        }
+
+        .project-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #00f5ff;
+        }
+
+        .project-content p {
+            color: #b0b0b0;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #00f5ff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .project-link:hover {
+            transform: translateX(5px);
+            text-shadow: 0 0 10px rgba(0, 245, 255, 0.5);
+        }
+
+        /* Contact Section */
+        #contact {
+            background: #0a0a0a;
+        }
+
+        .contact-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 0.5rem;
+            color: #00f5ff;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 1rem;
+            background: rgba(0, 245, 255, 0.05);
+            border: 1px solid rgba(0, 245, 255, 0.2);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #00f5ff;
+            box-shadow: 0 0 20px rgba(0, 245, 255, 0.2);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .contact-info {
+            margin-top: 3rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .contact-item {
+            text-align: center;
+        }
+
+        /* Footer */
+        footer {
+            background: #000;
+            padding: 2rem 5%;
+            text-align: center;
+            color: #b0b0b0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                flex-direction: column;
+                background: rgba(10, 10, 10, 0.98);
+                width: 100%;
+                padding: 2rem;
+                transition: left 0.3s ease;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .hero-description {
+                font-size: 1rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .model-container {
+                width: 300px;
+                height: 300px;
+                top: 100px;
+            }
+
+            .hero-content {
+                margin-top: 250px;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .skills-grid,
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">DataSci.Pro</div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Section with 3D Robotic Eye -->
+    <section id="home">
+        <div class="model-container">
+            <canvas id="roboticEye"></canvas>
+        </div>
+        <div class="particles" id="particles"></div>
+        <div class="hero-content">
+            <div class="hero-subtitle">Data Scientist & ML Engineer</div>
+            <h1 class="hero-title">From Complex Data<br>To Clear Decisions</h1>
+            <p class="hero-description">
+                Leveraging advanced analytics, machine learning, and AI to extract actionable insights 
+                and drive data-driven decision making for businesses worldwide.
+            </p>
+            <div class="cta-buttons">
+                <a href="#projects" class="btn btn-primary">View My Work</a>
+                <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="section-container">
+            <h2 class="section-title">About Me</h2>
+            <p class="section-subtitle">Passionate about turning complex data into simple solutions</p>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>
+                        I'm a results-driven Data Scientist with expertise in statistical analysis, machine learning, 
+                        and predictive modeling. My passion lies in uncovering hidden patterns within data and 
+                        translating them into actionable business strategies.
+                    </p>
+                    <p>
+                        With a strong foundation in mathematics and computer science, I specialize in building 
+                        end-to-end machine learning pipelines, from data collection and preprocessing to model 
+                        deployment and monitoring in production environments.
+                    </p>
+                    <p>
+                        I believe in the power of data to transform businesses and improve lives, and I'm 
+                        committed to staying at the forefront of emerging technologies in AI and data science.
+                    </p>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">5+</div>
+                        <div class="stat-label">Years Experience</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">50+</div>
+                        <div class="stat-label">Projects Completed</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">30+</div>
+                        <div class="stat-label">Happy Clients</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">15+</div>
+                        <div class="stat-label">ML Models Deployed</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+        <div class="section-container">
+            <h2 class="section-title">Skills & Expertise</h2>
+            <p class="section-subtitle">Core competencies in data science and machine learning</p>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <div class="skill-icon">📊</div>
+                    <h3>Data Analysis</h3>
+                    <p>Expert in exploratory data analysis, statistical modeling, and data visualization to extract meaningful insights from complex datasets.</p>
+                    <div class="skill-tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">R</span>
+                        <span class="tag">SQL</span>
+                        <span class="tag">Pandas</span>
+                        <span class="tag">NumPy</span>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🤖</div>
+                    <h3>Machine Learning</h3>
+                    <p>Proficient in developing and deploying supervised and unsupervised learning models for classification, regression, and clustering tasks.</p>
+                    <div class="skill-tags">
+                        <span class="tag">Scikit-learn</span>
+                        <span class="tag">TensorFlow</span>
+                        <span class="tag">PyTorch</span>
+                        <span class="tag">XGBoost</span>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🧠</div>
+                    <h3>Deep Learning</h3>
+                    <p>Experience with neural networks, CNNs, RNNs, and transformer architectures for computer vision and NLP applications.</p>
+                    <div class="skill-tags">
+                        <span class="tag">Keras</span>
+                        <span class="tag">PyTorch</span>
+                        <span class="tag">BERT</span>
+                        <span class="tag">GANs</span>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">📈</div>
+                    <h3>Data Visualization</h3>
+                    <p>Creating compelling visual narratives through interactive dashboards and data-driven storytelling.</p>
+                    <div class="skill-tags">
+                        <span class="tag">Tableau</span>
+                        <span class="tag">Power BI</span>
+                        <span class="tag">Plotly</span>
+                        <span class="tag">Matplotlib</span>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">☁️</div>
+                    <h3>Cloud & Big Data</h3>
+                    <p>Deploying scalable ML solutions using cloud platforms and handling large-scale data processing.</p>
+                    <div class="skill-tags">
+                        <span class="tag">AWS</span>
+                        <span class="tag">Azure</span>
+                        <span class="tag">Spark</span>
+                        <span class="tag">Docker</span>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🔍</div>
+                    <h3>NLP & Text Analytics</h3>
+                    <p>Extracting insights from unstructured text data using advanced natural language processing techniques.</p>
+                    <div class="skill-tags">
+                        <span class="tag">NLTK</span>
+                        <span class="tag">spaCy</span>
+                        <span class="tag">Transformers</span>
+                        <span class="tag">GPT</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+        <div class="section-container">
+            <h2 class="section-title">Featured Projects</h2>
+            <p class="section-subtitle">Real-world applications of data science and machine learning</p>
+            
+            <div class="projects-grid" id="projectsGrid">
+                <!-- AI Compliance Monitoring -->
+                <div class="project-card">
+                    <div class="project-image">🛡️</div>
+                    <div class="project-content">
+                        <h3>AI Compliance Monitoring</h3>
+                        <p>Comprehensive system for AI compliance monitoring, reporting, and integration with modular agent-based architecture. Features automated remediation, privacy-preserving technologies, and enterprise integrations with JIRA and QRadar.</p>
+                        <div class="skill-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">AI Ethics</span>
+                            <span class="tag">Enterprise Integration</span>
+                            <span class="tag">Automation</span>
+                        </div>
+                        <a href="https://github.com/rahulsingh1397/AI_Compliance" class="project-link" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
+                    </div>
+                </div>
+
+                <!-- AIHawk Job Applier -->
+                <div class="project-card">
+                    <div class="project-image">🤖</div>
+                    <div class="project-content">
+                        <h3>AIHawk - Jobs Applier AI Agent</h3>
+                        <p>Revolutionary AI-driven job application agent that automates job applications. Featured by Business Insider, TechCrunch, The Verge, and Wired. Open-source core architecture enabling automated job search and application processes.</p>
+                        <div class="skill-tags">
+                            <span class="tag">AI Agents</span>
+                            <span class="tag">Automation</span>
+                            <span class="tag">NLP</span>
+                            <span class="tag">Python</span>
+                        </div>
+                        <a href="https://github.com/yourusername/aihawk" class="project-link" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
+                    </div>
+                </div>
+
+                <!-- MITRE-CORE -->
+                <div class="project-card">
+                    <div class="project-image">🔒</div>
+                    <div class="project-content">
+                        <h3>MITRE-CORE: Threat Detection Engine</h3>
+                        <p>Advanced cybersecurity analytics platform processing 300+ security events in under 2 minutes. Reduced false positives by 40% and investigation time by 70% through ML-powered correlation and MITRE ATT&CK framework integration.</p>
+                        <div class="skill-tags">
+                            <span class="tag">Scikit-learn</span>
+                            <span class="tag">NetworkX</span>
+                            <span class="tag">Cybersecurity</span>
+                            <span class="tag">ML</span>
+                        </div>
+                        <a href="https://github.com/yourusername/mitre-core" class="project-link" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
+                    </div>
+                </div>
+
+                <!-- Additional Projects -->
+                <div class="project-card">
+                    <div class="project-image">📊</div>
+                    <div class="project-content">
+                        <h3>Customer Churn Prediction</h3>
+                        <p>Developed a predictive model to identify customers at risk of churning, achieving 92% accuracy. Implemented real-time scoring pipeline reducing customer loss by 25%.</p>
+                        <div class="skill-tags">
+                            <span class="tag">XGBoost</span>
+                            <span class="tag">Python</span>
+                            <span class="tag">AWS</span>
+                        </div>
+                        <a href="#" class="project-link" onclick="alert('Add your GitHub repository link here'); return false;">View More →</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">💬</div>
+                    <div class="project-content">
+                        <h3>Sentiment Analysis Platform</h3>
+                        <p>Created an NLP-powered sentiment analysis tool for social media monitoring, processing 1M+ tweets daily with 88% sentiment classification accuracy.</p>
+                        <div class="skill-tags">
+                            <span class="tag">BERT</span>
+                            <span class="tag">PyTorch</span>
+                            <span class="tag">Kafka</span>
+                        </div>
+                        <a href="#" class="project-link" onclick="alert('Add your GitHub repository link here'); return false;">View More →</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">🔮</div>
+                    <div class="project-content">
+                        <h3>Demand Forecasting</h3>
+                        <p>Implemented time-series forecasting models for inventory optimization, reducing stockouts by 30% and cutting excess inventory costs by $2M annually.</p>
+                        <div class="skill-tags">
+                            <span class="tag">Prophet</span>
+                            <span class="tag">LSTM</span>
+                            <span class="tag">SQL</span>
+                        </div>
+                        <a href="#" class="project-link" onclick="alert('Add your GitHub repository link here'); return false;">View More →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="section-container">
+            <h2 class="section-title">Get In Touch</h2>
+            <p class="section-subtitle">Let's discuss how data science can transform your business</p>
+            <div class="contact-content">
+                <form class="contact-form" onsubmit="handleSubmit(event)">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" placeholder="your.email@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" placeholder="Tell me about your project..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
+                </form>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit;">
+                            <svg height="48" aria-hidden="true" viewBox="0 0 16 16" version="1.1" width="48" style="fill: #00f5ff; margin-bottom: 0.5rem;">
+                                <path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"></path>
+                            </svg>
+                            <p style="color: #b0b0b0; margin-top: 0.5rem;">GitHub</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 DataSci.Pro. All rights reserved.</p>
+    </footer>
+
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
+    <script type="module">
+        import * as THREE from 'three';
+        import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+        // Initialize 3D Scene for Robotic Eye
+        const container = document.querySelector('.model-container');
+        const canvas = document.getElementById('roboticEye');
+        
+        const scene = new THREE.Scene();
+        
+        // Camera settings matching reference (FOV: 110, position: 0, 1.5, 1)
+        const camera = new THREE.PerspectiveCamera(110, container.offsetWidth / container.offsetHeight, 0.5, 100);
+        camera.position.set(0, 1.5, 7);
+        
+        const renderer = new THREE.WebGLRenderer({ 
+            canvas: canvas, 
+            alpha: true, 
+            antialias: true 
+        });
+
+        renderer.setSize(container.offsetWidth, container.offsetHeight);
+        renderer.setClearColor(0x000000, 0);
+
+        // Lighting setup matching reference
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        scene.add(ambientLight);
+
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 2.5);
+        directionalLight.position.set(0, 10, 5);
+        scene.add(directionalLight);
+
+        const backLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        backLight.position.set(0, -5, -5);
+        scene.add(backLight);
+
+        const pointLight = new THREE.PointLight(0xffffff, 1.2, 100);
+        pointLight.position.set(0, 8, 0);
+        scene.add(pointLight);
+
+        const spotlight = new THREE.SpotLight(0xffffff, 2, 20, Math.PI / 6, 0.5, 2);
+        spotlight.position.set(0, 5, 3);
+        spotlight.target.position.set(0, 0.58, 0.1);
+        scene.add(spotlight);
+        scene.add(spotlight.target);
+
+        // OrbitControls setup
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.enableZoom = false;
+        controls.enablePan = false;
+        controls.minDistance = controls.maxDistance = camera.position.length();
+
+        // Load GLTF Model
+        const loader = new GLTFLoader();
+        let roboticEyeModel = null;
+        
+        // Load texture for emissive light
+        const textureLoader = new THREE.TextureLoader();
+        const emissiveTexture = textureLoader.load('./models/textures/Light_emissive.png');
+        emissiveTexture.wrapS = THREE.RepeatWrapping;
+        emissiveTexture.wrapT = THREE.RepeatWrapping;
+        emissiveTexture.repeat.set(1, 1);
+        
+        // Try to load the model from the reference path
+        loader.load(
+            './models/robotic_eye.glb',
+            (gltf) => {
+                const model = gltf.scene;
+                model.scale.set(70, 70, 70);
+                model.position.set(0, 0, 0);
+
+                // Apply materials similar to reference
+                model.traverse((child) => {
+                    if (!child.isMesh) return;
+
+                    const materials = Array.isArray(child.material) ? child.material : [child.material];
+
+                    // Lens material
+                    if (child.name === 'Lens_Low_Poly_0') {
+                        materials.forEach((mat) => {
+                            mat.transparent = true;
+                            mat.opacity = 0.3;
+                            mat.depthWrite = false;
+                            mat.metalness = 0.1;
+                            mat.roughness = 0.05;
+                            mat.side = THREE.DoubleSide;
+                            mat.color = new THREE.Color(0x000000);
+                        });
+                        return;
+                    }
+
+                    // Light material with emissive
+                    if (child.name === 'Light_Low_Poly_0') {
+                        materials.forEach((mat) => {
+                            mat.map = emissiveTexture;
+                            mat.emissiveMap = emissiveTexture;
+                            mat.emissive = new THREE.Color('#00f5ff');
+                            mat.emissiveIntensity = 9000.0;
+                            mat.metalness = 1.0;
+                            mat.roughness = 0.3;
+                            mat.transparent = true;
+                            mat.opacity = 1.0;
+                            mat.side = THREE.DoubleSide;
+                        });
+                        return;
+                    }
+
+                    // Apply default material properties
+                    materials.forEach((mat) => {
+                        switch (mat.name) {
+                            case 'Camera_Plastic':
+                                mat.color = new THREE.Color('#252525');
+                                break;
+                            case 'Metal':
+                                mat.color = new THREE.Color('#dadada');
+                                break;
+                            case 'Black_Plastic':
+                                mat.color = new THREE.Color('#3e3e3e');
+                                break;
+                            case 'Metal.001':
+                                mat.color = new THREE.Color('#e7e7e7');
+                                break;
+                            case 'Copper':
+                                mat.color = new THREE.Color('#fad0c0');
+                                break;
+                            case 'White_Plastic':
+                                mat.color = new THREE.Color('#000000');
+                                break;
+                            case "BezierCurve.006_0":
+                                mat.color = new THREE.Color("#ffffff");
+                                break;
+                            case 'Light':
+                                mat.emissive = new THREE.Color('#00f5ff');
+                                mat.emissiveIntensity = 3000.0;
+                                mat.color = new THREE.Color('#00f5ff');
+                                break;
+                            case 'Camera_Lens':
+                                mat.color = new THREE.Color('#000000');
+                                mat.opacity = 0.5;
+                                break;
+                            case 'Camera_Lens.001':
+                                mat.color = new THREE.Color('#00f5ff');
+                                mat.opacity = 1.0;
+                                mat.transparent = false;
+                                break;
+                            default:
+                                mat.color = new THREE.Color(0x888ca0);
+                                mat.metalness = 0.9;
+                                mat.roughness = 0.2;
+                                mat.transparent = true;
+                                mat.opacity = 0.0;
+                                mat.side = THREE.FrontSide;
+                                break;
+                        }
+                    });
+                });
+
+                roboticEyeModel = model;
+                scene.add(model);
+                console.log('3D Model loaded successfully');
+            },
+            undefined,
+            (error) => {
+                console.error('Error loading model:', error);
+                console.log('Falling back to procedural eye...');
+                createProceduralEye();
+            }
+        );
+
+        // Fallback: Create procedural eye if model fails to load
+        function createProceduralEye() {
+            const eyeGroup = new THREE.Group();
+
+            // Main eye sphere
+            const eyeGeometry = new THREE.SphereGeometry(1, 32, 32);
+            const eyeMaterial = new THREE.MeshStandardMaterial({ 
+                color: 0x2a2a2a,
+                metalness: 0.7,
+                roughness: 0.3
+            });
+            const eyeSphere = new THREE.Mesh(eyeGeometry, eyeMaterial);
+            eyeGroup.add(eyeSphere);
+
+            // Iris with cyan color
+            const irisGeometry = new THREE.CircleGeometry(0.4, 32);
+            const irisMaterial = new THREE.MeshBasicMaterial({ 
+                color: 0x00f5ff
+            });
+            const iris = new THREE.Mesh(irisGeometry, irisMaterial);
+            iris.position.z = 1.01;
+            eyeGroup.add(iris);
+
+            // Pupil
+            const pupilGeometry = new THREE.CircleGeometry(0.15, 32);
+            const pupilMaterial = new THREE.MeshBasicMaterial({ 
+                color: 0x000000
+            });
+            const pupil = new THREE.Mesh(pupilGeometry, pupilMaterial);
+            pupil.position.z = 1.02;
+            eyeGroup.add(pupil);
+
+            // Lens (transparent overlay)
+            const lensGeometry = new THREE.SphereGeometry(1.05, 32, 32);
+            const lensMaterial = new THREE.MeshStandardMaterial({ 
+                color: 0xffffff,
+                transparent: true,
+                opacity: 0.2,
+                metalness: 0.9,
+                roughness: 0.1
+            });
+            const lens = new THREE.Mesh(lensGeometry, lensMaterial);
+            eyeGroup.add(lens);
+
+            // Mechanical rings with cyan accent
+            for (let i = 0; i < 3; i++) {
+                const ringGeometry = new THREE.TorusGeometry(1.2 + (i * 0.15), 0.03, 16, 100);
+                const ringMaterial = new THREE.MeshStandardMaterial({ 
+                    color: i === 1 ? 0x00f5ff : 0x444444,
+                    metalness: 0.8,
+                    roughness: 0.2,
+                    emissive: i === 1 ? new THREE.Color(0x00f5ff) : new THREE.Color(0x000000),
+                    emissiveIntensity: i === 1 ? 0.3 : 0
+                });
+                const ring = new THREE.Mesh(ringGeometry, ringMaterial);
+                ring.rotation.x = Math.PI / 2;
+                eyeGroup.add(ring);
+            }
+
+            eyeGroup.position.set(0, 0, 0);
+            roboticEyeModel = eyeGroup;
+            scene.add(eyeGroup);
+        }
+
+        // Base rotation offset to make model look at center
+        const baseRotationX = -Math.PI / 10; // Tilt up to look at center
+        const baseRotationY = 0;
+        
+        // Mouse tracking - relative to model container (centerpoint is the model)
+        const onMouseMove = (event) => {
+            // Get container bounds
+            const rect = container.getBoundingClientRect();
+            
+            // Calculate mouse position relative to container center
+            // When mouse is at container center, mouseX and mouseY will be 0
+            const mouseX = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+            const mouseY = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+            
+            const roboticEyeModel = scene.children[scene.children.length - 1];
+            roboticEyeModel.rotation.y = baseRotationY + THREE.MathUtils.clamp(mouseX * Math.PI / 2.5, -Math.PI / 2.5, Math.PI / 2.5);
+            roboticEyeModel.rotation.x = baseRotationX + THREE.MathUtils.clamp(-mouseY * Math.PI / 2.5, -Math.PI / 2.5, Math.PI / 2.5);
+        };
+
+        window.addEventListener('mousemove', onMouseMove);
+
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        // Handle window resize
+        function handleResize() {
+            const width = container.offsetWidth;
+            const height = container.offsetHeight;
+            
+            renderer.setSize(width, height);
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+        }
+        
+        window.addEventListener('resize', handleResize);
+        handleResize();
+
+        // Particle animation
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 50; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 20 + 's';
+            particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
+            particlesContainer.appendChild(particle);
+        }
+
+        // File upload handling for README files
+        const fileInput = document.getElementById('fileInput');
+        const uploadStatus = document.getElementById('uploadStatus');
+        const projectsGrid = document.getElementById('projectsGrid');
+
+        fileInput.addEventListener('change', async (e) => {
+            const files = e.target.files;
+            if (files.length === 0) return;
+
+            uploadStatus.textContent = 'Processing files...';
+            projectsGrid.innerHTML = ''; // Clear existing projects
+
+            for (let file of files) {
+                try {
+                    const content = await file.text();
+                    const project = parseReadme(content, file.name);
+                    if (project) {
+                        addProjectCard(project);
+                    }
+                } catch (error) {
+                    console.error('Error reading file:', error);
+                }
+            }
+
+            uploadStatus.textContent = `✓ Successfully loaded ${files.length} project(s)`;
+            setTimeout(() => {
+                uploadStatus.textContent = '';
+            }, 3000);
+        });
+
+        function parseReadme(content, filename) {
+            // Extract project information from README
+            const lines = content.split('\n');
+            let title = filename.replace(/README\.md|\.md|\.txt/gi, '').trim() || 'Untitled Project';
+            let description = '';
+            let githubUrl = '';
+            let tags = [];
+
+            // Try to find title (first heading)
+            for (let line of lines) {
+                if (line.startsWith('# ')) {
+                    title = line.replace('# ', '').trim();
+                    break;
+                }
+            }
+
+            // Find description (first paragraph after title)
+            let foundTitle = false;
+            for (let line of lines) {
+                if (line.startsWith('# ')) {
+                    foundTitle = true;
+                    continue;
+                }
+                if (foundTitle && line.trim() && !line.startsWith('#') && !line.startsWith('[')) {
+                    description = line.trim();
+                    if (description.length > 200) {
+                        description = description.substring(0, 197) + '...';
+                    }
+                    break;
+                }
+            }
+
+            // Find GitHub URL
+            const urlMatch = content.match(/https:\/\/github\.com\/[^\s\)]+/);
+            if (urlMatch) {
+                githubUrl = urlMatch[0];
+            }
+
+            // Extract tags (look for badges, technology mentions)
+            const techKeywords = ['python', 'tensorflow', 'pytorch', 'scikit-learn', 'pandas', 'numpy', 
+                                'react', 'javascript', 'docker', 'aws', 'azure', 'sql', 'keras',
+                                'nlp', 'cv', 'ml', 'ai', 'data', 'deep learning'];
+            
+            const contentLower = content.toLowerCase();
+            techKeywords.forEach(keyword => {
+                if (contentLower.includes(keyword)) {
+                    tags.push(keyword);
+                }
+            });
+            tags = tags.slice(0, 4); // Limit to 4 tags
+
+            return {
+                title,
+                description: description || 'A data science project showcasing advanced analytics and machine learning techniques.',
+                githubUrl: githubUrl || '#',
+                tags: tags.length > 0 ? tags : ['Python', 'ML', 'Data Science']
+            };
+        }
+
+        function addProjectCard(project) {
+            const icons = ['📊', '🤖', '🧠', '📈', '🔍', '💡', '⚡', '🎯'];
+            const randomIcon = icons[Math.floor(Math.random() * icons.length)];
+
+            const card = document.createElement('div');
+            card.className = 'project-card';
+            card.innerHTML = `
+                <div class="project-image">${randomIcon}</div>
+                <div class="project-content">
+                    <h3>${project.title}</h3>
+                    <p>${project.description}</p>
+                    <div class="skill-tags">
+                        ${project.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                    </div>
+                    <a href="${project.githubUrl}" class="project-link" target="_blank" rel="noopener noreferrer">
+                        ${project.githubUrl !== '#' ? 'View on GitHub →' : 'View More →'}
+                    </a>
+                </div>
+            `;
+            projectsGrid.appendChild(card);
+        }
+
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
+        
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Form submission
+        function handleSubmit(e) {
+            e.preventDefault();
+            alert('Thank you for your message! This is a demo form. In production, this would send your message.');
+            e.target.reset();
+        }
+
+        // Initialize with default project if no files uploaded
+        if (projectsGrid.children.length === 1) {
+            // Keep the default project
+        }
+    </script>
