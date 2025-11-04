@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -157,17 +157,6 @@
             transition: all 0.3s ease;
         }
 
-        /* Hero Section with Spline 3D */
-        #home {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-            padding: 0 5%;
-        }
-
         /* Hero Section with 3D Model */
         #home {
             min-height: 100vh;
@@ -251,10 +240,72 @@
             }
         }
 
+        .chalk-border {
+            display: inline-block;
+            padding: 0.5rem 1.2rem;
+            position: relative;
+            background: rgba(10, 10, 10, 0.9);
+            border: 2px solid #00f5ff;
+            color: #00f5ff;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            animation: fadeInUp 1s ease 0.2s both;
+            box-shadow: 0 0 15px rgba(0, 245, 255, 0.3);
+            text-shadow: 0 0 10px rgba(0, 245, 255, 0.5);
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            transform: rotate(-1deg);
+            position: relative;
+            z-index: 1;
+            overflow: visible;
+        }
+        
+        .chalk-border::after {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: -6px;
+            right: -6px;
+            bottom: -6px;
+            border: 1px solid rgba(0, 245, 255, 0.4);
+            border-radius: 2px;
+            pointer-events: none;
+            z-index: -1;
+            animation: pulse 2s infinite alternate;
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 5px 2px rgba(0, 245, 255, 0.1);
+                opacity: 0.6;
+            }
+            100% {
+                box-shadow: 0 0 20px 8px rgba(0, 245, 255, 0.3);
+                opacity: 1;
+            }
+        }
+
+        .chalk-border::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            right: -8px;
+            bottom: -8px;
+            border: 1px dashed rgba(0, 245, 255, 0.3);
+            pointer-events: none;
+            animation: borderFlicker 2s infinite alternate;
+        }
+
+        @keyframes borderFlicker {
+            0% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
         .hero-subtitle {
             font-size: 1.2rem;
             color: #00f5ff;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             text-transform: uppercase;
             letter-spacing: 3px;
             animation: fadeInUp 1s ease 0.2s both;
@@ -265,11 +316,13 @@
             font-weight: 800;
             margin-bottom: 1.5rem;
             line-height: 1.2;
-            background: linear-gradient(135deg, #fff, #00f5ff);
+            background: radial-gradient(circle 500px at var(--mouse-x, 50%) var(--mouse-y, 50%), #fff, transparent 50%), linear-gradient(135deg, #00f5ff, #0080ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             animation: fadeInUp 1s ease 0.4s both;
+            transition: background 0.15s ease;
+            cursor: default;
         }
 
         .hero-description {
@@ -314,6 +367,7 @@
             background: rgba(255, 255, 255, 0.3);
             transform: translate(-50%, -50%);
             transition: width 0.6s, height 0.6s;
+            z-index: 0;
         }
 
         .btn:active::before {
@@ -322,25 +376,57 @@
         }
 
         .btn-primary {
+            position: relative;
+            overflow: hidden;
             background: linear-gradient(135deg, #00f5ff, #0080ff);
             color: #000;
             box-shadow: 0 10px 30px rgba(0, 245, 255, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            --spotlight-size: 200px;
+            --spotlight-opacity: 0.4;
+            --spotlight-x: 50%;
+            --spotlight-y: 50%;
+            background: radial-gradient(
+                circle var(--spotlight-size) at var(--spotlight-x) var(--spotlight-y),
+                rgba(255, 255, 255, var(--spotlight-opacity)) 0%,
+                rgba(255, 255, 255, 0) 60%
+            ), linear-gradient(135deg, #00f5ff, #0080ff);
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: -100%;
+            right: -100%;
+            bottom: -100%;
+            background: radial-gradient(circle 150px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.4), transparent 50%);
+            pointer-events: none;
+            z-index: 1;
+            transition: background 0.2s ease;
         }
 
         .btn-primary:hover {
             transform: translateY(-3px);
             box-shadow: 0 15px 40px rgba(0, 245, 255, 0.5);
         }
+        
+        .btn-primary > * {
+            position: relative;
+            z-index: 2;
+        }
 
         .btn-secondary {
             background: transparent;
             color: #00f5ff;
             border: 2px solid #00f5ff;
+            transition: all 0.3s ease;
         }
 
         .btn-secondary:hover {
             background: rgba(0, 245, 255, 0.1);
             transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
 
         /* Section Styles */
@@ -359,11 +445,13 @@
             font-size: 3.5rem;
             font-weight: 800;
             text-align: center;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, #fff, #00f5ff);
+            background: radial-gradient(circle 500px at var(--mouse-x, 50%) var(--mouse-y, 50%), #fff, transparent 50%), linear-gradient(135deg, #00f5ff, #0080ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            transition: background 0.15s ease;
+            cursor: default;
+            margin-bottom: 1rem;
         }
 
         .section-subtitle {
@@ -409,6 +497,7 @@
             border-radius: 20px;
             border: 1px solid rgba(0, 245, 255, 0.1);
             transition: all 0.3s ease;
+            position: relative;
         }
 
         .stat-item:hover {
@@ -417,19 +506,79 @@
             transform: translateY(-5px);
         }
 
+        /* Circular Progress Visualization */
+        .stat-circle {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 1rem;
+        }
+
+        .stat-circle svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: rotate(-90deg);
+            width: 120px;
+            height: 120px;
+        }
+
+        .stat-circle-bg {
+            fill: none;
+            stroke: rgba(0, 245, 255, 0.1);
+            stroke-width: 8;
+        }
+
+        .stat-circle-progress {
+            fill: none;
+            stroke: url(#gradient1);
+            stroke-width: 8;
+            stroke-linecap: round;
+            stroke-dasharray: 339.292;
+            stroke-dashoffset: 339.292;
+            transition: stroke-dashoffset 2s ease-in-out;
+        }
+
+        .stat-circle-progress.animated {
+            animation: fillProgress 2s ease-in-out forwards;
+        }
+
+        @keyframes fillProgress {
+            to {
+                stroke-dashoffset: var(--progress);
+            }
+        }
+
         .stat-number {
-            font-size: 3rem;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
             font-weight: 800;
             background: linear-gradient(135deg, #00f5ff, #0080ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 0.5rem;
+            margin: 0;
         }
 
         .stat-label {
             color: #b0b0b0;
-            font-size: 1rem;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Animated Counter */
+        .stat-number[data-count] {
+            opacity: 0;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
         }
 
         .project-image {
@@ -439,8 +588,19 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 4rem;
-            color: rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            border-radius: 18px 18px 0 0;
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .project-card:hover .project-image img {
+            transform: scale(1.05);
         }
 
         .project-content {
@@ -555,15 +715,6 @@
         }
 
         /* Skill Progress Bars */
-        .skill-progress {
-            width: 100%;
-            height: 8px;
-            background: rgba(0, 245, 255, 0.1);
-            border-radius: 10px;
-            margin-top: 1rem;
-            overflow: hidden;
-        }
-
         .skill-progress-bar {
             height: 100%;
             background: linear-gradient(90deg, #00f5ff, #0080ff);
@@ -586,28 +737,81 @@
             }
         }
 
+        /* Theme Variables */
+        :root {
+            /* Light Theme */
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --text-primary: #333333;
+            --text-secondary: #666666;
+            --accent: #0080ff;
+            --accent-light: #00f5ff;
+            --spotlight-color: rgba(255, 255, 150, 0.8); /* Light yellow for light mode */
+            --shadow: rgba(0, 0, 0, 0.1);
+            --card-bg: #ffffff;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #1a1a1a;
+            --text-primary: #f0f0f0;
+            --text-secondary: #b0b0b0;
+            --spotlight-color: rgba(255, 255, 255, 0.4); /* White for dark mode */
+            --shadow: rgba(0, 0, 0, 0.3);
+            --card-bg: #1a1a1a;
+        }
+
+        /* Apply theme colors */
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
         /* Theme Toggle */
         .theme-toggle {
+            display: none; /* Temporarily disabled */
             position: fixed;
             bottom: 30px;
             right: 30px;
             width: 60px;
             height: 60px;
-            background: linear-gradient(135deg, #00f5ff, #0080ff);
+            background: radial-gradient(
+                circle var(--spotlight-size, 200px) at var(--spotlight-x, 50%) var(--spotlight-y, 50%),
+                var(--spotlight-color, rgba(255, 255, 150, 0.8)) 0%,
+                transparent 80%
+            ), linear-gradient(135deg, var(--accent-light), var(--accent));
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             z-index: 999;
-            box-shadow: 0 5px 20px rgba(0, 245, 255, 0.4);
+            box-shadow: 0 5px 20px var(--shadow);
             transition: all 0.3s ease;
             font-size: 1.5rem;
+            color: white;
+            border: none;
+            outline: none;
         }
 
         .theme-toggle:hover {
             transform: scale(1.1) rotate(15deg);
-            box-shadow: 0 8px 30px rgba(0, 245, 255, 0.6);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Hide sun icon by default */
+        .theme-toggle .sun-icon {
+            display: none;
+        }
+
+        /* Hide moon icon in dark mode */
+        [data-theme="dark"] .theme-toggle .sun-icon {
+            display: block;
+        }
+
+        [data-theme="dark"] .theme-toggle .moon-icon {
+            display: none;
         }
 
         /* Project Filter Buttons */
@@ -721,6 +925,11 @@
             transition: all 0.3s ease;
             border: 1px solid rgba(0, 245, 255, 0.1);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
         }
 
         .skill-card:hover {
@@ -733,6 +942,8 @@
         .skill-icon {
             font-size: 3rem;
             margin-bottom: 1rem;
+            text-align: center;
+            display: block;
         }
 
         .skill-card h3 {
@@ -745,6 +956,7 @@
             color: #b0b0b0;
             line-height: 1.6;
             margin-bottom: 1rem;
+            flex-grow: 1;
         }
 
         /* Projects Grid with Glassmorphism */
@@ -760,7 +972,20 @@
             display: flex;
             flex-wrap: wrap;
             gap: 0.5rem;
-            margin-top: 1rem;
+            margin-top: auto;
+            margin-bottom: 1rem;
+        }
+
+        .skill-progress {
+            width: calc(100% - 4rem);
+            height: 8px;
+            background: rgba(0, 245, 255, 0.1);
+            border-radius: 10px;
+            margin-top: auto;
+            overflow: hidden;
+            position: absolute;
+            bottom: 2rem;
+            left: 2rem;
         }
 
         .tag {
@@ -890,7 +1115,7 @@
         </div>
         <div class="particles" id="particles"></div>
         <div class="hero-content">
-            <div class="hero-subtitle">Hey! I am Rahul Singh</div>
+            <div class="chalk-border">Machine Learning and AI</div>
             <h1 class="hero-title">From Complex Data<br>To Clear Decisions</h1>
             <p class="hero-description">
                 Leveraging advanced analytics, machine learning, and AI to extract actionable insights 
@@ -926,20 +1151,72 @@
                     </p>
                 </div>
                 <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-number">5+</div>
+                    <div class="stat-item">
+                        <div class="stat-circle">
+                            <svg>
+                                <defs>
+                                    <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#00f5ff" />
+                                        <stop offset="100%" stop-color="#0080ff" />
+                                    </linearGradient>
+                                </defs>
+                                <circle cx="60" cy="60" r="54" class="stat-circle-bg"></circle>
+                                <circle cx="60" cy="60" r="54" class="stat-circle-progress" 
+                                        style="--progress: 271.43" data-percent="20"></circle>
+                            </svg>
+                            <div class="stat-number" data-count="5">0</div>
+                        </div>
                         <div class="stat-label">Years Experience</div>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-number">50+</div>
+                    <div class="stat-item">
+                        <div class="stat-circle">
+                            <svg>
+                                <defs>
+                                    <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#00f5ff" />
+                                        <stop offset="100%" stop-color="#0080ff" />
+                                    </linearGradient>
+                                </defs>
+                                <circle cx="60" cy="60" r="54" class="stat-circle-bg"></circle>
+                                <circle cx="60" cy="60" r="54" class="stat-circle-progress" 
+                                        style="--progress: 169.65" data-percent="50"></circle>
+                            </svg>
+                            <div class="stat-number" data-count="50">0</div>
+                        </div>
                         <div class="stat-label">Projects Completed</div>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-number">30+</div>
+                    <div class="stat-item">
+                        <div class="stat-circle">
+                            <svg>
+                                <defs>
+                                    <linearGradient id="gradient3" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#00f5ff" />
+                                        <stop offset="100%" stop-color="#0080ff" />
+                                    </linearGradient>
+                                </defs>
+                                <circle cx="60" cy="60" r="54" class="stat-circle-bg"></circle>
+                                <circle cx="60" cy="60" r="54" class="stat-circle-progress" 
+                                        style="--progress: 237.50" data-percent="30"></circle>
+                            </svg>
+                            <div class="stat-number" data-count="30">0</div>
+                        </div>
                         <div class="stat-label">Happy Clients</div>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-number">15+</div>
+                    <div class="stat-item">
+                        <div class="stat-circle">
+                            <svg>
+                                <defs>
+                                    <linearGradient id="gradient4" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#00f5ff" />
+                                        <stop offset="100%" stop-color="#0080ff" />
+                                    </linearGradient>
+                                </defs>
+                                <circle cx="60" cy="60" r="54" class="stat-circle-bg"></circle>
+                                <circle cx="60" cy="60" r="54" class="stat-circle-progress" 
+                                        style="--progress: 288.70" data-percent="15"></circle>
+                            </svg>
+                            <div class="stat-number" data-count="15">0</div>
+                        </div>
                         <div class="stat-label">ML Models Deployed</div>
                     </div>
                 </div>
@@ -1020,6 +1297,30 @@
                         <span class="tag">GPT</span>
                     </div>
                 </div>
+                <div class="skill-card">
+                    <div class="skill-icon">⚡</div>
+                    <h3>Workflow Automation</h3>
+                    <p>Expert in n8n workflow automation, building powerful integrations and automated processes to streamline data pipelines and business operations.</p>
+                    <div class="skill-tags">
+                        <span class="tag">n8n</span>
+                        <span class="tag">API Integration</span>
+                        <span class="tag">Webhooks</span>
+                        <span class="tag">Automation</span>
+                        <span class="tag">Data Pipelines</span>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🔒</div>
+                    <h3>Cybersecurity</h3>
+                    <p>Skilled in identifying vulnerabilities, implementing security measures, and protecting data systems from cyber threats. Experience with ethical hacking and security best practices.</p>
+                    <div class="skill-tags">
+                        <span class="tag">Penetration Testing</span>
+                        <span class="tag">Network Security</span>
+                        <span class="tag">Encryption</span>
+                        <span class="tag">SIEM</span>
+                        <span class="tag">Risk Assessment</span>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -1033,7 +1334,9 @@
             <div class="projects-grid" id="projectsGrid">
                 <!-- AI Compliance Monitoring -->
                 <div class="project-card">
-                    <div class="project-image">🛡️</div>
+                    <div class="project-image">
+                        <img src="assets/ai-compliance.webp" alt="AI Compliance Monitoring dashboard">
+                    </div>
                     <div class="project-content">
                         <h3>AI Compliance Monitoring</h3>
                         <p>Comprehensive system for AI compliance monitoring, reporting, and integration with modular agent-based architecture. Features automated remediation, privacy-preserving technologies, and enterprise integrations with JIRA and QRadar.</p>
@@ -1043,29 +1346,33 @@
                             <span class="tag">Enterprise Integration</span>
                             <span class="tag">Automation</span>
                         </div>
-                        <a href="https://github.com/rahulsingh1397/AI_Compliance" class="project-link" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
+                        <a href="https://github.com/rahulsingh1397/AI_Compliance" class="project-link" target="_blank" rel="noopener noreferrer">View Project →</a>
                     </div>
                 </div>
 
-                <!-- AIHawk Job Applier -->
+                <!-- Energy Usage Prediction -->
                 <div class="project-card">
-                    <div class="project-image">🤖</div>
+                    <div class="project-image">
+                        <img src="assets/energy-consumption.jpeg" alt="Energy usage prediction dashboard">
+                    </div>
                     <div class="project-content">
-                        <h3>AIHawk - Jobs Applier AI Agent</h3>
-                        <p>Revolutionary AI-driven job application agent that automates job applications. Featured by Business Insider, TechCrunch, The Verge, and Wired. Open-source core architecture enabling automated job search and application processes.</p>
+                        <h3>Energy Usage Prediction</h3>
+                        <p>Forecasting building-level energy consumption using advanced regression ensembles, feature engineering, and time-series modeling to drive sustainability initiatives.</p>
                         <div class="skill-tags">
-                            <span class="tag">AI Agents</span>
-                            <span class="tag">Automation</span>
-                            <span class="tag">NLP</span>
+                            <span class="tag">Machine Learning</span>
+                            <span class="tag">Energy Analytics</span>
                             <span class="tag">Python</span>
+                            <span class="tag">Time Series</span>
                         </div>
-                        <a href="https://github.com/yourusername/aihawk" class="project-link" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
+                        <a href="https://github.com/rahulsingh1397/Predicting_Energy_Consumption" class="project-link" target="_blank" rel="noopener noreferrer">View Project →</a>
                     </div>
                 </div>
 
                 <!-- MITRE-CORE -->
                 <div class="project-card">
-                    <div class="project-image">🔒</div>
+                    <div class="project-image">
+                        <img src="assets/mitre-core.png" alt="MITRE-CORE threat detection interface">
+                    </div>
                     <div class="project-content">
                         <h3>MITRE-CORE: Threat Detection Engine</h3>
                         <p>Advanced cybersecurity analytics platform processing 300+ security events in under 2 minutes. Reduced false positives by 40% and investigation time by 70% through ML-powered correlation and MITRE ATT&CK framework integration.</p>
@@ -1075,50 +1382,58 @@
                             <span class="tag">Cybersecurity</span>
                             <span class="tag">ML</span>
                         </div>
-                        <a href="https://github.com/yourusername/mitre-core" class="project-link" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
+                        <a href="https://github.com/rahulsingh1397/Mitre-Core" class="project-link" target="_blank" rel="noopener noreferrer">View Project →</a>
                     </div>
                 </div>
 
-                <!-- Additional Projects -->
+                <!-- Fine-Tune LLM model (BERT) -->
                 <div class="project-card">
-                    <div class="project-image">📊</div>
-                    <div class="project-content">
-                        <h3>Customer Churn Prediction</h3>
-                        <p>Developed a predictive model to identify customers at risk of churning, achieving 92% accuracy. Implemented real-time scoring pipeline reducing customer loss by 25%.</p>
-                        <div class="skill-tags">
-                            <span class="tag">XGBoost</span>
-                            <span class="tag">Python</span>
-                            <span class="tag">AWS</span>
-                        </div>
-                        <a href="#" class="project-link" onclick="alert('Add your GitHub repository link here'); return false;">View More →</a>
+                    <div class="project-image">
+                        <img src="assets/agentic.webp" alt="Fine-tuned BERT large language model visualization">
                     </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-image">💬</div>
                     <div class="project-content">
-                        <h3>Sentiment Analysis Platform</h3>
-                        <p>Created an NLP-powered sentiment analysis tool for social media monitoring, processing 1M+ tweets daily with 88% sentiment classification accuracy.</p>
+                        <h3>Fine-Tune LLM model (BERT)</h3>
+                        <p>End-to-end fine-tuning pipeline for BERT on domain-specific corpora, delivering high-accuracy intent classification and contextual understanding for downstream applications.</p>
                         <div class="skill-tags">
                             <span class="tag">BERT</span>
-                            <span class="tag">PyTorch</span>
-                            <span class="tag">Kafka</span>
+                            <span class="tag">NLP</span>
+                            <span class="tag">Transfer Learning</span>
                         </div>
-                        <a href="#" class="project-link" onclick="alert('Add your GitHub repository link here'); return false;">View More →</a>
+                        <a href="https://github.com/rahulsingh1397/Fine_tune_Bert" class="project-link" target="_blank" rel="noopener noreferrer">View Project →</a>
                     </div>
                 </div>
 
+                <!-- Amazon reviews Product Sentiment Analysis -->
                 <div class="project-card">
-                    <div class="project-image">🔮</div>
+                    <div class="project-image">
+                        <img src="assets/alexa-reviews.jpg" alt="Amazon reviews sentiment analysis dashboard">
+                    </div>
                     <div class="project-content">
-                        <h3>Demand Forecasting</h3>
-                        <p>Implemented time-series forecasting models for inventory optimization, reducing stockouts by 30% and cutting excess inventory costs by $2M annually.</p>
+                        <h3>Amazon reviews Product Sentiment Analysis</h3>
+                        <p>Analyzing Amazon customer feedback to uncover sentiment trends and product pain points, leveraging NLP pipelines, topic modeling, and interactive reporting.</p>
                         <div class="skill-tags">
-                            <span class="tag">Prophet</span>
-                            <span class="tag">LSTM</span>
-                            <span class="tag">SQL</span>
+                            <span class="tag">Sentiment Analysis</span>
+                            <span class="tag">Python</span>
+                            <span class="tag">NLP</span>
                         </div>
-                        <a href="#" class="project-link" onclick="alert('Add your GitHub repository link here'); return false;">View More →</a>
+                        <a href="https://github.com/rahulsingh1397/Amazon_reviews_sentiment_analysis" class="project-link" target="_blank" rel="noopener noreferrer">View Project →</a>
+                    </div>
+                </div>
+
+                <!-- MalJpeg -->
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="assets/maljpeg.jpeg" alt="MalJpeg malware detection visualization">
+                    </div>
+                    <div class="project-content">
+                        <h3>MalJpeg</h3>
+                        <p>Deep learning-based malware detection framework converting malicious binaries into RGB imagery to identify obfuscated threats and improve SOC response times.</p>
+                        <div class="skill-tags">
+                            <span class="tag">Computer Vision</span>
+                            <span class="tag">Security</span>
+                            <span class="tag">Deep Learning</span>
+                        </div>
+                        <a href="https://github.com/rahulsingh1397/MalJPEG" class="project-link" target="_blank" rel="noopener noreferrer">View Project →</a>
                     </div>
                 </div>
             </div>
@@ -1148,7 +1463,7 @@
                 </form>
                 <div class="contact-info">
                     <div class="contact-item">
-                        <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit;">
+                        <a href="https://github.com/rahulsingh1397" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit;">
                             <svg height="48" aria-hidden="true" viewBox="0 0 16 16" version="1.1" width="48" style="fill: #00f5ff; margin-bottom: 0.5rem;">
                                 <path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"></path>
                             </svg>
@@ -1236,7 +1551,7 @@
             './models/robotic_eye.glb',
             (gltf) => {
                 const model = gltf.scene;
-                model.scale.set(65, 65, 65);
+                model.scale.set(50, 50, 50);
                 model.position.set(0, 0, 0);
 
                 // Apply materials similar to reference
@@ -1248,7 +1563,7 @@
                     // Lens material
                     if (child.name === 'Lens_Low_Poly_0') {
                         materials.forEach((mat) => {
-                            mat.transparent = true;
+                            mat.transparent = false;
                             mat.opacity = 0.3;
                             mat.depthWrite = false;
                             mat.metalness = 0.1;
@@ -1266,7 +1581,7 @@
                             mat.map = null;
                             mat.emissiveMap = null;
                             mat.emissive = new THREE.Color(0x0080ff); // Blue #0080ff
-                            mat.color = new THREE.Color('#000000'); // Black base - only emissive will show
+                            mat.color = new THREE.Color('#252525'); // Black base - only emissive will show
                             mat.emissiveIntensity = 3000.0;
                             mat.metalness = 0.0; // Non-metallic for pure emissive glow
                             mat.roughness = 1.0; // Rough for diffuse appearance
@@ -1286,13 +1601,13 @@
                                 mat.color = new THREE.Color('#252525');
                                 break;
                             case 'Metal':
-                                mat.color = new THREE.Color('#dadada');
+                                mat.color = new THREE.Color('#C1C1C1');
                                 break;
                             case 'Black_Plastic':
                                 mat.color = new THREE.Color('#3e3e3e');
                                 break;
                             case 'Metal.001':
-                                mat.color = new THREE.Color('#e7e7e7');
+                                mat.color = new THREE.Color('#C1C1C1');
                                 break;
                             case 'Copper':
                                 mat.color = new THREE.Color('#fad0c0');
@@ -1463,7 +1778,8 @@
         const uploadStatus = document.getElementById('uploadStatus');
         const projectsGrid = document.getElementById('projectsGrid');
 
-        fileInput.addEventListener('change', async (e) => {
+        if (fileInput) {
+            fileInput.addEventListener('change', async (e) => {
             const files = e.target.files;
             if (files.length === 0) return;
 
@@ -1486,7 +1802,8 @@
             setTimeout(() => {
                 uploadStatus.textContent = '';
             }, 3000);
-        });
+            });
+        }
 
         function parseReadme(content, filename) {
             // Extract project information from README
@@ -1608,6 +1925,86 @@
             });
         });
 
+        // Section title mouse tracking effect - for both hero title and section titles
+        function setupTitleMouseTracking(selector) {
+            const title = document.querySelector(selector);
+            if (title) {
+                document.addEventListener('mousemove', (e) => {
+                    const rect = title.getBoundingClientRect();
+                    let x = ((e.clientX - rect.left) / rect.width) * 100;
+                    let y = ((e.clientY - rect.top) / rect.height) * 100;
+                    
+                    // Clamp values to keep spotlight within text boundaries at all times
+                    x = Math.max(0, Math.min(100, x));
+                    y = Math.max(0, Math.min(100, y));
+                    
+                    title.style.setProperty('--mouse-x', `${x}%`);
+                    title.style.setProperty('--mouse-y', `${y}%`);
+                });
+            }
+        }
+
+        // Setup tracking for hero title
+        setupTitleMouseTracking('.hero-title');
+        
+        // Setup tracking for section titles
+        document.querySelectorAll('.section-title').forEach(title => {
+            setupTitleMouseTracking(`#${title.closest('section').id} .section-title`);
+        });
+
+        // Button hover effect for primary button
+        const btnPrimary = document.querySelector('.btn-primary');
+        if (btnPrimary) {
+            // Set initial position
+            btnPrimary.style.setProperty('--spotlight-x', '50%');
+            btnPrimary.style.setProperty('--spotlight-y', '50%');
+            
+            // Handle mouse movement
+            const handleMouseMove = (e) => {
+                const rect = btnPrimary.getBoundingClientRect();
+                
+                // Calculate position as percentage (0-100) relative to the button
+                let x = ((e.clientX - rect.left) / rect.width) * 100;
+                let y = ((e.clientY - rect.top) / rect.height) * 100;
+                
+                // Clamp values to keep the spotlight within the button
+                x = Math.max(0, Math.min(100, x));
+                y = Math.max(0, Math.min(100, y));
+                
+                // Update CSS variables for spotlight position
+                btnPrimary.style.setProperty('--spotlight-x', `${x}%`);
+                btnPrimary.style.setProperty('--spotlight-y', `${y}%`);
+                
+                // Slightly increase opacity when hovering
+                btnPrimary.style.setProperty('--spotlight-opacity', '0.6');
+            };
+            
+            // Reset to center and lower opacity when mouse leaves
+            const handleMouseLeave = () => {
+                btnPrimary.style.setProperty('--spotlight-x', '50%');
+                btnPrimary.style.setProperty('--spotlight-y', '50%');
+                btnPrimary.style.setProperty('--spotlight-opacity', '0.4');
+            };
+            
+            // Add event listeners
+            btnPrimary.addEventListener('mousemove', handleMouseMove);
+            btnPrimary.addEventListener('mouseleave', handleMouseLeave);
+            
+            // Clean up event listeners if the button is removed from DOM
+            // This prevents memory leaks in single-page applications
+            const cleanup = () => {
+                btnPrimary.removeEventListener('mousemove', handleMouseMove);
+                btnPrimary.removeEventListener('mouseleave', handleMouseLeave);
+            };
+            
+            // Optional: Add a cleanup function if needed
+            // For example, if this is a single-page application
+            // and the button might be removed from the DOM
+            if (typeof window !== 'undefined') {
+                window.addEventListener('beforeunload', cleanup);
+            }
+        }
+
         // Form submission
         function handleSubmit(e) {
             e.preventDefault();
@@ -1616,7 +2013,7 @@
         }
 
         // Initialize with default project if no files uploaded
-        if (projectsGrid.children.length === 1) {
+        if (projectsGrid && projectsGrid.children.length === 1) {
             // Keep the default project
         }
 
@@ -1629,17 +2026,68 @@
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('reveal', 'active');
+                    
+                    // Animate stat circles if they're stat items
+                    if (entry.target.classList.contains('stat-item')) {
+                        // Small delay to ensure element is visible
+                        setTimeout(() => {
+                            animateStatCircle(entry.target);
+                        }, 100);
+                    }
                 } 
             });
         }, {
-            threshold: 0.15,
-            rootMargin: '0px 0px -50px 0px'
+            threshold: 0.1,  // Lower threshold for earlier trigger
+            rootMargin: '0px 0px -20px 0px'
         });
 
         revealElements.forEach(el => {
             el.classList.add('reveal');
             revealObserver.observe(el);
         });
+
+        // ============================================
+        // ANIMATED STAT CIRCLES AND COUNTERS
+        // ============================================
+        function animateStatCircle(statItem) {
+            const circle = statItem.querySelector('.stat-circle-progress');
+            const numberElement = statItem.querySelector('.stat-number');
+            
+            if (!circle || !numberElement) return;
+            
+            // Check if already animated
+            if (numberElement.dataset.animated === 'true') return;
+            numberElement.dataset.animated = 'true';
+            
+            // Animate circle
+            circle.classList.add('animated');
+            
+            // Animate counter
+            const targetNumber = parseInt(numberElement.getAttribute('data-count'));
+            const duration = 1500; // 1.5 seconds for faster animation
+            const startTime = performance.now();
+            
+            function updateCounter(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                // Easing function for smooth animation
+                const easeOutCubic = 1 - Math.pow(1 - progress, 3);
+                const currentNumber = Math.floor(targetNumber * easeOutCubic);
+                
+                numberElement.textContent = currentNumber + '+';
+                
+                if (progress < 1) {
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    numberElement.textContent = targetNumber + '+';
+                }
+            }
+            
+            // Start animation immediately
+            numberElement.textContent = '0+';
+            requestAnimationFrame(updateCounter);
+        }
 
         // ============================================
         // PARALLAX EFFECT FOR PARTICLES
@@ -1653,21 +2101,52 @@
         });
 
         // ============================================
-        // THEME TOGGLE (Dark Mode Only for Now)
+        // THEME TOGGLE (DISABLED)
         // ============================================
-        const themeToggle = document.createElement('div');
+        // Temporarily disabled - uncomment to enable theme toggle
+        /*
+        const themeToggle = document.createElement('button');
         themeToggle.className = 'theme-toggle';
-        themeToggle.innerHTML = '🌙';
-        themeToggle.title = 'Theme Toggle';
+        themeToggle.innerHTML = `
+            <span class="moon-icon">🌙</span>
+            <span class="sun-icon">☀️</span>
+        `;
+        themeToggle.title = 'Toggle Theme';
+        themeToggle.setAttribute('aria-label', 'Toggle dark/light mode');
         document.body.appendChild(themeToggle);
 
-        themeToggle.addEventListener('click', () => {
-            // Placeholder for future light mode implementation
+        // Check for saved theme preference or use system preference
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+        const currentTheme = localStorage.getItem('theme');
+
+        // Set initial theme
+        if (currentTheme === 'dark' || (!currentTheme && prefersDarkScheme.matches)) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        }
+
+        // Toggle theme function
+        function toggleTheme() {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+            localStorage.setItem('theme', isDark ? 'light' : 'dark');
+            
+            // Add animation
             themeToggle.style.transform = 'scale(1.2) rotate(360deg)';
             setTimeout(() => {
                 themeToggle.style.transform = 'scale(1) rotate(0deg)';
             }, 300);
+        }
+
+        // Add click event
+        themeToggle.addEventListener('click', toggleTheme);
+
+        // Listen for system theme changes
+        prefersDarkScheme.addListener((e) => {
+            if (!localStorage.getItem('theme')) {
+                document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+            }
         });
+        */
 
         // ============================================
         // PROJECT FILTERING
@@ -1765,7 +2244,7 @@
         // SKILL PROGRESS BARS
         // ============================================
         const skillCards = document.querySelectorAll('.skill-card');
-        const skillLevels = [95, 90, 85, 88, 92, 87]; // Proficiency levels for each skill
+        const skillLevels = [95, 90, 85, 88, 92, 87, 83]; // Proficiency levels for each skill (7 skills now)
         
         skillCards.forEach((card, index) => {
             const progressContainer = document.createElement('div');
