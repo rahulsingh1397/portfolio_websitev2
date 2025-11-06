@@ -55,21 +55,19 @@
         }
 
         .work-with-me-btn {
-            padding: 0.8rem 1.8rem;
-            background: linear-gradient(135deg, #ff4444, #ff6b6b);
+            background: linear-gradient(135deg, var(--electric-purple), var(--primary-blue));
             color: #fff;
+            padding: 0.8rem 2rem;
             border-radius: 50px;
             text-decoration: none;
             font-weight: 600;
-            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(255, 68, 68, 0.3);
-            white-space: nowrap;
-            position: relative;
-            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
         }
 
         .work-with-me-btn::before {
@@ -92,8 +90,8 @@
 
         .work-with-me-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 25px rgba(255, 68, 68, 0.5);
-            background: linear-gradient(135deg, #ff5555, #ff7b7b);
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.6);
+            background: linear-gradient(135deg, #9333ea, var(--electric-purple));
         }
 
         .work-with-me-btn span,
@@ -103,8 +101,8 @@
         }
 
         .work-with-me-btn svg {
-            width: 16px;
-            height: 16px;
+            width: 24px;
+            height: 24px;
             transition: transform 0.3s ease;
         }
 
@@ -170,8 +168,8 @@
 
         .model-container {
             position: absolute;
-            width: 500px;
-            height: 500px;
+            width: clamp(300px, 35vw, 500px);
+            height: clamp(300px, 35vw, 500px);
             top: 80px;
             left: 50%;
             transform: translateX(-50%);
@@ -184,7 +182,7 @@
         }
 
         .hero-content {
-            margin-top: 350px;
+            margin-top: 420px; /* Increased from 350px */
         }
 
         .particles {
@@ -271,18 +269,14 @@
             border-radius: 2px;
             pointer-events: none;
             z-index: -1;
-            animation: pulse 2s infinite alternate;
+            transition: box-shadow 0.3s ease, opacity 0.3s ease;
+            box-shadow: 0 0 5px 2px rgba(0, 245, 255, 0.1);
+            opacity: 0.6;
         }
         
-        @keyframes pulse {
-            0% {
-                box-shadow: 0 0 5px 2px rgba(0, 245, 255, 0.1);
-                opacity: 0.6;
-            }
-            100% {
-                box-shadow: 0 0 20px 8px rgba(0, 245, 255, 0.3);
-                opacity: 1;
-            }
+        .chalk-border.bright::after {
+            box-shadow: 0 0 20px 8px rgba(0, 245, 255, 0.8);
+            opacity: 1;
         }
 
         .chalk-border::before {
@@ -297,18 +291,9 @@
             animation: borderFlicker 2s infinite alternate;
         }
 
-        @keyframes borderFlicker {
+@keyframes borderFlicker {
             0% { opacity: 0.5; }
             100% { opacity: 1; }
-        }
-
-        .hero-subtitle {
-            font-size: 1.2rem;
-            color: #00f5ff;
-            margin-bottom: 1.5rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            animation: fadeInUp 1s ease 0.2s both;
         }
 
         .hero-title {
@@ -316,7 +301,7 @@
             font-weight: 800;
             margin-bottom: 1.5rem;
             line-height: 1.2;
-            background: radial-gradient(circle 500px at var(--mouse-x, 50%) var(--mouse-y, 50%), #fff, transparent 50%), linear-gradient(135deg, #00f5ff, #0080ff);
+            background: radial-gradient(circle 500px at var(--mouse-x, 50%) var(--mouse-y, 50%), #fff, transparent 50%), linear-gradient(135deg, var(--primary-cyan), var(--primary-blue));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -327,7 +312,7 @@
 
         .hero-description {
             font-size: 1.3rem;
-            color: #b0b0b0;
+            color: var(--text-secondary);
             margin-bottom: 2.5rem;
             max-width: 800px;
             margin-left: auto;
@@ -410,6 +395,20 @@
             transform: translateY(-3px);
             box-shadow: 0 15px 40px rgba(0, 245, 255, 0.5);
         }
+
+        /* Phone icon ring animation */
+        @keyframes ring {
+            0%, 100% { transform: rotate(0deg); }
+            10% { transform: rotate(-15deg); }
+            20% { transform: rotate(15deg); }
+            30% { transform: rotate(-15deg); }
+            40% { transform: rotate(15deg); }
+            50% { transform: rotate(0deg); }
+        }
+
+        #bookCallBtn:hover .phone-icon {
+            animation: ring 0.8s ease-in-out;
+        }
         
         .btn-primary > * {
             position: relative;
@@ -456,7 +455,7 @@
 
         .section-subtitle {
             text-align: center;
-            color: #b0b0b0;
+            color: var(--text-secondary);
             font-size: 1.2rem;
             margin-bottom: 3rem;
         }
@@ -603,35 +602,6 @@
             transform: scale(1.05);
         }
 
-        .project-content {
-            padding: 2rem;
-        }
-
-        .project-content h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: #00f5ff;
-        }
-
-        .project-content p {
-            color: #b0b0b0;
-            line-height: 1.6;
-            margin-bottom: 1.5rem;
-        }
-
-        .project-link {
-            display: inline-block;
-            margin-top: 1rem;
-            color: #00f5ff;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .project-link:hover {
-            transform: translateX(5px);
-            text-shadow: 0 0 10px rgba(0, 245, 255, 0.5);
-        }
 
         /* Contact Section */
         #contact {
@@ -717,11 +687,11 @@
         /* Skill Progress Bars */
         .skill-progress-bar {
             height: 100%;
-            background: linear-gradient(90deg, #00f5ff, #0080ff);
+            background: linear-gradient(90deg, var(--success-green), var(--primary-cyan));
             border-radius: 10px;
             width: 0;
             transition: width 1.5s ease;
-            box-shadow: 0 0 20px rgba(0, 245, 255, 0.5);
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
         }
 
         .skill-progress-bar.animate {
@@ -730,35 +700,66 @@
 
         @keyframes progressGlow {
             0%, 100% {
-                box-shadow: 0 0 10px rgba(0, 245, 255, 0.5);
+                box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
             }
             50% {
-                box-shadow: 0 0 20px rgba(0, 245, 255, 0.8);
+                box-shadow: 0 0 20px rgba(16, 185, 129, 0.8);
             }
         }
 
-        /* Theme Variables */
+        /* Theme Variables - Enhanced Cyber Tech Palette */
         :root {
-            /* Light Theme */
-            --bg-primary: #ffffff;
-            --bg-secondary: #f8f9fa;
-            --text-primary: #333333;
-            --text-secondary: #666666;
+            /* Primary Colors */
+            --primary-cyan: #00f5ff;
+            --primary-blue: #0080ff;
+            --electric-purple: #8B5CF6;
+            
+            /* Backgrounds */
+            --bg-darkest: #0a0a0a;
+            --bg-dark: #1a1a1a;
+            --bg-elevated: #242424;
+            
+            /* Accents & States */
+            --success-green: #10b981;
+            --warning-amber: #f59e0b;
+            --error-red: #ef4444;
+            
+            /* Text */
+            --text-primary: #f0f0f0;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+            
+            /* Legacy compatibility */
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #1a1a1a;
             --accent: #0080ff;
             --accent-light: #00f5ff;
-            --spotlight-color: rgba(255, 255, 150, 0.8); /* Light yellow for light mode */
-            --shadow: rgba(0, 0, 0, 0.1);
-            --card-bg: #ffffff;
+            --spotlight-color: rgba(255, 255, 150, 0.8);
+            --shadow: rgba(0, 0, 0, 0.3);
+            --card-bg: #1a1a1a;
         }
 
         [data-theme="dark"] {
-            --bg-primary: #0a0a0a;
-            --bg-secondary: #1a1a1a;
+            --primary-cyan: #00f5ff;
+            --primary-blue: #0080ff;
+            --electric-purple: #8B5CF6;
+            --bg-darkest: #0a0a0a;
+            --bg-dark: #1a1a1a;
+            --bg-elevated: #242424;
+            --success-green: #10b981;
+            --warning-amber: #f59e0b;
             --text-primary: #f0f0f0;
-            --text-secondary: #b0b0b0;
-            --spotlight-color: rgba(255, 255, 255, 0.4); /* White for dark mode */
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+            --spotlight-color: rgba(255, 255, 255, 0.4);
             --shadow: rgba(0, 0, 0, 0.3);
             --card-bg: #1a1a1a;
+            
+            /* Legacy */
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #1a1a1a;
+            --accent: #0080ff;
+            --accent-light: #00f5ff;
         }
 
         /* Apply theme colors */
@@ -766,7 +767,11 @@
             background-color: var(--bg-primary);
             color: var(--text-primary);
             transition: background-color 0.3s ease, color 0.3s ease;
+            position: relative;
+            overflow-x: hidden;
         }
+
+        
 
         /* Theme Toggle */
         .theme-toggle {
@@ -935,8 +940,8 @@
         .skill-card:hover {
             transform: translateY(-10px);
             box-shadow: 0 15px 40px rgba(0, 245, 255, 0.3);
-            background: rgba(20, 20, 20, 0.6);
-            border-color: rgba(0, 245, 255, 0.3);
+            background: var(--bg-elevated);
+            border-color: var(--primary-cyan);
         }
 
         .skill-icon {
@@ -950,13 +955,15 @@
             color: #00f5ff;
             margin-bottom: 0.5rem;
             font-size: 1.3rem;
+            text-align: center;
         }
 
         .skill-card p {
-            color: #b0b0b0;
+            color: var(--text-secondary);
             line-height: 1.6;
             margin-bottom: 1rem;
             flex-grow: 1;
+            text-align: center;
         }
 
         /* Projects Grid with Glassmorphism */
@@ -1001,6 +1008,156 @@
         .tag:hover {
             background: rgba(0, 245, 255, 0.2);
             border-color: #00f5ff;
+        }
+
+        /* Calendar Modal Styles */
+        .calendar-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .calendar-modal.show {
+            display: flex;
+        }
+
+        .calendar-content {
+            background: #1a1a1a;
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 900px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 2px solid rgba(0, 245, 255, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 245, 255, 0.3);
+            position: relative;
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .calendar-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #00f5ff;
+            font-size: 2rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .calendar-close:hover {
+            background: rgba(0, 245, 255, 0.2);
+            transform: rotate(90deg);
+        }
+
+        .calendar-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .calendar-header h2 {
+            color: #00f5ff;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .calendar-header p {
+            color: #b0b0b0;
+        }
+
+        .calendar-iframe {
+            width: 100%;
+            height: 600px;
+            border: none;
+            border-radius: 10px;
+        }
+
+        /* Project Card Improvements */
+        .project-card {
+            background: rgba(20, 20, 20, 0.6);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 245, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 245, 255, 0.3);
+            border-color: rgba(0, 245, 255, 0.5);
+        }
+
+        .project-content {
+            padding: 2rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .project-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #00f5ff;
+        }
+
+        .project-content p {
+            color: #b0b0b0;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .project-link {
+            display: inline-block;
+            margin-top: auto;
+            padding: 0.8rem 2rem;
+            background: linear-gradient(135deg, rgba(0, 245, 255, 0.1), rgba(0, 128, 255, 0.1));
+            border: 2px solid rgba(0, 245, 255, 0.3);
+            border-radius: 50px;
+            color: #00f5ff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .project-link:hover {
+            background: linear-gradient(135deg, rgba(0, 245, 255, 0.2), rgba(0, 128, 255, 0.2));
+            border-color: #00f5ff;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 245, 255, 0.4);
         }
 
         /* Responsive */
@@ -1048,14 +1205,14 @@
                 flex-direction: column;
             }
 
-            .model-container {
-                width: 300px;
-                height: 300px;
-                top: 100px;
-            }
 
             .hero-content {
                 margin-top: 250px;
+            }
+
+            .model-container {
+                width: clamp(250px, 80vw, 400px);
+                height: clamp(250px, 80vw, 400px);
             }
 
             .section-title {
@@ -1075,10 +1232,84 @@
             .projects-grid {
                 grid-template-columns: 1fr;
             }
+
+            .calendar-content {
+                width: 95%;
+                padding: 1.5rem;
+            }
+
+            .calendar-iframe {
+                height: 500px;
+            }
+
+            .project-content {
+                padding: 1.5rem;
+            }
+        }
+
+        /* Enhanced Mobile Optimization */
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+            }
+
+            .chalk-border {
+                font-size: 0.7rem;
+                padding: 0.4rem 1rem;
+                letter-spacing: 2px;
+            }
+
+            .work-with-me-btn svg {
+                width: 20px;
+                height: 20px;
+            }
+        }
+
+        /* Touch Device Optimizations */
+        @media (hover: none) and (pointer: coarse) {
+            .btn:hover,
+            .project-card:hover,
+            .skill-card:hover,
+            .stat-item:hover {
+                transform: none;
+            }
+
+            .btn:active {
+                transform: scale(0.95);
+            }
+
+            .project-card:active,
+            .skill-card:active {
+                transform: translateY(-5px);
+            }
+        }
+
+        /* Improve tap targets for mobile */
+        @media (max-width: 768px) {
+            .nav-links a,
+            .btn,
+            .project-link,
+            .filter-btn {
+                min-height: 44px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+            }
         }
     </style>
 </head>
 <body>
+    
+
     <!-- Navigation -->
     <nav id="navbar">
         <div class="nav-container">
@@ -1089,6 +1320,7 @@
                     <li><a href="#about">About</a></li>
                     <li><a href="#skills">Skills</a></li>
                     <li><a href="#projects">Projects</a></li>
+                    <li><a href="blog.html">Blog</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </div>
@@ -1132,7 +1364,10 @@
     <section id="about">
         <div class="section-container">
             <h2 class="section-title">About Me</h2>
-            <p class="section-subtitle">Passionate about turning complex data into simple solutions</p>
+            <!-- ANN 3D Model Container -->
+            <div class="ann-model-container" style="width: 100%; max-width: 600px; height: 250px; margin: 2rem auto 1rem auto; position: relative; border: 1px solid rgba(0, 245, 200, 0.2); border-radius: 1px; background: rgba(0, 0, 0, 0.1); z-index: 1;">
+                <canvas id="annCanvas" style="width: 100%; height: 100%; display: block; position: relative; z-index: 2; border-radius: 8px;"></canvas>
+            </div>
             <div class="about-content">
                 <div class="about-text">
                     <p>
@@ -1440,6 +1675,86 @@
         </div>
     </section>
 
+    <!-- Blog Preview Section -->
+    <section id="blog-preview" style="padding: 80px 5%; background: linear-gradient(180deg, #0a0a0a 0%, #0f0f0f 100%);">
+        <div class="section-container">
+            <h2 class="section-title">Latest Insights</h2>
+            <p class="section-subtitle">Exploring Data Science, AI, and Machine Learning</p>
+            
+            <div class="blog-preview-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2.5rem; margin-top: 3rem;">
+                <!-- Blog Preview Card 1 -->
+                <div class="blog-preview-card" style="background: rgba(20, 20, 20, 0.6); backdrop-filter: blur(20px); border-radius: 20px; overflow: hidden; border: 1px solid rgba(0, 245, 255, 0.1); transition: all 0.4s ease; cursor: pointer;" onmouseover="this.style.transform='translateY(-10px)'; this.style.borderColor='rgba(0, 245, 255, 0.5)'; this.style.boxShadow='0 15px 40px rgba(0, 245, 255, 0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(0, 245, 255, 0.1)'; this.style.boxShadow='0 8px 32px rgba(0, 0, 0, 0.3)';">
+                    <div style="width: 100%; height: 200px; background: linear-gradient(135deg, #00f5ff, #0080ff); display: flex; align-items: center; justify-content: center; font-size: 3.5rem;">
+                        📊
+                    </div>
+                    <div style="padding: 2rem;">
+                        <div style="display: flex; gap: 1rem; margin-bottom: 1rem; font-size: 0.9rem; color: #9ca3af;">
+                            <span>📅 Coming Soon</span>
+                            <span>⏱️ 5 min read</span>
+                        </div>
+                        <h3 style="font-size: 1.4rem; margin-bottom: 1rem; color: #00f5ff;">The Future of AI in Data Science</h3>
+                        <p style="color: #b0b0b0; line-height: 1.6; margin-bottom: 1.5rem;">Exploring how artificial intelligence is revolutionizing data analysis and predictive modeling...</p>
+                        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem;">
+                            <span class="tag">AI</span>
+                            <span class="tag">Machine Learning</span>
+                            <span class="tag">Data Science</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Blog Preview Card 2 -->
+                <div class="blog-preview-card" style="background: rgba(20, 20, 20, 0.6); backdrop-filter: blur(20px); border-radius: 20px; overflow: hidden; border: 1px solid rgba(0, 245, 255, 0.1); transition: all 0.4s ease; cursor: pointer;" onmouseover="this.style.transform='translateY(-10px)'; this.style.borderColor='rgba(0, 245, 255, 0.5)'; this.style.boxShadow='0 15px 40px rgba(0, 245, 255, 0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(0, 245, 255, 0.1)'; this.style.boxShadow='0 8px 32px rgba(0, 0, 0, 0.3)';">
+                    <div style="width: 100%; height: 200px; background: linear-gradient(135deg, #00f5ff, #0080ff); display: flex; align-items: center; justify-content: center; font-size: 3.5rem;">
+                        🤖
+                    </div>
+                    <div style="padding: 2rem;">
+                        <div style="display: flex; gap: 1rem; margin-bottom: 1rem; font-size: 0.9rem; color: #9ca3af;">
+                            <span>📅 Coming Soon</span>
+                            <span>⏱️ 8 min read</span>
+                        </div>
+                        <h3 style="font-size: 1.4rem; margin-bottom: 1rem; color: #00f5ff;">Building Scalable ML Pipelines</h3>
+                        <p style="color: #b0b0b0; line-height: 1.6; margin-bottom: 1.5rem;">Best practices for designing and deploying production-ready machine learning pipelines...</p>
+                        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem;">
+                            <span class="tag">MLOps</span>
+                            <span class="tag">DevOps</span>
+                            <span class="tag">Cloud</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Blog Preview Card 3 -->
+                <div class="blog-preview-card" style="background: rgba(20, 20, 20, 0.6); backdrop-filter: blur(20px); border-radius: 20px; overflow: hidden; border: 1px solid rgba(0, 245, 255, 0.1); transition: all 0.4s ease; cursor: pointer;" onmouseover="this.style.transform='translateY(-10px)'; this.style.borderColor='rgba(0, 245, 255, 0.5)'; this.style.boxShadow='0 15px 40px rgba(0, 245, 255, 0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(0, 245, 255, 0.1)'; this.style.boxShadow='0 8px 32px rgba(0, 0, 0, 0.3)';">
+                    <div style="width: 100%; height: 200px; background: linear-gradient(135deg, #00f5ff, #0080ff); display: flex; align-items: center; justify-content: center; font-size: 3.5rem;">
+                        ⚡
+                    </div>
+                    <div style="padding: 2rem;">
+                        <div style="display: flex; gap: 1rem; margin-bottom: 1rem; font-size: 0.9rem; color: #9ca3af;">
+                            <span>📅 Coming Soon</span>
+                            <span>⏱️ 6 min read</span>
+                        </div>
+                        <h3 style="font-size: 1.4rem; margin-bottom: 1rem; color: #00f5ff;">Automating Data Workflows</h3>
+                        <p style="color: #b0b0b0; line-height: 1.6; margin-bottom: 1.5rem;">Learn how to leverage automation for streamlining your data processing and analysis tasks...</p>
+                        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem;">
+                            <span class="tag">Automation</span>
+                            <span class="tag">n8n</span>
+                            <span class="tag">Workflows</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- View All Blogs Button -->
+            <div style="text-align: center; margin-top: 3rem;">
+                <a href="blog.html" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 0.8rem; padding: 1rem 2.5rem; font-size: 1.1rem; text-decoration: none;">
+                    View All Blogs
+                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="transition: transform 0.3s ease;">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
     <!-- Contact Section -->
     <section id="contact">
         <div class="section-container">
@@ -1447,19 +1762,24 @@
             <p class="section-subtitle">Let's discuss how data science can transform your business</p>
             <div class="contact-content">
                 <form class="contact-form" onsubmit="handleSubmit(event)">
-                    <div class="form-group">
+                    <div class="form-group floating">
+                        <input type="text" id="name" required placeholder=" ">
                         <label for="name">Name</label>
-                        <input type="text" id="name" placeholder="Your Name" required>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group floating">
+                        <input type="email" id="email" required placeholder=" ">
                         <label for="email">Email</label>
-                        <input type="email" id="email" placeholder="your.email@example.com" required>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group floating">
+                        <textarea id="message" required placeholder=" "></textarea>
                         <label for="message">Message</label>
-                        <textarea id="message" placeholder="Tell me about your project..." required></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
+                    <button type="submit" class="btn btn-primary" id="bookCallBtn" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.8rem;">
+                        <svg class="phone-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition: transform 0.3s ease;">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                        </svg>
+                        <span>Book a Call</span>
+                    </button>
                 </form>
                 <div class="contact-info">
                     <div class="contact-item">
@@ -1474,6 +1794,31 @@
             </div>
         </div>
     </section>
+
+    <!-- Calendar Modal -->
+    <div class="calendar-modal" id="calendarModal">
+        <div class="calendar-content">
+            <button class="calendar-close" id="closeCalendar" aria-label="Close calendar">&times;</button>
+            <div class="calendar-header">
+                <h2>Book a Clarity Call</h2>
+                <p>Select a date & time that works best for you</p>
+            </div>
+            <div class="calendar-iframe-container">
+                <!-- Placeholder for calendar integration (Calendly, Cal.com, or custom) -->
+                <div style="text-align: center; padding: 3rem; background: rgba(0, 245, 255, 0.05); border-radius: 10px; border: 2px dashed rgba(0, 245, 255, 0.3);">
+                    <h3 style="color: #00f5ff; margin-bottom: 1rem;">📅 Calendar Integration</h3>
+                    <p style="color: #b0b0b0; margin-bottom: 1.5rem;">This section will integrate with your preferred scheduling tool:</p>
+                    <ul style="list-style: none; padding: 0; color: #b0b0b0; text-align: left; max-width: 400px; margin: 0 auto;">
+                        <li style="margin-bottom: 0.5rem;">✓ Calendly</li>
+                        <li style="margin-bottom: 0.5rem;">✓ Cal.com</li>
+                        <li style="margin-bottom: 0.5rem;">✓ Google Calendar</li>
+                        <li style="margin-bottom: 0.5rem;">✓ Custom n8n Workflow</li>
+                    </ul>
+                    <p style="color: #00f5ff; margin-top: 1.5rem; font-size: 0.9rem;">Replace this placeholder with your booking widget embed code</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer>
@@ -1492,6 +1837,8 @@
         import * as THREE from 'three';
         import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
         import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+        
 
         // Initialize 3D Scene for Robotic Eye
         const container = document.querySelector('.model-container');
@@ -1539,6 +1886,7 @@
         controls.enableDamping = true;
         controls.enableZoom = false;
         controls.enablePan = false;
+        controls.enableRotate = false; // Prevent click-drag rotation; hover logic handles movement
         controls.minDistance = controls.maxDistance = camera.position.length();
 
         // Load GLTF Model
@@ -1644,7 +1992,7 @@
 
                 roboticEyeModel = model;
                 scene.add(model);
-                console.log('3D Model loaded successfully');
+                console.log('Robotic Eye Model loaded successfully');
             },
             undefined,
             (error) => {
@@ -1653,6 +2001,7 @@
                 createProceduralEye();
             }
         );
+
 
         // Fallback: Create procedural eye if model fails to load
         function createProceduralEye() {
@@ -1722,22 +2071,35 @@
         const baseRotationX = -Math.PI / 10; // Tilt up to look at center
         const baseRotationY = 0;
         
-        // Mouse tracking - relative to model container (centerpoint is the model)
+        // Mouse tracking - for robotic eye (with touch support)
         const onMouseMove = (event) => {
-            // Get container bounds
             const rect = container.getBoundingClientRect();
-            
-            // Calculate mouse position relative to container center
-            // When mouse is at container center, mouseX and mouseY will be 0
             const mouseX = ((event.clientX - rect.left) / rect.width) * 2 - 1;
             const mouseY = -((event.clientY - rect.top) / rect.height) * 2 + 1;
             
-            const roboticEyeModel = scene.children[scene.children.length - 1];
-            roboticEyeModel.rotation.y = baseRotationY + THREE.MathUtils.clamp(mouseX * Math.PI / 2.5, -Math.PI / 2.5, Math.PI / 2.5);
-            roboticEyeModel.rotation.x = baseRotationX + THREE.MathUtils.clamp(-mouseY * Math.PI / 2.5, -Math.PI / 2.5, Math.PI / 2.5);
+            if (roboticEyeModel) {
+                roboticEyeModel.rotation.y = baseRotationY + THREE.MathUtils.clamp(mouseX * Math.PI / 2.5, -Math.PI / 2.5, Math.PI / 2.5);
+                roboticEyeModel.rotation.x = baseRotationX + THREE.MathUtils.clamp(-mouseY * Math.PI / 2.5, -Math.PI / 2.5, Math.PI / 2.5);
+            }
+        };
+
+        // Touch tracking for robotic eye (mobile/tablet)
+        const onTouchMove = (event) => {
+            if (event.touches.length > 0) {
+                const touch = event.touches[0];
+                const rect = container.getBoundingClientRect();
+                const touchX = ((touch.clientX - rect.left) / rect.width) * 2 - 1;
+                const touchY = -((touch.clientY - rect.top) / rect.height) * 2 + 1;
+                
+                if (roboticEyeModel) {
+                    roboticEyeModel.rotation.y = baseRotationY + THREE.MathUtils.clamp(touchX * Math.PI / 2.5, -Math.PI / 2.5, Math.PI / 2.5);
+                    roboticEyeModel.rotation.x = baseRotationX + THREE.MathUtils.clamp(-touchY * Math.PI / 2.5, -Math.PI / 2.5, Math.PI / 2.5);
+                }
+            }
         };
 
         window.addEventListener('mousemove', onMouseMove);
+        window.addEventListener('touchmove', onTouchMove, { passive: true });
 
         // Animation loop
         function animate() {
@@ -1760,6 +2122,230 @@
         
         window.addEventListener('resize', handleResize);
         handleResize();
+
+        // ============================================
+        // ANN MODEL - About Me Section
+        // ============================================
+        const annContainer = document.querySelector('.ann-model-container');
+        const annCanvas = document.getElementById('annCanvas');
+        
+        console.log('ANN Container found:', !!annContainer);
+        console.log('ANN Canvas found:', !!annCanvas);
+        console.log('ANN Container in DOM:', document.contains(annContainer));
+        console.log('ANN Canvas in DOM:', document.contains(annCanvas));
+        console.log('ANN Container dimensions:', annContainer.offsetWidth, 'x', annContainer.offsetHeight);
+        
+        if (annContainer && annCanvas) {
+            console.log('Initializing ANN Three.js scene...');
+            const annScene = new THREE.Scene();
+            
+            // Camera for ANN model - matching reference image (side view angle)
+            const annCamera = new THREE.PerspectiveCamera(
+                50, 
+                annContainer.offsetWidth / annContainer.offsetHeight, 
+                0.1, 
+                1000
+            );
+            // Position camera for horizontal side view like reference image
+            annCamera.position.set(35, 10, 1); // Side view position
+            annCamera.lookAt(10, 12, 5); // Look at center of model
+            
+            // Renderer for ANN
+            const annRenderer = new THREE.WebGLRenderer({ 
+                canvas: annCanvas, 
+                alpha: true, 
+                antialias: true 
+            });
+            const annWidth = annContainer.offsetWidth;
+            const annHeight = annContainer.offsetHeight;
+            annRenderer.setSize(annWidth, annHeight);
+            annRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            annRenderer.setClearColor(0x000000, 0); // Transparent background
+            
+            console.log('ANN Canvas initialized:', annWidth, 'x', annHeight);
+            console.log('ANN Renderer created with transparent background');
+            
+            // Lighting for ANN - positioned on opposite side
+            const annAmbient = new THREE.AmbientLight(0xffffff, 0.5);
+            annScene.add(annAmbient);
+            
+            const annDirectional = new THREE.DirectionalLight(0xffffff, 2.5);
+            annDirectional.position.set(0, 10, -5); // Flipped Z from 5 to -5
+            annScene.add(annDirectional);
+            
+            const annBackLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            annBackLight.position.set(0, -5, 5); // Flipped Z from -5 to 5
+            annScene.add(annBackLight);
+            
+            const annPointLight = new THREE.PointLight(0xffffff, 1.2, 100);
+            annPointLight.position.set(0, 8, 0); // Kept at center
+            annScene.add(annPointLight);
+            
+            const annSpotlight = new THREE.SpotLight(0xffffff, 2, 20, Math.PI / 6, 0.5, 2);
+            annSpotlight.position.set(0, 10, -3); // Flipped Z from 3 to -3
+            annSpotlight.target.position.set(0, 0.58, -0.1); // Flipped Z from 0.1 to -0.1
+            annScene.add(annSpotlight);
+            annScene.add(annSpotlight.target);
+            
+            // OrbitControls for ANN
+            const annControls = new OrbitControls(annCamera, annRenderer.domElement);
+            annControls.enableDamping = false;
+            annControls.enableZoom = false;
+            annControls.enablePan = false;
+            annControls.autoRotate = false; // Keep model static unless controls enabled
+            annControls.enabled = false; // Disable orbit controls to prevent manual rotation
+            
+            // Load ANN Model
+            let annModel = null;
+            const annLoader = new GLTFLoader();
+            
+            // Test cube removed - model is loading successfully
+            
+            console.log('Starting ANN model load from: ./models/artificial_neural_network_ann/scene.gltf');
+            
+            annLoader.load(
+                './models/artificial_neural_network_ann/scene.gltf',
+                (gltf) => {
+                    console.log('ANN Model GLTF loaded successfully, processing...');
+                    annModel = gltf.scene;
+                    
+                    // Center and scale the model
+                    const box = new THREE.Box3().setFromObject(annModel);
+                    const size = new THREE.Vector3();
+                    box.getSize(size);
+                    const center = new THREE.Vector3();
+                    box.getCenter(center);
+                    annModel.position.sub(center);
+                    
+                    const maxDim = Math.max(size.x, size.y, size.z) || 1;
+                    const targetSize = 50.0; // 5x larger (was 10.0, now 50.0)
+                    const scale = targetSize / maxDim;
+                    annModel.scale.setScalar(scale);
+                    
+                    // Position model at origin
+                    annModel.position.set(20, 6, 12);
+                    
+                    console.log('  Original max dimension:', maxDim.toFixed(2));
+                    console.log('  Target size:', targetSize);
+                    console.log('  Applied scale:', scale.toFixed(4));
+                    
+                    // Apply website color palette (Cyan/Blue) - matching site theme
+                    annModel.traverse((child) => {
+                        if (child.isMesh) {
+                            const name = child.name.toLowerCase();
+                            console.log('  Found mesh:', child.name, '| Type:', child.geometry.type);
+                            
+                            // Hide base/platform meshes
+                            if (name.includes('base') || name.includes('plane') || name.includes('floor') || name.includes('ground') || name.includes('platform')) {
+                                child.visible = false;
+                                console.log('  ✗ Hidden base mesh:', child.name);
+                            } else {
+                                // Detect node vs edge based on geometry type or name
+                                // Spheres/Icosahedrons = nodes (glass/white), Cylinders/Lines = edges (cyan/blue)
+                                const geometryType = child.geometry.type.toLowerCase();
+                                const isNode = geometryType.includes('sphere') || 
+                                              geometryType.includes('icosahedron') || 
+                                              name.includes('node') || 
+                                              name.includes('sphere') ||
+                                              name.includes('ball') ||
+                                              name.includes('neuron');
+                                
+                                // Create MeshStandardMaterial with reduced density (wireframe option)
+                                const newMaterial = new THREE.MeshStandardMaterial({
+                                    side: THREE.DoubleSide,
+                                    wireframe: false, // Set to true for lower density mesh look
+                                    transparent: true
+                                });
+                                
+                                if (isNode) {
+                                    // Nodes: Cyan/Blue gradient from "Work with Me" button
+                                    newMaterial.color = new THREE.Color(0x00f5ff); // Cyan #00f5ff (website primary)
+                                    newMaterial.metalness = 0.6;
+                                    newMaterial.roughness = 0.3;
+                                    newMaterial.emissive = new THREE.Color(0x0080ff); // Blue #0080ff emissive glow
+                                    newMaterial.emissiveIntensity = 0.7; // Strong glow for nodes
+                                    newMaterial.opacity = 0.95; // Solid appearance
+                                    console.log('  ✓ Applied CYAN/BLUE node:', child.name);
+                                } else {
+                                    // Edges/Connections: White/Silver
+                                    newMaterial.color = new THREE.Color(0xFFFFFF); // Pure white
+                                    newMaterial.metalness = 0.8;
+                                    newMaterial.roughness = 0.2;
+                                    newMaterial.emissive = new THREE.Color(0x0080ff); // Subtle white glow
+                                    newMaterial.emissiveIntensity = 0.3;
+                                    newMaterial.opacity = 0.50; // Slightly transparent
+                                    console.log('  ✓ Applied WHITE edge:', child.name);
+                                }
+                                
+                                child.material = newMaterial;
+                                child.material.needsUpdate = true;
+                            }
+                        }
+                    });
+                    
+                    annScene.add(annModel);
+                    annControls.target.set(0, 0, 0); // Center point for navigation
+                    annControls.update();
+                    
+                    console.log('✓ ANN Model loaded and added to About Me section');
+                    console.log('  Model size:', size.x.toFixed(2), size.y.toFixed(2), size.z.toFixed(2));
+                    console.log('  Scale factor:', scale.toFixed(2));
+                    console.log('  Scene children:', annScene.children.length);
+                },
+                (progress) => {
+                    if (progress.total > 0) {
+                        const percent = (progress.loaded / progress.total * 100).toFixed(0);
+                        console.log('Loading ANN model... ' + percent + '%');
+                    }
+                },
+                (error) => {
+                    console.error('✗ Error loading ANN model:', error);
+                    console.error('  Error details:', error.message || error);
+                }
+            );
+            
+            // ANN Model Auto-Rotation Configuration
+            // Control rotation axis here:
+            const annRotationSpeed = 0.001; // Rotation speed (increase for faster, decrease for slower)
+            const annRotateX = false; // Set to true to rotate around X-axis (pitch)
+            const annRotateY = false;  // Set to true to rotate around Y-axis (yaw) - DEFAULT
+            const annRotateZ = true; // Set to true to rotate around Z-axis (roll)
+            
+            // Animation loop for ANN with rotation
+            function animateANN() {
+                requestAnimationFrame(animateANN);
+                
+                // Apply rotation if model is loaded
+                if (annModel) {
+                    if (annRotateX) annModel.rotation.x += annRotationSpeed;
+                    if (annRotateY) annModel.rotation.y += annRotationSpeed;
+                    if (annRotateZ) annModel.rotation.z += annRotationSpeed;
+                }
+                
+                annRenderer.render(annScene, annCamera);
+            }
+            animateANN();
+            
+            // Handle resize for ANN
+            function handleANNResize() {
+                const width = annContainer.offsetWidth;
+                const height = annContainer.offsetHeight;
+                annRenderer.setSize(width, height);
+                annCamera.aspect = width / height;
+                annCamera.updateProjectionMatrix();
+            }
+            
+            window.addEventListener('resize', handleANNResize);
+            handleANNResize();
+            
+            // Force immediate render for debugging
+            annRenderer.render(annScene, annCamera);
+            console.log('✓ Force rendered scene with test cube');
+        } else {
+            console.error('✗ ANN container or canvas not found!');
+            console.error('  Container:', annContainer);
+            console.error('  Canvas:', annCanvas);
+        }
 
         // Particle animation (reduced to 30 for performance)
         const particlesContainer = document.getElementById('particles');
@@ -2005,11 +2591,66 @@
             }
         }
 
-        // Form submission
+        // Form submission - now opens calendar modal
         function handleSubmit(e) {
             e.preventDefault();
-            alert('Thank you for your message! This is a demo form. In production, this would send your message.');
-            e.target.reset();
+            // Open calendar modal instead of showing alert
+            const calendarModal = document.getElementById('calendarModal');
+            if (calendarModal) {
+                calendarModal.classList.add('show');
+                document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            }
+        }
+
+        // Calendar modal controls
+        const calendarModal = document.getElementById('calendarModal');
+        const closeCalendar = document.getElementById('closeCalendar');
+        const bookCallBtn = document.getElementById('bookCallBtn');
+
+        if (closeCalendar) {
+            closeCalendar.addEventListener('click', () => {
+                calendarModal.classList.remove('show');
+                document.body.style.overflow = ''; // Restore scrolling
+            });
+        }
+
+        // Close modal when clicking outside
+        if (calendarModal) {
+            calendarModal.addEventListener('click', (e) => {
+                if (e.target === calendarModal) {
+                    calendarModal.classList.remove('show');
+                    document.body.style.overflow = '';
+                }
+            });
+        }
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && calendarModal && calendarModal.classList.contains('show')) {
+                calendarModal.classList.remove('show');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Illuminate "Machine Learning and AI" when cursor is in horizontal center of page
+        const chalkBorder = document.querySelector('.chalk-border');
+        if (chalkBorder) {
+            document.addEventListener('mousemove', (e) => {
+                const centerX = window.innerWidth / 2;
+                const mouseX = e.clientX;
+                
+                // Calculate horizontal distance from center (ignore vertical position)
+                const distanceX = Math.abs(mouseX - centerX);
+                
+                // Define threshold - illuminate when cursor is within 300px of horizontal center
+                const threshold = 300;
+                
+                if (distanceX < threshold) {
+                    chalkBorder.classList.add('bright');
+                } else {
+                    chalkBorder.classList.remove('bright');
+                }
+            });
         }
 
         // Initialize with default project if no files uploaded

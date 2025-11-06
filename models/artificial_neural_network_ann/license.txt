@@ -1,0 +1,11 @@
+Model Information:
+* title:	Artificial Neural Network (ANN)
+* source:	https://sketchfab.com/3d-models/artificial-neural-network-ann-32abf86ca5a4428c98561cadc5ce8945
+* author:	M.E (https://sketchfab.com/essabahootraza)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Artificial Neural Network (ANN)" (https://sketchfab.com/3d-models/artificial-neural-network-ann-32abf86ca5a4428c98561cadc5ce8945) by M.E (https://sketchfab.com/essabahootraza) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
