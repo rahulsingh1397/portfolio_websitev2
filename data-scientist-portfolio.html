@@ -1365,7 +1365,7 @@
         <div class="section-container">
             <h2 class="section-title">About Me</h2>
             <!-- ANN 3D Model Container -->
-            <div class="ann-model-container" style="width: 100%; max-width: 600px; height: 250px; margin: 2rem auto 1rem auto; position: relative; border: 1px solid rgba(0, 245, 200, 0.2); border-radius: 1px; background: rgba(0, 0, 0, 0.1); z-index: 1;">
+            <div class="ann-model-container" style="width: 100%; max-width: 600px; height: 250px; margin: 2rem auto 1rem auto; position: relative; background: transparent; z-index: 1;">
                 <canvas id="annCanvas" style="width: 100%; height: 100%; display: block; position: relative; z-index: 2; border-radius: 8px;"></canvas>
             </div>
             <div class="about-content">
@@ -2263,7 +2263,7 @@
                                     newMaterial.metalness = 0.6;
                                     newMaterial.roughness = 0.3;
                                     newMaterial.emissive = new THREE.Color(0x0080ff); // Blue #0080ff emissive glow
-                                    newMaterial.emissiveIntensity = 0.7; // Strong glow for nodes
+                                    newMaterial.emissiveIntensity = 1; // Strong glow for nodes
                                     newMaterial.opacity = 0.95; // Solid appearance
                                     console.log('  ✓ Applied CYAN/BLUE node:', child.name);
                                 } else {
@@ -2515,10 +2515,11 @@
         function setupTitleMouseTracking(selector) {
             const title = document.querySelector(selector);
             if (title) {
-                document.addEventListener('mousemove', (e) => {
+                // Function to update title position
+                function updateTitlePosition(clientX, clientY) {
                     const rect = title.getBoundingClientRect();
-                    let x = ((e.clientX - rect.left) / rect.width) * 100;
-                    let y = ((e.clientY - rect.top) / rect.height) * 100;
+                    let x = ((clientX - rect.left) / rect.width) * 100;
+                    let y = ((clientY - rect.top) / rect.height) * 100;
                     
                     // Clamp values to keep spotlight within text boundaries at all times
                     x = Math.max(0, Math.min(100, x));
@@ -2526,7 +2527,19 @@
                     
                     title.style.setProperty('--mouse-x', `${x}%`);
                     title.style.setProperty('--mouse-y', `${y}%`);
+                }
+                
+                // Mouse support
+                document.addEventListener('mousemove', (e) => {
+                    updateTitlePosition(e.clientX, e.clientY);
                 });
+                
+                // Touch support
+                document.addEventListener('touchmove', (e) => {
+                    if (e.touches.length > 0) {
+                        updateTitlePosition(e.touches[0].clientX, e.touches[0].clientY);
+                    }
+                }, { passive: true });
             }
         }
 
@@ -2572,15 +2585,37 @@
                 btnPrimary.style.setProperty('--spotlight-opacity', '0.4');
             };
             
-            // Add event listeners
+            // Touch event handlers
+            const handleTouchMove = (e) => {
+                const touch = e.touches[0];
+                const rect = btnPrimary.getBoundingClientRect();
+                const x = ((touch.clientX - rect.left) / rect.width) * 100;
+                const y = ((touch.clientY - rect.top) / rect.height) * 100;
+                
+                btnPrimary.style.setProperty('--spotlight-x', `${x}%`);
+                btnPrimary.style.setProperty('--spotlight-y', `${y}%`);
+                btnPrimary.style.setProperty('--spotlight-opacity', '0.6');
+            };
+            
+            const handleTouchEnd = () => {
+                btnPrimary.style.setProperty('--spotlight-x', '50%');
+                btnPrimary.style.setProperty('--spotlight-y', '50%');
+                btnPrimary.style.setProperty('--spotlight-opacity', '0.4');
+            };
+            
+            // Add event listeners for both mouse and touch
             btnPrimary.addEventListener('mousemove', handleMouseMove);
             btnPrimary.addEventListener('mouseleave', handleMouseLeave);
+            btnPrimary.addEventListener('touchmove', handleTouchMove, { passive: true });
+            btnPrimary.addEventListener('touchend', handleTouchEnd, { passive: true });
             
             // Clean up event listeners if the button is removed from DOM
             // This prevents memory leaks in single-page applications
             const cleanup = () => {
                 btnPrimary.removeEventListener('mousemove', handleMouseMove);
                 btnPrimary.removeEventListener('mouseleave', handleMouseLeave);
+                btnPrimary.removeEventListener('touchmove', handleTouchMove);
+                btnPrimary.removeEventListener('touchend', handleTouchEnd);
             };
             
             // Optional: Add a cleanup function if needed
@@ -2635,14 +2670,10 @@
         // Illuminate "Machine Learning and AI" when cursor is in horizontal center of page
         const chalkBorder = document.querySelector('.chalk-border');
         if (chalkBorder) {
-            document.addEventListener('mousemove', (e) => {
+            // Function to check if position is in center
+            function checkCenterPosition(clientX) {
                 const centerX = window.innerWidth / 2;
-                const mouseX = e.clientX;
-                
-                // Calculate horizontal distance from center (ignore vertical position)
-                const distanceX = Math.abs(mouseX - centerX);
-                
-                // Define threshold - illuminate when cursor is within 300px of horizontal center
+                const distanceX = Math.abs(clientX - centerX);
                 const threshold = 300;
                 
                 if (distanceX < threshold) {
@@ -2650,13 +2681,92 @@
                 } else {
                     chalkBorder.classList.remove('bright');
                 }
+            }
+            
+            // Mouse support
+            document.addEventListener('mousemove', (e) => {
+                checkCenterPosition(e.clientX);
             });
+            
+            // Touch support
+            document.addEventListener('touchmove', (e) => {
+                if (e.touches.length > 0) {
+                    checkCenterPosition(e.touches[0].clientX);
+                }
+            }, { passive: true });
+            
+            // Remove bright class when touch ends
+            document.addEventListener('touchend', () => {
+                chalkBorder.classList.remove('bright');
+            }, { passive: true });
         }
 
         // Initialize with default project if no files uploaded
         if (projectsGrid && projectsGrid.children.length === 1) {
             // Keep the default project
         }
+
+        // ============================================
+        // TOUCH SUPPORT FOR INTERACTIVE ELEMENTS
+        // ============================================
+        
+        // Blog Preview Cards
+        const blogPreviewCardsTouch = document.querySelectorAll('.blog-preview-card');
+        blogPreviewCardsTouch.forEach(card => {
+            card.addEventListener('touchstart', () => {
+                card.style.transform = 'translateY(-10px)';
+                card.style.borderColor = 'rgba(0, 245, 255, 0.5)';
+                card.style.boxShadow = '0 15px 40px rgba(0, 245, 255, 0.3)';
+            }, { passive: true });
+            
+            card.addEventListener('touchend', () => {
+                card.style.transform = 'translateY(0)';
+                card.style.borderColor = 'rgba(0, 245, 255, 0.1)';
+                card.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.3)';
+            }, { passive: true });
+        });
+        
+        // Project Cards
+        const projectCardsTouch = document.querySelectorAll('.project-card');
+        projectCardsTouch.forEach(card => {
+            card.addEventListener('touchstart', () => {
+                card.style.transform = 'translateY(-10px)';
+                card.style.boxShadow = '0 15px 40px rgba(0, 245, 255, 0.3)';
+            }, { passive: true });
+            
+            card.addEventListener('touchend', () => {
+                card.style.transform = 'translateY(0)';
+                card.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.3)';
+            }, { passive: true });
+        });
+        
+        // All Buttons (primary and secondary)
+        const allButtonsTouch = document.querySelectorAll('.btn, .btn-primary, .btn-secondary, .project-link');
+        allButtonsTouch.forEach(btn => {
+            // Store original transform for restoration
+            let originalTransform = '';
+            
+            btn.addEventListener('touchstart', () => {
+                originalTransform = btn.style.transform || '';
+                btn.style.transform = 'translateY(-3px)';
+            }, { passive: true });
+            
+            btn.addEventListener('touchend', () => {
+                btn.style.transform = originalTransform;
+            }, { passive: true });
+        });
+        
+        // Skill Cards
+        const skillCardsTouch = document.querySelectorAll('.skill-card');
+        skillCardsTouch.forEach(card => {
+            card.addEventListener('touchstart', () => {
+                card.style.transform = 'translateY(-5px)';
+            }, { passive: true });
+            
+            card.addEventListener('touchend', () => {
+                card.style.transform = 'translateY(0)';
+            }, { passive: true });
+        });
 
         // ============================================
         // SCROLL REVEAL ANIMATIONS (Intersection Observer)
