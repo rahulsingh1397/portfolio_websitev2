@@ -1,0 +1,441 @@
+{
+  "name": "Daily Blog Automation - AI/ML/Data Science",
+  "nodes": [
+    {
+      "id": "cron-trigger-001",
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 8 * * *"
+            }
+          ]
+        }
+      },
+      "name": "Daily Trigger - 8 AM",
+      "type": "n8n-nodes-base.schedule",
+      "typeVersion": 1.1,
+      "position": [250, 300]
+    },
+    {
+      "id": "newsapi-fetch-001",
+      "parameters": {
+        "url": "https://newsapi.org/v2/everything",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "q",
+              "value": "artificial intelligence OR machine learning OR data science"
+            },
+            {
+              "name": "sortBy",
+              "value": "publishedAt"
+            },
+            {
+              "name": "pageSize",
+              "value": "20"
+            },
+            {
+              "name": "language",
+              "value": "en"
+            },
+            {
+              "name": "from",
+              "value": "={{ $now.minus({ days: 2 }).toISO() }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "NewsAPI - Fetch Articles",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [450, 200],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "newsapi-cred",
+          "name": "NewsAPI Credentials"
+        }
+      }
+    },
+    {
+      "id": "rss-arxiv-001",
+      "parameters": {
+        "feedUrl": "=http://export.arxiv.org/rss/cs.AI"
+      },
+      "name": "RSS - arXiv AI",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.1,
+      "position": [450, 300]
+    },
+    {
+      "id": "rss-openai-001",
+      "parameters": {
+        "feedUrl": "=https://openai.com/blog/rss/"
+      },
+      "name": "RSS - OpenAI Blog",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.1,
+      "position": [450, 400]
+    },
+    {
+      "id": "merge-sources-001",
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "multiplex"
+      },
+      "name": "Merge Sources",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [650, 300]
+    },
+    {
+      "id": "filter-score-001",
+      "parameters": {
+        "jsCode": "// Filter and score sources\nconst items = $input.all();\nconst now = new Date();\n\nconst scored = items.map(item => {\n  const data = item.json;\n  const pubDate = new Date(data.publishedAt || data.pubDate || data.isoDate || data.published);\n  const ageHours = (now - pubDate) / 3600000;\n  \n  let score = 100 - ageHours;\n  \n  // Boost trusted sources\n  const trustedSources = ['Nature', 'Science', 'arXiv', 'OpenAI', 'Google AI', 'MIT', 'Stanford'];\n  const sourceText = JSON.stringify(data).toLowerCase();\n  if (trustedSources.some(s => sourceText.includes(s.toLowerCase()))) {\n    score += 30;\n  }\n  \n  // Boost relevant keywords\n  const title = (data.title || '').toLowerCase();\n  const keywords = ['breakthrough', 'released', 'announced', 'open-source', 'research', 'state-of-the-art', 'new', 'advances'];\n  if (keywords.some(k => title.includes(k))) {\n    score += 15;\n  }\n  \n  // Penalize old content\n  if (ageHours > 72) score -= 50;\n  if (ageHours > 168) score -= 100;\n  \n  return {\n    json: {\n      ...data,\n      score,\n      ageHours,\n      cleanTitle: (data.title || '').replace(/<[^>]*>/g, '').trim(),\n      cleanDescription: (data.description || data.summary || '').replace(/<[^>]*>/g, '').trim(),\n      url: data.url || data.link || data.guid\n    }\n  };\n});\n\n// Sort by score and keep top 6\nconst topSources = scored\n  .filter(item => item.json.score > 0)\n  .sort((a, b) => b.json.score - a.json.score)\n  .slice(0, 6);\n\nconsole.log(`Filtered ${items.length} sources down to ${topSources.length} top sources`);\n\nreturn topSources;"
+      },
+      "name": "Filter & Score Sources",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [850, 300]
+    },
+    {
+      "id": "fetch-html-001",
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "options": {
+          "timeout": 10000,
+          "redirect": {
+            "redirect": {
+              "followRedirects": true,
+              "maxRedirects": 5
+            }
+          }
+        }
+      },
+      "name": "Fetch Article HTML",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1050, 300]
+    },
+    {
+      "id": "extract-text-001",
+      "parameters": {
+        "jsCode": "// Extract article text using regex (Cheerio alternative)\nconst html = $input.first().json.data || '';\nconst originalData = $input.first().json;\n\n// Remove script and style tags\nlet cleanHtml = html.replace(/<script[^>]*>.*?<\\/script>/gis, '');\ncleanHtml = cleanHtml.replace(/<style[^>]*>.*?<\\/style>/gis, '');\n\n// Extract text from common article containers\nconst articlePatterns = [\n  /<article[^>]*>(.*?)<\\/article>/is,\n  /<div[^>]*class=\"[^\"]*article[^\"]*\"[^>]*>(.*?)<\\/div>/is,\n  /<div[^>]*class=\"[^\"]*post-content[^\"]*\"[^>]*>(.*?)<\\/div>/is,\n  /<main[^>]*>(.*?)<\\/main>/is\n];\n\nlet articleText = '';\nfor (const pattern of articlePatterns) {\n  const match = cleanHtml.match(pattern);\n  if (match && match[1].length > articleText.length) {\n    articleText = match[1];\n  }\n}\n\n// Fallback: extract all paragraph text\nif (articleText.length < 200) {\n  const paragraphs = cleanHtml.match(/<p[^>]*>(.*?)<\\/p>/gis) || [];\n  articleText = paragraphs.map(p => p.replace(/<[^>]*>/g, '')).join(' ');\n}\n\n// Clean up text\narticleText = articleText\n  .replace(/<[^>]*>/g, ' ')  // Remove HTML tags\n  .replace(/&[a-z]+;/gi, ' ')  // Remove HTML entities\n  .replace(/\\s+/g, ' ')  // Normalize whitespace\n  .trim()\n  .substring(0, 8000);  // Limit to 8000 chars\n\nconst wordCount = articleText.split(' ').filter(w => w.length > 0).length;\n\nreturn [{\n  json: {\n    ...originalData,\n    fullText: articleText,\n    wordCount,\n    extractedSuccessfully: wordCount > 100\n  }\n}];"
+      },
+      "name": "Extract Article Text",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1250, 300]
+    },
+    {
+      "id": "deepseek-summarize-001",
+      "parameters": {
+        "url": "https://api.deepseek.com/v1/chat/completions",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"deepseek-reasoner\",\n  \"messages\": [\n    {\n      \"role\": \"system\",\n      \"content\": \"You are a factual research summarizer for AI/ML/Data Science content. Extract key information and return structured JSON. Be precise, cite sources, and do NOT hallucinate. If information is unclear, mark it as 'unknown'.\"\n    },\n    {\n      \"role\": \"user\",\n      \"content\": \"Summarize this article:\\n\\nTitle: {{ $json.cleanTitle }}\\nURL: {{ $json.url }}\\nDate: {{ $json.publishedAt || $json.pubDate || $json.isoDate }}\\n\\nContent:\\n{{ $json.fullText }}\\n\\nReturn ONLY valid JSON with this exact structure:\\n{\\n  \\\"title\\\": \\\"string\\\",\\n  \\\"summary\\\": \\\"3-sentence summary\\\",\\n  \\\"keyFacts\\\": [\\\"fact1\\\", \\\"fact2\\\", \\\"fact3\\\"],\\n  \\\"quotes\\\": [{\\\"text\\\": \\\"quote\\\", \\\"context\\\": \\\"context\\\"}],\\n  \\\"source\\\": \\\"source name\\\",\\n  \\\"url\\\": \\\"{{ $json.url }}\\\",\\n  \\\"date\\\": \\\"ISO date\\\",\\n  \\\"reliability\\\": 8\\n}\"\n    }\n  ],\n  \"temperature\": 0.1,\n  \"max_tokens\": 1000\n}",
+        "options": {}
+      },
+      "name": "DeepSeek - Summarize",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1450, 300],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "deepseek-cred",
+          "name": "DeepSeek API"
+        }
+      }
+    },
+    {
+      "id": "aggregate-research-001",
+      "parameters": {
+        "jsCode": "// Aggregate all summaries into research bundle\nconst summaries = $input.all();\n\nconst sources = summaries.map(item => {\n  try {\n    const response = item.json;\n    const content = response.choices[0].message.content;\n    return JSON.parse(content);\n  } catch (e) {\n    console.error('Failed to parse summary:', e);\n    return null;\n  }\n}).filter(s => s !== null);\n\nconst researchBundle = {\n  generatedDate: new Date().toISOString(),\n  generatedDateFormatted: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),\n  topic: \"AI, Machine Learning & Data Science Updates\",\n  sources: sources,\n  totalSources: sources.length,\n  avgReliability: sources.reduce((sum, s) => sum + (s.reliability || 5), 0) / sources.length,\n  tags: ['artificial-intelligence', 'machine-learning', 'data-science', 'ai-research', 'tech-news']\n};\n\nconsole.log(`Aggregated ${sources.length} summaries into research bundle`);\n\nreturn [{ json: researchBundle }];"
+      },
+      "name": "Aggregate Research",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1650, 300]
+    },
+    {
+      "id": "deepseek-generate-001",
+      "parameters": {
+        "url": "https://api.deepseek.com/v1/chat/completions",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"deepseek-chat\",\n  \"messages\": [\n    {\n      \"role\": \"system\",\n      \"content\": \"You are an expert technical writer specializing in AI/ML/Data Science. Write comprehensive, well-researched blog posts (1200-1800 words) with proper citations. Target audience: data scientists, ML engineers, technical hiring managers, and AI enthusiasts. Style: professional, factual, engaging, accessible. CRITICAL RULES:\\n1. Base ALL factual claims on provided sources\\n2. Use inline citations [1], [2], etc.\\n3. Include full reference list with URLs\\n4. Write in clear, engaging prose\\n5. Use technical terms correctly\\n6. Add relevant code examples when applicable\\n7. Structure content logically\\n8. Optimize for SEO\\n9. Be transparent about AI generation\"\n    },\n    {\n      \"role\": \"user\",\n      \"content\": \"Create a comprehensive blog post using this research bundle:\\n\\n{{ JSON.stringify($json, null, 2) }}\\n\\nREQUIREMENTS:\\n\\n1. YAML FRONTMATTER (first lines):\\n---\\ntitle: \\\"Compelling Title (60-70 chars)\\\"\\ndate: {{ $json.generatedDate }}\\nauthor: \\\"AI Research Assistant\\\"\\ntags: {{ JSON.stringify($json.tags) }}\\nsummary: \\\"One compelling sentence (150-160 chars for SEO)\\\"\\nai_generated: true\\nhuman_reviewed: false\\n---\\n\\n2. STRUCTURE:\\n- ## 🎯 TL;DR (3-4 bullet points)\\n- ## 📖 Introduction (2-3 paragraphs, set context)\\n- ## 🔍 Background (explain fundamentals)\\n- ## 🚀 Recent Developments (one H3 section per major finding from sources)\\n- ## 🏢 Industry Applications (real company examples from sources)\\n- ## 💡 Practical Implications (for data scientists/engineers)\\n- ## 📊 Code Example (if applicable, simple Python/pseudocode)\\n- ## 🔮 Future Outlook (brief, grounded in sources)\\n- ## 📚 References (numbered list with full URLs)\\n\\n3. CITATION RULES:\\n- Use [1], [2] inline after factual claims\\n- Each source must be cited at least once\\n- References section: [1] Title - Source Name (Date) - URL\\n\\n4. STYLE:\\n- Use emojis for section headers only\\n- Write in active voice\\n- Use short paragraphs (3-4 sentences max)\\n- Include transition sentences\\n- Technical but accessible\\n- 1200-1800 words total\\n\\n5. SEO:\\n- Include keywords naturally: AI, machine learning, data science\\n- Use descriptive subheadings\\n- Meta description in frontmatter\\n\\n6. TRANSPARENCY:\\n- Mention \\\"This post was generated by AI and aggregates recent research\\\" in intro\\n- Link to original sources\\n\\nGenerate the COMPLETE Markdown blog post now (including frontmatter).\"\n    }\n  ],\n  \"temperature\": 0.2,\n  \"max_tokens\": 4000\n}",
+        "options": {}
+      },
+      "name": "DeepSeek - Generate Blog",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1850, 300],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "deepseek-cred",
+          "name": "DeepSeek API"
+        }
+      }
+    },
+    {
+      "id": "process-blog-001",
+      "parameters": {
+        "jsCode": "// Extract blog content and create metadata\nconst response = $input.first().json;\nconst blogMarkdown = response.choices[0].message.content;\n\n// Extract title from frontmatter\nconst titleMatch = blogMarkdown.match(/title:\\s*[\"'](.+?)[\"']/);\nconst title = titleMatch ? titleMatch[1] : 'AI Research Update';\n\n// Create slug\nconst slug = title\n  .toLowerCase()\n  .replace(/[^a-z0-9]+/g, '-')\n  .replace(/(^-|-$)/g, '');\n\n// Get date\nconst date = new Date().toISOString().split('T')[0];\n\n// Count words and citations\nconst wordCount = blogMarkdown.split(/\\s+/).length;\nconst citationCount = (blogMarkdown.match(/\\[\\d+\\]/g) || []).length;\n\n// Quality checks\nconst hasReferences = blogMarkdown.includes('## 📚 References') || blogMarkdown.includes('## References');\nconst hasTLDR = blogMarkdown.includes('TL;DR');\nconst hasCodeExample = blogMarkdown.includes('```');\n\nconst qualityCheck = {\n  passed: hasReferences && hasTLDR && wordCount >= 1000 && citationCount >= 3,\n  wordCount,\n  citationCount,\n  hasReferences,\n  hasTLDR,\n  hasCodeExample,\n  issues: []\n};\n\nif (!hasReferences) qualityCheck.issues.push('Missing references section');\nif (!hasTLDR) qualityCheck.issues.push('Missing TL;DR');\nif (wordCount < 1000) qualityCheck.issues.push(`Word count too low: ${wordCount}`);\nif (citationCount < 3) qualityCheck.issues.push(`Too few citations: ${citationCount}`);\n\nconsole.log('Quality Check:', qualityCheck);\n\nreturn [{\n  json: {\n    blogContent: blogMarkdown,\n    title,\n    slug,\n    date,\n    filename: `${date}-${slug}.md`,\n    qualityCheck\n  }\n}];"
+      },
+      "name": "Process Blog Content",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2050, 300]
+    },
+    {
+      "id": "write-file-001",
+      "parameters": {
+        "fileName": "={{ $json.filename }}",
+        "fileContent": "={{ $json.blogContent }}",
+        "options": {
+          "encoding": "utf8"
+        }
+      },
+      "name": "Write Blog File",
+      "type": "n8n-nodes-base.writeBinaryFile",
+      "typeVersion": 1,
+      "position": [2250, 300]
+    },
+    {
+      "id": "git-commit-001",
+      "parameters": {
+        "command": "=cd /path/to/portfolio && git add content/blog/{{ $json.filename }} && git commit -m \"Auto-blog: {{ $json.title }} [{{ $json.date }}]\" && git push origin main",
+        "options": {}
+      },
+      "name": "Git Commit & Push",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [2450, 300]
+    },
+    {
+      "id": "build-deploy-001",
+      "parameters": {
+        "command": "=cd /path/to/portfolio && npm run build && pm2 restart portfolio",
+        "options": {}
+      },
+      "name": "Build & Deploy Site",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [2650, 300]
+    },
+    {
+      "id": "send-notification-001",
+      "parameters": {
+        "fromEmail": "noreply@yourportfolio.com",
+        "toEmail": "your.email@example.com",
+        "subject": "=✅ New Blog Published: {{ $json.title }}",
+        "text": "=Blog published successfully!\\n\\nTitle: {{ $json.title }}\\nDate: {{ $json.date }}\\nWord Count: {{ $json.qualityCheck.wordCount }}\\nCitations: {{ $json.qualityCheck.citationCount }}\\n\\nQuality Check: {{ $json.qualityCheck.passed ? 'PASSED ✅' : 'ISSUES FOUND ⚠️' }}\\n\\nIssues: {{ JSON.stringify($json.qualityCheck.issues) }}\\n\\nPreview: http://localhost:1313/blog/{{ $json.slug }}",
+        "options": {}
+      },
+      "name": "Send Notification",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [2850, 300]
+    }
+  ],
+  "connections": {
+    "Daily Trigger - 8 AM": {
+      "main": [
+        [
+          {
+            "node": "NewsAPI - Fetch Articles",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "RSS - arXiv AI",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "RSS - OpenAI Blog",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "NewsAPI - Fetch Articles": {
+      "main": [
+        [
+          {
+            "node": "Merge Sources",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RSS - arXiv AI": {
+      "main": [
+        [
+          {
+            "node": "Merge Sources",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "RSS - OpenAI Blog": {
+      "main": [
+        [
+          {
+            "node": "Merge Sources",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Merge Sources": {
+      "main": [
+        [
+          {
+            "node": "Filter & Score Sources",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter & Score Sources": {
+      "main": [
+        [
+          {
+            "node": "Fetch Article HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Article HTML": {
+      "main": [
+        [
+          {
+            "node": "Extract Article Text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Article Text": {
+      "main": [
+        [
+          {
+            "node": "DeepSeek - Summarize",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DeepSeek - Summarize": {
+      "main": [
+        [
+          {
+            "node": "Aggregate Research",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate Research": {
+      "main": [
+        [
+          {
+            "node": "DeepSeek - Generate Blog",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DeepSeek - Generate Blog": {
+      "main": [
+        [
+          {
+            "node": "Process Blog Content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Blog Content": {
+      "main": [
+        [
+          {
+            "node": "Write Blog File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Write Blog File": {
+      "main": [
+        [
+          {
+            "node": "Git Commit & Push",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Git Commit & Push": {
+      "main": [
+        [
+          {
+            "node": "Build & Deploy Site",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build & Deploy Site": {
+      "main": [
+        [
+          {
+            "node": "Send Notification",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-11-06T18:00:00.000Z",
+  "versionId": "blog-automation-v1",
+  "id": "blog-automation-workflow",
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "local-instance"
+  }
+}

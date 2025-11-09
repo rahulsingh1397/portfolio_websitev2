@@ -1,0 +1,40 @@
+name: Auto-Generate Blog Post
+
+on:
+  schedule:
+    # Run daily at 8 AM UTC (3 AM EST)
+    - cron: '0 8 * * *'
+  workflow_dispatch: # Allow manual trigger for testing
+
+jobs:
+  generate-blog:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          pip install requests beautifulsoup4 feedparser
+      
+      - name: Generate blog post
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          NEWSAPI_KEY: ${{ secrets.NEWSAPI_KEY }}
+        run: |
+          python blog-automation/generate_blog.py
+      
+      - name: Commit and push if changed
+        run: |
+          git config --global user.name 'Blog Automation Bot'
+          git config --global user.email 'bot@datasci.pro'
+          git add blog/*.md
+          git diff --quiet && git diff --staged --quiet || (git commit -m "🤖 Auto-generated blog post - $(date +'%Y-%m-%d')" && git push)
