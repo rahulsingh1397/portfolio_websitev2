@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blogs - Data Scientist Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1.5rem 5%;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            padding: 1rem 5%;
+            box-shadow: 0 4px 30px rgba(0, 255, 255, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #00f5ff, #0080ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-center {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            justify-content: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #00f5ff, #0080ff);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Main Content */
+        .blogs-section {
+            min-height: 100vh;
+            padding: 120px 5% 80px;
+        }
+
+        .section-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            text-align: center;
+            background: linear-gradient(135deg, #00f5ff, #0080ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #9ca3af;
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+        }
+
+        /* Blog Grid */
+        .blogs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .blog-card {
+            background: rgba(20, 20, 20, 0.6);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 245, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 245, 255, 0.3);
+            border-color: rgba(0, 245, 255, 0.5);
+        }
+
+        .blog-image {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, #00f5ff, #0080ff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+        }
+
+        .blog-content {
+            padding: 2rem;
+        }
+
+        .blog-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: #9ca3af;
+        }
+
+        .blog-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #00f5ff;
+        }
+
+        .blog-content p {
+            color: #b0b0b0;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .blog-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tag {
+            padding: 0.4rem 1rem;
+            background: rgba(0, 245, 255, 0.1);
+            border: 1px solid rgba(0, 245, 255, 0.2);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: #00f5ff;
+        }
+
+        .read-more {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background: linear-gradient(135deg, rgba(0, 245, 255, 0.1), rgba(0, 128, 255, 0.1));
+            border: 2px solid rgba(0, 245, 255, 0.3);
+            border-radius: 50px;
+            color: #00f5ff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .read-more:hover {
+            background: linear-gradient(135deg, rgba(0, 245, 255, 0.2), rgba(0, 128, 255, 0.2));
+            border-color: #00f5ff;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 245, 255, 0.4);
+        }
+
+        /* n8n Integration Placeholder */
+        .integration-notice {
+            background: rgba(139, 92, 246, 0.1);
+            border: 2px dashed rgba(139, 92, 246, 0.3);
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .integration-notice h3 {
+            color: #8B5CF6;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .integration-notice p {
+            color: #b0b0b0;
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Footer */
+        footer {
+            background: #000;
+            padding: 2rem 5%;
+            text-align: center;
+            color: #b0b0b0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .blogs-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                gap: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">DataSci.Pro</div>
+            <div class="nav-center">
+                <ul class="nav-links">
+                    <li><a href="data-scientist-portfolio.html#home">Home</a></li>
+                    <li><a href="data-scientist-portfolio.html#about">About</a></li>
+                    <li><a href="data-scientist-portfolio.html#skills">Skills</a></li>
+                    <li><a href="data-scientist-portfolio.html#projects">Projects</a></li>
+                    <li><a href="blogs.html">Blogs</a></li>
+                    <li><a href="data-scientist-portfolio.html#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Blogs Section -->
+    <section class="blogs-section">
+        <div class="section-container">
+            <h1 class="section-title">Blog & Insights</h1>
+            <p class="section-subtitle">Exploring the latest in Data Science, AI, and Machine Learning</p>
+
+            <!-- n8n Integration Notice -->
+            <div class="integration-notice">
+                <h3>🤖 AI-Powered Blog Automation</h3>
+                <p>
+                    This blog section will be powered by an <strong>n8n automation workflow</strong> that automatically 
+                    generates and publishes AI-driven content. The workflow will integrate with various AI models to create 
+                    insightful articles on data science, machine learning, and emerging technologies. Stay tuned for 
+                    automated posts that combine human expertise with AI capabilities!
+                </p>
+                <p style="margin-top: 1rem; font-size: 0.9rem; color: #8B5CF6;">
+                    <strong>Integration Status:</strong> Ready for n8n workflow configuration
+                </p>
+            </div>
+
+            <!-- Blog Grid (Placeholder posts) -->
+            <div class="blogs-grid">
+                <!-- Sample Blog Post 1 -->
+                <div class="blog-card">
+                    <div class="blog-image">📊</div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span>📅 Coming Soon</span>
+                            <span>⏱️ 5 min read</span>
+                        </div>
+                        <h3>The Future of AI in Data Science</h3>
+                        <p>Exploring how artificial intelligence is revolutionizing data analysis and predictive modeling in modern enterprises.</p>
+                        <div class="blog-tags">
+                            <span class="tag">AI</span>
+                            <span class="tag">Machine Learning</span>
+                            <span class="tag">Data Science</span>
+                        </div>
+                        <a href="#" class="read-more">Read More →</a>
+                    </div>
+                </div>
+
+                <!-- Sample Blog Post 2 -->
+                <div class="blog-card">
+                    <div class="blog-image">🤖</div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span>📅 Coming Soon</span>
+                            <span>⏱️ 8 min read</span>
+                        </div>
+                        <h3>Building Scalable ML Pipelines</h3>
+                        <p>Best practices for designing and deploying production-ready machine learning pipelines that scale with your business needs.</p>
+                        <div class="blog-tags">
+                            <span class="tag">MLOps</span>
+                            <span class="tag">DevOps</span>
+                            <span class="tag">Cloud</span>
+                        </div>
+                        <a href="#" class="read-more">Read More →</a>
+                    </div>
+                </div>
+
+                <!-- Sample Blog Post 3 -->
+                <div class="blog-card">
+                    <div class="blog-image">⚡</div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span>📅 Coming Soon</span>
+                            <span>⏱️ 6 min read</span>
+                        </div>
+                        <h3>Automating Data Workflows with n8n</h3>
+                        <p>Learn how to leverage n8n for creating powerful automation workflows that streamline your data processing and analysis tasks.</p>
+                        <div class="blog-tags">
+                            <span class="tag">Automation</span>
+                            <span class="tag">n8n</span>
+                            <span class="tag">Workflows</span>
+                        </div>
+                        <a href="#" class="read-more">Read More →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 DataSci.Pro. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>

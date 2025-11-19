@@ -1,0 +1,95 @@
+# Netlify Configuration for Data Scientist Portfolio
+
+[build]
+  # No build command needed for static site
+  publish = "."
+  
+  # Environment variables (if needed in future)
+  # [build.environment]
+  #   NODE_VERSION = "18"
+
+# Redirect rules
+[[redirects]]
+  from = "/*"
+  to = "/data-scientist-portfolio.html"
+  status = 200
+  force = false
+  
+  # Don't redirect if file exists
+  conditions = {Role = ["admin"]}
+
+# Headers for 3D models and assets
+[[headers]]
+  for = "/*.glb"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    Content-Type = "model/gltf-binary"
+    Access-Control-Allow-Origin = "*"
+
+[[headers]]
+  for = "/*.gltf"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    Content-Type = "model/gltf+json"
+    Access-Control-Allow-Origin = "*"
+
+[[headers]]
+  for = "/*.bin"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    Content-Type = "application/octet-stream"
+    Access-Control-Allow-Origin = "*"
+
+[[headers]]
+  for = "/models/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    Access-Control-Allow-Origin = "*"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    X-XSS-Protection = "1; mode=block"
+
+# Plugin configuration (optional)
+# [[plugins]]
+#   package = "@netlify/plugin-lighthouse"
+
+# Context-specific settings
+[context.production]
+  [context.production.environment]
+    NODE_ENV = "production"
+
+[context.deploy-preview]
+  [context.deploy-preview.environment]
+    NODE_ENV = "development"
+
+# Forms (if you add contact forms in future)
+# [build.processing]
+#   skip_processing = false
+# [build.processing.css]
+#   bundle = true
+#   minify = true
+# [build.processing.js]
+#   bundle = true
+#   minify = true
+# [build.processing.html]
+#   pretty_urls = true
+# [build.processing.images]
+#   compress = true

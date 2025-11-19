@@ -1,0 +1,3380 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Scientist Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1.5rem 5%;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            padding: 1rem 5%;
+            box-shadow: 0 4px 30px rgba(0, 255, 255, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: none; /* Hide logo to center nav links */
+        }
+
+        .nav-center {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            justify-content: center;
+        }
+
+        .work-with-me-btn {
+            background: linear-gradient(135deg, var(--electric-purple), var(--primary-blue));
+            color: #fff;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+        }
+
+        .work-with-me-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .work-with-me-btn:active::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .work-with-me-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.6);
+            background: linear-gradient(135deg, #9333ea, var(--electric-purple));
+        }
+
+        .work-with-me-btn span,
+        .work-with-me-btn svg {
+            position: relative;
+            z-index: 1;
+        }
+
+        .work-with-me-btn svg {
+            width: 24px;
+            height: 24px;
+            transition: transform 0.3s ease;
+        }
+
+        .work-with-me-btn:hover svg {
+            transform: translateX(3px);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #00f5ff, #0080ff);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: #00f5ff;
+            transition: all 0.3s ease;
+        }
+
+        /* Hero Section with 3D Model */
+        #home {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: 0 5%;
+        }
+
+        .model-container {
+            position: absolute;
+            width: clamp(300px, 35vw, 500px);
+            height: clamp(300px, 35vw, 500px);
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+        }
+
+        .model-container canvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        .hero-content {
+            margin-top: 420px; /* Increased from 350px */
+        }
+
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: #00f5ff;
+            border-radius: 50%;
+            animation: float 20s infinite;
+            opacity: 0.6;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(50px);
+                opacity: 0;
+            }
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            z-index: 1;
+            text-align: center;
+            animation: fadeInUp 1s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .chalk-border {
+            display: inline-block;
+            padding: 0.5rem 1.2rem;
+            position: relative;
+            background: rgba(10, 10, 10, 0.9);
+            border: 2px solid #00f5ff;
+            color: #00f5ff;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            animation: fadeInUp 1s ease 0.2s both;
+            box-shadow: 0 0 15px rgba(0, 245, 255, 0.3);
+            text-shadow: 0 0 10px rgba(0, 245, 255, 0.5);
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            transform: rotate(-1deg);
+            position: relative;
+            z-index: 1;
+            overflow: visible;
+        }
+        
+        .chalk-border::after {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: -6px;
+            right: -6px;
+            bottom: -6px;
+            border: 1px solid rgba(0, 245, 255, 0.4);
+            border-radius: 2px;
+            pointer-events: none;
+            z-index: -1;
+            transition: box-shadow 0.3s ease, opacity 0.3s ease;
+            box-shadow: 0 0 5px 2px rgba(0, 245, 255, 0.1);
+            opacity: 0.6;
+        }
+        
+        .chalk-border.bright::after {
+            box-shadow: 0 0 20px 8px rgba(0, 245, 255, 0.8);
+            opacity: 1;
+        }
+
+        .chalk-border::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            right: -8px;
+            bottom: -8px;
+            border: 1px dashed rgba(0, 245, 255, 0.3);
+            pointer-events: none;
+            animation: borderFlicker 2s infinite alternate;
+        }
+
+@keyframes borderFlicker {
+            0% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .hero-title {
+            font-size: 4.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            background: radial-gradient(circle 500px at var(--mouse-x, 50%) var(--mouse-y, 50%), #fff, transparent 50%), linear-gradient(135deg, var(--primary-cyan), var(--primary-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1s ease 0.4s both;
+            transition: background 0.15s ease;
+            cursor: default;
+        }
+
+        .hero-description {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeInUp 1s ease 0.6s both;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            animation: fadeInUp 1s ease 0.8s both;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+            z-index: 0;
+        }
+
+        .btn:active::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #00f5ff, #0080ff);
+            color: #000;
+            box-shadow: 0 10px 30px rgba(0, 245, 255, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            --spotlight-size: 200px;
+            --spotlight-opacity: 0.4;
+            --spotlight-x: 50%;
+            --spotlight-y: 50%;
+            background: radial-gradient(
+                circle var(--spotlight-size) at var(--spotlight-x) var(--spotlight-y),
+                rgba(255, 255, 255, var(--spotlight-opacity)) 0%,
+                rgba(255, 255, 255, 0) 60%
+            ), linear-gradient(135deg, #00f5ff, #0080ff);
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: -100%;
+            right: -100%;
+            bottom: -100%;
+            background: radial-gradient(circle 150px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.4), transparent 50%);
+            pointer-events: none;
+            z-index: 1;
+            transition: background 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 245, 255, 0.5);
+        }
+
+        /* Phone icon ring animation */
+        @keyframes ring {
+            0%, 100% { transform: rotate(0deg); }
+            10% { transform: rotate(-15deg); }
+            20% { transform: rotate(15deg); }
+            30% { transform: rotate(-15deg); }
+            40% { transform: rotate(15deg); }
+            50% { transform: rotate(0deg); }
+        }
+
+        #bookCallBtn:hover .phone-icon {
+            animation: ring 0.8s ease-in-out;
+        }
+        
+        .btn-primary > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #00f5ff;
+            border: 2px solid #00f5ff;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 245, 255, 0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Section Styles */
+        section {
+            min-height: 100vh;
+            padding: 120px 5% 80px;
+            position: relative;
+        }
+
+        .section-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            text-align: center;
+            background: radial-gradient(circle 500px at var(--mouse-x, 50%) var(--mouse-y, 50%), #fff, transparent 50%), linear-gradient(135deg, #00f5ff, #0080ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            transition: background 0.15s ease;
+            cursor: default;
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+        }
+
+        /* About Section */
+        #about {
+            background: #0a0a0a;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin-top: 3rem;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #b0b0b0;
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(0, 245, 255, 0.05);
+            border-radius: 20px;
+            border: 1px solid rgba(0, 245, 255, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .stat-item:hover {
+            background: rgba(0, 245, 255, 0.1);
+            border-color: rgba(0, 245, 255, 0.3);
+            transform: translateY(-5px);
+        }
+
+        /* Circular Progress Visualization */
+        .stat-circle {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 1rem;
+        }
+
+        .stat-circle svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: rotate(-90deg);
+            width: 120px;
+            height: 120px;
+        }
+
+        .stat-circle-bg {
+            fill: none;
+            stroke: rgba(0, 245, 255, 0.1);
+            stroke-width: 8;
+        }
+
+        .stat-circle-progress {
+            fill: none;
+            stroke: url(#gradient1);
+            stroke-width: 8;
+            stroke-linecap: round;
+            stroke-dasharray: 339.292;
+            stroke-dashoffset: 339.292;
+            transition: stroke-dashoffset 2s ease-in-out;
+        }
+
+        .stat-circle-progress.animated {
+            animation: fillProgress 2s ease-in-out forwards;
+        }
+
+        @keyframes fillProgress {
+            to {
+                stroke-dashoffset: var(--progress);
+            }
+        }
+
+        .stat-number {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #00f5ff, #0080ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 0;
+        }
+
+        .stat-label {
+            color: #b0b0b0;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Animated Counter */
+        .stat-number[data-count] {
+            opacity: 0;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .project-image {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, #00f5ff, #0080ff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-radius: 18px 18px 0 0;
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .project-card:hover .project-image img {
+            transform: scale(1.05);
+        }
+
+
+        /* Contact Section */
+        #contact {
+            background: #0a0a0a;
+        }
+
+        .contact-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 0.5rem;
+            color: #00f5ff;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 1rem;
+            background: rgba(0, 245, 255, 0.05);
+            border: 1px solid rgba(0, 245, 255, 0.2);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #00f5ff;
+            box-shadow: 0 0 20px rgba(0, 245, 255, 0.2);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .contact-info {
+            margin-top: 3rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .contact-item {
+            text-align: center;
+        }
+
+        /* Footer */
+        footer {
+            background: #000;
+            padding: 2rem 5%;
+            text-align: center;
+            color: #b0b0b0;
+        }
+
+        /* Scroll Reveal Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Skill Progress Bars */
+        .skill-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success-green), var(--primary-cyan));
+            border-radius: 10px;
+            width: 0;
+            transition: width 1.5s ease;
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+        }
+
+        .skill-progress-bar.animate {
+            animation: progressGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes progressGlow {
+            0%, 100% {
+                box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+            }
+            50% {
+                box-shadow: 0 0 20px rgba(16, 185, 129, 0.8);
+            }
+        }
+
+        /* Theme Variables - Enhanced Cyber Tech Palette */
+        :root {
+            /* Primary Colors */
+            --primary-cyan: #00f5ff;
+            --primary-blue: #0080ff;
+            --electric-purple: #8B5CF6;
+            
+            /* Backgrounds */
+            --bg-darkest: #0a0a0a;
+            --bg-dark: #1a1a1a;
+            --bg-elevated: #242424;
+            
+            /* Accents & States */
+            --success-green: #10b981;
+            --warning-amber: #f59e0b;
+            --error-red: #ef4444;
+            
+            /* Text */
+            --text-primary: #f0f0f0;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+            
+            /* Legacy compatibility */
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #1a1a1a;
+            --accent: #0080ff;
+            --accent-light: #00f5ff;
+            --spotlight-color: rgba(255, 255, 150, 0.8);
+            --shadow: rgba(0, 0, 0, 0.3);
+            --card-bg: #1a1a1a;
+        }
+
+        [data-theme="dark"] {
+            --primary-cyan: #00f5ff;
+            --primary-blue: #0080ff;
+            --electric-purple: #8B5CF6;
+            --bg-darkest: #0a0a0a;
+            --bg-dark: #1a1a1a;
+            --bg-elevated: #242424;
+            --success-green: #10b981;
+            --warning-amber: #f59e0b;
+            --text-primary: #f0f0f0;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+            --spotlight-color: rgba(255, 255, 255, 0.4);
+            --shadow: rgba(0, 0, 0, 0.3);
+            --card-bg: #1a1a1a;
+            
+            /* Legacy */
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #1a1a1a;
+            --accent: #0080ff;
+            --accent-light: #00f5ff;
+        }
+
+        /* Apply theme colors */
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        
+
+        /* Theme Toggle */
+        .theme-toggle {
+            display: none; /* Temporarily disabled */
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(
+                circle var(--spotlight-size, 200px) at var(--spotlight-x, 50%) var(--spotlight-y, 50%),
+                var(--spotlight-color, rgba(255, 255, 150, 0.8)) 0%,
+                transparent 80%
+            ), linear-gradient(135deg, var(--accent-light), var(--accent));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 999;
+            box-shadow: 0 5px 20px var(--shadow);
+            transition: all 0.3s ease;
+            font-size: 1.5rem;
+            color: white;
+            border: none;
+            outline: none;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1) rotate(15deg);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Hide sun icon by default */
+        .theme-toggle .sun-icon {
+            display: none;
+        }
+
+        /* Hide moon icon in dark mode */
+        [data-theme="dark"] .theme-toggle .sun-icon {
+            display: block;
+        }
+
+        [data-theme="dark"] .theme-toggle .moon-icon {
+            display: none;
+        }
+
+        /* Project Filter Buttons */
+        .project-filters {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.7rem 1.5rem;
+            background: rgba(0, 245, 255, 0.1);
+            border: 1px solid rgba(0, 245, 255, 0.3);
+            border-radius: 25px;
+            color: #00f5ff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: rgba(0, 245, 255, 0.2);
+            border-color: #00f5ff;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 245, 255, 0.3);
+        }
+
+        .project-card {
+            transition: all 0.5s ease;
+        }
+
+        .project-card.hidden {
+            opacity: 0;
+            transform: scale(0.8);
+            pointer-events: none;
+            height: 0;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        /* Floating Labels for Contact Form */
+        .form-group {
+            position: relative;
+        }
+
+        .form-group.floating label {
+            position: absolute;
+            left: 1rem;
+            top: 1rem;
+            transition: all 0.3s ease;
+            pointer-events: none;
+            color: #b0b0b0;
+        }
+
+        .form-group.floating input:focus ~ label,
+        .form-group.floating input:not(:placeholder-shown) ~ label,
+        .form-group.floating textarea:focus ~ label,
+        .form-group.floating textarea:not(:placeholder-shown) ~ label {
+            top: -10px;
+            left: 0.5rem;
+            font-size: 0.85rem;
+            color: #00f5ff;
+            background: #0a0a0a;
+            padding: 0 0.5rem;
+        }
+
+        /* Success Animation */
+        .success-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: rgba(0, 245, 255, 0.95);
+            color: #000;
+            padding: 2rem 3rem;
+            border-radius: 20px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            z-index: 9999;
+            box-shadow: 0 10px 40px rgba(0, 245, 255, 0.5);
+            transition: transform 0.3s ease;
+        }
+
+        .success-message.show {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        /* Parallax Effect for Particles */
+        .particles {
+            will-change: transform;
+        }
+
+        /* Skills Grid & Cards with Glassmorphism */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .skill-card {
+            background: rgba(20, 20, 20, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 245, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 245, 255, 0.3);
+            background: var(--bg-elevated);
+            border-color: var(--primary-cyan);
+        }
+
+        .skill-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            display: block;
+        }
+
+        .skill-card h3 {
+            color: #00f5ff;
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+            text-align: center;
+        }
+
+        .skill-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        /* Projects Grid with Glassmorphism */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        /* Skill & Project Tags */
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: auto;
+            margin-bottom: 1rem;
+        }
+
+        .skill-progress {
+            width: calc(100% - 4rem);
+            height: 8px;
+            background: rgba(0, 245, 255, 0.1);
+            border-radius: 10px;
+            margin-top: auto;
+            overflow: hidden;
+            position: absolute;
+            bottom: 2rem;
+            left: 2rem;
+        }
+
+        .tag {
+            padding: 0.4rem 1rem;
+            background: rgba(0, 245, 255, 0.1);
+            border: 1px solid rgba(0, 245, 255, 0.2);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: #00f5ff;
+            transition: all 0.3s ease;
+        }
+
+        .tag:hover {
+            background: rgba(0, 245, 255, 0.2);
+            border-color: #00f5ff;
+        }
+
+        /* Project Detail Modal Styles */
+        .project-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            overflow-y: auto;
+            padding: 2rem;
+        }
+
+        .project-modal.show {
+            display: flex;
+        }
+
+        .project-modal-content {
+            background: #1a1a1a;
+            border-radius: 20px;
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 2px solid rgba(0, 245, 255, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 245, 255, 0.3);
+            position: relative;
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        .project-modal-header {
+            padding: 2rem 2rem 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 1px solid rgba(0, 245, 255, 0.1);
+        }
+
+        .project-modal-title-section {
+            flex: 1;
+        }
+
+        .project-modal-title {
+            font-size: 2rem;
+            color: #00f5ff;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .project-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+
+        .project-status.in-progress {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+        }
+
+        .project-status.completed {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: #10b981;
+        }
+
+        .project-status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .project-status.in-progress .project-status-dot {
+            background: #ef4444;
+        }
+
+        .project-status.completed .project-status-dot {
+            background: #10b981;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        .project-modal-year {
+            font-size: 1.5rem;
+            color: #0080ff;
+            font-weight: 700;
+            margin-left: 2rem;
+        }
+
+        .project-modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #00f5ff;
+            font-size: 2rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .project-modal-close:hover {
+            background: rgba(0, 245, 255, 0.2);
+            transform: rotate(90deg);
+        }
+
+        .project-modal-body {
+            padding: 2rem;
+        }
+
+        .project-github-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.8rem 1.5rem;
+            background: linear-gradient(135deg, rgba(0, 245, 255, 0.1), rgba(0, 128, 255, 0.1));
+            border: 2px solid rgba(0, 245, 255, 0.3);
+            border-radius: 50px;
+            color: #00f5ff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+        }
+
+        .project-github-btn:hover {
+            background: linear-gradient(135deg, rgba(0, 245, 255, 0.2), rgba(0, 128, 255, 0.2));
+            border-color: #00f5ff;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 245, 255, 0.4);
+        }
+
+        .project-github-btn svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .project-modal-thumbnail {
+            width: 100%;
+            height: 300px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(0, 245, 255, 0.2);
+        }
+
+        .project-modal-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .project-modal-description {
+            color: #b0b0b0;
+            line-height: 1.8;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .project-modal-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        /* Calendar Modal Styles */
+        .calendar-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .calendar-modal.show {
+            display: flex;
+        }
+
+        .calendar-content {
+            background: #1a1a1a;
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 900px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 2px solid rgba(0, 245, 255, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 245, 255, 0.3);
+            position: relative;
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .calendar-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #00f5ff;
+            font-size: 2rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .calendar-close:hover {
+            background: rgba(0, 245, 255, 0.2);
+            transform: rotate(90deg);
+        }
+
+        .calendar-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .calendar-header h2 {
+            color: #00f5ff;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .calendar-header p {
+            color: #b0b0b0;
+        }
+
+        .calendar-iframe {
+            width: 100%;
+            height: 600px;
+            border: none;
+            border-radius: 10px;
+        }
+
+        /* Project Card Improvements */
+        .project-card {
+            background: rgba(20, 20, 20, 0.6);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 245, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 245, 255, 0.3);
+            border-color: rgba(0, 245, 255, 0.5);
+        }
+
+        .project-content {
+            padding: 2rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .project-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #00f5ff;
+        }
+
+        .project-content p {
+            color: #b0b0b0;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .project-link {
+            display: inline-block;
+            margin-top: auto;
+            padding: 0.8rem 2rem;
+            background: linear-gradient(135deg, rgba(0, 245, 255, 0.1), rgba(0, 128, 255, 0.1));
+            border: 2px solid rgba(0, 245, 255, 0.3);
+            border-radius: 50px;
+            color: #00f5ff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .project-link:hover {
+            background: linear-gradient(135deg, rgba(0, 245, 255, 0.2), rgba(0, 128, 255, 0.2));
+            border-color: #00f5ff;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 245, 255, 0.4);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+
+            .work-with-me-btn {
+                display: none; /* Hide on mobile to save space */
+            }
+
+            .nav-center {
+                justify-content: flex-end;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                flex-direction: column;
+                background: rgba(10, 10, 10, 0.98);
+                width: 100%;
+                padding: 2rem;
+                transition: left 0.3s ease;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .hero-description {
+                font-size: 1rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+
+            .hero-content {
+                margin-top: 250px;
+            }
+
+            .model-container {
+                width: clamp(250px, 80vw, 400px);
+                height: clamp(250px, 80vw, 400px);
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .skills-grid,
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .calendar-content {
+                width: 95%;
+                padding: 1.5rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+            }
+
+            .chalk-border {
+                font-size: 0.7rem;
+                padding: 0.4rem 1rem;
+                letter-spacing: 2px;
+            }
+
+            .work-with-me-btn svg {
+                width: 20px;
+                height: 20px;
+            }
+        }
+
+        /* Touch Device Optimizations */
+        @media (hover: none) and (pointer: coarse) {
+            .btn:hover,
+            .project-card:hover,
+            .skill-card:hover,
+            .stat-item:hover {
+                transform: none;
+            }
+
+            .btn:active {
+                transform: scale(0.95);
+            }
+
+            .project-card:active,
+            .skill-card:active {
+                transform: translateY(-5px);
+            }
+        }
+
+        /* Improve tap targets for mobile */
+        @media (max-width: 768px) {
+            .nav-links a,
+            .btn,
+            .project-link,
+            .filter-btn {
+                min-height: 44px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">DataSci.Pro</div>
+            <div class="nav-center">
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <a href="#contact" class="work-with-me-btn">
+                <span>Work with Me</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 16 16 12 12 8"></polyline>
+                    <line x1="8" y1="12" x2="16" y2="12"></line>
+                </svg>
+            </a>
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Section with 3D Robotic Eye -->
+    <section id="home">
+        <div class="model-container">
+            <canvas id="roboticEye"></canvas>
+        </div>
+        <div class="particles" id="particles"></div>
+        <div class="hero-content">
+            <div class="chalk-border">Machine Learning and AI</div>
+            <h1 class="hero-title">From Complex Data<br>To Clear Decisions</h1>
+            <p class="hero-description">
+                Leveraging advanced analytics, machine learning, and AI to extract actionable insights 
+                and drive data-driven decision making for businesses worldwide.
+            </p>
+            <div class="cta-buttons">
+                <a href="#projects" class="btn btn-primary">View My Work</a>
+                <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="section-container">
+            <h2 class="section-title">About Me</h2>
+            <!-- ANN 3D Model Container -->
+            <div class="ann-model-container" style="width: 100%; max-width: 600px; height: 250px; margin: 2rem auto 1rem auto; position: relative; background: transparent; z-index: 1;">
+                <canvas id="annCanvas" style="width: 100%; height: 100%; display: block; position: relative; z-index: 2; border-radius: 8px;"></canvas>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>
+                        I'm a results-driven Data Scientist with expertise in statistical analysis, machine learning, 
+                        and predictive modeling. My passion lies in uncovering hidden patterns within data and 
+                        translating them into actionable business strategies.
+                    </p>
+                    <p>
+                        With a strong foundation in mathematics and computer science, I specialize in building 
+                        end-to-end machine learning pipelines, from data collection and preprocessing to model 
+                        deployment and monitoring in production environments.
+                    </p>
+                    <p>
+                        I believe in the power of data to transform businesses and improve lives, and I'm 
+                        committed to staying at the forefront of emerging technologies in AI and data science.
+                    </p>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-circle">
+                            <svg>
+                                <defs>
+                                    <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#00f5ff" />
+                                        <stop offset="100%" stop-color="#0080ff" />
+                                    </linearGradient>
+                                </defs>
+                                <circle cx="60" cy="60" r="54" class="stat-circle-bg"></circle>
+                                <circle cx="60" cy="60" r="54" class="stat-circle-progress" 
+                                        style="--progress: 271.43" data-percent="20"></circle>
+                            </svg>
+                            <div class="stat-number" data-count="5">0</div>
+                        </div>
+                        <div class="stat-label">Years Experience</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-circle">
+                            <svg>
+                                <defs>
+                                    <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#00f5ff" />
+                                        <stop offset="100%" stop-color="#0080ff" />
+                                    </linearGradient>
+                                </defs>
+                                <circle cx="60" cy="60" r="54" class="stat-circle-bg"></circle>
+                                <circle cx="60" cy="60" r="54" class="stat-circle-progress" 
+                                        style="--progress: 169.65" data-percent="50"></circle>
+                            </svg>
+                            <div class="stat-number" data-count="50">0</div>
+                        </div>
+                        <div class="stat-label">Projects Completed</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-circle">
+                            <svg>
+                                <defs>
+                                    <linearGradient id="gradient3" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#00f5ff" />
+                                        <stop offset="100%" stop-color="#0080ff" />
+                                    </linearGradient>
+                                </defs>
+                                <circle cx="60" cy="60" r="54" class="stat-circle-bg"></circle>
+                                <circle cx="60" cy="60" r="54" class="stat-circle-progress" 
+                                        style="--progress: 237.50" data-percent="30"></circle>
+                            </svg>
+                            <div class="stat-number" data-count="30">0</div>
+                        </div>
+                        <div class="stat-label">Happy Clients</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-circle">
+                            <svg>
+                                <defs>
+                                    <linearGradient id="gradient4" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#00f5ff" />
+                                        <stop offset="100%" stop-color="#0080ff" />
+                                    </linearGradient>
+                                </defs>
+                                <circle cx="60" cy="60" r="54" class="stat-circle-bg"></circle>
+                                <circle cx="60" cy="60" r="54" class="stat-circle-progress" 
+                                        style="--progress: 288.70" data-percent="15"></circle>
+                            </svg>
+                            <div class="stat-number" data-count="15">0</div>
+                        </div>
+                        <div class="stat-label">ML Models Deployed</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+        <div class="section-container">
+            <h2 class="section-title">Skills & Expertise</h2>
+            <p class="section-subtitle">Core competencies in data science and machine learning</p>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <div class="skill-icon">📊</div>
+                    <h3>Data Analysis</h3>
+                    <p>Expert in exploratory data analysis, statistical modeling, and data visualization to extract meaningful insights from complex datasets.</p>
+                    <div class="skill-tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">R</span>
+                        <span class="tag">SQL</span>
+                        <span class="tag">Pandas</span>
+                        <span class="tag">NumPy</span>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🤖</div>
+                    <h3>Machine Learning</h3>
+                    <p>Proficient in developing and deploying supervised and unsupervised learning models for classification, regression, and clustering tasks.</p>
+                    <div class="skill-tags">
+                        <span class="tag">Scikit-learn</span>
+                        <span class="tag">TensorFlow</span>
+                        <span class="tag">PyTorch</span>
+                        <span class="tag">XGBoost</span>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🧠</div>
+                    <h3>Deep Learning</h3>
+                    <p>Experience with neural networks, CNNs, RNNs, and transformer architectures for computer vision and NLP applications.</p>
+                    <div class="skill-tags">
+                        <span class="tag">Keras</span>
+                        <span class="tag">PyTorch</span>
+                        <span class="tag">BERT</span>
+                        <span class="tag">GANs</span>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">📈</div>
+                    <h3>Data Visualization</h3>
+                    <p>Creating compelling visual narratives through interactive dashboards and data-driven storytelling.</p>
+                    <div class="skill-tags">
+                        <span class="tag">Tableau</span>
+                        <span class="tag">Power BI</span>
+                        <span class="tag">Plotly</span>
+                        <span class="tag">Matplotlib</span>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">☁️</div>
+                    <h3>Cloud & Big Data</h3>
+                    <p>Deploying scalable ML solutions using cloud platforms and handling large-scale data processing.</p>
+                    <div class="skill-tags">
+                        <span class="tag">AWS</span>
+                        <span class="tag">Azure</span>
+                        <span class="tag">Spark</span>
+                        <span class="tag">Docker</span>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🔍</div>
+                    <h3>NLP & Text Analytics</h3>
+                    <p>Extracting insights from unstructured text data using advanced natural language processing techniques.</p>
+                    <div class="skill-tags">
+                        <span class="tag">NLTK</span>
+                        <span class="tag">spaCy</span>
+                        <span class="tag">Transformers</span>
+                        <span class="tag">GPT</span>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">⚡</div>
+                    <h3>Workflow Automation</h3>
+                    <p>Expert in n8n workflow automation, building powerful integrations and automated processes to streamline data pipelines and business operations.</p>
+                    <div class="skill-tags">
+                        <span class="tag">n8n</span>
+                        <span class="tag">API Integration</span>
+                        <span class="tag">Webhooks</span>
+                        <span class="tag">Automation</span>
+                        <span class="tag">Data Pipelines</span>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🔒</div>
+                    <h3>Cybersecurity</h3>
+                    <p>Skilled in identifying vulnerabilities, implementing security measures, and protecting data systems from cyber threats. Experience with ethical hacking and security best practices.</p>
+                    <div class="skill-tags">
+                        <span class="tag">Penetration Testing</span>
+                        <span class="tag">Network Security</span>
+                        <span class="tag">Encryption</span>
+                        <span class="tag">SIEM</span>
+                        <span class="tag">Risk Assessment</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+        <div class="section-container">
+            <h2 class="section-title">Featured Projects</h2>
+            <p class="section-subtitle">Real-world applications of data science and machine learning</p>
+            
+            <div class="projects-grid" id="projectsGrid">
+                <!-- AI Compliance Monitoring -->
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="assets/ai-compliance.webp" alt="AI Compliance Monitoring dashboard">
+                    </div>
+                    <div class="project-content">
+                        <h3>AI Compliance Monitoring</h3>
+                        <p>Comprehensive system for AI compliance monitoring, reporting, and integration with modular agent-based architecture. Features automated remediation, privacy-preserving technologies, and enterprise integrations with JIRA and QRadar.</p>
+                        <div class="skill-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">AI Ethics</span>
+                            <span class="tag">Enterprise Integration</span>
+                            <span class="tag">Automation</span>
+                        </div>
+                        <a href="#" class="project-link" data-project="ai-compliance">View Project →</a>
+                    </div>
+                </div>
+
+                <!-- Energy Usage Prediction -->
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="assets/energy-consumption.jpeg" alt="Energy usage prediction dashboard">
+                    </div>
+                    <div class="project-content">
+                        <h3>Energy Usage Prediction</h3>
+                        <p>Forecasting building-level energy consumption using advanced regression ensembles, feature engineering, and time-series modeling to drive sustainability initiatives.</p>
+                        <div class="skill-tags">
+                            <span class="tag">Machine Learning</span>
+                            <span class="tag">Energy Analytics</span>
+                            <span class="tag">Python</span>
+                            <span class="tag">Time Series</span>
+                        </div>
+                        <a href="#" class="project-link" data-project="energy-prediction">View Project →</a>
+                    </div>
+                </div>
+
+                <!-- MITRE-CORE -->
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="assets/mitre-core.png" alt="MITRE-CORE threat detection interface">
+                    </div>
+                    <div class="project-content">
+                        <h3>MITRE-CORE: Threat Detection Engine</h3>
+                        <p>Advanced cybersecurity analytics platform processing 300+ security events in under 2 minutes. Reduced false positives by 40% and investigation time by 70% through ML-powered correlation and MITRE ATT&CK framework integration.</p>
+                        <div class="skill-tags">
+                            <span class="tag">Scikit-learn</span>
+                            <span class="tag">NetworkX</span>
+                            <span class="tag">Cybersecurity</span>
+                            <span class="tag">ML</span>
+                        </div>
+                        <a href="#" class="project-link" data-project="mitre-core">View Project →</a>
+                    </div>
+                </div>
+
+                <!-- Fine-Tune LLM model (BERT) -->
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="assets/agentic.webp" alt="Fine-tuned BERT large language model visualization">
+                    </div>
+                    <div class="project-content">
+                        <h3>Fine-Tune LLM model (BERT)</h3>
+                        <p>End-to-end fine-tuning pipeline for BERT on domain-specific corpora, delivering high-accuracy intent classification and contextual understanding for downstream applications.</p>
+                        <div class="skill-tags">
+                            <span class="tag">BERT</span>
+                            <span class="tag">NLP</span>
+                            <span class="tag">Transfer Learning</span>
+                        </div>
+                        <a href="#" class="project-link" data-project="bert-finetune">View Project →</a>
+                    </div>
+                </div>
+
+                <!-- Amazon reviews Product Sentiment Analysis -->
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="assets/alexa-reviews.jpg" alt="Amazon reviews sentiment analysis dashboard">
+                    </div>
+                    <div class="project-content">
+                        <h3>Amazon reviews Product Sentiment Analysis</h3>
+                        <p>Analyzing Amazon customer feedback to uncover sentiment trends and product pain points, leveraging NLP pipelines, topic modeling, and interactive reporting.</p>
+                        <div class="skill-tags">
+                            <span class="tag">Sentiment Analysis</span>
+                            <span class="tag">Python</span>
+                            <span class="tag">NLP</span>
+                        </div>
+                        <a href="#" class="project-link" data-project="amazon-sentiment">View Project →</a>
+                    </div>
+                </div>
+
+                <!-- MalJpeg -->
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="assets/maljpeg.jpeg" alt="MalJpeg malware detection visualization">
+                    </div>
+                    <div class="project-content">
+                        <h3>MalJpeg</h3>
+                        <p>Deep learning-based malware detection framework converting malicious binaries into RGB imagery to identify obfuscated threats and improve SOC response times.</p>
+                        <div class="skill-tags">
+                            <span class="tag">Computer Vision</span>
+                            <span class="tag">Security</span>
+                            <span class="tag">Deep Learning</span>
+                        </div>
+                        <a href="#" class="project-link" data-project="maljpeg">View Project →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Preview Section -->
+    <section id="blog-preview" style="padding: 80px 5%; background: linear-gradient(180deg, #0a0a0a 0%, #0f0f0f 100%);">
+        <div class="section-container">
+            <h2 class="section-title">Latest Insights</h2>
+            <p class="section-subtitle">Exploring Data Science, AI, and Machine Learning</p>
+            
+            <div class="blog-preview-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2.5rem; margin-top: 3rem;">
+                <!-- Blog Preview Card 1 -->
+                <div class="blog-preview-card" style="background: rgba(20, 20, 20, 0.6); backdrop-filter: blur(20px); border-radius: 20px; overflow: hidden; border: 1px solid rgba(0, 245, 255, 0.1); transition: all 0.4s ease; cursor: pointer;" onmouseover="this.style.transform='translateY(-10px)'; this.style.borderColor='rgba(0, 245, 255, 0.5)'; this.style.boxShadow='0 15px 40px rgba(0, 245, 255, 0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(0, 245, 255, 0.1)'; this.style.boxShadow='0 8px 32px rgba(0, 0, 0, 0.3)';">
+                    <div style="width: 100%; height: 200px; background: linear-gradient(135deg, #00f5ff, #0080ff); display: flex; align-items: center; justify-content: center; font-size: 3.5rem;">
+                        📊
+                    </div>
+                    <div style="padding: 2rem;">
+                        <div style="display: flex; gap: 1rem; margin-bottom: 1rem; font-size: 0.9rem; color: #9ca3af;">
+                            <span>📅 Coming Soon</span>
+                            <span>⏱️ 5 min read</span>
+                        </div>
+                        <h3 style="font-size: 1.4rem; margin-bottom: 1rem; color: #00f5ff;">The Future of AI in Data Science</h3>
+                        <p style="color: #b0b0b0; line-height: 1.6; margin-bottom: 1.5rem;">Exploring how artificial intelligence is revolutionizing data analysis and predictive modeling...</p>
+                        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem;">
+                            <span class="tag">AI</span>
+                            <span class="tag">Machine Learning</span>
+                            <span class="tag">Data Science</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Blog Preview Card 2 -->
+                <div class="blog-preview-card" style="background: rgba(20, 20, 20, 0.6); backdrop-filter: blur(20px); border-radius: 20px; overflow: hidden; border: 1px solid rgba(0, 245, 255, 0.1); transition: all 0.4s ease; cursor: pointer;" onmouseover="this.style.transform='translateY(-10px)'; this.style.borderColor='rgba(0, 245, 255, 0.5)'; this.style.boxShadow='0 15px 40px rgba(0, 245, 255, 0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(0, 245, 255, 0.1)'; this.style.boxShadow='0 8px 32px rgba(0, 0, 0, 0.3)';">
+                    <div style="width: 100%; height: 200px; background: linear-gradient(135deg, #00f5ff, #0080ff); display: flex; align-items: center; justify-content: center; font-size: 3.5rem;">
+                        🤖
+                    </div>
+                    <div style="padding: 2rem;">
+                        <div style="display: flex; gap: 1rem; margin-bottom: 1rem; font-size: 0.9rem; color: #9ca3af;">
+                            <span>📅 Coming Soon</span>
+                            <span>⏱️ 8 min read</span>
+                        </div>
+                        <h3 style="font-size: 1.4rem; margin-bottom: 1rem; color: #00f5ff;">Building Scalable ML Pipelines</h3>
+                        <p style="color: #b0b0b0; line-height: 1.6; margin-bottom: 1.5rem;">Best practices for designing and deploying production-ready machine learning pipelines...</p>
+                        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem;">
+                            <span class="tag">MLOps</span>
+                            <span class="tag">DevOps</span>
+                            <span class="tag">Cloud</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Blog Preview Card 3 -->
+                <div class="blog-preview-card" style="background: rgba(20, 20, 20, 0.6); backdrop-filter: blur(20px); border-radius: 20px; overflow: hidden; border: 1px solid rgba(0, 245, 255, 0.1); transition: all 0.4s ease; cursor: pointer;" onmouseover="this.style.transform='translateY(-10px)'; this.style.borderColor='rgba(0, 245, 255, 0.5)'; this.style.boxShadow='0 15px 40px rgba(0, 245, 255, 0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(0, 245, 255, 0.1)'; this.style.boxShadow='0 8px 32px rgba(0, 0, 0, 0.3)';">
+                    <div style="width: 100%; height: 200px; background: linear-gradient(135deg, #00f5ff, #0080ff); display: flex; align-items: center; justify-content: center; font-size: 3.5rem;">
+                        ⚡
+                    </div>
+                    <div style="padding: 2rem;">
+                        <div style="display: flex; gap: 1rem; margin-bottom: 1rem; font-size: 0.9rem; color: #9ca3af;">
+                            <span>📅 Coming Soon</span>
+                            <span>⏱️ 6 min read</span>
+                        </div>
+                        <h3 style="font-size: 1.4rem; margin-bottom: 1rem; color: #00f5ff;">Automating Data Workflows</h3>
+                        <p style="color: #b0b0b0; line-height: 1.6; margin-bottom: 1.5rem;">Learn how to leverage automation for streamlining your data processing and analysis tasks...</p>
+                        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem;">
+                            <span class="tag">Automation</span>
+                            <span class="tag">n8n</span>
+                            <span class="tag">Workflows</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- View All Blogs Button -->
+            <div style="text-align: center; margin-top: 3rem;">
+                <a href="blog.html" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 0.8rem; padding: 1rem 2.5rem; font-size: 1.1rem; text-decoration: none;">
+                    View All Blogs
+                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="transition: transform 0.3s ease;">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="section-container">
+            <h2 class="section-title">Get In Touch</h2>
+            <p class="section-subtitle">Let's discuss how data science can transform your business</p>
+            <div class="contact-content">
+                <form class="contact-form" onsubmit="handleSubmit(event)">
+                    <div class="form-group floating">
+                        <input type="text" id="name" required placeholder=" ">
+                        <label for="name">Name</label>
+                    </div>
+                    <div class="form-group floating">
+                        <input type="email" id="email" required placeholder=" ">
+                        <label for="email">Email</label>
+                    </div>
+                    <div class="form-group floating">
+                        <textarea id="message" required placeholder=" "></textarea>
+                        <label for="message">Message</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="bookCallBtn" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.8rem;">
+                        <svg class="phone-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition: transform 0.3s ease;">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                        </svg>
+                        <span>Book a Call</span>
+                    </button>
+                </form>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <a href="https://github.com/rahulsingh1397" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit;">
+                            <svg height="48" aria-hidden="true" viewBox="0 0 16 16" version="1.1" width="48" style="fill: #00f5ff; margin-bottom: 0.5rem;">
+                                <path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"></path>
+                            </svg>
+                            <p style="color: #b0b0b0; margin-top: 0.5rem;">GitHub</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Detail Modal -->
+    <div class="project-modal" id="projectModal">
+        <div class="project-modal-content">
+            <button class="project-modal-close" id="closeProjectModal" aria-label="Close project details">&times;</button>
+            <div class="project-modal-header">
+                <div class="project-modal-title-section">
+                    <h2 class="project-modal-title" id="projectModalTitle">Project Title</h2>
+                    <div class="project-status completed" id="projectModalStatus">
+                        <span class="project-status-dot"></span>
+                        <span id="projectModalStatusText">Completed</span>
+                    </div>
+                </div>
+                <div class="project-modal-year" id="projectModalYear">2024</div>
+            </div>
+            <div class="project-modal-body">
+                <a href="#" class="project-github-btn" id="projectModalGithub" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                    View on GitHub
+                </a>
+                <div class="project-modal-thumbnail" id="projectModalThumbnail">
+                    <img src="" alt="Project thumbnail">
+                </div>
+                <div class="project-modal-description" id="projectModalDescription">
+                    Project description goes here...
+                </div>
+                <div class="project-modal-tags" id="projectModalTags">
+                    <!-- Tags will be inserted here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Calendar Modal -->
+    <div class="calendar-modal" id="calendarModal">
+        <div class="calendar-content">
+            <button class="calendar-close" id="closeCalendar" aria-label="Close calendar">&times;</button>
+            <div class="calendar-header">
+                <h2>Book a Clarity Call</h2>
+                <p>Select a date & time that works best for you</p>
+            </div>
+            <div class="calendar-iframe-container">
+                <!-- Placeholder for calendar integration (Calendly, Cal.com, or custom) -->
+                <div style="text-align: center; padding: 3rem; background: rgba(0, 245, 255, 0.05); border-radius: 10px; border: 2px dashed rgba(0, 245, 255, 0.3);">
+                    <h3 style="color: #00f5ff; margin-bottom: 1rem;">📅 Calendar Integration</h3>
+                    <p style="color: #b0b0b0; margin-bottom: 1.5rem;">This section will integrate with your preferred scheduling tool:</p>
+                    <ul style="list-style: none; padding: 0; color: #b0b0b0; text-align: left; max-width: 400px; margin: 0 auto;">
+                        <li style="margin-bottom: 0.5rem;">✓ Calendly</li>
+                        <li style="margin-bottom: 0.5rem;">✓ Cal.com</li>
+                        <li style="margin-bottom: 0.5rem;">✓ Google Calendar</li>
+                        <li style="margin-bottom: 0.5rem;">✓ Custom n8n Workflow</li>
+                    </ul>
+                    <p style="color: #00f5ff; margin-top: 1.5rem; font-size: 0.9rem;">Replace this placeholder with your booking widget embed code</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 DataSci.Pro. All rights reserved.</p>
+    </footer>
+
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
+    <script type="module">
+        import * as THREE from 'three';
+        import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+        
+
+        // Initialize 3D Scene for Robotic Eye
+        const container = document.querySelector('.model-container');
+        const canvas = document.getElementById('roboticEye');
+        
+        const scene = new THREE.Scene();
+        
+        // Camera settings matching reference (FOV: 110, position: 0, 1.5, 1)
+        const camera = new THREE.PerspectiveCamera(110, container.offsetWidth / container.offsetHeight, 0.5, 100);
+        camera.position.set(0, 1.5, 7);
+        
+        const renderer = new THREE.WebGLRenderer({ 
+            canvas: canvas, 
+            alpha: true, 
+            antialias: true 
+        });
+
+        renderer.setSize(container.offsetWidth, container.offsetHeight);
+        renderer.setClearColor(0x000000, 0);
+
+        // Lighting setup matching reference
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        scene.add(ambientLight);
+
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 2.5);
+        directionalLight.position.set(0, 10, 5);
+        scene.add(directionalLight);
+
+        const backLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        backLight.position.set(0, -5, -5);
+        scene.add(backLight);
+
+        const pointLight = new THREE.PointLight(0xffffff, 1.2, 100);
+        pointLight.position.set(0, 8, 0);
+        scene.add(pointLight);
+
+        const spotlight = new THREE.SpotLight(0xffffff, 2, 20, Math.PI / 6, 0.5, 2);
+        spotlight.position.set(0, 5, 3);
+        spotlight.target.position.set(0, 0.58, 0.1);
+        scene.add(spotlight);
+        scene.add(spotlight.target);
+
+        // OrbitControls setup
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.enableZoom = false;
+        controls.enablePan = false;
+        controls.enableRotate = false; // Prevent click-drag rotation; hover logic handles movement
+        controls.minDistance = controls.maxDistance = camera.position.length();
+
+        // Load GLTF Model
+        const loader = new GLTFLoader();
+        let roboticEyeModel = null;
+        let lightMaterial = null; // Store reference to light material for color cycling
+        
+        // Try to load the model from the reference path
+        loader.load(
+            './models/robotic_eye.glb',
+            (gltf) => {
+                const model = gltf.scene;
+                model.scale.set(50, 50, 50);
+                model.position.set(0, 0, 0);
+
+                // Apply materials similar to reference
+                model.traverse((child) => {
+                    if (!child.isMesh) return;
+
+                    const materials = Array.isArray(child.material) ? child.material : [child.material];
+
+                    // Lens material
+                    if (child.name === 'Lens_Low_Poly_0') {
+                        materials.forEach((mat) => {
+                            mat.transparent = false;
+                            mat.opacity = 0.3;
+                            mat.depthWrite = false;
+                            mat.metalness = 0.1;
+                            mat.roughness = 0.05;
+                            mat.side = THREE.DoubleSide;
+                            mat.color = new THREE.Color(0x000000);
+                        });
+                        return;
+                    }
+
+                    // Light material with emissive
+                    if (child.name === 'Light_Low_Poly_0') {
+                        materials.forEach((mat) => {
+                            // Solid blue emissive color
+                            mat.map = null;
+                            mat.emissiveMap = null;
+                            mat.emissive = new THREE.Color(0x0080ff); // Blue #0080ff
+                            mat.color = new THREE.Color('#252525'); // Black base - only emissive will show
+                            mat.emissiveIntensity = 3000.0;
+                            mat.metalness = 0.0; // Non-metallic for pure emissive glow
+                            mat.roughness = 1.0; // Rough for diffuse appearance
+                            mat.transparent = true;
+                            mat.opacity = 1.0;
+                            mat.side = THREE.DoubleSide;
+                            
+                            lightMaterial = mat;
+                        });
+                        return;
+                    }
+
+                    // Apply default material properties
+                    materials.forEach((mat) => {
+                        switch (mat.name) {
+                            case 'Camera_Plastic':
+                                mat.color = new THREE.Color('#252525');
+                                break;
+                            case 'Metal':
+                                mat.color = new THREE.Color('#C1C1C1');
+                                break;
+                            case 'Black_Plastic':
+                                mat.color = new THREE.Color('#3e3e3e');
+                                break;
+                            case 'Metal.001':
+                                mat.color = new THREE.Color('#C1C1C1');
+                                break;
+                            case 'Copper':
+                                mat.color = new THREE.Color('#fad0c0');
+                                break;
+                            case 'White_Plastic':
+                                mat.color = new THREE.Color('#000000');
+                                break;
+                            case "BezierCurve.006_0":
+                                mat.color = new THREE.Color("#ffffff");
+                                break;
+                            case 'Light':
+                                // Skip - handled by Light_Low_Poly_0 above
+                                break;
+                            case 'Camera_Lens':
+                                mat.color = new THREE.Color('#000000');
+                                mat.opacity = 0.5;
+                                break;
+                            case 'Camera_Lens.001':
+                                mat.color = new THREE.Color('#00f5ff');
+                                mat.opacity = 1.0;
+                                mat.transparent = false;
+                                break;
+                            default:
+                                mat.color = new THREE.Color(0x888ca0);
+                                mat.metalness = 0.9;
+                                mat.roughness = 0.2;
+                                mat.transparent = true;
+                                mat.opacity = 0.0;
+                                mat.side = THREE.FrontSide;
+                                break;
+                        }
+                    });
+                });
+
+                roboticEyeModel = model;
+                scene.add(model);
+                console.log('Robotic Eye Model loaded successfully');
+            },
+            undefined,
+            (error) => {
+                console.error('Error loading model:', error);
+                console.log('Falling back to procedural eye...');
+                createProceduralEye();
+            }
+        );
+
+
+        // Fallback: Create procedural eye if model fails to load
+        function createProceduralEye() {
+            const eyeGroup = new THREE.Group();
+
+            // Main eye sphere
+            const eyeGeometry = new THREE.SphereGeometry(1, 32, 32);
+            const eyeMaterial = new THREE.MeshStandardMaterial({ 
+                color: 0x2a2a2a,
+                metalness: 0.7,
+                roughness: 0.3
+            });
+            const eyeSphere = new THREE.Mesh(eyeGeometry, eyeMaterial);
+            eyeGroup.add(eyeSphere);
+
+            // Iris with cyan color
+            const irisGeometry = new THREE.CircleGeometry(0.4, 32);
+            const irisMaterial = new THREE.MeshBasicMaterial({ 
+                color: 0x00f5ff
+            });
+            const iris = new THREE.Mesh(irisGeometry, irisMaterial);
+            iris.position.z = 1.01;
+            eyeGroup.add(iris);
+
+            // Pupil
+            const pupilGeometry = new THREE.CircleGeometry(0.15, 32);
+            const pupilMaterial = new THREE.MeshBasicMaterial({ 
+                color: 0x000000
+            });
+            const pupil = new THREE.Mesh(pupilGeometry, pupilMaterial);
+            pupil.position.z = 1.02;
+            eyeGroup.add(pupil);
+
+            // Lens (transparent overlay)
+            const lensGeometry = new THREE.SphereGeometry(1.05, 32, 32);
+            const lensMaterial = new THREE.MeshStandardMaterial({ 
+                color: 0xffffff,
+                transparent: true,
+                opacity: 0.2,
+                metalness: 0.9,
+                roughness: 0.1
+            });
+            const lens = new THREE.Mesh(lensGeometry, lensMaterial);
+            eyeGroup.add(lens);
+
+            // Mechanical rings with cyan accent
+            for (let i = 0; i < 3; i++) {
+                const ringGeometry = new THREE.TorusGeometry(1.2 + (i * 0.15), 0.03, 16, 100);
+                const ringMaterial = new THREE.MeshStandardMaterial({ 
+                    color: i === 1 ? 0x00f5ff : 0x444444,
+                    metalness: 0.8,
+                    roughness: 0.2,
+                    emissive: i === 1 ? new THREE.Color(0x00f5ff) : new THREE.Color(0x000000),
+                    emissiveIntensity: i === 1 ? 0.3 : 0
+                });
+                const ring = new THREE.Mesh(ringGeometry, ringMaterial);
+                ring.rotation.x = Math.PI / 2;
+                eyeGroup.add(ring);
+            }
+
+            eyeGroup.position.set(0, 0, 0);
+            roboticEyeModel = eyeGroup;
+            scene.add(eyeGroup);
+        }
+
+        // Base rotation offset to make model look at center
+        const baseRotationX = -Math.PI / 10; // Tilt up to look at center
+        const baseRotationY = 0;
+        
+        // Mouse tracking - for robotic eye (with touch support)
+        const onMouseMove = (event) => {
+            const rect = container.getBoundingClientRect();
+            const mouseX = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+            const mouseY = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+            
+            if (roboticEyeModel) {
+                roboticEyeModel.rotation.y = baseRotationY + THREE.MathUtils.clamp(mouseX * Math.PI / 2.5, -Math.PI / 2.5, Math.PI / 2.5);
+                roboticEyeModel.rotation.x = baseRotationX + THREE.MathUtils.clamp(-mouseY * Math.PI / 2.5, -Math.PI / 2.5, Math.PI / 2.5);
+            }
+        };
+
+        // Touch tracking for robotic eye (mobile/tablet)
+        const onTouchMove = (event) => {
+            if (event.touches.length > 0) {
+                const touch = event.touches[0];
+                const rect = container.getBoundingClientRect();
+                const touchX = ((touch.clientX - rect.left) / rect.width) * 2 - 1;
+                const touchY = -((touch.clientY - rect.top) / rect.height) * 2 + 1;
+                
+                if (roboticEyeModel) {
+                    roboticEyeModel.rotation.y = baseRotationY + THREE.MathUtils.clamp(touchX * Math.PI / 2.5, -Math.PI / 2.5, Math.PI / 2.5);
+                    roboticEyeModel.rotation.x = baseRotationX + THREE.MathUtils.clamp(-touchY * Math.PI / 2.5, -Math.PI / 2.5, Math.PI / 2.5);
+                }
+            }
+        };
+
+        window.addEventListener('mousemove', onMouseMove);
+        window.addEventListener('touchmove', onTouchMove, { passive: true });
+
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        // Handle window resize
+        function handleResize() {
+            const width = container.offsetWidth;
+            const height = container.offsetHeight;
+            
+            renderer.setSize(width, height);
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+        }
+        
+        window.addEventListener('resize', handleResize);
+        handleResize();
+
+        // ============================================
+        // ANN MODEL - About Me Section
+        // ============================================
+        const annContainer = document.querySelector('.ann-model-container');
+        const annCanvas = document.getElementById('annCanvas');
+        
+        console.log('ANN Container found:', !!annContainer);
+        console.log('ANN Canvas found:', !!annCanvas);
+        console.log('ANN Container in DOM:', document.contains(annContainer));
+        console.log('ANN Canvas in DOM:', document.contains(annCanvas));
+        console.log('ANN Container dimensions:', annContainer.offsetWidth, 'x', annContainer.offsetHeight);
+        
+        if (annContainer && annCanvas) {
+            console.log('Initializing ANN Three.js scene...');
+            const annScene = new THREE.Scene();
+            
+            // Camera for ANN model - matching reference image (side view angle)
+            const annCamera = new THREE.PerspectiveCamera(
+                50, 
+                annContainer.offsetWidth / annContainer.offsetHeight, 
+                0.1, 
+                1000
+            );
+            // Position camera for horizontal side view like reference image
+            annCamera.position.set(35, 10, 1); // Side view position
+            annCamera.lookAt(10, 12, 5); // Look at center of model
+            
+            // Renderer for ANN
+            const annRenderer = new THREE.WebGLRenderer({ 
+                canvas: annCanvas, 
+                alpha: true, 
+                antialias: true 
+            });
+            const annWidth = annContainer.offsetWidth;
+            const annHeight = annContainer.offsetHeight;
+            annRenderer.setSize(annWidth, annHeight);
+            annRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            annRenderer.setClearColor(0x000000, 0); // Transparent background
+            
+            console.log('ANN Canvas initialized:', annWidth, 'x', annHeight);
+            console.log('ANN Renderer created with transparent background');
+            
+            // Lighting for ANN - positioned on opposite side
+            const annAmbient = new THREE.AmbientLight(0xffffff, 0.5);
+            annScene.add(annAmbient);
+            
+            const annDirectional = new THREE.DirectionalLight(0xffffff, 2.5);
+            annDirectional.position.set(0, 10, -5); // Flipped Z from 5 to -5
+            annScene.add(annDirectional);
+            
+            const annBackLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            annBackLight.position.set(0, -5, 5); // Flipped Z from -5 to 5
+            annScene.add(annBackLight);
+            
+            const annPointLight = new THREE.PointLight(0xffffff, 1.2, 100);
+            annPointLight.position.set(0, 8, 0); // Kept at center
+            annScene.add(annPointLight);
+            
+            const annSpotlight = new THREE.SpotLight(0xffffff, 2, 20, Math.PI / 6, 0.5, 2);
+            annSpotlight.position.set(0, 10, -3); // Flipped Z from 3 to -3
+            annSpotlight.target.position.set(0, 0.58, -0.1); // Flipped Z from 0.1 to -0.1
+            annScene.add(annSpotlight);
+            annScene.add(annSpotlight.target);
+            
+            // OrbitControls for ANN
+            const annControls = new OrbitControls(annCamera, annRenderer.domElement);
+            annControls.enableDamping = false;
+            annControls.enableZoom = false;
+            annControls.enablePan = false;
+            annControls.autoRotate = false; // Keep model static unless controls enabled
+            annControls.enabled = false; // Disable orbit controls to prevent manual rotation
+            
+            // Load ANN Model
+            let annModel = null;
+            const annLoader = new GLTFLoader();
+            
+            // Test cube removed - model is loading successfully
+            
+            console.log('Starting ANN model load from: ./models/artificial_neural_network_ann/scene.gltf');
+            
+            annLoader.load(
+                './models/artificial_neural_network_ann/scene.gltf',
+                (gltf) => {
+                    console.log('ANN Model GLTF loaded successfully, processing...');
+                    annModel = gltf.scene;
+                    
+                    // Center and scale the model
+                    const box = new THREE.Box3().setFromObject(annModel);
+                    const size = new THREE.Vector3();
+                    box.getSize(size);
+                    const center = new THREE.Vector3();
+                    box.getCenter(center);
+                    annModel.position.sub(center);
+                    
+                    const maxDim = Math.max(size.x, size.y, size.z) || 1;
+                    const targetSize = 50.0; // 5x larger (was 10.0, now 50.0)
+                    const scale = targetSize / maxDim;
+                    annModel.scale.setScalar(scale);
+                    
+                    // Position model at origin
+                    annModel.position.set(20, 6, 12);
+                    
+                    console.log('  Original max dimension:', maxDim.toFixed(2));
+                    console.log('  Target size:', targetSize);
+                    console.log('  Applied scale:', scale.toFixed(4));
+                    
+                    // Apply website color palette (Cyan/Blue) - matching site theme
+                    annModel.traverse((child) => {
+                        if (child.isMesh) {
+                            const name = child.name.toLowerCase();
+                            console.log('  Found mesh:', child.name, '| Type:', child.geometry.type);
+                            
+                            // Hide base/platform meshes
+                            if (name.includes('base') || name.includes('plane') || name.includes('floor') || name.includes('ground') || name.includes('platform')) {
+                                child.visible = false;
+                                console.log('  ✗ Hidden base mesh:', child.name);
+                            } else {
+                                // Detect node vs edge based on geometry type or name
+                                // Spheres/Icosahedrons = nodes (glass/white), Cylinders/Lines = edges (cyan/blue)
+                                const geometryType = child.geometry.type.toLowerCase();
+                                const isNode = geometryType.includes('sphere') || 
+                                              geometryType.includes('icosahedron') || 
+                                              name.includes('node') || 
+                                              name.includes('sphere') ||
+                                              name.includes('ball') ||
+                                              name.includes('neuron');
+                                
+                                // Create MeshStandardMaterial with reduced density (wireframe option)
+                                const newMaterial = new THREE.MeshStandardMaterial({
+                                    side: THREE.DoubleSide,
+                                    wireframe: false, // Set to true for lower density mesh look
+                                    transparent: true
+                                });
+                                
+                                if (isNode) {
+                                    // Nodes: Cyan/Blue gradient from "Work with Me" button
+                                    newMaterial.color = new THREE.Color(0x00f5ff); // Cyan #00f5ff (website primary)
+                                    newMaterial.metalness = 0.6;
+                                    newMaterial.roughness = 0.3;
+                                    newMaterial.emissive = new THREE.Color(0x0080ff); // Blue #0080ff emissive glow
+                                    newMaterial.emissiveIntensity = 1; // Strong glow for nodes
+                                    newMaterial.opacity = 0.95; // Solid appearance
+                                    console.log('  ✓ Applied CYAN/BLUE node:', child.name);
+                                } else {
+                                    // Edges/Connections: White/Silver
+                                    newMaterial.color = new THREE.Color(0xFFFFFF); // Pure white
+                                    newMaterial.metalness = 0.8;
+                                    newMaterial.roughness = 0.2;
+                                    newMaterial.emissive = new THREE.Color(0x0080ff); // Subtle white glow
+                                    newMaterial.emissiveIntensity = 0.3;
+                                    newMaterial.opacity = 0.50; // Slightly transparent
+                                    console.log('  ✓ Applied WHITE edge:', child.name);
+                                }
+                                
+                                child.material = newMaterial;
+                                child.material.needsUpdate = true;
+                            }
+                        }
+                    });
+                    
+                    annScene.add(annModel);
+                    annControls.target.set(0, 0, 0); // Center point for navigation
+                    annControls.update();
+                    
+                    console.log('✓ ANN Model loaded and added to About Me section');
+                    console.log('  Model size:', size.x.toFixed(2), size.y.toFixed(2), size.z.toFixed(2));
+                    console.log('  Scale factor:', scale.toFixed(2));
+                    console.log('  Scene children:', annScene.children.length);
+                },
+                (progress) => {
+                    if (progress.total > 0) {
+                        const percent = (progress.loaded / progress.total * 100).toFixed(0);
+                        console.log('Loading ANN model... ' + percent + '%');
+                    }
+                },
+                (error) => {
+                    console.error('✗ Error loading ANN model:', error);
+                    console.error('  Error details:', error.message || error);
+                }
+            );
+            
+            // ANN Model Auto-Rotation Configuration
+            // Control rotation axis here:
+            const annRotationSpeed = 0.001; // Rotation speed (increase for faster, decrease for slower)
+            const annRotateX = false; // Set to true to rotate around X-axis (pitch)
+            const annRotateY = false;  // Set to true to rotate around Y-axis (yaw) - DEFAULT
+            const annRotateZ = true; // Set to true to rotate around Z-axis (roll)
+            
+            // Animation loop for ANN with rotation
+            function animateANN() {
+                requestAnimationFrame(animateANN);
+                
+                // Apply rotation if model is loaded
+                if (annModel) {
+                    if (annRotateX) annModel.rotation.x += annRotationSpeed;
+                    if (annRotateY) annModel.rotation.y += annRotationSpeed;
+                    if (annRotateZ) annModel.rotation.z += annRotationSpeed;
+                }
+                
+                annRenderer.render(annScene, annCamera);
+            }
+            animateANN();
+            
+            // Handle resize for ANN
+            function handleANNResize() {
+                const width = annContainer.offsetWidth;
+                const height = annContainer.offsetHeight;
+                annRenderer.setSize(width, height);
+                annCamera.aspect = width / height;
+                annCamera.updateProjectionMatrix();
+            }
+            
+            window.addEventListener('resize', handleANNResize);
+            handleANNResize();
+            
+            // Force immediate render for debugging
+            annRenderer.render(annScene, annCamera);
+            console.log('✓ Force rendered scene with test cube');
+        } else {
+            console.error('✗ ANN container or canvas not found!');
+            console.error('  Container:', annContainer);
+            console.error('  Canvas:', annCanvas);
+        }
+
+        // Particle animation (reduced to 30 for performance)
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 30; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 20 + 's';
+            particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
+            particle.style.willChange = 'transform, opacity'; // Performance hint
+            particlesContainer.appendChild(particle);
+        }
+
+        // File upload handling for README files
+        const fileInput = document.getElementById('fileInput');
+        const uploadStatus = document.getElementById('uploadStatus');
+        const projectsGrid = document.getElementById('projectsGrid');
+
+        if (fileInput) {
+            fileInput.addEventListener('change', async (e) => {
+            const files = e.target.files;
+            if (files.length === 0) return;
+
+            uploadStatus.textContent = 'Processing files...';
+            projectsGrid.innerHTML = ''; // Clear existing projects
+
+            for (let file of files) {
+                try {
+                    const content = await file.text();
+                    const project = parseReadme(content, file.name);
+                    if (project) {
+                        addProjectCard(project);
+                    }
+                } catch (error) {
+                    console.error('Error reading file:', error);
+                }
+            }
+
+            uploadStatus.textContent = `✓ Successfully loaded ${files.length} project(s)`;
+            setTimeout(() => {
+                uploadStatus.textContent = '';
+            }, 3000);
+            });
+        }
+
+        function parseReadme(content, filename) {
+            // Extract project information from README
+            const lines = content.split('\n');
+            let title = filename.replace(/README\.md|\.md|\.txt/gi, '').trim() || 'Untitled Project';
+            let description = '';
+            let githubUrl = '';
+            let tags = [];
+
+            // Try to find title (first heading)
+            for (let line of lines) {
+                if (line.startsWith('# ')) {
+                    title = line.replace('# ', '').trim();
+                    break;
+                }
+            }
+
+            // Find description (first paragraph after title)
+            let foundTitle = false;
+            for (let line of lines) {
+                if (line.startsWith('# ')) {
+                    foundTitle = true;
+                    continue;
+                }
+                if (foundTitle && line.trim() && !line.startsWith('#') && !line.startsWith('[')) {
+                    description = line.trim();
+                    if (description.length > 200) {
+                        description = description.substring(0, 197) + '...';
+                    }
+                    break;
+                }
+            }
+
+            // Find GitHub URL
+            const urlMatch = content.match(/https:\/\/github\.com\/[^\s\)]+/);
+            if (urlMatch) {
+                githubUrl = urlMatch[0];
+            }
+
+            // Extract tags (look for badges, technology mentions)
+            const techKeywords = ['python', 'tensorflow', 'pytorch', 'scikit-learn', 'pandas', 'numpy', 
+                                'react', 'javascript', 'docker', 'aws', 'azure', 'sql', 'keras',
+                                'nlp', 'cv', 'ml', 'ai', 'data', 'deep learning'];
+            
+            const contentLower = content.toLowerCase();
+            techKeywords.forEach(keyword => {
+                if (contentLower.includes(keyword)) {
+                    tags.push(keyword);
+                }
+            });
+            tags = tags.slice(0, 4); // Limit to 4 tags
+
+            return {
+                title,
+                description: description || 'A data science project showcasing advanced analytics and machine learning techniques.',
+                githubUrl: githubUrl || '#',
+                tags: tags.length > 0 ? tags : ['Python', 'ML', 'Data Science']
+            };
+        }
+
+        function addProjectCard(project) {
+            const icons = ['📊', '🤖', '🧠', '📈', '🔍', '💡', '⚡', '🎯'];
+            const randomIcon = icons[Math.floor(Math.random() * icons.length)];
+
+            const card = document.createElement('div');
+            card.className = 'project-card';
+            card.innerHTML = `
+                <div class="project-image">${randomIcon}</div>
+                <div class="project-content">
+                    <h3>${project.title}</h3>
+                    <p>${project.description}</p>
+                    <div class="skill-tags">
+                        ${project.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                    </div>
+                    <a href="${project.githubUrl}" class="project-link" target="_blank" rel="noopener noreferrer">
+                        ${project.githubUrl !== '#' ? 'View on GitHub →' : 'View More →'}
+                    </a>
+                </div>
+            `;
+            projectsGrid.appendChild(card);
+        }
+
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
+        
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Section title mouse tracking effect - for both hero title and section titles
+        function setupTitleMouseTracking(selector) {
+            const title = document.querySelector(selector);
+            if (title) {
+                // Function to update title position
+                function updateTitlePosition(clientX, clientY) {
+                    const rect = title.getBoundingClientRect();
+                    let x = ((clientX - rect.left) / rect.width) * 100;
+                    let y = ((clientY - rect.top) / rect.height) * 100;
+                    
+                    // Clamp values to keep spotlight within text boundaries at all times
+                    x = Math.max(0, Math.min(100, x));
+                    y = Math.max(0, Math.min(100, y));
+                    
+                    title.style.setProperty('--mouse-x', `${x}%`);
+                    title.style.setProperty('--mouse-y', `${y}%`);
+                }
+                
+                // Mouse support
+                document.addEventListener('mousemove', (e) => {
+                    updateTitlePosition(e.clientX, e.clientY);
+                });
+                
+                // Touch support
+                document.addEventListener('touchmove', (e) => {
+                    if (e.touches.length > 0) {
+                        updateTitlePosition(e.touches[0].clientX, e.touches[0].clientY);
+                    }
+                }, { passive: true });
+            }
+        }
+
+        // Setup tracking for hero title
+        setupTitleMouseTracking('.hero-title');
+        
+        // Setup tracking for section titles
+        document.querySelectorAll('.section-title').forEach(title => {
+            setupTitleMouseTracking(`#${title.closest('section').id} .section-title`);
+        });
+
+        // Button hover effect for primary button
+        const btnPrimary = document.querySelector('.btn-primary');
+        if (btnPrimary) {
+            // Set initial position
+            btnPrimary.style.setProperty('--spotlight-x', '50%');
+            btnPrimary.style.setProperty('--spotlight-y', '50%');
+            
+            // Handle mouse movement
+            const handleMouseMove = (e) => {
+                const rect = btnPrimary.getBoundingClientRect();
+                
+                // Calculate position as percentage (0-100) relative to the button
+                let x = ((e.clientX - rect.left) / rect.width) * 100;
+                let y = ((e.clientY - rect.top) / rect.height) * 100;
+                
+                // Clamp values to keep the spotlight within the button
+                x = Math.max(0, Math.min(100, x));
+                y = Math.max(0, Math.min(100, y));
+                
+                // Update CSS variables for spotlight position
+                btnPrimary.style.setProperty('--spotlight-x', `${x}%`);
+                btnPrimary.style.setProperty('--spotlight-y', `${y}%`);
+                
+                // Slightly increase opacity when hovering
+                btnPrimary.style.setProperty('--spotlight-opacity', '0.6');
+            };
+            
+            // Reset to center and lower opacity when mouse leaves
+            const handleMouseLeave = () => {
+                btnPrimary.style.setProperty('--spotlight-x', '50%');
+                btnPrimary.style.setProperty('--spotlight-y', '50%');
+                btnPrimary.style.setProperty('--spotlight-opacity', '0.4');
+            };
+            
+            // Touch event handlers
+            const handleTouchMove = (e) => {
+                const touch = e.touches[0];
+                const rect = btnPrimary.getBoundingClientRect();
+                const x = ((touch.clientX - rect.left) / rect.width) * 100;
+                const y = ((touch.clientY - rect.top) / rect.height) * 100;
+                
+                btnPrimary.style.setProperty('--spotlight-x', `${x}%`);
+                btnPrimary.style.setProperty('--spotlight-y', `${y}%`);
+                btnPrimary.style.setProperty('--spotlight-opacity', '0.6');
+            };
+            
+            const handleTouchEnd = () => {
+                btnPrimary.style.setProperty('--spotlight-x', '50%');
+                btnPrimary.style.setProperty('--spotlight-y', '50%');
+                btnPrimary.style.setProperty('--spotlight-opacity', '0.4');
+            };
+            
+            // Add event listeners for both mouse and touch
+            btnPrimary.addEventListener('mousemove', handleMouseMove);
+            btnPrimary.addEventListener('mouseleave', handleMouseLeave);
+            btnPrimary.addEventListener('touchmove', handleTouchMove, { passive: true });
+            btnPrimary.addEventListener('touchend', handleTouchEnd, { passive: true });
+            
+            // Clean up event listeners if the button is removed from DOM
+            // This prevents memory leaks in single-page applications
+            const cleanup = () => {
+                btnPrimary.removeEventListener('mousemove', handleMouseMove);
+                btnPrimary.removeEventListener('mouseleave', handleMouseLeave);
+                btnPrimary.removeEventListener('touchmove', handleTouchMove);
+                btnPrimary.removeEventListener('touchend', handleTouchEnd);
+            };
+            
+            // Optional: Add a cleanup function if needed
+            // For example, if this is a single-page application
+            // and the button might be removed from the DOM
+            if (typeof window !== 'undefined') {
+                window.addEventListener('beforeunload', cleanup);
+            }
+        }
+
+        // Form submission - now opens calendar modal
+        function handleSubmit(e) {
+            e.preventDefault();
+            // Open calendar modal instead of showing alert
+            const calendarModal = document.getElementById('calendarModal');
+            if (calendarModal) {
+                calendarModal.classList.add('show');
+                document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            }
+        }
+
+        // Calendar modal controls
+        const calendarModal = document.getElementById('calendarModal');
+        const closeCalendar = document.getElementById('closeCalendar');
+        const bookCallBtn = document.getElementById('bookCallBtn');
+
+        if (closeCalendar) {
+            closeCalendar.addEventListener('click', () => {
+                calendarModal.classList.remove('show');
+                document.body.style.overflow = ''; // Restore scrolling
+            });
+        }
+
+        // Close modal when clicking outside
+        if (calendarModal) {
+            calendarModal.addEventListener('click', (e) => {
+                if (e.target === calendarModal) {
+                    calendarModal.classList.remove('show');
+                    document.body.style.overflow = '';
+                }
+            });
+        }
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && calendarModal && calendarModal.classList.contains('show')) {
+                calendarModal.classList.remove('show');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Illuminate "Machine Learning and AI" when cursor is in horizontal center of page
+        const chalkBorder = document.querySelector('.chalk-border');
+        if (chalkBorder) {
+            // Function to check if position is in center
+            function checkCenterPosition(clientX) {
+                const centerX = window.innerWidth / 2;
+                const distanceX = Math.abs(clientX - centerX);
+                const threshold = 300;
+                
+                if (distanceX < threshold) {
+                    chalkBorder.classList.add('bright');
+                } else {
+                    chalkBorder.classList.remove('bright');
+                }
+            }
+            
+            // Mouse support
+            document.addEventListener('mousemove', (e) => {
+                checkCenterPosition(e.clientX);
+            });
+            
+            // Touch support
+            document.addEventListener('touchmove', (e) => {
+                if (e.touches.length > 0) {
+                    checkCenterPosition(e.touches[0].clientX);
+                }
+            }, { passive: true });
+            
+            // Remove bright class when touch ends
+            document.addEventListener('touchend', () => {
+                chalkBorder.classList.remove('bright');
+            }, { passive: true });
+        }
+
+        // Initialize with default project if no files uploaded
+        if (projectsGrid && projectsGrid.children.length === 1) {
+            // Keep the default project
+        }
+
+        // ============================================
+        // TOUCH SUPPORT FOR INTERACTIVE ELEMENTS
+        // ============================================
+        
+        // Blog Preview Cards
+        const blogPreviewCardsTouch = document.querySelectorAll('.blog-preview-card');
+        blogPreviewCardsTouch.forEach(card => {
+            card.addEventListener('touchstart', () => {
+                card.style.transform = 'translateY(-10px)';
+                card.style.borderColor = 'rgba(0, 245, 255, 0.5)';
+                card.style.boxShadow = '0 15px 40px rgba(0, 245, 255, 0.3)';
+            }, { passive: true });
+            
+            card.addEventListener('touchend', () => {
+                card.style.transform = 'translateY(0)';
+                card.style.borderColor = 'rgba(0, 245, 255, 0.1)';
+                card.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.3)';
+            }, { passive: true });
+        });
+        
+        // Project Cards
+        const projectCardsTouch = document.querySelectorAll('.project-card');
+        projectCardsTouch.forEach(card => {
+            card.addEventListener('touchstart', () => {
+                card.style.transform = 'translateY(-10px)';
+                card.style.boxShadow = '0 15px 40px rgba(0, 245, 255, 0.3)';
+            }, { passive: true });
+            
+            card.addEventListener('touchend', () => {
+                card.style.transform = 'translateY(0)';
+                card.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.3)';
+            }, { passive: true });
+        });
+        
+        // All Buttons (primary and secondary)
+        const allButtonsTouch = document.querySelectorAll('.btn, .btn-primary, .btn-secondary, .project-link');
+        allButtonsTouch.forEach(btn => {
+            // Store original transform for restoration
+            let originalTransform = '';
+            
+            btn.addEventListener('touchstart', () => {
+                originalTransform = btn.style.transform || '';
+                btn.style.transform = 'translateY(-3px)';
+            }, { passive: true });
+            
+            btn.addEventListener('touchend', () => {
+                btn.style.transform = originalTransform;
+            }, { passive: true });
+        });
+        
+        // Skill Cards
+        const skillCardsTouch = document.querySelectorAll('.skill-card');
+        skillCardsTouch.forEach(card => {
+            card.addEventListener('touchstart', () => {
+                card.style.transform = 'translateY(-5px)';
+            }, { passive: true });
+            
+            card.addEventListener('touchend', () => {
+                card.style.transform = 'translateY(0)';
+            }, { passive: true });
+        });
+
+        // ============================================
+        // PROJECT DETAIL MODAL FUNCTIONALITY
+        // ============================================
+        
+        // Project data with details for each project
+        const projectData = {
+            'ai-compliance': {
+                title: 'AI Compliance Monitoring',
+                description: 'This project provides a modular, agent-based architecture for monitoring AI systems and ensuring compliance with various regulations and ethical standards. The system is designed to be extensible, allowing for easy integration with existing enterprise systems and adaptation to different compliance requirements. Key components include Data Discovery Agent, Monitoring Agent, Privacy-Preserving Agent, Remediation Agent, and Reporting Agent. Features integration with JIRA, QRadar, Slack, and email for comprehensive compliance management.',
+                status: 'completed',
+                year: '2024',
+                github: 'https://github.com/rahulsingh1397/AI_Compliance',
+                image: 'assets/ai-compliance.webp',
+                tags: ['Python', 'AI Ethics', 'Enterprise Integration', 'Automation']
+            },
+            'energy-prediction': {
+                title: 'Energy Usage Prediction',
+                description: 'Forecasting building-level energy consumption using advanced regression ensembles, feature engineering, and time-series modeling to drive sustainability initiatives. The system analyzes historical energy consumption patterns, weather data, and building characteristics to predict future energy needs with high accuracy, enabling proactive energy management and cost optimization.',
+                status: 'completed',
+                year: '2023',
+                github: 'https://github.com/rahulsingh1397/Predicting_Energy_Consumption',
+                image: 'assets/energy-consumption.jpeg',
+                tags: ['Machine Learning', 'Energy Analytics', 'Python', 'Time Series']
+            },
+            'mitre-core': {
+                title: 'MITRE-CORE: Advanced Threat Detection & Correlation Engine',
+                description: 'MITRE-CORE is an advanced cybersecurity analytics platform designed to detect and correlate security alerts into meaningful attack chains using the MITRE ATT&CK framework. The system processes raw security events, applies machine learning techniques to identify patterns, and visualizes potential Advanced Persistent Threat (APT) campaigns. Features include alert correlation, MITRE ATT&CK mapping, anomaly detection, visual analytics, and high performance processing of hundreds of alerts in minutes with high accuracy. Reduces false positives by 40% and investigation time by 70%.',
+                status: 'completed',
+                year: '2024',
+                github: 'https://github.com/rahulsingh1397/Mitre-Core',
+                image: 'assets/mitre-core.png',
+                tags: ['Scikit-learn', 'NetworkX', 'Cybersecurity', 'ML']
+            },
+            'bert-finetune': {
+                title: 'Fine-Tune LLM model (BERT)',
+                description: 'End-to-end fine-tuning pipeline for BERT on domain-specific corpora, delivering high-accuracy intent classification and contextual understanding for downstream applications. The project includes custom tokenization, data augmentation techniques, and hyperparameter optimization to achieve state-of-the-art performance on specialized NLP tasks.',
+                status: 'completed',
+                year: '2023',
+                github: 'https://github.com/rahulsingh1397/Fine_tune_Bert',
+                image: 'assets/agentic.webp',
+                tags: ['BERT', 'NLP', 'Transfer Learning']
+            },
+            'amazon-sentiment': {
+                title: 'Amazon Reviews Product Sentiment Analysis',
+                description: 'Analyzing Amazon customer feedback to uncover sentiment trends and product pain points, leveraging NLP pipelines, topic modeling, and interactive reporting. The system processes thousands of reviews to extract actionable insights about product quality, customer satisfaction, and areas for improvement, helping businesses make data-driven product decisions.',
+                status: 'completed',
+                year: '2023',
+                github: 'https://github.com/rahulsingh1397/Amazon_reviews_sentiment_analysis',
+                image: 'assets/alexa-reviews.jpg',
+                tags: ['Sentiment Analysis', 'Python', 'NLP']
+            },
+            'maljpeg': {
+                title: 'MalJpeg',
+                description: 'Deep learning-based malware detection framework converting malicious binaries into RGB imagery to identify obfuscated threats and improve SOC response times. The innovative approach uses computer vision techniques to detect malware patterns that traditional signature-based methods miss, providing an additional layer of security for enterprise environments.',
+                status: 'completed',
+                year: '2024',
+                github: 'https://github.com/rahulsingh1397/MalJPEG',
+                image: 'assets/maljpeg.jpeg',
+                tags: ['Computer Vision', 'Security', 'Deep Learning']
+            }
+        };
+
+        // Get modal elements
+        const projectModal = document.getElementById('projectModal');
+        const closeProjectModalBtn = document.getElementById('closeProjectModal');
+        const projectModalTitle = document.getElementById('projectModalTitle');
+        const projectModalStatus = document.getElementById('projectModalStatus');
+        const projectModalStatusText = document.getElementById('projectModalStatusText');
+        const projectModalYear = document.getElementById('projectModalYear');
+        const projectModalGithub = document.getElementById('projectModalGithub');
+        const projectModalThumbnail = document.getElementById('projectModalThumbnail');
+        const projectModalDescription = document.getElementById('projectModalDescription');
+        const projectModalTags = document.getElementById('projectModalTags');
+
+        // Function to open project modal
+        function openProjectModal(projectId) {
+            const project = projectData[projectId];
+            if (!project) return;
+
+            // Populate modal with project data
+            projectModalTitle.textContent = project.title;
+            projectModalYear.textContent = project.year;
+            projectModalDescription.textContent = project.description;
+            projectModalGithub.href = project.github;
+            
+            // Set thumbnail image
+            const thumbnailImg = projectModalThumbnail.querySelector('img');
+            thumbnailImg.src = project.image;
+            thumbnailImg.alt = project.title;
+
+            // Set status
+            projectModalStatus.className = `project-status ${project.status}`;
+            projectModalStatusText.textContent = project.status === 'completed' ? 'Completed' : 'In Progress';
+
+            // Populate tags
+            projectModalTags.innerHTML = '';
+            project.tags.forEach(tag => {
+                const tagElement = document.createElement('span');
+                tagElement.className = 'tag';
+                tagElement.textContent = tag;
+                projectModalTags.appendChild(tagElement);
+            });
+
+            // Show modal
+            projectModal.classList.add('show');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        // Function to close project modal
+        function closeProjectModal() {
+            projectModal.classList.remove('show');
+            document.body.style.overflow = ''; // Restore scrolling
+        }
+
+        // Add click event listeners to all project links
+        document.querySelectorAll('.project-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const projectId = link.getAttribute('data-project');
+                openProjectModal(projectId);
+            });
+        });
+
+        // Close modal when clicking the close button
+        closeProjectModalBtn.addEventListener('click', closeProjectModal);
+
+        // Close modal when clicking outside the modal content
+        projectModal.addEventListener('click', (e) => {
+            if (e.target === projectModal) {
+                closeProjectModal();
+            }
+        });
+
+        // Close modal when pressing Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && projectModal.classList.contains('show')) {
+                closeProjectModal();
+            }
+        });
+
+        // ============================================
+        // SCROLL REVEAL ANIMATIONS (Intersection Observer)
+        // ============================================
+        const revealElements = document.querySelectorAll('section, .skill-card, .project-card, .stat-item');
+        
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('reveal', 'active');
+                    
+                    // Animate stat circles if they're stat items
+                    if (entry.target.classList.contains('stat-item')) {
+                        // Small delay to ensure element is visible
+                        setTimeout(() => {
+                            animateStatCircle(entry.target);
+                        }, 100);
+                    }
+                } 
+            });
+        }, {
+            threshold: 0.1,  // Lower threshold for earlier trigger
+            rootMargin: '0px 0px -20px 0px'
+        });
+
+        revealElements.forEach(el => {
+            el.classList.add('reveal');
+            revealObserver.observe(el);
+        });
+
+        // ============================================
+        // ANIMATED STAT CIRCLES AND COUNTERS
+        // ============================================
+        function animateStatCircle(statItem) {
+            const circle = statItem.querySelector('.stat-circle-progress');
+            const numberElement = statItem.querySelector('.stat-number');
+            
+            if (!circle || !numberElement) return;
+            
+            // Check if already animated
+            if (numberElement.dataset.animated === 'true') return;
+            numberElement.dataset.animated = 'true';
+            
+            // Animate circle
+            circle.classList.add('animated');
+            
+            // Animate counter
+            const targetNumber = parseInt(numberElement.getAttribute('data-count'));
+            const duration = 1500; // 1.5 seconds for faster animation
+            const startTime = performance.now();
+            
+            function updateCounter(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                // Easing function for smooth animation
+                const easeOutCubic = 1 - Math.pow(1 - progress, 3);
+                const currentNumber = Math.floor(targetNumber * easeOutCubic);
+                
+                numberElement.textContent = currentNumber + '+';
+                
+                if (progress < 1) {
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    numberElement.textContent = targetNumber + '+';
+                }
+            }
+            
+            // Start animation immediately
+            numberElement.textContent = '0+';
+            requestAnimationFrame(updateCounter);
+        }
+
+        // ============================================
+        // PARALLAX EFFECT FOR PARTICLES
+        // ============================================
+        let scrollY = 0;
+        window.addEventListener('scroll', () => {
+            scrollY = window.scrollY;
+            if (particlesContainer) {
+                particlesContainer.style.transform = `translateY(${scrollY * 0.5}px)`;
+            }
+        });
+
+        // ============================================
+        // THEME TOGGLE (DISABLED)
+        // ============================================
+        // Temporarily disabled - uncomment to enable theme toggle
+        /*
+        const themeToggle = document.createElement('button');
+        themeToggle.className = 'theme-toggle';
+        themeToggle.innerHTML = `
+            <span class="moon-icon">🌙</span>
+            <span class="sun-icon">☀️</span>
+        `;
+        themeToggle.title = 'Toggle Theme';
+        themeToggle.setAttribute('aria-label', 'Toggle dark/light mode');
+        document.body.appendChild(themeToggle);
+
+        // Check for saved theme preference or use system preference
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+        const currentTheme = localStorage.getItem('theme');
+
+        // Set initial theme
+        if (currentTheme === 'dark' || (!currentTheme && prefersDarkScheme.matches)) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        }
+
+        // Toggle theme function
+        function toggleTheme() {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+            localStorage.setItem('theme', isDark ? 'light' : 'dark');
+            
+            // Add animation
+            themeToggle.style.transform = 'scale(1.2) rotate(360deg)';
+            setTimeout(() => {
+                themeToggle.style.transform = 'scale(1) rotate(0deg)';
+            }, 300);
+        }
+
+        // Add click event
+        themeToggle.addEventListener('click', toggleTheme);
+
+        // Listen for system theme changes
+        prefersDarkScheme.addListener((e) => {
+            if (!localStorage.getItem('theme')) {
+                document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+            }
+        });
+        */
+
+        // ============================================
+        // PROJECT FILTERING
+        // ============================================
+        const projectsSection = document.querySelector('#projects .section-container');
+        const filterContainer = document.createElement('div');
+        filterContainer.className = 'project-filters';
+        filterContainer.innerHTML = `
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="ai">AI/ML</button>
+            <button class="filter-btn" data-filter="data">Data Science</button>
+            <button class="filter-btn" data-filter="automation">Automation</button>
+        `;
+        projectsSection.insertBefore(filterContainer, projectsGrid);
+
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const projectCards = document.querySelectorAll('.project-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const filter = btn.dataset.filter;
+                
+                // Update active button
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // Filter projects
+                projectCards.forEach(card => {
+                    const cardText = card.textContent.toLowerCase();
+                    const shouldShow = filter === 'all' || 
+                        (filter === 'ai' && (cardText.includes('ai') || cardText.includes('machine learning') || cardText.includes('ml'))) ||
+                        (filter === 'data' && (cardText.includes('data') || cardText.includes('analytics'))) ||
+                        (filter === 'automation' && cardText.includes('automat'));
+                    
+                    if (shouldShow) {
+                        card.classList.remove('hidden');
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
+            });
+        });
+
+        // ============================================
+        // CONTACT FORM FLOATING LABELS & ANIMATION
+        // ============================================
+        const formGroups = document.querySelectorAll('.form-group');
+        formGroups.forEach(group => {
+            group.classList.add('floating');
+            const input = group.querySelector('input, textarea');
+            if (input) {
+                input.setAttribute('placeholder', ' ');
+            }
+        });
+
+        // Success message animation
+        const contactForm = document.querySelector('.contact-form');
+        const originalSubmitHandler = window.handleSubmit;
+        
+        window.handleSubmit = function(e) {
+            e.preventDefault();
+            
+            // Create success message
+            const successMsg = document.createElement('div');
+            successMsg.className = 'success-message';
+            successMsg.textContent = '✓ Message Sent Successfully!';
+            document.body.appendChild(successMsg);
+            
+            setTimeout(() => successMsg.classList.add('show'), 100);
+            setTimeout(() => {
+                successMsg.classList.remove('show');
+                setTimeout(() => successMsg.remove(), 300);
+            }, 2000);
+            
+            e.target.reset();
+        };
+
+        // ============================================
+        // LAZY LOADING FOR 3D MODEL
+        // ============================================
+        const modelObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Model already loads on page load, but this sets up future optimization
+                    modelObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        if (container) {
+            modelObserver.observe(container);
+        }
+
+        // ============================================
+        // SKILL PROGRESS BARS
+        // ============================================
+        const skillCards = document.querySelectorAll('.skill-card');
+        const skillLevels = [95, 90, 85, 88, 92, 87, 83]; // Proficiency levels for each skill (7 skills now)
+        
+        skillCards.forEach((card, index) => {
+            const progressContainer = document.createElement('div');
+            progressContainer.className = 'skill-progress';
+            const progressBar = document.createElement('div');
+            progressBar.className = 'skill-progress-bar';
+            progressBar.dataset.level = skillLevels[index] || 85;
+            progressContainer.appendChild(progressBar);
+            card.appendChild(progressContainer);
+        });
+
+        // Animate progress bars when they come into view
+        const progressObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const progressBar = entry.target.querySelector('.skill-progress-bar');
+                    if (progressBar && !progressBar.classList.contains('animate')) {
+                        setTimeout(() => {
+                            progressBar.style.width = progressBar.dataset.level + '%';
+                            progressBar.classList.add('animate');
+                        }, 300);
+                    }
+                    progressObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.3 });
+
+        skillCards.forEach(card => progressObserver.observe(card));
+
+        console.log('✨ All enhancements loaded successfully!');
+    </script>
+</body>
+</html>
