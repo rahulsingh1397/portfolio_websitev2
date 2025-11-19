@@ -1010,6 +1010,196 @@
             border-color: #00f5ff;
         }
 
+        /* Project Detail Modal Styles */
+        .project-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            overflow-y: auto;
+            padding: 2rem;
+        }
+
+        .project-modal.show {
+            display: flex;
+        }
+
+        .project-modal-content {
+            background: #1a1a1a;
+            border-radius: 20px;
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 2px solid rgba(0, 245, 255, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 245, 255, 0.3);
+            position: relative;
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        .project-modal-header {
+            padding: 2rem 2rem 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 1px solid rgba(0, 245, 255, 0.1);
+        }
+
+        .project-modal-title-section {
+            flex: 1;
+        }
+
+        .project-modal-title {
+            font-size: 2rem;
+            color: #00f5ff;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .project-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+
+        .project-status.in-progress {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+        }
+
+        .project-status.completed {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: #10b981;
+        }
+
+        .project-status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .project-status.in-progress .project-status-dot {
+            background: #ef4444;
+        }
+
+        .project-status.completed .project-status-dot {
+            background: #10b981;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        .project-modal-year {
+            font-size: 1.5rem;
+            color: #0080ff;
+            font-weight: 700;
+            margin-left: 2rem;
+        }
+
+        .project-modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #00f5ff;
+            font-size: 2rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .project-modal-close:hover {
+            background: rgba(0, 245, 255, 0.2);
+            transform: rotate(90deg);
+        }
+
+        .project-modal-body {
+            padding: 2rem;
+        }
+
+        .project-github-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.8rem 1.5rem;
+            background: linear-gradient(135deg, rgba(0, 245, 255, 0.1), rgba(0, 128, 255, 0.1));
+            border: 2px solid rgba(0, 245, 255, 0.3);
+            border-radius: 50px;
+            color: #00f5ff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+        }
+
+        .project-github-btn:hover {
+            background: linear-gradient(135deg, rgba(0, 245, 255, 0.2), rgba(0, 128, 255, 0.2));
+            border-color: #00f5ff;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 245, 255, 0.4);
+        }
+
+        .project-github-btn svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .project-modal-thumbnail {
+            width: 100%;
+            height: 300px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(0, 245, 255, 0.2);
+        }
+
+        .project-modal-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .project-modal-description {
+            color: #b0b0b0;
+            line-height: 1.8;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .project-modal-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
         /* Calendar Modal Styles */
         .calendar-modal {
             display: none;
@@ -1236,21 +1426,6 @@
             .calendar-content {
                 width: 95%;
                 padding: 1.5rem;
-            }
-
-            .calendar-iframe {
-                height: 500px;
-            }
-
-            .project-content {
-                padding: 1.5rem;
-            }
-        }
-
-        /* Enhanced Mobile Optimization */
-        @media (max-width: 480px) {
-            .hero-title {
-                font-size: 2rem;
             }
 
             .section-title {
@@ -1581,7 +1756,7 @@
                             <span class="tag">Enterprise Integration</span>
                             <span class="tag">Automation</span>
                         </div>
-                        <a href="https://github.com/rahulsingh1397/AI_Compliance" class="project-link" target="_blank" rel="noopener noreferrer">View Project →</a>
+                        <a href="#" class="project-link" data-project="ai-compliance">View Project →</a>
                     </div>
                 </div>
 
@@ -1599,7 +1774,7 @@
                             <span class="tag">Python</span>
                             <span class="tag">Time Series</span>
                         </div>
-                        <a href="https://github.com/rahulsingh1397/Predicting_Energy_Consumption" class="project-link" target="_blank" rel="noopener noreferrer">View Project →</a>
+                        <a href="#" class="project-link" data-project="energy-prediction">View Project →</a>
                     </div>
                 </div>
 
@@ -1617,7 +1792,7 @@
                             <span class="tag">Cybersecurity</span>
                             <span class="tag">ML</span>
                         </div>
-                        <a href="https://github.com/rahulsingh1397/Mitre-Core" class="project-link" target="_blank" rel="noopener noreferrer">View Project →</a>
+                        <a href="#" class="project-link" data-project="mitre-core">View Project →</a>
                     </div>
                 </div>
 
@@ -1634,7 +1809,7 @@
                             <span class="tag">NLP</span>
                             <span class="tag">Transfer Learning</span>
                         </div>
-                        <a href="https://github.com/rahulsingh1397/Fine_tune_Bert" class="project-link" target="_blank" rel="noopener noreferrer">View Project →</a>
+                        <a href="#" class="project-link" data-project="bert-finetune">View Project →</a>
                     </div>
                 </div>
 
@@ -1651,7 +1826,7 @@
                             <span class="tag">Python</span>
                             <span class="tag">NLP</span>
                         </div>
-                        <a href="https://github.com/rahulsingh1397/Amazon_reviews_sentiment_analysis" class="project-link" target="_blank" rel="noopener noreferrer">View Project →</a>
+                        <a href="#" class="project-link" data-project="amazon-sentiment">View Project →</a>
                     </div>
                 </div>
 
@@ -1668,7 +1843,7 @@
                             <span class="tag">Security</span>
                             <span class="tag">Deep Learning</span>
                         </div>
-                        <a href="https://github.com/rahulsingh1397/MalJPEG" class="project-link" target="_blank" rel="noopener noreferrer">View Project →</a>
+                        <a href="#" class="project-link" data-project="maljpeg">View Project →</a>
                     </div>
                 </div>
             </div>
@@ -1794,6 +1969,40 @@
             </div>
         </div>
     </section>
+
+    <!-- Project Detail Modal -->
+    <div class="project-modal" id="projectModal">
+        <div class="project-modal-content">
+            <button class="project-modal-close" id="closeProjectModal" aria-label="Close project details">&times;</button>
+            <div class="project-modal-header">
+                <div class="project-modal-title-section">
+                    <h2 class="project-modal-title" id="projectModalTitle">Project Title</h2>
+                    <div class="project-status completed" id="projectModalStatus">
+                        <span class="project-status-dot"></span>
+                        <span id="projectModalStatusText">Completed</span>
+                    </div>
+                </div>
+                <div class="project-modal-year" id="projectModalYear">2024</div>
+            </div>
+            <div class="project-modal-body">
+                <a href="#" class="project-github-btn" id="projectModalGithub" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                    View on GitHub
+                </a>
+                <div class="project-modal-thumbnail" id="projectModalThumbnail">
+                    <img src="" alt="Project thumbnail">
+                </div>
+                <div class="project-modal-description" id="projectModalDescription">
+                    Project description goes here...
+                </div>
+                <div class="project-modal-tags" id="projectModalTags">
+                    <!-- Tags will be inserted here -->
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Calendar Modal -->
     <div class="calendar-modal" id="calendarModal">
@@ -2766,6 +2975,146 @@
             card.addEventListener('touchend', () => {
                 card.style.transform = 'translateY(0)';
             }, { passive: true });
+        });
+
+        // ============================================
+        // PROJECT DETAIL MODAL FUNCTIONALITY
+        // ============================================
+        
+        // Project data with details for each project
+        const projectData = {
+            'ai-compliance': {
+                title: 'AI Compliance Monitoring',
+                description: 'This project provides a modular, agent-based architecture for monitoring AI systems and ensuring compliance with various regulations and ethical standards. The system is designed to be extensible, allowing for easy integration with existing enterprise systems and adaptation to different compliance requirements. Key components include Data Discovery Agent, Monitoring Agent, Privacy-Preserving Agent, Remediation Agent, and Reporting Agent. Features integration with JIRA, QRadar, Slack, and email for comprehensive compliance management.',
+                status: 'completed',
+                year: '2024',
+                github: 'https://github.com/rahulsingh1397/AI_Compliance',
+                image: 'assets/ai-compliance.webp',
+                tags: ['Python', 'AI Ethics', 'Enterprise Integration', 'Automation']
+            },
+            'energy-prediction': {
+                title: 'Energy Usage Prediction',
+                description: 'Forecasting building-level energy consumption using advanced regression ensembles, feature engineering, and time-series modeling to drive sustainability initiatives. The system analyzes historical energy consumption patterns, weather data, and building characteristics to predict future energy needs with high accuracy, enabling proactive energy management and cost optimization.',
+                status: 'completed',
+                year: '2023',
+                github: 'https://github.com/rahulsingh1397/Predicting_Energy_Consumption',
+                image: 'assets/energy-consumption.jpeg',
+                tags: ['Machine Learning', 'Energy Analytics', 'Python', 'Time Series']
+            },
+            'mitre-core': {
+                title: 'MITRE-CORE: Advanced Threat Detection & Correlation Engine',
+                description: 'MITRE-CORE is an advanced cybersecurity analytics platform designed to detect and correlate security alerts into meaningful attack chains using the MITRE ATT&CK framework. The system processes raw security events, applies machine learning techniques to identify patterns, and visualizes potential Advanced Persistent Threat (APT) campaigns. Features include alert correlation, MITRE ATT&CK mapping, anomaly detection, visual analytics, and high performance processing of hundreds of alerts in minutes with high accuracy. Reduces false positives by 40% and investigation time by 70%.',
+                status: 'completed',
+                year: '2024',
+                github: 'https://github.com/rahulsingh1397/Mitre-Core',
+                image: 'assets/mitre-core.png',
+                tags: ['Scikit-learn', 'NetworkX', 'Cybersecurity', 'ML']
+            },
+            'bert-finetune': {
+                title: 'Fine-Tune LLM model (BERT)',
+                description: 'End-to-end fine-tuning pipeline for BERT on domain-specific corpora, delivering high-accuracy intent classification and contextual understanding for downstream applications. The project includes custom tokenization, data augmentation techniques, and hyperparameter optimization to achieve state-of-the-art performance on specialized NLP tasks.',
+                status: 'completed',
+                year: '2023',
+                github: 'https://github.com/rahulsingh1397/Fine_tune_Bert',
+                image: 'assets/agentic.webp',
+                tags: ['BERT', 'NLP', 'Transfer Learning']
+            },
+            'amazon-sentiment': {
+                title: 'Amazon Reviews Product Sentiment Analysis',
+                description: 'Analyzing Amazon customer feedback to uncover sentiment trends and product pain points, leveraging NLP pipelines, topic modeling, and interactive reporting. The system processes thousands of reviews to extract actionable insights about product quality, customer satisfaction, and areas for improvement, helping businesses make data-driven product decisions.',
+                status: 'completed',
+                year: '2023',
+                github: 'https://github.com/rahulsingh1397/Amazon_reviews_sentiment_analysis',
+                image: 'assets/alexa-reviews.jpg',
+                tags: ['Sentiment Analysis', 'Python', 'NLP']
+            },
+            'maljpeg': {
+                title: 'MalJpeg',
+                description: 'Deep learning-based malware detection framework converting malicious binaries into RGB imagery to identify obfuscated threats and improve SOC response times. The innovative approach uses computer vision techniques to detect malware patterns that traditional signature-based methods miss, providing an additional layer of security for enterprise environments.',
+                status: 'completed',
+                year: '2024',
+                github: 'https://github.com/rahulsingh1397/MalJPEG',
+                image: 'assets/maljpeg.jpeg',
+                tags: ['Computer Vision', 'Security', 'Deep Learning']
+            }
+        };
+
+        // Get modal elements
+        const projectModal = document.getElementById('projectModal');
+        const closeProjectModalBtn = document.getElementById('closeProjectModal');
+        const projectModalTitle = document.getElementById('projectModalTitle');
+        const projectModalStatus = document.getElementById('projectModalStatus');
+        const projectModalStatusText = document.getElementById('projectModalStatusText');
+        const projectModalYear = document.getElementById('projectModalYear');
+        const projectModalGithub = document.getElementById('projectModalGithub');
+        const projectModalThumbnail = document.getElementById('projectModalThumbnail');
+        const projectModalDescription = document.getElementById('projectModalDescription');
+        const projectModalTags = document.getElementById('projectModalTags');
+
+        // Function to open project modal
+        function openProjectModal(projectId) {
+            const project = projectData[projectId];
+            if (!project) return;
+
+            // Populate modal with project data
+            projectModalTitle.textContent = project.title;
+            projectModalYear.textContent = project.year;
+            projectModalDescription.textContent = project.description;
+            projectModalGithub.href = project.github;
+            
+            // Set thumbnail image
+            const thumbnailImg = projectModalThumbnail.querySelector('img');
+            thumbnailImg.src = project.image;
+            thumbnailImg.alt = project.title;
+
+            // Set status
+            projectModalStatus.className = `project-status ${project.status}`;
+            projectModalStatusText.textContent = project.status === 'completed' ? 'Completed' : 'In Progress';
+
+            // Populate tags
+            projectModalTags.innerHTML = '';
+            project.tags.forEach(tag => {
+                const tagElement = document.createElement('span');
+                tagElement.className = 'tag';
+                tagElement.textContent = tag;
+                projectModalTags.appendChild(tagElement);
+            });
+
+            // Show modal
+            projectModal.classList.add('show');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        // Function to close project modal
+        function closeProjectModal() {
+            projectModal.classList.remove('show');
+            document.body.style.overflow = ''; // Restore scrolling
+        }
+
+        // Add click event listeners to all project links
+        document.querySelectorAll('.project-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const projectId = link.getAttribute('data-project');
+                openProjectModal(projectId);
+            });
+        });
+
+        // Close modal when clicking the close button
+        closeProjectModalBtn.addEventListener('click', closeProjectModal);
+
+        // Close modal when clicking outside the modal content
+        projectModal.addEventListener('click', (e) => {
+            if (e.target === projectModal) {
+                closeProjectModal();
+            }
+        });
+
+        // Close modal when pressing Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && projectModal.classList.contains('show')) {
+                closeProjectModal();
+            }
         });
 
         // ============================================
