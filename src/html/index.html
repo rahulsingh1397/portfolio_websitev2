@@ -1745,7 +1745,7 @@
                 <!-- AI Compliance Monitoring -->
                 <div class="project-card">
                     <div class="project-image">
-                        <img src="assets/ai-compliance.webp" alt="AI Compliance Monitoring dashboard">
+                        <img src="../assets/images/ai-compliance.webp" alt="AI Compliance Monitoring dashboard">
                     </div>
                     <div class="project-content">
                         <h3>AI Compliance Monitoring</h3>
@@ -1757,13 +1757,14 @@
                             <span class="tag">Automation</span>
                         </div>
                         <a href="#" class="project-link" data-project="ai-compliance">View Project →</a>
+                        <a href="https://github.com/rahulsingh1397/AI_Compliance" class="project-link" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
                     </div>
                 </div>
 
                 <!-- Energy Usage Prediction -->
                 <div class="project-card">
                     <div class="project-image">
-                        <img src="assets/energy-consumption.jpeg" alt="Energy usage prediction dashboard">
+                        <img src="../assets/images/energy-consumption.jpeg" alt="Energy usage prediction dashboard">
                     </div>
                     <div class="project-content">
                         <h3>Energy Usage Prediction</h3>
@@ -1775,13 +1776,14 @@
                             <span class="tag">Time Series</span>
                         </div>
                         <a href="#" class="project-link" data-project="energy-prediction">View Project →</a>
+                        <a href="https://github.com/rahulsingh1397/Predicting_Energy_Consumption" class="project-link" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
                     </div>
                 </div>
 
                 <!-- MITRE-CORE -->
                 <div class="project-card">
                     <div class="project-image">
-                        <img src="assets/mitre-core.png" alt="MITRE-CORE threat detection interface">
+                        <img src="../assets/images/mitre-core.png" alt="MITRE-CORE threat detection interface">
                     </div>
                     <div class="project-content">
                         <h3>MITRE-CORE: Threat Detection Engine</h3>
@@ -1793,13 +1795,14 @@
                             <span class="tag">ML</span>
                         </div>
                         <a href="#" class="project-link" data-project="mitre-core">View Project →</a>
+                        <a href="https://github.com/rahulsingh1397/Mitre-Core" class="project-link" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
                     </div>
                 </div>
 
                 <!-- Fine-Tune LLM model (BERT) -->
                 <div class="project-card">
                     <div class="project-image">
-                        <img src="assets/agentic.webp" alt="Fine-tuned BERT large language model visualization">
+                        <img src="../assets/images/agentic.webp" alt="Fine-tuned BERT large language model visualization">
                     </div>
                     <div class="project-content">
                         <h3>Fine-Tune LLM model (BERT)</h3>
@@ -1810,13 +1813,14 @@
                             <span class="tag">Transfer Learning</span>
                         </div>
                         <a href="#" class="project-link" data-project="bert-finetune">View Project →</a>
+                        <a href="https://github.com/rahulsingh1397/Fine_tune_Bert" class="project-link" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
                     </div>
                 </div>
 
                 <!-- Amazon reviews Product Sentiment Analysis -->
                 <div class="project-card">
                     <div class="project-image">
-                        <img src="assets/alexa-reviews.jpg" alt="Amazon reviews sentiment analysis dashboard">
+                        <img src="../assets/images/alexa-reviews.jpg" alt="Amazon reviews sentiment analysis dashboard">
                     </div>
                     <div class="project-content">
                         <h3>Amazon reviews Product Sentiment Analysis</h3>
@@ -1827,13 +1831,14 @@
                             <span class="tag">NLP</span>
                         </div>
                         <a href="#" class="project-link" data-project="amazon-sentiment">View Project →</a>
+                        <a href="https://github.com/rahulsingh1397/Amazon_reviews_sentiment_analysis" class="project-link" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
                     </div>
                 </div>
 
                 <!-- MalJpeg -->
                 <div class="project-card">
                     <div class="project-image">
-                        <img src="assets/maljpeg.jpeg" alt="MalJpeg malware detection visualization">
+                        <img src="../assets/images/maljpeg.jpeg" alt="MalJpeg malware detection visualization">
                     </div>
                     <div class="project-content">
                         <h3>MalJpeg</h3>
@@ -1844,6 +1849,7 @@
                             <span class="tag">Deep Learning</span>
                         </div>
                         <a href="#" class="project-link" data-project="maljpeg">View Project →</a>
+                        <a href="https://github.com/rahulsingh1397/MalJPEG" class="project-link" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
                     </div>
                 </div>
             </div>
@@ -2105,7 +2111,7 @@
         
         // Try to load the model from the reference path
         loader.load(
-            './models/robotic_eye.glb',
+            '/models/robotic_eye.glb',
             (gltf) => {
                 const model = gltf.scene;
                 model.scale.set(50, 50, 50);
@@ -2410,10 +2416,10 @@
             
             // Test cube removed - model is loading successfully
             
-            console.log('Starting ANN model load from: ./models/artificial_neural_network_ann/scene.gltf');
+            console.log('Starting ANN model load from: /models/artificial_neural_network_ann/scene.gltf');
             
             annLoader.load(
-                './models/artificial_neural_network_ann/scene.gltf',
+                '/models/artificial_neural_network_ann/scene.gltf',
                 (gltf) => {
                     console.log('ANN Model GLTF loaded successfully, processing...');
                     annModel = gltf.scene;
@@ -2989,7 +2995,7 @@
                 status: 'completed',
                 year: '2024',
                 github: 'https://github.com/rahulsingh1397/AI_Compliance',
-                image: 'assets/ai-compliance.webp',
+                image: '../assets/images/ai-compliance.webp',
                 tags: ['Python', 'AI Ethics', 'Enterprise Integration', 'Automation']
             },
             'energy-prediction': {
@@ -2998,7 +3004,7 @@
                 status: 'completed',
                 year: '2023',
                 github: 'https://github.com/rahulsingh1397/Predicting_Energy_Consumption',
-                image: 'assets/energy-consumption.jpeg',
+                image: '../assets/images/energy-consumption.jpeg',
                 tags: ['Machine Learning', 'Energy Analytics', 'Python', 'Time Series']
             },
             'mitre-core': {
@@ -3007,7 +3013,7 @@
                 status: 'completed',
                 year: '2024',
                 github: 'https://github.com/rahulsingh1397/Mitre-Core',
-                image: 'assets/mitre-core.png',
+                image: '../assets/images/mitre-core.png',
                 tags: ['Scikit-learn', 'NetworkX', 'Cybersecurity', 'ML']
             },
             'bert-finetune': {
@@ -3016,7 +3022,7 @@
                 status: 'completed',
                 year: '2023',
                 github: 'https://github.com/rahulsingh1397/Fine_tune_Bert',
-                image: 'assets/agentic.webp',
+                image: '../assets/images/agentic.webp',
                 tags: ['BERT', 'NLP', 'Transfer Learning']
             },
             'amazon-sentiment': {
@@ -3025,7 +3031,7 @@
                 status: 'completed',
                 year: '2023',
                 github: 'https://github.com/rahulsingh1397/Amazon_reviews_sentiment_analysis',
-                image: 'assets/alexa-reviews.jpg',
+                image: '../assets/images/alexa-reviews.jpg',
                 tags: ['Sentiment Analysis', 'Python', 'NLP']
             },
             'maljpeg': {
@@ -3034,7 +3040,7 @@
                 status: 'completed',
                 year: '2024',
                 github: 'https://github.com/rahulsingh1397/MalJPEG',
-                image: 'assets/maljpeg.jpeg',
+                image: '../assets/images/maljpeg.jpeg',
                 tags: ['Computer Vision', 'Security', 'Deep Learning']
             }
         };
@@ -3094,8 +3100,11 @@
         // Add click event listeners to all project links
         document.querySelectorAll('.project-link').forEach(link => {
             link.addEventListener('click', (e) => {
-                e.preventDefault();
                 const projectId = link.getAttribute('data-project');
+                if (!projectId) {
+                    return;
+                }
+                e.preventDefault();
                 openProjectModal(projectId);
             });
         });
