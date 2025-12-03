@@ -16,6 +16,18 @@
             background: #0a0a0a;
             color: #fff;
             overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Atmospheric Glow from Reference */
+        body::before {
+            content: "";
+            position: absolute;
+            inset: 40% -60% 0 -60%;
+            background: radial-gradient(ellipse at bottom, rgba(0, 245, 255, 0.15), transparent 70%);
+            opacity: 0.6;
+            pointer-events: none;
+            z-index: -1;
         }
 
         /* Navigation */
@@ -23,11 +35,12 @@
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(10, 10, 10, 0.95);
-            backdrop-filter: blur(10px);
+            background: rgba(10, 10, 10, 0.8); /* More transparent to show glow */
+            backdrop-filter: blur(12px);
             z-index: 1000;
             padding: 1.5rem 5%;
             transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         nav.scrolled {
@@ -110,35 +123,130 @@
             transform: translateX(3px);
         }
 
+        .navigation-menu {
+            margin: 0;
+            position: relative;
+            z-index: 1;
+        }
+
         .nav-links {
             display: flex;
-            gap: 2.5rem;
+            gap: 40px;
             list-style: none;
             margin: 0;
             padding: 0;
         }
 
+        .nav-links li {
+            list-style: none;
+        }
+
         .nav-links a {
-            color: #fff;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            border: none;
+            cursor: pointer;
+            background-color: transparent;
+            padding: 0;
+            margin: 0;
+            line-height: 22px;
+            font: inherit;
+            color: #e5e7eb;
             text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            position: relative;
+            transition: color 0.25s;
         }
 
-        .nav-links a::after {
-            content: '';
+        .nav-links li.active a {
+            color: #ffffff;
+        }
+
+        .nav-links li:not(.active):hover a {
+            text-shadow: 0 0 10px #00fffc, 0 0 20px #00fffc;
+        }
+
+        .navigation-menu .active-element {
+            --active-element-scale-x: 1;
+            --active-element-scale-y: 1;
+            --active-element-show: 0;
+            --active-element-opacity: 0;
+            --active-element-width: 0px;
+            --active-element-strike-x: 0%;
+            --active-element-mask-position: 0%;
             position: absolute;
-            bottom: -5px;
             left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, #00f5ff, #0080ff);
-            transition: width 0.3s ease;
+            top: 34px;
+            height: 3px;
+            width: 36px;
+            border-radius: 2px;
+            background-color: #00fffc;
+            opacity: var(--active-element-show);
         }
 
-        .nav-links a:hover::after {
-            width: 100%;
+        .navigation-menu .active-element > svg,
+        .navigation-menu .active-element .strike {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: var(--active-element-opacity);
+            width: var(--active-element-width);
+            mix-blend-mode: multiply;
+        }
+
+        .navigation-menu .active-element > svg {
+            display: block;
+            overflow: visible;
+            height: 5px;
+            filter: blur(0.5px)
+                drop-shadow(2px 0px 8px #00fffc40)
+                drop-shadow(1px 0px 2px #00fffc80)
+                drop-shadow(0px 0px 3px #00fffc40)
+                drop-shadow(2px 0px 8px #00fffc45)
+                drop-shadow(8px 0px 16px #00fffc50);
+        }
+
+        .navigation-menu .active-element .strike {
+            padding: 24px 0;
+            -webkit-mask-image: linear-gradient(
+                to right,
+                transparent calc(0% + var(--active-element-mask-position)),
+                black calc(15% + var(--active-element-mask-position)),
+                black 80%,
+                transparent
+            );
+            mask-image: linear-gradient(
+                to right,
+                transparent calc(0% + var(--active-element-mask-position)),
+                black calc(15% + var(--active-element-mask-position)),
+                black 80%,
+                transparent
+            );
+        }
+
+        .navigation-menu .active-element .strike svg {
+            display: block;
+            overflow: visible;
+            height: 12px;
+            width: calc(var(--active-element-width) * 2);
+            transform: translate(var(--active-element-strike-x), 30%)
+                scale(var(--active-element-scale-x), var(--active-element-scale-y));
+        }
+
+        .navigation-menu .active-element .strike svg:last-child {
+            transform: translate(var(--active-element-strike-x), -30%) scale(-1);
+        }
+
+        .navigation-menu .active-element .strike svg g path:nth-child(2) {
+            filter: blur(2px);
+        }
+
+        .navigation-menu .active-element .strike svg g path:nth-child(3) {
+            filter: blur(4px);
+        }
+
+        .navigation-menu.before .active-element {
+            transform: rotateY(180deg);
         }
 
         .menu-toggle {
@@ -1315,14 +1423,17 @@
         <div class="nav-container">
             <div class="logo">DataSci.Pro</div>
             <div class="nav-center">
-                <ul class="nav-links" id="navLinks">
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#skills">Skills</a></li>
-                    <li><a href="#projects">Projects</a></li>
-                    <li><a href="blog.html">Blog</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
+                <div class="navigation-menu">
+                    <ul class="nav-links" id="navLinks">
+                        <li class="active"><a href="#home">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#skills">Skills</a></li>
+                        <li><a href="#projects">Projects</a></li>
+                        <li><a href="#blog-preview">Blog</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                    <div class="active-element"></div>
+                </div>
             </div>
             <a href="#contact" class="work-with-me-btn">
                 <span>Work with Me</span>
@@ -1833,12 +1944,13 @@
         }
     }
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script type="module">
         import * as THREE from 'three';
         import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
         import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
-        
+        const gsap = window.gsap;
 
         // Initialize 3D Scene for Robotic Eye
         const container = document.querySelector('.model-container');
@@ -2481,6 +2593,134 @@
                 navbar.classList.remove('scrolled');
             }
         });
+
+        // Sparkle-style navbar active indicator (Lightswind-inspired) - Full implementation
+        if (gsap) {
+            const navigationMenu = document.querySelector('.navigation-menu');
+            const activeElement = navigationMenu ? navigationMenu.querySelector('.active-element') : null;
+            const navItems = navigationMenu
+                ? Array.from(navigationMenu.querySelectorAll('#navLinks li a'))
+                : [];
+
+            const sparkleColor = '#00fffc';
+
+            // Create the SVG beam and strike elements (exact Lightswind implementation)
+            const createSVG = (element) => {
+                element.innerHTML = `
+                <svg viewBox="0 0 116 5" preserveAspectRatio="none" class="beam">
+                  <path d="M0.5 2.5L113 0.534929C114.099 0.515738 115 1.40113 115 2.5C115 3.59887 114.099 4.48426 113 4.46507L0.5 2.5Z" fill="url(#gradient-beam)"/>
+                  <defs>
+                    <linearGradient id="gradient-beam" x1="2" y1="2.5" x2="115" y2="2.5" gradientUnits="userSpaceOnUse">
+                      <stop stop-color="${sparkleColor}"/>
+                      <stop offset="1" stop-color="white"/>
+                    </linearGradient>
+                  </defs>
+                </svg>
+                <div class="strike">
+                  <svg viewBox="0 0 114 12" preserveAspectRatio="none">
+                    <g fill="none" stroke="white" stroke-width="0.75" stroke-linecap="round">
+                      <path d="M113.5 6.5L109.068 8.96C109.023 8.99 108.974 9.01 108.923 9.02L106.889 9.42C106.661 9.47 106.432 9.35 106.336 9.14L104.045 4.1C104.015 4.03 104 3.96 104 3.89V2.12C104 1.69 103.487 1.46 103.166 1.75L99.289 5.24C99.119 5.39 98.867 5.41 98.677 5.28L95.07 2.88C94.788 2.69 94.405 2.83 94.312 3.16L92.615 9.1C92.548 9.33 92.325 9.48 92.084 9.46L87.709 9.02C87.575 9.01 87.442 9.05 87.339 9.13L84.949 11.13C84.713 11.32 84.358 11.26 84.2 11L81.76 6.93C81.617 6.69 81.306 6.62 81.069 6.77L75.317 10.31C75.129 10.42 74.887 10.4 74.722 10.25L70.668 6.65C70.561 6.55 70.5 6.42 70.5 6.28V1.21C70.5 1.07 70.447 0.95 70.354 0.85L70.219 0.72C70.085 0.58 69.887 0.54 69.707 0.6L69.268 0.74C68.915 0.86 68.809 1.31 69.072 1.57L69.605 2.1C69.816 2.32 69.797 2.66 69.564 2.85L67.5 4.5L65.272 6.28C65.108 6.41 64.881 6.43 64.702 6.32L60.362 3.72C60.153 3.59 59.884 3.64 59.725 3.82L57.04 6.95C57.014 6.98 56.991 7.02 56.973 7.06L55.253 10.49C55.119 10.76 54.779 10.85 54.529 10.69L50.769 8.18C50.605 8.07 50.393 8.07 50.226 8.17L46.709 10.37C46.577 10.45 46.415 10.47 46.269 10.41L42.659 9.06C42.556 9.02 42.468 8.95 42.41 8.86L40.125 5.2C40.046 5.07 40.027 4.92 40.075 4.78L40.637 3.09C40.776 2.67 40.354 2.29 39.956 2.47L35.5 4.5L32.266 5.89C32.101 5.96 31.912 5.93 31.769 5.83L30.19 4.64C30.07 4.55 29.915 4.52 29.769 4.56L26.201 5.45C26.072 5.48 25.962 5.56 25.893 5.68L23.195 10.18C23.08 10.37 22.851 10.46 22.635 10.4L17.689 9.05C17.567 9.02 17.463 8.94 17.396 8.83L15.333 5.53C15.163 5.26 14.783 5.22 14.556 5.44L12.146 7.85C12.053 7.95 11.926 8 11.793 8H8.151C8.053 8 7.956 7.97 7.874 7.92L3.741 5.16C3.592 5.06 3.401 5.05 3.24 5.13L0.5 6.5" />
+                      <path d="M113.5 6.5L109.068 8.96C109.023 8.99 108.974 9.01 108.923 9.02L106.889 9.42C106.661 9.47 106.432 9.35 106.336 9.14L104.045 4.1C104.015 4.03 104 3.96 104 3.89V2.12C104 1.69 103.487 1.46 103.166 1.75L99.289 5.24C99.119 5.39 98.867 5.41 98.677 5.28L95.07 2.88C94.788 2.69 94.405 2.83 94.312 3.16L92.615 9.1C92.548 9.33 92.325 9.48 92.084 9.46L87.709 9.02C87.575 9.01 87.442 9.05 87.339 9.13L84.949 11.13C84.713 11.32 84.358 11.26 84.2 11L81.76 6.93C81.617 6.69 81.306 6.62 81.069 6.77L75.317 10.31C75.129 10.42 74.887 10.4 74.722 10.25L70.668 6.65C70.561 6.55 70.5 6.42 70.5 6.28V1.21C70.5 1.07 70.447 0.95 70.354 0.85L70.219 0.72C70.085 0.58 69.887 0.54 69.707 0.6L69.268 0.74C68.915 0.86 68.809 1.31 69.072 1.57L69.605 2.1C69.816 2.32 69.797 2.66 69.564 2.85L67.5 4.5L65.272 6.28C65.108 6.41 64.881 6.43 64.702 6.32L60.362 3.72C60.153 3.59 59.884 3.64 59.725 3.82L57.04 6.95C57.014 6.98 56.991 7.02 56.973 7.06L55.253 10.49C55.119 10.76 54.779 10.85 54.529 10.69L50.769 8.18C50.605 8.07 50.393 8.07 50.226 8.17L46.709 10.37C46.577 10.45 46.415 10.47 46.269 10.41L42.659 9.06C42.556 9.02 42.468 8.95 42.41 8.86L40.125 5.2C40.046 5.07 40.027 4.92 40.075 4.78L40.637 3.09C40.776 2.67 40.354 2.29 39.956 2.47L35.5 4.5L32.266 5.89C32.101 5.96 31.912 5.93 31.769 5.83L30.19 4.64C30.07 4.55 29.915 4.52 29.769 4.56L26.201 5.45C26.072 5.48 25.962 5.56 25.893 5.68L23.195 10.18C23.08 10.37 22.851 10.46 22.635 10.4L17.689 9.05C17.567 9.02 17.463 8.94 17.396 8.83L15.333 5.53C15.163 5.26 14.783 5.22 14.556 5.44L12.146 7.85C12.053 7.95 11.926 8 11.793 8H8.151C8.053 8 7.956 7.97 7.874 7.92L3.741 5.16C3.592 5.06 3.401 5.05 3.24 5.13L0.5 6.5" />
+                      <path d="M113.5 6.5L109.068 8.96C109.023 8.99 108.974 9.01 108.923 9.02L106.889 9.42C106.661 9.47 106.432 9.35 106.336 9.14L104.045 4.1C104.015 4.03 104 3.96 104 3.89V2.12C104 1.69 103.487 1.46 103.166 1.75L99.289 5.24C99.119 5.39 98.867 5.41 98.677 5.28L95.07 2.88C94.788 2.69 94.405 2.83 94.312 3.16L92.615 9.1C92.548 9.33 92.325 9.48 92.084 9.46L87.709 9.02C87.575 9.01 87.442 9.05 87.339 9.13L84.949 11.13C84.713 11.32 84.358 11.26 84.2 11L81.76 6.93C81.617 6.69 81.306 6.62 81.069 6.77L75.317 10.31C75.129 10.42 74.887 10.4 74.722 10.25L70.668 6.65C70.561 6.55 70.5 6.42 70.5 6.28V1.21C70.5 1.07 70.447 0.95 70.354 0.85L70.219 0.72C70.085 0.58 69.887 0.54 69.707 0.6L69.268 0.74C68.915 0.86 68.809 1.31 69.072 1.57L69.605 2.1C69.816 2.32 69.797 2.66 69.564 2.85L67.5 4.5L65.272 6.28C65.108 6.41 64.881 6.43 64.702 6.32L60.362 3.72C60.153 3.59 59.884 3.64 59.725 3.82L57.04 6.95C57.014 6.98 56.991 7.02 56.973 7.06L55.253 10.49C55.119 10.76 54.779 10.85 54.529 10.69L50.769 8.18C50.605 8.07 50.393 8.07 50.226 8.17L46.709 10.37C46.577 10.45 46.415 10.47 46.269 10.41L42.659 9.06C42.556 9.02 42.468 8.95 42.41 8.86L40.125 5.2C40.046 5.07 40.027 4.92 40.075 4.78L40.637 3.09C40.776 2.67 40.354 2.29 39.956 2.47L35.5 4.5L32.266 5.89C32.101 5.96 31.912 5.93 31.769 5.83L30.19 4.64C30.07 4.55 29.915 4.52 29.769 4.56L26.201 5.45C26.072 5.48 25.962 5.56 25.893 5.68L23.195 10.18C23.08 10.37 22.851 10.46 22.635 10.4L17.689 9.05C17.567 9.02 17.463 8.94 17.396 8.83L15.333 5.53C15.163 5.26 14.783 5.22 14.556 5.44L12.146 7.85C12.053 7.95 11.926 8 11.793 8H8.151C8.053 8 7.956 7.97 7.874 7.92L3.741 5.16C3.592 5.06 3.401 5.05 3.24 5.13L0.5 6.5" />
+                      <path d="M113.5 6.5L109.068 8.96C109.023 8.99 108.974 9.01 108.923 9.02L106.889 9.42C106.661 9.47 106.432 9.35 106.336 9.14L104.045 4.1C104.015 4.03 104 3.96 104 3.89V2.12C104 1.69 103.487 1.46 103.166 1.75L99.289 5.24C99.119 5.39 98.867 5.41 98.677 5.28L95.07 2.88C94.788 2.69 94.405 2.83 94.312 3.16L92.615 9.1C92.548 9.33 92.325 9.48 92.084 9.46L87.709 9.02C87.575 9.01 87.442 9.05 87.339 9.13L84.949 11.13C84.713 11.32 84.358 11.26 84.2 11L81.76 6.93C81.617 6.69 81.306 6.62 81.069 6.77L75.317 10.31C75.129 10.42 74.887 10.4 74.722 10.25L70.668 6.65C70.561 6.55 70.5 6.42 70.5 6.28V1.21C70.5 1.07 70.447 0.95 70.354 0.85L70.219 0.72C70.085 0.58 69.887 0.54 69.707 0.6L69.268 0.74C68.915 0.86 68.809 1.31 69.072 1.57L69.605 2.1C69.816 2.32 69.797 2.66 69.564 2.85L67.5 4.5L65.272 6.28C65.108 6.41 64.881 6.43 64.702 6.32L60.362 3.72C60.153 3.59 59.884 3.64 59.725 3.82L57.04 6.95C57.014 6.98 56.991 7.02 56.973 7.06L55.253 10.49C55.119 10.76 54.779 10.85 54.529 10.69L50.769 8.18C50.605 8.07 50.393 8.07 50.226 8.17L46.709 10.37C46.577 10.45 46.415 10.47 46.269 10.41L42.659 9.06C42.556 9.02 42.468 8.95 42.41 8.86L40.125 5.2C40.046 5.07 40.027 4.92 40.075 4.78L40.637 3.09C40.776 2.67 40.354 2.29 39.956 2.47L35.5 4.5L32.266 5.89C32.101 5.96 31.912 5.93 31.769 5.83L30.19 4.64C30.07 4.55 29.915 4.52 29.769 4.56L26.201 5.45C26.072 5.48 25.962 5.56 25.893 5.68L23.195 10.18C23.08 10.37 22.851 10.46 22.635 10.4L17.689 9.05C17.567 9.02 17.463 8.94 17.396 8.83L15.333 5.53C15.163 5.26 14.783 5.22 14.556 5.44L12.146 7.85C12.053 7.95 11.926 8 11.793 8H8.151C8.053 8 7.956 7.97 7.874 7.92L3.741 5.16C3.592 5.06 3.401 5.05 3.24 5.13L0.5 6.5" />
+                    </g>
+                  </svg>
+                </div>
+                `;
+            };
+
+            if (navigationMenu && activeElement && navItems.length > 0) {
+                const getOffsetLeft = (link) => {
+                    const li = link.closest('li');
+                    const navRect = navigationMenu.getBoundingClientRect();
+                    const itemRect = (li || link).getBoundingClientRect();
+                    const activeWidth = activeElement.offsetWidth || 36;
+                    return itemRect.left - navRect.left + (itemRect.width - activeWidth) / 2;
+                };
+
+                let activeIndex = navItems.findIndex((link) => {
+                    const li = link.closest('li');
+                    return li && li.classList.contains('active');
+                });
+                if (activeIndex === -1) activeIndex = 0;
+
+                const initialLink = navItems[activeIndex];
+                gsap.set(activeElement, {
+                    x: getOffsetLeft(initialLink),
+                    '--active-element-show': '1',
+                });
+
+                navItems.forEach((link, index) => {
+                    link.addEventListener('click', () => {
+                        if (index === activeIndex) return;
+
+                        const oldLink = navItems[activeIndex];
+                        const newLink = link;
+                        const oldX = getOffsetLeft(oldLink);
+                        const newX = getOffsetLeft(newLink);
+                        const spacing = Math.abs(newX - oldX);
+                        const direction = index > activeIndex ? 'after' : 'before';
+
+                        navigationMenu.classList.remove('before', 'after');
+                        navigationMenu.classList.add(direction);
+
+                        gsap.set(activeElement, {
+                            rotateY: direction === 'before' ? '180deg' : '0deg',
+                        });
+
+                        gsap.killTweensOf(activeElement);
+
+                        gsap.to(activeElement, {
+                            keyframes: [
+                                {
+                                    '--active-element-width': `${spacing > navigationMenu.offsetWidth - 60 ? navigationMenu.offsetWidth - 60 : spacing}px`,
+                                    duration: 0.3,
+                                    ease: 'none',
+                                    onStart: () => {
+                                        createSVG(activeElement);
+                                        gsap.to(activeElement, { '--active-element-opacity': 1, duration: 0.1 });
+                                    },
+                                },
+                                {
+                                    '--active-element-scale-x': '0',
+                                    '--active-element-scale-y': '.25',
+                                    '--active-element-width': '0px',
+                                    duration: 0.3,
+                                    onStart: () => {
+                                        gsap.to(activeElement, { '--active-element-mask-position': '40%', duration: 0.5 });
+                                        gsap.to(activeElement, { '--active-element-opacity': 0, delay: 0.45, duration: 0.25 });
+                                    },
+                                    onComplete: () => {
+                                        activeElement.innerHTML = '';
+                                        navigationMenu.classList.remove('before', 'after');
+                                        gsap.set(activeElement, {
+                                            x: getOffsetLeft(newLink),
+                                            '--active-element-show': '1',
+                                            '--active-element-scale-x': '1',
+                                            '--active-element-scale-y': '1',
+                                            '--active-element-mask-position': '0%',
+                                            '--active-element-strike-x': '0%',
+                                        });
+                                        const oldLi = oldLink.closest('li');
+                                        const newLi = newLink.closest('li');
+                                        if (oldLi) oldLi.classList.remove('active');
+                                        if (newLi) newLi.classList.add('active');
+                                        activeIndex = index;
+                                    },
+                                },
+                            ],
+                        });
+
+                        gsap.to(activeElement, {
+                            x: newX,
+                            '--active-element-strike-x': '-50%',
+                            duration: 0.6,
+                            ease: 'none',
+                        });
+                    });
+                });
+            }
+        }
 
         // Mobile menu toggle
         const menuToggle = document.getElementById('menuToggle');
