@@ -1,3 +1,14 @@
 {
-  "blogs": []
+  "blogs": [
+    {
+      "slug": "ai-models-showdown-2025",
+      "title": "The Ultimate AI Models Showdown: December 2025 Edition",
+      "excerpt": "An honest, no-holds-barred comparison of Claude Opus 4.5, GPT-5.1, Gemini 3 Pro, and Grok 4.1. Real opinions from a data scientist who uses them daily.",
+      "date": "Dec 5, 2025",
+      "readTime": "12 min read",
+      "tags": ["AI", "LLMs", "Claude", "GPT-5", "Gemini", "Grok"],
+      "icon": "🤖",
+      "thumbnail": null
+    }
+  ]
 }
