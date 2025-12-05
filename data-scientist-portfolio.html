@@ -2,7 +2,7 @@
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>Data Scientist Portfolio</title>
     <style>
         * {
@@ -11,23 +11,65 @@
             box-sizing: border-box;
         }
 
+        html {
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        html, body {
+            max-width: 100vw;
+            overscroll-behavior-x: none;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: #0a0a0a;
             color: #fff;
             overflow-x: hidden;
             position: relative;
+            -webkit-overflow-scrolling: touch;
         }
 
         /* Atmospheric Glow from Reference */
         body::before {
             content: "";
-            position: absolute;
-            inset: 40% -60% 0 -60%;
+            position: fixed;
+            top: 40%;
+            left: 0;
+            right: 0;
+            bottom: 0;
             background: radial-gradient(ellipse at bottom, rgba(0, 245, 255, 0.15), transparent 70%);
             opacity: 0.6;
             pointer-events: none;
             z-index: -1;
+        }
+
+        /* Beam Grid Background */
+        .beam-grid-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        .beam-grid-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .beam-grid-fade {
+            display: none; /* Disabled to remove horizontal line artifact */
+        }
+
+        .beam-grid-vignette {
+            display: none; /* Disabled to remove potential line artifacts */
         }
 
         /* Navigation */
@@ -546,6 +588,8 @@
         .section-container {
             max-width: 1400px;
             margin: 0 auto;
+            padding: 0 1rem;
+            overflow-x: hidden;
         }
 
         .section-title {
@@ -570,7 +614,7 @@
 
         /* About Section */
         #about {
-            background: #0a0a0a;
+            background: rgba(10, 10, 10, 0.3);
         }
 
         .about-content {
@@ -713,7 +757,7 @@
 
         /* Contact Section */
         #contact {
-            background: #0a0a0a;
+            background: rgba(10, 10, 10, 0.3);
         }
 
         .contact-content {
@@ -782,22 +826,17 @@
 
         /* Scroll Reveal Animations */
         .reveal {
-            opacity: 0;
-            transform: translateY(50px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
-        }
 
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
+.github-link:hover {
+    color: #fff;
+    transform: translateX(5px);
+}
 
-        /* Skill Progress Bars */
-        .skill-progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, var(--success-green), var(--primary-cyan));
-            border-radius: 10px;
-            width: 0;
+/* FAQ Section */
+.faq-section {
+    padding: 80px 5%;
+    background: transparent;
+}
             transition: width 1.5s ease;
             box-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
         }
@@ -1222,8 +1261,7 @@
 
         .project-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0, 245, 255, 0.3);
-            border-color: rgba(0, 245, 255, 0.5);
+            box-shadow: 0 15px 40px rgba(0, 245, 255, 0.2);
         }
 
         .project-content {
@@ -1384,6 +1422,15 @@
 
         /* Touch Device Optimizations */
         @media (hover: none) and (pointer: coarse) {
+            * {
+                -webkit-tap-highlight-color: transparent;
+            }
+            
+            html, body {
+                touch-action: pan-y;
+                -webkit-overflow-scrolling: touch;
+            }
+            
             .btn:hover,
             .project-card:hover,
             .skill-card:hover,
@@ -1413,10 +1460,1088 @@
                 justify-content: center;
             }
         }
+
+        /* iPad and Tablet Responsive */
+        @media (min-width: 768px) and (max-width: 1024px) {
+            section {
+                padding: 100px 4% 60px;
+            }
+            
+            .hero-title {
+                font-size: 3.5rem;
+            }
+            
+            .section-title {
+                font-size: 2.8rem;
+            }
+            
+            .skills-grid,
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .about-content {
+                gap: 2rem;
+            }
+        }
+
+        /* ============================================
+           NEW SECTIONS STYLES
+           ============================================ */
+
+        /* Achievements Section */
+        .achievements-section {
+            padding: 80px 5%;
+            background: rgba(10, 10, 10, 0.6);
+            position: relative;
+        }
+
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 3rem auto 0;
+        }
+
+        .achievement-card {
+            background: rgba(20, 20, 20, 0.6);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            border: 1px solid rgba(0, 245, 255, 0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .achievement-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00f5ff, transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .achievement-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 245, 255, 0.15);
+        }
+
+        .achievement-card:hover::before {
+            opacity: 1;
+        }
+
+        .achievement-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .achievement-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00f5ff, #0080ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .achievement-label {
+            color: #9ca3af;
+            font-size: 0.95rem;
+        }
+
+        /* Experience Timeline Section - Connected Design */
+        .timeline-section {
+            padding: 80px 5%;
+            background: rgba(10, 10, 10, 0.3); /* Changed from 0.6 to 0.3 */
+            overflow-x: hidden;
+        }
+
+        .timeline-wrapper {
+            max-width: 1200px;
+            margin: 3rem auto 0;
+            position: relative;
+            padding: 0 1rem;
+        }
+
+        /* Central Spine - The static vertical line */
+        .timeline-spine {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 2rem;
+            width: 2px;
+            background: linear-gradient(180deg, rgba(0, 245, 255, 0.3), rgba(0, 128, 255, 0.3), rgba(139, 92, 246, 0.3));
+            transform: translateX(-50%);
+            z-index: 0;
+        }
+
+        @media (min-width: 768px) {
+            .timeline-spine {
+                left: 50%;
+            }
+        }
+
+        /* Timeline Item */
+        .tl-item {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            position: relative;
+            margin-bottom: 4rem;
+        }
+
+        .tl-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (min-width: 768px) {
+            .tl-item {
+                flex-direction: row;
+            }
+        }
+
+        /* Year Node - The central circle */
+        .year-node-wrapper {
+            position: absolute;
+            left: 2rem;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 20;
+        }
+
+        @media (min-width: 768px) {
+            .year-node-wrapper {
+                left: 50%;
+            }
+        }
+
+        .year-node {
+            width: 56px;
+            height: 56px;
+            background: rgba(10, 10, 10, 0.95);
+            border: 3px solid rgba(0, 245, 255, 0.4);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #9ca3af;
+            box-shadow: 0 0 15px rgba(0, 245, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .tl-item:hover .year-node {
+            transform: scale(1.15);
+            background: linear-gradient(135deg, #00f5ff, #0080ff);
+            color: #0a0a0a;
+            border-color: #00f5ff;
+            box-shadow: 0 0 25px rgba(0, 245, 255, 0.6);
+        }
+
+        /* Laser Line - The animated connector */
+        .laser-connector {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 2px;
+            width: 4rem;
+            display: flex;
+            align-items: center;
+            z-index: 0;
+        }
+
+        .laser-connector.left {
+            right: 50%;
+            justify-content: flex-end;
+        }
+
+        .laser-connector.right {
+            left: 50%;
+            justify-content: flex-start;
+        }
+
+        /* Mobile laser connector */
+        .laser-connector.mobile {
+            left: 2rem;
+            width: 2rem;
+            display: flex;
+        }
+
+        @media (min-width: 768px) {
+            .laser-connector.mobile {
+                display: none;
+            }
+            .laser-connector.desktop {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .laser-connector.desktop {
+                display: none;
+            }
+        }
+
+        .laser-line {
+            height: 2px;
+            width: 0;
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .laser-line.cyan {
+            background: linear-gradient(90deg, #00f5ff, #0080ff);
+        }
+
+        .laser-line.teal {
+            background: linear-gradient(90deg, #14b8a6, #0d9488);
+        }
+
+        .laser-line.amber {
+            background: linear-gradient(90deg, #f59e0b, #d97706);
+        }
+
+        .laser-line.slate {
+            background: linear-gradient(90deg, #64748b, #475569);
+        }
+
+        .tl-item:hover .laser-line {
+            width: 100%;
+        }
+
+        /* Card Spacer */
+        .tl-spacer {
+            display: none;
+            width: 50%;
+        }
+
+        @media (min-width: 768px) {
+            .tl-spacer {
+                display: block;
+            }
+        }
+
+        /* Timeline Card */
+        .tl-card-wrapper {
+            width: 100%;
+            padding-left: 5rem;
+        }
+
+        @media (min-width: 768px) {
+            .tl-card-wrapper {
+                width: 50%;
+                padding-left: 4rem;
+                padding-right: 0;
+            }
+
+            .tl-card-wrapper.left {
+                padding-left: 0;
+                padding-right: 4rem;
+                text-align: right;
+            }
+        }
+
+        .tl-card {
+            background: rgba(20, 20, 20, 0.8);
+            backdrop-filter: blur(20px);
+            padding: 1.5rem;
+            border-radius: 16px;
+            border: 1px solid rgba(0, 245, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .tl-item:hover .tl-card {
+            box-shadow: 0 20px 50px rgba(0, 245, 255, 0.15);
+        }
+
+        .tl-item:hover .tl-card.teal-accent {
+            box-shadow: 0 20px 50px rgba(20, 184, 166, 0.15);
+        }
+
+        .tl-item:hover .tl-card.amber-accent {
+            box-shadow: 0 20px 50px rgba(245, 158, 11, 0.15);
+        }
+
+        /* Card Header */
+        .tl-card-header {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        @media (min-width: 640px) {
+            .tl-card-header {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: flex-start;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .tl-card-wrapper.left .tl-card-header {
+                flex-direction: row-reverse;
+            }
+        }
+
+        .tl-card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #fff;
+            transition: color 0.3s ease;
+            margin: 0;
+        }
+
+        .tl-item:hover .tl-card-title {
+            color: #00f5ff;
+        }
+
+        .tl-item:hover .tl-card.teal-accent .tl-card-title {
+            color: #14b8a6;
+        }
+
+        .tl-item:hover .tl-card.amber-accent .tl-card-title {
+            color: #f59e0b;
+        }
+
+        .tl-card-company {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #9ca3af;
+        }
+
+        .tl-card-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            border-radius: 9999px;
+            align-self: flex-start;
+        }
+
+        .tl-card-badge.cyan {
+            background: rgba(0, 245, 255, 0.15);
+            color: #00f5ff;
+        }
+
+        .tl-card-badge.teal {
+            background: rgba(20, 184, 166, 0.15);
+            color: #14b8a6;
+        }
+
+        .tl-card-badge.amber {
+            background: rgba(245, 158, 11, 0.15);
+            color: #f59e0b;
+        }
+
+        .tl-card-badge.slate {
+            background: rgba(100, 116, 139, 0.15);
+            color: #94a3b8;
+        }
+
+        .tl-card-description {
+            color: #b0b0b0;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        /* Tech Stack Tags */
+        .tl-tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .tl-card-wrapper.left .tl-tech-stack {
+                justify-content: flex-end;
+            }
+        }
+
+        .tl-tech-tag {
+            padding: 0.25rem 0.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            color: #9ca3af;
+            font-size: 0.75rem;
+            font-weight: 500;
+            border-radius: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Accordion Toggle */
+        .tl-accordion-btn {
+            width: 100%;
+            padding: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #00f5ff;
+            background: transparent;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .tl-accordion-btn:hover {
+            background: rgba(0, 245, 255, 0.1);
+        }
+
+        .tl-accordion-btn.teal {
+            color: #14b8a6;
+        }
+
+        .tl-accordion-btn.teal:hover {
+            background: rgba(20, 184, 166, 0.1);
+        }
+
+        .tl-accordion-btn.amber {
+            color: #f59e0b;
+        }
+
+        .tl-accordion-btn.amber:hover {
+            background: rgba(245, 158, 11, 0.1);
+        }
+
+        @media (min-width: 768px) {
+            .tl-card-wrapper.left .tl-accordion-btn {
+                flex-direction: row-reverse;
+            }
+        }
+
+        .tl-chevron {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.3s ease;
+        }
+
+        .tl-chevron.rotate {
+            transform: rotate(180deg);
+        }
+
+        /* Accordion Content */
+        .tl-details {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: all 0.5s ease-in-out;
+        }
+
+        .tl-details.open {
+            max-height: 500px;
+            opacity: 1;
+            margin-top: 1rem;
+        }
+
+        .tl-details ul {
+            list-style: disc;
+            padding-left: 1.25rem;
+            text-align: left;
+        }
+
+        .tl-details li {
+            color: #b0b0b0;
+            font-size: 0.85rem;
+            line-height: 1.7;
+            margin-bottom: 0.5rem;
+        }
+
+        .tl-details li strong {
+            color: #00f5ff;
+        }
+
+        /* Section Divider */
+        .tl-divider {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            padding: 1.5rem 0;
+            margin: 1rem 0;
+        }
+
+        .tl-divider-label {
+            background: rgba(20, 20, 20, 0.9);
+            color: #64748b;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            border: 1px solid rgba(100, 116, 139, 0.3);
+            z-index: 20;
+        }
+
+        /* Education Card - Simplified */
+        .tl-edu-card {
+            background: rgba(20, 20, 20, 0.6);
+            backdrop-filter: blur(20px);
+            padding: 1.25rem 1.5rem;
+            border-radius: 12px;
+            border: 1px solid rgba(100, 116, 139, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .tl-item:hover .tl-edu-card {
+            box-shadow: 0 10px 30px rgba(100, 116, 139, 0.1);
+        }
+
+        .tl-edu-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 0 0 0.25rem 0;
+        }
+
+        .tl-edu-school {
+            font-size: 0.9rem;
+            color: #9ca3af;
+            margin: 0;
+        }
+
+        .tl-edu-location {
+            font-size: 0.8rem;
+            color: #64748b;
+            margin: 0.25rem 0 0 0;
+        }
+
+        /* Testimonials Section */
+        .testimonials-section {
+            padding: 80px 5%;
+            background: rgba(10, 10, 10, 0.3);
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 3rem auto 0;
+        }
+
+        .testimonial-card {
+            background: rgba(20, 20, 20, 0.6);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(0, 245, 255, 0.1);
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 20px;
+            left: 25px;
+            font-size: 4rem;
+            color: rgba(0, 245, 255, 0.2);
+            font-family: Georgia, serif;
+            line-height: 1;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .testimonial-text {
+            color: #d1d5db;
+            font-size: 1rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            padding-top: 1rem;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .testimonial-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid rgba(0, 245, 255, 0.3);
+            object-fit: cover;
+        }
+
+        .testimonial-info h4 {
+            color: #fff;
+            font-size: 1rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .testimonial-info p {
+            color: #9ca3af;
+            font-size: 0.85rem;
+        }
+
+        .testimonial-rating {
+            display: flex;
+            gap: 0.2rem;
+            margin-top: 0.5rem;
+        }
+
+        .testimonial-rating span {
+            color: #fbbf24;
+            font-size: 0.9rem;
+        }
+
+        /* Certifications Section */
+        .certifications-section {
+            padding: 80px 5%;
+            background: rgba(10, 10, 10, 0.3);
+        }
+
+        .certifications-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 3rem auto 0;
+        }
+
+        .cert-card {
+            background: rgba(20, 20, 20, 0.6);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 1px solid rgba(0, 245, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.4s ease;
+        }
+
+        .cert-card:hover {
+            transform: translateX(10px);
+        }
+
+        .cert-badge {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            object-fit: contain;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 8px;
+        }
+
+        .cert-info h4 {
+            color: #fff;
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+        }
+
+            .github-container {
+                max-width: 1100px;
+                margin: 4rem auto 0;
+                text-align: center;
+                position: relative;
+                z-index: 2;
+            }
+
+            .github-stats {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 1.5rem;
+                margin-bottom: 3rem;
+            }
+
+            .github-stat {
+                background: rgba(20, 20, 20, 0.4);
+                backdrop-filter: blur(10px);
+                border-radius: 16px;
+                padding: 2rem;
+                border: 1px solid rgba(255, 255, 255, 0.05);
+                transition: all 0.3s ease;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .github-stat::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.03), transparent);
+                transform: translateX(-100%);
+                transition: 0.5s;
+            }
+
+            .github-stat:hover {
+                transform: translateY(-5px);
+                border-color: rgba(255, 255, 255, 0.2);
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            }
+
+            .github-stat:hover::before {
+                transform: translateX(100%);
+            }
+
+            .github-stat-icon {
+                font-size: 2rem;
+                margin-bottom: 1rem;
+                display: inline-block;
+                filter: drop-shadow(0 0 10px rgba(0, 245, 255, 0.3));
+            }
+
+            .github-stat-number {
+                font-size: 2.5rem;
+                font-weight: 700;
+                color: #fff;
+                margin-bottom: 0.5rem;
+                background: linear-gradient(to right, #fff, #9ca3af);
+                background-clip: text;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+
+            .github-stat-label {
+                color: #9ca3af;
+                font-size: 0.95rem;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+            }
+
+            .github-graph-wrapper {
+                background: rgba(20, 20, 20, 0.4);
+                backdrop-filter: blur(10px);
+                border-radius: 20px;
+                padding: 2rem;
+                border: 1px solid rgba(255, 255, 255, 0.05);
+                margin-bottom: 2rem;
+                transition: all 0.3s ease;
+            }
+
+            .github-graph-wrapper:hover {
+                border-color: rgba(255, 255, 255, 0.2);
+                box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            }
+
+            .github-graph-img {
+                width: 100%;
+                height: auto;
+                border-radius: 8px;
+                opacity: 0.9;
+                transition: opacity 0.3s ease;
+            }
+
+            .github-graph-wrapper:hover .github-graph-img {
+                opacity: 1;
+            }
+
+            .github-link {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.8rem;
+                padding: 1rem 2rem;
+                background: rgba(255, 255, 255, 0.05);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 50px;
+                color: #fff;
+                text-decoration: none;
+                font-weight: 500;
+                transition: all 0.3s ease;
+            }
+
+            .github-link:hover {
+                background: rgba(255, 255, 255, 0.1);
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            }
+
+            .github-link svg {
+                transition: transform 0.3s ease;
+            }
+
+            .github-link:hover svg {
+                transform: translateX(3px);
+            }
+
+            /* FAQ Section */
+            .faq-section {
+                padding: 100px 5%;
+                background: rgba(10, 10, 10, 0.6);
+                position: relative;
+            }
+
+            .faq-container {
+                max-width: 800px;
+                margin: 3rem auto 0;
+            }
+
+            .faq-item {
+                margin-bottom: 1rem;
+                border: 1px solid rgba(0, 245, 255, 0.1);
+                border-radius: 12px;
+                background: rgba(20, 20, 20, 0.4);
+                backdrop-filter: blur(10px);
+                overflow: hidden;
+                transition: all 0.3s ease;
+            }
+
+            .faq-item:hover {
+                border-color: rgba(0, 245, 255, 0.3);
+                transform: translateY(-2px);
+            }
+
+            .faq-question {
+                padding: 1.5rem;
+                cursor: pointer;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                font-weight: 600;
+                color: #fff;
+                transition: all 0.3s ease;
+            }
+
+            .faq-question:hover {
+                background: rgba(255, 255, 255, 0.02);
+            }
+
+            .faq-answer {
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease-out;
+                background: rgba(0, 0, 0, 0.2);
+            }
+
+            .faq-item.active .faq-answer {
+                max-height: 300px; /* Approximate max height */
+                transition: max-height 0.5s ease-in;
+            }
+
+            .faq-answer p {
+                padding: 1.5rem;
+                margin: 0;
+                color: #b0b0b0;
+                line-height: 1.6;
+                border-top: 1px solid rgba(255, 255, 255, 0.05);
+            }
+
+            .faq-icon {
+                font-size: 1.5rem;
+                color: #00f5ff;
+                transition: transform 0.3s ease;
+            }
+
+            .faq-item.active .faq-icon {
+                transform: rotate(45deg);
+            }
+
+            /* Mobile Responsive Styles */
+            @media (max-width: 768px) {
+                .timeline-item,
+                .timeline-item:nth-child(even) {
+                    padding-left: 50px;
+                    padding-right: 0;
+                    justify-content: flex-start;
+                }
+
+            .timeline-content,
+            .timeline-item:nth-child(even) .timeline-content {
+                margin-left: 0;
+                margin-right: 0;
+                max-width: 100%;
+            }
+
+            .timeline-dot {
+                left: 20px;
+            }
+
+            .achievements-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .github-stats {
+                gap: 1rem;
+            }
+
+            .github-stat {
+                min-width: 120px;
+                padding: 1rem 1.5rem;
+            }
+        }
+
+        /* 3D Carousel Container */
+        .github-stats-carousel {
+            position: relative;
+            height: 280px;
+            perspective: 1000px;
+            margin-bottom: 3rem;
+            overflow: visible;
+        }
+
+        .github-stats {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform-style: preserve-3d;
+        }
+
+        .github-stat {
+            position: absolute;
+            width: 200px;
+            background: rgba(20, 20, 20, 0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+            cursor: pointer;
+            transform-style: preserve-3d;
+        }
+
+        .github-stat::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+            transform: translateX(-100%);
+            transition: 0.5s;
+        }
+
+        .github-stat.active {
+            z-index: 20;
+            transform: translateX(0) scale(1) rotateY(0deg);
+            border-color: rgba(34, 197, 94, 0.5);
+            box-shadow: 0 20px 50px rgba(34, 197, 94, 0.2);
+        }
+
+        .github-stat.prev {
+            z-index: 10;
+            transform: translateX(-120%) scale(0.85) rotateY(25deg);
+            opacity: 0.6;
+        }
+
+        .github-stat.next {
+            z-index: 10;
+            transform: translateX(120%) scale(0.85) rotateY(-25deg);
+            opacity: 0.6;
+        }
+
+        .github-stat.hidden-left {
+            z-index: 5;
+            transform: translateX(-200%) scale(0.7) rotateY(35deg);
+            opacity: 0;
+        }
+
+        .github-stat.hidden-right {
+            z-index: 5;
+            transform: translateX(200%) scale(0.7) rotateY(-35deg);
+            opacity: 0;
+        }
+
+        .github-stat:hover::before {
+            transform: translateX(100%);
+        }
+
+        /* Carousel Navigation */
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 30;
+            transition: all 0.3s ease;
+            color: #fff;
+        }
+
+        .carousel-nav:hover {
+            background: rgba(34, 197, 94, 0.3);
+            border-color: rgba(34, 197, 94, 0.5);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .carousel-nav.prev {
+            left: 0;
+        }
+
+        .carousel-nav.next {
+            right: 0;
+        }
+
+        /* Carousel Indicators */
+        .carousel-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .carousel-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-indicator.active {
+            width: 24px;
+            border-radius: 4px;
+            background: #22c55e;
+        }
+
+        .carousel-indicator:hover {
+            background: rgba(34, 197, 94, 0.5);
+        }
+
     </style>
 </head>
 <body>
-    
+    <!-- Beam Grid Animated Background -->
+    <div class="beam-grid-container" id="beamGridContainer">
+        <canvas class="beam-grid-canvas" id="beamGridCanvas"></canvas>
+        <div class="beam-grid-vignette"></div>
+        <div class="beam-grid-fade"></div>
+    </div>
 
     <!-- Navigation -->
     <nav id="navbar">
@@ -1427,9 +2552,10 @@
                     <ul class="nav-links" id="navLinks">
                         <li class="active"><a href="#home">Home</a></li>
                         <li><a href="#about">About</a></li>
+                        <li><a href="#experience">Experience</a></li>
                         <li><a href="#skills">Skills</a></li>
                         <li><a href="#projects">Projects</a></li>
-                        <li><a href="#blog-preview">Blog</a></li>
+                        <li><a href="#github">GitHub</a></li>
                         <li><a href="#contact">Contact</a></li>
                     </ul>
                     <div class="active-element"></div>
@@ -1475,95 +2601,366 @@
     <section id="about">
         <div class="section-container">
             <h2 class="section-title">About Me</h2>
-            <!-- ANN 3D Model Container -->
-            <div class="ann-model-container" style="width: 100%; max-width: 600px; height: 250px; margin: 2rem auto 1rem auto; position: relative; background: transparent; z-index: 1;">
-                <canvas id="annCanvas" style="width: 100%; height: 100%; display: block; position: relative; z-index: 2; border-radius: 8px;"></canvas>
-            </div>
-            <div class="about-content">
-                <div class="about-text">
+            <div class="about-content" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 3rem; max-width: 1100px; margin: 0 auto;">
+                <!-- Profile Image -->
+                <div class="about-image" style="flex: 0 0 auto;">
+                    <div style="width: 280px; height: 280px; border-radius: 50%; overflow: hidden; border: 4px solid rgba(0, 245, 255, 0.5); box-shadow: 0 0 30px rgba(0, 245, 255, 0.3), 0 0 60px rgba(0, 128, 255, 0.2); position: relative; background: #0a0a0a;">
+                        <img src="./assets/Rahul.png" alt="Rahul Singh" style="width: 115%; height: 115%; object-fit: cover; object-position: center 35%; margin-left: -7.5%; margin-top: -5%;">
+                        <div style="position: absolute; inset: 0; border-radius: 50%; background: linear-gradient(135deg, rgba(0, 245, 255, 0.1) 0%, transparent 50%, rgba(0, 128, 255, 0.1) 100%);"></div>
+                    </div>
+                </div>
+                <!-- About Text -->
+                <div class="about-text" style="flex: 1 1 400px; text-align: left; max-width: 600px;">
                     <p>
-                        I'm a results-driven Data Scientist with expertise in statistical analysis, machine learning, 
-                        and predictive modeling. My passion lies in uncovering hidden patterns within data and 
-                        translating them into actionable business strategies.
+                        I'm an AI/ML Engineer and Data Scientist specializing in building real-world machine learning systems that move beyond prototypes and deliver results at scale. My work sits at the intersection of data engineering, machine learning, and MLOps—designing solutions that are not only accurate, but also efficient, reliable, and production-ready.
                     </p>
                     <p>
-                        With a strong foundation in mathematics and computer science, I specialize in building 
-                        end-to-end machine learning pipelines, from data collection and preprocessing to model 
-                        deployment and monitoring in production environments.
+                        I have hands-on experience with modern AI stacks including transformer models, deep learning architectures, and automated ML pipelines. From preprocessing large datasets to deploying models with cloud-native tools, I enjoy architecting systems that are clean, scalable, and optimized for performance.
                     </p>
                     <p>
-                        I believe in the power of data to transform businesses and improve lives, and I'm 
-                        committed to staying at the forefront of emerging technologies in AI and data science.
+                        What motivates me is the ability to take a raw problem, give it structure, design a solution, and ship something that adds real value. I'm constantly learning, experimenting, and staying ahead of the fast-moving AI landscape so I can build solutions that matter today and remain relevant tomorrow.
                     </p>
                 </div>
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <div class="stat-circle">
-                            <svg>
-                                <defs>
-                                    <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
-                                        <stop offset="0%" stop-color="#00f5ff" />
-                                        <stop offset="100%" stop-color="#0080ff" />
-                                    </linearGradient>
-                                </defs>
-                                <circle cx="60" cy="60" r="54" class="stat-circle-bg"></circle>
-                                <circle cx="60" cy="60" r="54" class="stat-circle-progress" 
-                                        style="--progress: 271.43" data-percent="20"></circle>
-                            </svg>
-                            <div class="stat-number" data-count="5">0</div>
-                        </div>
-                        <div class="stat-label">Years Experience</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Achievements Section -->
+    <section id="achievements" class="achievements-section">
+        <div class="section-container">
+            <h2 class="section-title">By The Numbers</h2>
+            <p class="section-subtitle">Milestones and achievements in my data science journey</p>
+            
+            <!-- ANN 3D Model Container - Centered -->
+            <div class="ann-model-container" style="width: 100%; max-width: 500px; height: 300px; margin: 2rem auto; position: relative; background: transparent; z-index: 1;">
+                <canvas id="annCanvas" style="width: 100%; height: 100%; display: block; position: relative; z-index: 2; border-radius: 8px;"></canvas>
+            </div>
+            
+            <div class="achievements-grid">
+                <div class="achievement-card">
+                    <div class="achievement-icon">🎯</div>
+                    <div class="achievement-number" data-count="5">0</div>
+                    <div class="achievement-label">Years Experience</div>
+                </div>
+                <div class="achievement-card">
+                    <div class="achievement-icon">📊</div>
+                    <div class="achievement-number" data-count="50">0</div>
+                    <div class="achievement-label">Projects Completed</div>
+                </div>
+                <div class="achievement-card">
+                    <div class="achievement-icon">😊</div>
+                    <div class="achievement-number" data-count="30">0</div>
+                    <div class="achievement-label">Happy Clients</div>
+                </div>
+                <div class="achievement-card">
+                    <div class="achievement-icon">🤖</div>
+                    <div class="achievement-number" data-count="15">0</div>
+                    <div class="achievement-label">ML Models Deployed</div>
+                </div>
+                <div class="achievement-card">
+                    <div class="achievement-icon">🏆</div>
+                    <div class="achievement-number" data-count="8">0</div>
+                    <div class="achievement-label">Certifications</div>
+                </div>
+                <div class="achievement-card">
+                    <div class="achievement-icon">⭐</div>
+                    <div class="achievement-number" data-count="500">0</div>
+                    <div class="achievement-label">GitHub Stars</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Timeline Section - Connected Design -->
+    <section id="experience" class="timeline-section">
+        <div class="section-container">
+            <h2 class="section-title">Experience</h2>
+            <p class="section-subtitle">My professional journey in data science and AI</p>
+            
+            <div class="timeline-wrapper">
+                <!-- Central Spine -->
+                <div class="timeline-spine"></div>
+
+                <!-- ITEM 1: Honda (Right) -->
+                <div class="tl-item">
+                    <!-- Left Spacer (Desktop) -->
+                    <div class="tl-spacer"></div>
+
+                    <!-- Year Node -->
+                    <div class="year-node-wrapper">
+                        <div class="year-node">2021</div>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-circle">
-                            <svg>
-                                <defs>
-                                    <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="100%">
-                                        <stop offset="0%" stop-color="#00f5ff" />
-                                        <stop offset="100%" stop-color="#0080ff" />
-                                    </linearGradient>
-                                </defs>
-                                <circle cx="60" cy="60" r="54" class="stat-circle-bg"></circle>
-                                <circle cx="60" cy="60" r="54" class="stat-circle-progress" 
-                                        style="--progress: 169.65" data-percent="50"></circle>
-                            </svg>
-                            <div class="stat-number" data-count="50">0</div>
-                        </div>
-                        <div class="stat-label">Projects Completed</div>
+
+                    <!-- Laser Connector (Desktop Right) -->
+                    <div class="laser-connector desktop right">
+                        <div class="laser-line amber"></div>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-circle">
-                            <svg>
-                                <defs>
-                                    <linearGradient id="gradient3" x1="0%" y1="0%" x2="100%" y2="100%">
-                                        <stop offset="0%" stop-color="#00f5ff" />
-                                        <stop offset="100%" stop-color="#0080ff" />
-                                    </linearGradient>
-                                </defs>
-                                <circle cx="60" cy="60" r="54" class="stat-circle-bg"></circle>
-                                <circle cx="60" cy="60" r="54" class="stat-circle-progress" 
-                                        style="--progress: 237.50" data-percent="30"></circle>
-                            </svg>
-                            <div class="stat-number" data-count="30">0</div>
-                        </div>
-                        <div class="stat-label">Happy Clients</div>
+
+                    <!-- Laser Connector (Mobile) -->
+                    <div class="laser-connector mobile">
+                        <div class="laser-line amber"></div>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-circle">
-                            <svg>
-                                <defs>
-                                    <linearGradient id="gradient4" x1="0%" y1="0%" x2="100%" y2="100%">
-                                        <stop offset="0%" stop-color="#00f5ff" />
-                                        <stop offset="100%" stop-color="#0080ff" />
-                                    </linearGradient>
-                                </defs>
-                                <circle cx="60" cy="60" r="54" class="stat-circle-bg"></circle>
-                                <circle cx="60" cy="60" r="54" class="stat-circle-progress" 
-                                        style="--progress: 288.70" data-percent="15"></circle>
-                            </svg>
-                            <div class="stat-number" data-count="15">0</div>
+
+                    <!-- Card (Right Side) -->
+                    <div class="tl-card-wrapper">
+                        <div class="tl-card amber-accent">
+                            <div class="tl-card-header">
+                                <div>
+                                    <h3 class="tl-card-title">Data Scientist</h3>
+                                    <span class="tl-card-company">Honda Motors</span>
+                                </div>
+                                <span class="tl-card-badge amber">Present</span>
+                            </div>
+
+                            <p class="tl-card-description">
+                                Designing LLM-powered chatbots and deploying containerized ML solutions to automate financial reporting.
+                            </p>
+
+                            <div class="tl-tech-stack">
+                                <span class="tl-tech-tag">LLMs</span>
+                                <span class="tl-tech-tag">LangChain</span>
+                                <span class="tl-tech-tag">FastAPI</span>
+                                <span class="tl-tech-tag">Docker</span>
+                            </div>
+
+                            <button class="tl-accordion-btn amber" onclick="toggleTimelineDetails(this)">
+                                <span>Key Responsibilities</span>
+                                <svg class="tl-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+
+                            <div class="tl-details">
+                                <ul>
+                                    <li>Built AI agent workflows using <strong>LangChain</strong> and MCP tools.</li>
+                                    <li>Fine-tuned models for sales forecasting, improving accuracy.</li>
+                                    <li>Developed microservices architecture with <strong>FastAPI</strong> & <strong>Kubernetes</strong>.</li>
+                                    <li>Automated ETL pipelines in Azure Data Factory (60% effort reduction).</li>
+                                </ul>
+                            </div>
                         </div>
-                        <div class="stat-label">ML Models Deployed</div>
+                    </div>
+                </div>
+
+                <!-- ITEM 2: NextGen (Left) -->
+                <div class="tl-item">
+                    <!-- Card (Left Side) -->
+                    <div class="tl-card-wrapper left">
+                        <div class="tl-card amber-accent">
+                            <div class="tl-card-header">
+                                <div>
+                                    <h3 class="tl-card-title">Data Analyst</h3>
+                                    <span class="tl-card-company">NextGen Healthcare</span>
+                                </div>
+                                <span class="tl-card-badge amber">2020 - 2021</span>
+                            </div>
+
+                            <p class="tl-card-description">
+                                Implemented customer segmentation models and optimized data warehousing solutions.
+                            </p>
+
+                            <div class="tl-tech-stack">
+                                <span class="tl-tech-tag">Python</span>
+                                <span class="tl-tech-tag">Snowflake</span>
+                                <span class="tl-tech-tag">Clustering</span>
+                            </div>
+
+                            <button class="tl-accordion-btn amber" onclick="toggleTimelineDetails(this)">
+                                <span>Key Responsibilities</span>
+                                <svg class="tl-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+
+                            <div class="tl-details">
+                                <ul>
+                                    <li>Increased customer engagement by 25% via segmentation models.</li>
+                                    <li>Migrated legacy warehouse to <strong>Snowflake</strong> and Databricks.</li>
+                                    <li>Reduced data-related issues by 35% through cleansing pipelines.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Laser Connector (Desktop Left) -->
+                    <div class="laser-connector desktop left">
+                        <div class="laser-line amber"></div>
+                    </div>
+
+                    <!-- Laser Connector (Mobile) -->
+                    <div class="laser-connector mobile">
+                        <div class="laser-line amber"></div>
+                    </div>
+
+                    <!-- Year Node -->
+                    <div class="year-node-wrapper">
+                        <div class="year-node">2020</div>
+                    </div>
+
+                    <!-- Right Spacer -->
+                    <div class="tl-spacer"></div>
+                </div>
+
+                <!-- ITEM 3: Phoenix (Right) -->
+                <div class="tl-item">
+                    <div class="tl-spacer"></div>
+
+                    <!-- Year Node -->
+                    <div class="year-node-wrapper">
+                        <div class="year-node">2018</div>
+                    </div>
+
+                    <!-- Laser Connector (Desktop Right) -->
+                    <div class="laser-connector desktop right">
+                        <div class="laser-line amber"></div>
+                    </div>
+
+                    <!-- Laser Connector (Mobile) -->
+                    <div class="laser-connector mobile">
+                        <div class="laser-line amber"></div>
+                    </div>
+
+                    <!-- Card -->
+                    <div class="tl-card-wrapper">
+                        <div class="tl-card amber-accent">
+                            <div class="tl-card-header">
+                                <div>
+                                    <h3 class="tl-card-title">Business Analyst</h3>
+                                    <span class="tl-card-company">Phoenix Technologies</span>
+                                </div>
+                                <span class="tl-card-badge amber">2018 - 2020</span>
+                            </div>
+
+                            <p class="tl-card-description">
+                                Led requirement gathering and developed interactive dashboards for decision making.
+                            </p>
+
+                            <div class="tl-tech-stack">
+                                <span class="tl-tech-tag">Tableau</span>
+                                <span class="tl-tech-tag">PowerBI</span>
+                                <span class="tl-tech-tag">SQL</span>
+                            </div>
+
+                            <button class="tl-accordion-btn amber" onclick="toggleTimelineDetails(this)">
+                                <span>Key Responsibilities</span>
+                                <svg class="tl-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+
+                            <div class="tl-details">
+                                <ul>
+                                    <li>Produced detailed BRDs and FRDs to guide development.</li>
+                                    <li>Developed interactive <strong>Tableau dashboards</strong> for KPIs.</li>
+                                    <li>Improved operational efficiency by 20% through BI solutions.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Education Divider -->
+                <div class="tl-divider">
+                    <span class="tl-divider-label">Academic Background</span>
+                </div>
+
+                <!-- ITEM 4: Masters (Left) -->
+                <div class="tl-item">
+                    <div class="tl-card-wrapper left">
+                        <div class="tl-edu-card">
+                            <h3 class="tl-edu-title">Masters in Information Systems</h3>
+                            <p class="tl-edu-school">Stevens Institute of Technology</p>
+                            <p class="tl-edu-location">Hoboken, New Jersey</p>
+                        </div>
+                    </div>
+
+                    <!-- Laser Connector (Desktop Left) -->
+                    <div class="laser-connector desktop left">
+                        <div class="laser-line slate"></div>
+                    </div>
+
+                    <!-- Laser Connector (Mobile) -->
+                    <div class="laser-connector mobile">
+                        <div class="laser-line slate"></div>
+                    </div>
+
+                    <!-- Year Node -->
+                    <div class="year-node-wrapper">
+                        <div class="year-node">2023</div>
+                    </div>
+
+                    <div class="tl-spacer"></div>
+                </div>
+
+                <!-- ITEM 5: Bachelors (Right) -->
+                <div class="tl-item">
+                    <div class="tl-spacer"></div>
+
+                    <!-- Year Node -->
+                    <div class="year-node-wrapper">
+                        <div class="year-node">2015</div>
+                    </div>
+
+                    <!-- Laser Connector (Desktop Right) -->
+                    <div class="laser-connector desktop right">
+                        <div class="laser-line slate"></div>
+                    </div>
+
+                    <!-- Laser Connector (Mobile) -->
+                    <div class="laser-connector mobile">
+                        <div class="laser-line slate"></div>
+                    </div>
+
+                    <div class="tl-card-wrapper">
+                        <div class="tl-edu-card">
+                            <h3 class="tl-edu-title">Bachelors in Finance Market</h3>
+                            <p class="tl-edu-school">University of Mumbai</p>
+                            <p class="tl-edu-location">Mumbai, India</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials-section">
+        <div class="section-container">
+            <h2 class="section-title">What Clients Say</h2>
+            <p class="section-subtitle">Feedback from people I've worked with</p>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <p class="testimonial-text">Rahul delivered exceptional work on our ML pipeline. His attention to detail and ability to translate complex requirements into working solutions is remarkable.</p>
+                    <div class="testimonial-author">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23333'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='%23fff' font-size='40'%3EJ%3C/text%3E%3C/svg%3E" alt="John" class="testimonial-avatar">
+                        <div class="testimonial-info">
+                            <h4>John</h4>
+                            <p>Manager Data Science, Sequretek</p>
+                            <div class="testimonial-rating">
+                                <span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">Working with Rahul was a game-changer for our data analytics. He helped us reduce costs by 30% through intelligent automation and predictive modeling.</p>
+                    <div class="testimonial-author">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23333'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='%23fff' font-size='40'%3ESM%3C/text%3E%3C/svg%3E" alt="Sarah Miller" class="testimonial-avatar">
+                        <div class="testimonial-info">
+                            <h4>Sarah Miller</h4>
+                            <p>VP of Engineering, DataCorp</p>
+                            <div class="testimonial-rating">
+                                <span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">Rahul's cybersecurity expertise combined with his ML skills helped us build a robust threat detection system. Highly recommended!</p>
+                    <div class="testimonial-author">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23333'/%3E%3Ctext x='50' y='55' text-anchor='middle' fill='%23fff' font-size='40'%3EMK%3C/text%3E%3C/svg%3E" alt="Mike Kumar" class="testimonial-avatar">
+                        <div class="testimonial-info">
+                            <h4>Mike Kumar</h4>
+                            <p>Security Lead, CyberSafe Inc</p>
+                            <div class="testimonial-rating">
+                                <span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1787,7 +3184,7 @@
     </section>
 
     <!-- Blog Preview Section -->
-    <section id="blog-preview" style="padding: 80px 5%; background: linear-gradient(180deg, #0a0a0a 0%, #0f0f0f 100%);">
+    <section id="blog-preview" style="padding: 80px 5%; background: rgba(10, 10, 10, 0.3);">
         <div class="section-container">
             <h2 class="section-title">Latest Insights</h2>
             <p class="section-subtitle">Exploring Data Science, AI, and Machine Learning</p>
@@ -1866,6 +3263,186 @@
         </div>
     </section>
 
+    <!-- Certifications & Education Section -->
+    <section id="certifications" class="certifications-section">
+        <div class="section-container">
+            <h2 class="section-title">Certifications & Education</h2>
+            <p class="section-subtitle">Professional credentials and continuous learning</p>
+            <div class="certifications-grid">
+                <div class="cert-card">
+                    <img src="https://images.credly.com/size/340x340/images/00634f82-b07f-4bbd-a6bb-53de397fc3a6/image.png" alt="AWS" class="cert-badge" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23232f3e%22 width=%22100%22 height=%22100%22 rx=%2210%22/><text x=%2250%22 y=%2255%22 text-anchor=%22middle%22 fill=%22%23ff9900%22 font-size=%2230%22 font-weight=%22bold%22>AWS</text></svg>'">
+                    <div class="cert-info">
+                        <h4>AWS Certified Solutions Architect</h4>
+                        <p>Amazon Web Services</p>
+                        <div class="cert-date">Issued 2023</div>
+                    </div>
+                </div>
+                <div class="cert-card">
+                    <img src="https://images.credly.com/size/340x340/images/024d0122-724d-4c5a-bd83-cfe3c4b7a073/image.png" alt="Google Cloud" class="cert-badge" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%234285f4%22 width=%22100%22 height=%22100%22 rx=%2210%22/><text x=%2250%22 y=%2255%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2225%22 font-weight=%22bold%22>GCP</text></svg>'">
+                    <div class="cert-info">
+                        <h4>Google Cloud Professional Data Engineer</h4>
+                        <p>Google Cloud</p>
+                        <div class="cert-date">Issued 2023</div>
+                    </div>
+                </div>
+                <div class="cert-card">
+                    <img src="https://images.credly.com/size/340x340/images/61f56aa4-16fd-403c-90bc-1d90dba1fa99/image.png" alt="TensorFlow" class="cert-badge" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23ff6f00%22 width=%22100%22 height=%22100%22 rx=%2210%22/><text x=%2250%22 y=%2255%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2215%22 font-weight=%22bold%22>TF</text></svg>'">
+                    <div class="cert-info">
+                        <h4>TensorFlow Developer Certificate</h4>
+                        <p>Google</p>
+                        <div class="cert-date">Issued 2022</div>
+                    </div>
+                </div>
+                <div class="cert-card">
+                    <img src="https://images.credly.com/size/340x340/images/2d178f89-4816-4190-8c4a-3bdbfec9db01/Dev_Skills_Network_-_Security_Analytics.png" alt="Security" class="cert-badge" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%231a1a2e%22 width=%22100%22 height=%22100%22 rx=%2210%22/><text x=%2250%22 y=%2255%22 text-anchor=%22middle%22 fill=%22%2300f5ff%22 font-size=%2230%22 font-weight=%22bold%22>🔒</text></svg>'">
+                    <div class="cert-info">
+                        <h4>CompTIA Security+</h4>
+                        <p>CompTIA</p>
+                        <div class="cert-date">Issued 2022</div>
+                    </div>
+                </div>
+                <div class="cert-card">
+                    <img src="https://images.credly.com/size/340x340/images/84ac9eff-b8a2-4571-9e9d-69f1c5a539c0/image.png" alt="Azure" class="cert-badge" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%230078d4%22 width=%22100%22 height=%22100%22 rx=%2210%22/><text x=%2250%22 y=%2255%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2220%22 font-weight=%22bold%22>Azure</text></svg>'">
+                    <div class="cert-info">
+                        <h4>Azure Data Scientist Associate</h4>
+                        <p>Microsoft</p>
+                        <div class="cert-date">Issued 2023</div>
+                    </div>
+                </div>
+                <div class="cert-card">
+                    <img src="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23006699%22 width=%22100%22 height=%22100%22 rx=%2210%22/><text x=%2250%22 y=%2255%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2215%22 font-weight=%22bold%22>M.S.</text></svg>" alt="Education" class="cert-badge">
+                    <div class="cert-info">
+                        <h4>M.S. in Data Science</h4>
+                        <p>University Name</p>
+                        <div class="cert-date">2019</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GitHub Activity Section -->
+    <section id="github" class="github-section">
+        <div class="section-container">
+            <h2 class="section-title">GitHub Activity</h2>
+            <p class="section-subtitle">Open source contributions and coding activity</p>
+            <div class="github-container">
+                <div class="github-stats-carousel">
+                    <button class="carousel-nav prev" onclick="githubCarousel.prev()" aria-label="Previous">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                        </svg>
+                    </button>
+                    <div class="github-stats" id="github-stats-container">
+                        <div class="github-stat" data-index="0">
+                            <div class="github-stat-icon">📦</div>
+                            <div class="github-stat-number" id="gh-repos">--</div>
+                            <div class="github-stat-label">Repositories</div>
+                        </div>
+                        <div class="github-stat tech-card" data-index="1">
+                            <div class="github-stat-icon">🐍</div>
+                            <div class="github-stat-number" id="gh-python">--</div>
+                            <div class="github-stat-label">Python Repos</div>
+                        </div>
+                        <div class="github-stat tech-card" data-index="2">
+                            <div class="github-stat-icon">📓</div>
+                            <div class="github-stat-number" id="gh-jupyter">--</div>
+                            <div class="github-stat-label">Jupyter Notebooks</div>
+                        </div>
+                        <div class="github-stat tech-card" data-index="3">
+                            <div class="github-stat-icon">🌐</div>
+                            <div class="github-stat-number" id="gh-js">--</div>
+                            <div class="github-stat-label">JavaScript/HTML</div>
+                        </div>
+                        <div class="github-stat tech-card" data-index="4">
+                            <div class="github-stat-icon">🗄️</div>
+                            <div class="github-stat-number" id="gh-other">--</div>
+                            <div class="github-stat-label">Other Languages</div>
+                        </div>
+                    </div>
+                    <button class="carousel-nav next" onclick="githubCarousel.next()" aria-label="Next">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </button>
+                    <div class="carousel-indicators" id="carousel-indicators"></div>
+                </div>
+
+                <div class="github-graph-wrapper" style="background: rgba(30, 30, 30, 0.6);">
+                    <!-- GitHub Contribution Graph - Dark Gray & Green Theme -->
+                    <img id="gh-contrib-chart" class="github-graph-img" src="https://ghchart.rshah.org/22c55e/rahulsingh1397" alt="GitHub Contribution Graph" 
+                         style="filter: brightness(0.85) contrast(1.1);" 
+                         onerror="this.onerror=null; this.src='https://github-readme-stats.vercel.app/api?username=rahulsingh1397&show_icons=true&theme=dark&hide_border=true&title_color=22c55e&icon_color=22c55e&text_color=9ca3af&bg_color=1e1e1e';">
+                </div>
+
+                <a href="https://github.com/rahulsingh1397" target="_blank" rel="noopener noreferrer" class="github-link">
+                    <svg height="20" viewBox="0 0 16 16" width="20" fill="currentColor">
+                        <path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"></path>
+                    </svg>
+                    <span>View Full GitHub Profile</span>
+                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq-section">
+        <div class="section-container">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <p class="section-subtitle">Common questions about my services and process</p>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="this.parentElement.classList.toggle('active')">
+                        <span>What services do you offer?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>I offer end-to-end data science consulting including machine learning model development, data analysis and visualization, NLP solutions, predictive modeling, and workflow automation. I also provide cybersecurity analytics and threat detection solutions.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="this.parentElement.classList.toggle('active')">
+                        <span>What is your typical project timeline?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Project timelines vary based on complexity. A simple analysis or dashboard might take 1-2 weeks, while a full ML pipeline with deployment could take 4-8 weeks. I always provide detailed timelines during our initial consultation.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="this.parentElement.classList.toggle('active')">
+                        <span>Do you work with startups or only enterprises?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>I work with businesses of all sizes! From early-stage startups looking to build their first ML models to enterprises needing to scale their data infrastructure. Each engagement is tailored to your specific needs and budget.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="this.parentElement.classList.toggle('active')">
+                        <span>What technologies do you specialize in?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>My core stack includes Python, TensorFlow, PyTorch, Scikit-learn, and SQL. For cloud, I work with AWS, Azure, and GCP. I also specialize in n8n for workflow automation and have expertise in cybersecurity tools and frameworks.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="this.parentElement.classList.toggle('active')">
+                        <span>How do we get started?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Simply click the "Book a Call" button or reach out through the contact form. We'll schedule a free 30-minute consultation to discuss your project requirements, timeline, and how I can help achieve your goals.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Contact Section -->
     <section id="contact">
         <div class="section-container">
@@ -1886,7 +3463,7 @@
                         <label for="message">Message</label>
                     </div>
                     <button type="submit" class="btn btn-primary" id="bookCallBtn" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.8rem;">
-                        <svg class="phone-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition: transform 0.3s ease;">
+                        <svg class="phone-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
                         </svg>
                         <span>Book a Call</span>
@@ -2259,7 +3836,7 @@
                 1000
             );
             // Position camera for horizontal side view like reference image
-            annCamera.position.set(35, 10, 1); // Side view position
+            annCamera.position.set(45, 10, 1); // Side view position - zoomed out
             annCamera.lookAt(10, 12, 5); // Look at center of model
             
             // Renderer for ANN
@@ -2298,7 +3875,7 @@
             annSpotlight.target.position.set(0, 0.58, -0.1); // Flipped Z from 0.1 to -0.1
             annScene.add(annSpotlight);
             annScene.add(annSpotlight.target);
-            
+
             // OrbitControls for ANN
             const annControls = new OrbitControls(annCamera, annRenderer.domElement);
             annControls.enableDamping = false;
@@ -2339,7 +3916,7 @@
                     
                     console.log('  Original max dimension:', maxDim.toFixed(2));
                     console.log('  Target size:', targetSize);
-                    console.log('  Applied scale:', scale.toFixed(4));
+                    console.log('  Applied scale:', scale.toFixed(2));
                     
                     // Apply website color palette (Cyan/Blue) - matching site theme
                     annModel.traverse((child) => {
@@ -2751,6 +4328,150 @@
             });
         });
 
+        // ============================================
+        // SCROLL-BASED NAVIGATION ACTIVE STATE
+        // ============================================
+        // Detect which section is in view and update nav directly
+        const sections = document.querySelectorAll('section[id]');
+        const navLinksForScroll = document.querySelectorAll('.nav-links li a');
+        
+        // Store reference to update sparkle position
+        let currentActiveSection = null;
+        
+        function updateActiveNavOnScroll() {
+            const scrollY = window.scrollY;
+            const windowHeight = window.innerHeight;
+            
+            let foundSection = null;
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 150; // Offset for navbar height
+                const sectionHeight = section.offsetHeight;
+                const sectionId = section.getAttribute('id');
+                
+                // Check if section is in viewport
+                if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+                    foundSection = sectionId;
+                }
+            });
+            
+            // Only update if section changed
+            if (foundSection && foundSection !== currentActiveSection) {
+                currentActiveSection = foundSection;
+                
+                // Update active class on nav items
+                const allNavItems = document.querySelectorAll('.nav-links li');
+                allNavItems.forEach(item => {
+                    const link = item.querySelector('a');
+                    if (link && link.getAttribute('href') === `#${foundSection}`) {
+                        item.classList.add('active');
+                    } else {
+                        item.classList.remove('active');
+                    }
+                });
+                
+                // Update sparkle position with full animation if GSAP is available
+                const navigationMenu = document.querySelector('.navigation-menu');
+                const activeElement = navigationMenu ? navigationMenu.querySelector('.active-element') : null;
+                const activeLink = document.querySelector(`.nav-links li.active a`);
+                
+                if (activeElement && activeLink && typeof gsap !== 'undefined') {
+                    const sparkleColor = '#00fffc';
+                    
+                    // Create SVG for sparkle effect
+                    const createSparkle = (element) => {
+                        element.innerHTML = `
+                        <svg viewBox="0 0 116 5" preserveAspectRatio="none" class="beam">
+                          <path d="M0.5 2.5L113 0.534929C114.099 0.515738 115 1.40113 115 2.5C115 3.59887 114.099 4.48426 113 4.46507L0.5 2.5Z" fill="url(#gradient-beam-scroll)"/>
+                          <defs>
+                            <linearGradient id="gradient-beam-scroll" x1="2" y1="2.5" x2="115" y2="2.5" gradientUnits="userSpaceOnUse">
+                              <stop stop-color="${sparkleColor}"/>
+                              <stop offset="1" stop-color="white"/>
+                            </linearGradient>
+                          </defs>
+                        </svg>
+                        <div class="strike">
+                          <svg viewBox="0 0 114 12" preserveAspectRatio="none">
+                            <g fill="none" stroke="white" stroke-width="0.75" stroke-linecap="round">
+                              <path d="M113.5 6.5L109.068 8.96C109.023 8.99 108.974 9.01 108.923 9.02L106.889 9.42C106.661 9.47 106.432 9.35 106.336 9.14L104.045 4.1C104.015 4.03 104 3.96 104 3.89V2.12C104 1.69 103.487 1.46 103.166 1.75L99.289 5.24C99.119 5.39 98.867 5.41 98.677 5.28L95.07 2.88C94.788 2.69 94.405 2.83 94.312 3.16L92.615 9.1C92.548 9.33 92.325 9.48 92.084 9.46L87.709 9.02C87.575 9.01 87.442 9.05 87.339 9.13L84.949 11.13C84.713 11.32 84.358 11.26 84.2 11L81.76 6.93C81.617 6.69 81.306 6.62 81.069 6.77L75.317 10.31C75.129 10.42 74.887 10.4 74.722 10.25L70.668 6.65C70.561 6.55 70.5 6.42 70.5 6.28V1.21C70.5 1.07 70.447 0.95 70.354 0.85L70.219 0.72C70.085 0.58 69.887 0.54 69.707 0.6L69.268 0.74C68.915 0.86 68.809 1.31 69.072 1.57L69.605 2.1C69.816 2.32 69.797 2.66 69.564 2.85L67.5 4.5L65.272 6.28C65.108 6.41 64.881 6.43 64.702 6.32L60.362 3.72C60.153 3.59 59.884 3.64 59.725 3.82L57.04 6.95C57.014 6.98 56.991 7.02 56.973 7.06L55.253 10.49C55.119 10.76 54.779 10.85 54.529 10.69L50.769 8.18C50.605 8.07 50.393 8.07 50.226 8.17L46.709 10.37C46.577 10.45 46.415 10.47 46.269 10.41L42.659 9.06C42.556 9.02 42.468 8.95 42.41 8.86L40.125 5.2C40.046 5.07 40.027 4.92 40.075 4.78L40.637 3.09C40.776 2.67 40.354 2.29 39.956 2.47L35.5 4.5L32.266 5.89C32.101 5.96 31.912 5.93 31.769 5.83L30.19 4.64C30.07 4.55 29.915 4.52 29.769 4.56L26.201 5.45C26.072 5.48 25.962 5.56 25.893 5.68L23.195 10.18C23.08 10.37 22.851 10.46 22.635 10.4L17.689 9.05C17.567 9.02 17.463 8.94 17.396 8.83L15.333 5.53C15.163 5.26 14.783 5.22 14.556 5.44L12.146 7.85C12.053 7.95 11.926 8 11.793 8H8.151C8.053 8 7.956 7.97 7.874 7.92L3.741 5.16C3.592 5.06 3.401 5.05 3.24 5.13L0.5 6.5" />
+                            </g>
+                          </svg>
+                        </div>
+                        `;
+                    };
+                    
+                    const getOffsetLeft = (link) => {
+                        const li = link.closest('li');
+                        const navRect = navigationMenu.getBoundingClientRect();
+                        const itemRect = (li || link).getBoundingClientRect();
+                        const activeWidth = activeElement.offsetWidth || 36;
+                        return itemRect.left - navRect.left + (itemRect.width - activeWidth) / 2;
+                    };
+                    
+                    const newX = getOffsetLeft(activeLink);
+                    
+                    // Kill any existing animations
+                    gsap.killTweensOf(activeElement);
+                    
+                    // Trigger full sparkle animation
+                    gsap.to(activeElement, {
+                        keyframes: [
+                            {
+                                '--active-element-width': '80px',
+                                duration: 0.25,
+                                ease: 'none',
+                                onStart: () => {
+                                    createSparkle(activeElement);
+                                    gsap.to(activeElement, { '--active-element-opacity': 1, duration: 0.1 });
+                                },
+                            },
+                            {
+                                '--active-element-scale-x': '0',
+                                '--active-element-scale-y': '.25',
+                                '--active-element-width': '0px',
+                                duration: 0.25,
+                                onStart: () => {
+                                    gsap.to(activeElement, { '--active-element-mask-position': '40%', duration: 0.4 });
+                                    gsap.to(activeElement, { '--active-element-opacity': 0, delay: 0.35, duration: 0.2 });
+                                },
+                                onComplete: () => {
+                                    activeElement.innerHTML = '';
+                                    gsap.set(activeElement, {
+                                        x: newX,
+                                        '--active-element-show': '1',
+                                        '--active-element-scale-x': '1',
+                                        '--active-element-scale-y': '1',
+                                        '--active-element-mask-position': '0%',
+                                        '--active-element-strike-x': '0%',
+                                    });
+                                },
+                            },
+                        ],
+                    });
+                    
+                    gsap.to(activeElement, {
+                        x: newX,
+                        '--active-element-strike-x': '-50%',
+                        duration: 0.5,
+                        ease: 'none',
+                    });
+                }
+            }
+        }
+        
+        // Throttle scroll event for performance
+        let scrollTimeout;
+        window.addEventListener('scroll', () => {
+            if (scrollTimeout) return;
+            scrollTimeout = setTimeout(() => {
+                updateActiveNavOnScroll();
+                scrollTimeout = null;
+            }, 50); // Faster response
+        });
+        
+        // Initial check on page load
+        setTimeout(updateActiveNavOnScroll, 300);
+
         // Section title mouse tracking effect - for both hero title and section titles
         function setupTitleMouseTracking(selector) {
             const title = document.querySelector(selector);
@@ -3055,14 +4776,12 @@
             
             // Animate counter
             const targetNumber = parseInt(numberElement.getAttribute('data-count'));
-            const duration = 1500; // 1.5 seconds for faster animation
+            const duration = 1500;
             const startTime = performance.now();
             
             function updateCounter(currentTime) {
                 const elapsed = currentTime - startTime;
                 const progress = Math.min(elapsed / duration, 1);
-                
-                // Easing function for smooth animation
                 const easeOutCubic = 1 - Math.pow(1 - progress, 3);
                 const currentNumber = Math.floor(targetNumber * easeOutCubic);
                 
@@ -3075,10 +4794,51 @@
                 }
             }
             
-            // Start animation immediately
             numberElement.textContent = '0+';
             requestAnimationFrame(updateCounter);
         }
+
+        // ============================================
+        // ANIMATED ACHIEVEMENT & GITHUB COUNTERS
+        // ============================================
+        function animateCounter(element) {
+            if (element.dataset.animated === 'true') return;
+            element.dataset.animated = 'true';
+            
+            const targetNumber = parseInt(element.getAttribute('data-count'));
+            const duration = 2000;
+            const startTime = performance.now();
+            
+            function update(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const easeOutCubic = 1 - Math.pow(1 - progress, 3);
+                const currentNumber = Math.floor(targetNumber * easeOutCubic);
+                
+                element.textContent = currentNumber.toLocaleString() + '+';
+                
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                } else {
+                    element.textContent = targetNumber.toLocaleString() + '+';
+                }
+            }
+            
+            element.textContent = '0';
+            requestAnimationFrame(update);
+        }
+
+        // Observe achievement cards and GitHub stats
+        const counterElements = document.querySelectorAll('.achievement-number, .github-stat-number');
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounter(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        counterElements.forEach(el => counterObserver.observe(el));
 
         // ============================================
         // PARALLAX EFFECT FOR PARTICLES
@@ -3265,6 +5025,453 @@
 
         skillCards.forEach(card => progressObserver.observe(card));
 
+        // ============================================
+        // TIMELINE ANIMATIONS
+        // ============================================
+        // Reveal timeline items on scroll
+        const timelineObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.tl-item').forEach(item => {
+            timelineObserver.observe(item);
+        });
+
+        // Timeline accordion toggle function
+        window.toggleTimelineDetails = function(button) {
+            const card = button.closest('.tl-card, .tl-edu-card');
+            const content = card.querySelector('.tl-details');
+            const icon = button.querySelector('.tl-chevron');
+            const label = button.querySelector('span');
+
+            if (content.classList.contains('open')) {
+                content.classList.remove('open');
+                icon.classList.remove('rotate');
+                label.textContent = "Key Responsibilities";
+            } else {
+                content.classList.add('open');
+                icon.classList.add('rotate');
+                label.textContent = "Hide Responsibilities";
+            }
+        };
+
+        // ============================================
+        // GITHUB STATS 3D CAROUSEL
+        // ============================================
+        window.githubCarousel = {
+            active: 0,
+            items: [],
+            indicators: null,
+            autoRotateInterval: null,
+            isHovering: false,
+            
+            init() {
+                this.items = document.querySelectorAll('.github-stat');
+                this.indicators = document.getElementById('carousel-indicators');
+                
+                if (this.items.length === 0) return;
+                
+                // Create indicators
+                this.createIndicators();
+                
+                // Set initial positions
+                this.updatePositions();
+                
+                // Add click handlers to cards
+                this.items.forEach((item, index) => {
+                    item.addEventListener('click', () => this.goTo(index));
+                });
+                
+                // Add touch/swipe support
+                this.addTouchSupport();
+                
+                // Add hover pause
+                const carousel = document.querySelector('.github-stats-carousel');
+                if (carousel) {
+                    carousel.addEventListener('mouseenter', () => {
+                        this.isHovering = true;
+                        this.stopAutoRotate();
+                    });
+                    carousel.addEventListener('mouseleave', () => {
+                        this.isHovering = false;
+                        this.startAutoRotate();
+                    });
+                }
+                
+                // Start auto-rotation
+                this.startAutoRotate();
+            },
+            
+            createIndicators() {
+                if (!this.indicators) return;
+                this.indicators.innerHTML = '';
+                
+                this.items.forEach((_, index) => {
+                    const dot = document.createElement('button');
+                    dot.className = 'carousel-indicator' + (index === 0 ? ' active' : '');
+                    dot.setAttribute('aria-label', `Go to slide ${index + 1}`);
+                    dot.addEventListener('click', () => this.goTo(index));
+                    this.indicators.appendChild(dot);
+                });
+            },
+            
+            updatePositions() {
+                const total = this.items.length;
+                
+                this.items.forEach((item, index) => {
+                    // Remove all position classes
+                    item.classList.remove('active', 'prev', 'next', 'hidden-left', 'hidden-right');
+                    
+                    // Calculate relative position
+                    let diff = index - this.active;
+                    
+                    // Handle wrapping
+                    if (diff > total / 2) diff -= total;
+                    if (diff < -total / 2) diff += total;
+                    
+                    // Apply appropriate class
+                    if (diff === 0) {
+                        item.classList.add('active');
+                    } else if (diff === -1) {
+                        item.classList.add('prev');
+                    } else if (diff === 1) {
+                        item.classList.add('next');
+                    } else if (diff < -1) {
+                        item.classList.add('hidden-left');
+                    } else {
+                        item.classList.add('hidden-right');
+                    }
+                });
+                
+                // Update indicators
+                if (this.indicators) {
+                    const dots = this.indicators.querySelectorAll('.carousel-indicator');
+                    dots.forEach((dot, index) => {
+                        dot.classList.toggle('active', index === this.active);
+                    });
+                }
+            },
+            
+            next() {
+                this.active = (this.active + 1) % this.items.length;
+                this.updatePositions();
+            },
+            
+            prev() {
+                this.active = (this.active - 1 + this.items.length) % this.items.length;
+                this.updatePositions();
+            },
+            
+            goTo(index) {
+                this.active = index;
+                this.updatePositions();
+            },
+            
+            startAutoRotate() {
+                if (this.autoRotateInterval) return;
+                this.autoRotateInterval = setInterval(() => {
+                    if (!this.isHovering) {
+                        this.next();
+                    }
+                }, 4000);
+            },
+            
+            stopAutoRotate() {
+                if (this.autoRotateInterval) {
+                    clearInterval(this.autoRotateInterval);
+                    this.autoRotateInterval = null;
+                }
+            },
+            
+            addTouchSupport() {
+                const carousel = document.querySelector('.github-stats-carousel');
+                if (!carousel) return;
+                
+                let touchStartX = 0;
+                let touchEndX = 0;
+                const minSwipeDistance = 50;
+                
+                carousel.addEventListener('touchstart', (e) => {
+                    touchStartX = e.changedTouches[0].screenX;
+                }, { passive: true });
+                
+                carousel.addEventListener('touchend', (e) => {
+                    touchEndX = e.changedTouches[0].screenX;
+                    const distance = touchStartX - touchEndX;
+                    
+                    if (Math.abs(distance) > minSwipeDistance) {
+                        if (distance > 0) {
+                            this.next();
+                        } else {
+                            this.prev();
+                        }
+                    }
+                }, { passive: true });
+            }
+        };
+        
+        // Initialize carousel when DOM is ready or immediately if already loaded
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                window.githubCarousel.init();
+            });
+        } else {
+            window.githubCarousel.init();
+        }
+
+        // ============================================
+        // GITHUB API INTEGRATION - LIVE STATS
+        // ============================================
+        const GITHUB_USERNAME = 'rahulsingh1397';
+        
+        async function fetchGitHubStats() {
+            try {
+                // Fetch user data
+                const userResponse = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}`);
+                if (!userResponse.ok) throw new Error('Failed to fetch user data');
+                const userData = await userResponse.json();
+                
+                // Fetch all repositories
+                const reposResponse = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100`);
+                if (!reposResponse.ok) throw new Error('Failed to fetch repos');
+                const reposData = await reposResponse.json();
+                
+                // Count repos by language
+                const languageCounts = { python: 0, jupyter: 0, javascript: 0, other: 0 };
+                
+                reposData.forEach(repo => {
+                    const lang = (repo.language || '').toLowerCase();
+                    if (lang === 'python') languageCounts.python++;
+                    else if (lang === 'jupyter notebook') languageCounts.jupyter++;
+                    else if (['javascript', 'html', 'typescript', 'css'].includes(lang)) languageCounts.javascript++;
+                    else if (lang) languageCounts.other++;
+                });
+                
+                // Update stats
+                function updateStat(id, value) {
+                    const el = document.getElementById(id);
+                    if (el) {
+                        el.textContent = value;
+                        el.setAttribute('data-count', value);
+                        el.dataset.animated = 'false';
+                    }
+                }
+                
+                updateStat('gh-repos', userData.public_repos);
+                updateStat('gh-python', languageCounts.python);
+                updateStat('gh-jupyter', languageCounts.jupyter);
+                updateStat('gh-js', languageCounts.javascript);
+                updateStat('gh-other', languageCounts.other);
+                
+                console.log('GitHub stats loaded');
+                
+            } catch (error) {
+                console.warn('Could not fetch GitHub stats:', error.message);
+            }
+        }
+        
+        fetchGitHubStats();
+
+        // ============================================
+        // HEXAGON GRID ANIMATED BACKGROUND
+        // ============================================
+        (function initBeamGrid() {
+            const canvas = document.getElementById('beamGridCanvas');
+            const container = document.getElementById('beamGridContainer');
+            if (!canvas || !container) return;
+
+            const ctx = canvas.getContext('2d');
+            
+            const config = {
+                hexSize: 50,
+                gridColor: 'rgba(192, 192, 192, 0.06)',
+                activeColor: 'rgba(0, 245, 255, 0.35)',
+                activeColorAlt: 'rgba(0, 128, 255, 0.35)',
+                pulseSpeed: 0.006,
+                maxActive: 4,
+                interactive: true
+            };
+
+            let width, height, cols, rows;
+            let hexWidth, hexHeight;
+            const mouse = { x: -1000, y: -1000 };
+            let activeHexes = [];
+
+            function resize() {
+                const rect = container.getBoundingClientRect();
+                width = canvas.width = rect.width;
+                height = canvas.height = rect.height;
+                hexWidth = config.hexSize * Math.sqrt(3);
+                hexHeight = config.hexSize * 2;
+                cols = Math.ceil(width / hexWidth) + 2;
+                rows = Math.ceil(height / (hexHeight * 0.75)) + 2;
+            }
+
+            function drawHex(x, y, size, strokeColor, fillColor) {
+                ctx.beginPath();
+                for (let i = 0; i < 6; i++) {
+                    const angle = (Math.PI / 3) * i - Math.PI / 6; // Rotate 30deg to point up
+                    const px = x + size * Math.cos(angle);
+                    const py = y + size * Math.sin(angle);
+                    if (i === 0) ctx.moveTo(px, py);
+                    else ctx.lineTo(px, py);
+                }
+                ctx.closePath();
+                if (fillColor) {
+                    ctx.fillStyle = fillColor;
+                    ctx.fill();
+                }
+                if (strokeColor) {
+                    ctx.strokeStyle = strokeColor;
+                    ctx.lineWidth = 1;
+                    ctx.stroke();
+                }
+            }
+
+            function updateActiveHexes() {
+                // Remove finished hexes
+                activeHexes = activeHexes.filter(h => h.life > 0);
+                
+                // Add new hexes if below limit
+                if (activeHexes.length < config.maxActive && Math.random() > 0.97) { // Less frequent spawning
+                    activeHexes.push({
+                        col: Math.floor(Math.random() * cols),
+                        row: Math.floor(Math.random() * rows),
+                        life: 0,
+                        maxLife: 1, // Will go 0->1->0
+                        phase: 'in', // 'in' or 'out'
+                        color: Math.random() > 0.5 ? config.activeColor : config.activeColorAlt
+                    });
+                }
+
+                // Update life
+                activeHexes.forEach(h => {
+                    if (h.phase === 'in') {
+                        h.life += config.pulseSpeed;
+                        if (h.life >= h.maxLife) {
+                            h.life = h.maxLife;
+                            h.phase = 'out';
+                        }
+                    } else {
+                        h.life -= config.pulseSpeed;
+                    }
+                });
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, width, height);
+
+                // Draw Grid
+                for (let r = 0; r < rows; r++) {
+                    for (let c = 0; c < cols; c++) {
+                        const xOffset = (r % 2) * (hexWidth / 2);
+                        const x = c * hexWidth + xOffset - hexWidth;
+                        const y = r * (hexHeight * 0.75) - hexHeight;
+                        
+                        drawHex(x, y, config.hexSize, config.gridColor, null);
+                    }
+                }
+
+                // Draw Active Hexes (Pulse)
+                activeHexes.forEach(h => {
+                    const xOffset = (h.row % 2) * (hexWidth / 2);
+                    const x = h.col * hexWidth + xOffset - hexWidth;
+                    const y = h.row * (hexHeight * 0.75) - hexHeight;
+                    const alpha = h.life;
+                    const baseColor = h.color.replace(/[\d.]+\)$/g, '');
+                    const color = `${baseColor}${alpha})`;
+                    
+                    ctx.shadowBlur = 10 * alpha;
+                    ctx.shadowColor = h.color;
+                    drawHex(x, y, config.hexSize, null, color);
+                    ctx.shadowBlur = 0;
+                });
+
+                // Interactive Highlight - Central hexagon + 6 connected neighbors
+                if (config.interactive && mouse.x > 0 && mouse.y > 0) {
+                    // Account for the grid offset used in drawing (grid starts at -hexWidth, -hexHeight)
+                    const adjustedX = mouse.x + hexWidth + (hexWidth / 2);
+                    const adjustedY = mouse.y + hexHeight + (hexHeight * 0.375);
+                    
+                    // Calculate row first (affects x offset calculation)
+                    const mRow = Math.floor(adjustedY / (hexHeight * 0.75));
+                    // Account for row offset in x calculation
+                    const rowXOffset = (mRow % 2) * (hexWidth / 2);
+                    const mCol = Math.floor((adjustedX - rowXOffset) / hexWidth);
+                    
+                    // Get neighbor offsets based on row parity (even/odd rows have different neighbors)
+                    const isEvenRow = mRow % 2 === 0;
+                    const neighbors = isEvenRow ? [
+                        [0, 0],    // Center
+                        [-1, -1],  // Top-left
+                        [0, -1],   // Top-right
+                        [-1, 0],   // Left
+                        [1, 0],    // Right
+                        [-1, 1],   // Bottom-left
+                        [0, 1]     // Bottom-right
+                    ] : [
+                        [0, 0],    // Center
+                        [0, -1],   // Top-left
+                        [1, -1],   // Top-right
+                        [-1, 0],   // Left
+                        [1, 0],    // Right
+                        [0, 1],    // Bottom-left
+                        [1, 1]     // Bottom-right
+                    ];
+                    
+                    // Draw neighbors first (faded), then center on top
+                    neighbors.forEach(([dc, dr], i) => {
+                        const col = mCol + dc;
+                        const row = mRow + dr;
+                        const xOffset = (row % 2) * (hexWidth / 2);
+                        const x = col * hexWidth + xOffset - hexWidth;
+                        const y = row * (hexHeight * 0.75) - hexHeight;
+                        
+                        const isCenter = i === 0;
+                        
+                        if (isCenter) {
+                            // Center hex - solid bright
+                            ctx.shadowBlur = 15;
+                            ctx.shadowColor = 'rgba(0, 245, 255, 0.8)';
+                            drawHex(x, y, config.hexSize, 'rgba(0, 245, 255, 0.9)', 'rgba(0, 245, 255, 0.35)');
+                            ctx.shadowBlur = 0;
+                        } else {
+                            // Neighbors - faded effect (lower opacity)
+                            const fadeOpacity = 0.2; // Fade multiplier for neighbors
+                            drawHex(x, y, config.hexSize, `rgba(0, 245, 255, ${0.5 * fadeOpacity})`, `rgba(0, 245, 255, ${0.15 * fadeOpacity})`);
+                        }
+                    });
+                }
+
+                updateActiveHexes();
+                requestAnimationFrame(draw);
+            }
+
+            if (config.interactive) {
+                window.addEventListener('mousemove', (e) => {
+                    const rect = canvas.getBoundingClientRect();
+                    mouse.x = e.clientX - rect.left;
+                    mouse.y = e.clientY - rect.top;
+                });
+                window.addEventListener('touchmove', (e) => {
+                    if (e.touches.length > 0) {
+                        const rect = canvas.getBoundingClientRect();
+                        mouse.x = e.touches[0].clientX - rect.left;
+                        mouse.y = e.touches[0].clientY - rect.top;
+                    }
+                }, { passive: true });
+            }
+
+            resize();
+            window.addEventListener('resize', resize);
+            draw();
+            console.log('✨ Hexagon Grid Background initialized');
+        })();
+        
         console.log('✨ All enhancements loaded successfully!');
     </script>
 </body>

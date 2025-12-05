@@ -1,18 +1,44 @@
 # Data Scientist Portfolio Website
 
-A modern, interactive portfolio website featuring a 3D robotic eye model built with Three.js.
+A modern, interactive portfolio website featuring 3D models, animated backgrounds, and live GitHub integration built with Three.js and GSAP.
 
 ## Features
 
-- **Interactive 3D Model**: Robotic eye that tracks mouse movement
-- **Responsive Design**: Works seamlessly on desktop and mobile devices
-- **Modern UI**: Gradient effects, smooth animations, and cyan accent colors
+- **Interactive 3D Models**: 
+  - Robotic eye on landing page that tracks mouse movement
+  - ANN (Artificial Neural Network) 3D model in Achievements section
+- **Animated Hexagon Grid Background**: Interactive hover effects with pulsing animations
+- **Live GitHub Stats**: Real-time repository and language statistics via GitHub API
+- **Responsive Design**: Optimized for desktop and mobile with touch support
+- **Modern UI**: Gradient effects, smooth animations, and cyan/blue accent colors
+- **Navigation Sparkle Effect**: Animated sparkle on active nav items (click & scroll)
 - **Sections**:
-  - Hero with 3D model
-  - About with statistics
+  - Hero with 3D robotic eye
+  - About Me with profile image
   - Skills showcase
   - Featured projects
-  - Contact form
+  - Achievements with ANN model
+  - GitHub Activity carousel
+  - Contact form with calendar booking
+
+## Version 2.0 Changes (December 2024)
+
+### New Features
+- **Profile Image**: Added circular profile image with glow effects in About Me section
+- **GitHub Activity Carousel**: Auto-scrolling cards with live stats (Repositories, Python, Jupyter, JS/HTML, Other)
+- **Interactive Hexagon Grid**: Mouse-following highlight with neighbor fade effect
+- **Navigation Sparkle**: Sparkle animation triggers on both click and scroll navigation
+
+### Improvements
+- **ANN Model**: Zoomed out camera for better visibility (position: 45, 10, 1)
+- **Hexagon Hover**: Precise mouse tracking with proper grid offset calculation
+- **GitHub Carousel**: Global accessibility for button controls, touch/swipe support
+- **Removed Stats**: Stars Earned, Total Forks, and Followers cards removed from GitHub section
+
+### Bug Fixes
+- Fixed hexagon hover position sync with cursor
+- Fixed GitHub carousel prev/next buttons not working
+- Fixed sparkle effect not showing on scroll navigation
 
 ## Technology Stack
 
@@ -61,12 +87,22 @@ http://localhost:8000/data-scientist-portfolio.html
 - **Mouse Tracking**: Relative to model container
 - **Lighting**: Multi-source setup (ambient, directional, point, spotlight)
 
-## Baseline Version
+## Version Control
 
-This is the **baseline version** of the portfolio website. If future changes cause issues, you can always revert to this stable version using:
+### Branches
+- **main**: Current production version
+- **v2.0-major-update**: Version 2.0 with all new features (this branch)
+- **stable-v1-backup**: Previous stable version backup
+
+### Rollback Instructions
+If v2.0 causes issues, revert to the previous stable version:
 
 ```bash
-git checkout baseline
+git checkout stable-v1-backup
+# Or to restore main to previous version:
+git checkout main
+git reset --hard stable-v1-backup
+git push origin main --force
 ```
 
 ## License
