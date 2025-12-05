@@ -2109,184 +2109,242 @@
             font-size: 0.9rem;
         }
 
-        /* Certifications Section */
-        .certifications-section {
-            padding: 80px 5%;
-            background: rgba(10, 10, 10, 0.3);
+        .github-container {
+            max-width: 1100px;
+            margin: 4rem auto 0;
+            text-align: center;
+            position: relative;
+            z-index: 2;
         }
 
-        .certifications-grid {
+        .github-stats {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 1.5rem;
-            max-width: 1200px;
+            margin-bottom: 3rem;
+        }
+
+        .github-stat {
+            background: rgba(20, 20, 20, 0.4);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .github-stat::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.03), transparent);
+            transform: translateX(-100%);
+            transition: 0.5s;
+        }
+
+        .github-stat:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .github-stat:hover::before {
+            transform: translateX(100%);
+        }
+
+        .github-stat-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+            filter: drop-shadow(0 0 10px rgba(0, 245, 255, 0.3));
+        }
+
+        .github-stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, #fff, #9ca3af);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .github-stat-label {
+            color: #9ca3af;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .github-graph-wrapper {
+            background: rgba(20, 20, 20, 0.4);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .github-graph-wrapper:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .github-graph-img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            opacity: 0.9;
+            transition: opacity 0.3s ease;
+        }
+
+        .github-graph-wrapper:hover .github-graph-img {
+            opacity: 1;
+        }
+
+        .github-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .github-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .github-link svg {
+            transition: transform 0.3s ease;
+        }
+
+        .github-link:hover svg {
+            transform: translateX(3px);
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            padding: 100px 5%;
+            background: rgba(10, 10, 10, 0.6);
+            position: relative;
+        }
+
+        .faq-container {
+            max-width: 800px;
             margin: 3rem auto 0;
         }
 
-        .cert-card {
-            background: rgba(20, 20, 20, 0.6);
-            backdrop-filter: blur(20px);
-            border-radius: 16px;
-            padding: 1.5rem;
+        .faq-item {
+            margin-bottom: 1rem;
             border: 1px solid rgba(0, 245, 255, 0.1);
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            transition: all 0.4s ease;
-        }
-
-        .cert-card:hover {
-            transform: translateX(10px);
-        }
-
-        .cert-badge {
-            width: 60px;
-            height: 60px;
             border-radius: 12px;
-            object-fit: contain;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 8px;
+            background: rgba(20, 20, 20, 0.4);
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+            transition: all 0.3s ease;
         }
 
-        .cert-info h4 {
+        .faq-item:hover {
+            border-color: rgba(0, 245, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
             color: #fff;
-            font-size: 1rem;
-            margin-bottom: 0.3rem;
+            transition: all 0.3s ease;
         }
 
-            .github-container {
-                max-width: 1100px;
-                margin: 4rem auto 0;
-                text-align: center;
-                position: relative;
-                z-index: 2;
+        .faq-question:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 300px; /* Approximate max height */
+            transition: max-height 0.5s ease-in;
+        }
+
+        .faq-answer p {
+            padding: 1.5rem;
+            margin: 0;
+            color: #b0b0b0;
+            line-height: 1.6;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .faq-icon {
+            font-size: 1.5rem;
+            color: #00f5ff;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        /* Mobile Responsive Styles */
+        @media (max-width: 768px) {
+            .timeline-item,
+            .timeline-item:nth-child(even) {
+                padding-left: 50px;
+                padding-right: 0;
+                justify-content: flex-start;
+            }
+
+            .timeline-content,
+            .timeline-item:nth-child(even) .timeline-content {
+                margin-left: 0;
+                margin-right: 0;
+                max-width: 100%;
+            }
+
+            .timeline-dot {
+                left: 20px;
+            }
+
+            .achievements-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            .testimonials-grid {
+                grid-template-columns: 1fr;
             }
 
             .github-stats {
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-                gap: 1.5rem;
-                margin-bottom: 3rem;
+                gap: 1rem;
             }
 
             .github-stat {
-                background: rgba(20, 20, 20, 0.4);
-                backdrop-filter: blur(10px);
-                border-radius: 16px;
-                padding: 2rem;
-                border: 1px solid rgba(255, 255, 255, 0.05);
-                transition: all 0.3s ease;
-                position: relative;
-                overflow: hidden;
-            }
-
-            .github-stat::before {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.03), transparent);
-                transform: translateX(-100%);
-                transition: 0.5s;
-            }
-
-            .github-stat:hover {
-                transform: translateY(-5px);
-                border-color: rgba(255, 255, 255, 0.2);
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            }
-
-            .github-stat:hover::before {
-                transform: translateX(100%);
-            }
-
-            .github-stat-icon {
-                font-size: 2rem;
-                margin-bottom: 1rem;
-                display: inline-block;
-                filter: drop-shadow(0 0 10px rgba(0, 245, 255, 0.3));
-            }
-
-            .github-stat-number {
-                font-size: 2.5rem;
-                font-weight: 700;
-                color: #fff;
-                margin-bottom: 0.5rem;
-                background: linear-gradient(to right, #fff, #9ca3af);
-                background-clip: text;
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-            }
-
-            .github-stat-label {
-                color: #9ca3af;
-                font-size: 0.95rem;
-                text-transform: uppercase;
-                letter-spacing: 1px;
-            }
-
-            .github-graph-wrapper {
-                background: rgba(20, 20, 20, 0.4);
-                backdrop-filter: blur(10px);
-                border-radius: 20px;
-                padding: 2rem;
-                border: 1px solid rgba(255, 255, 255, 0.05);
-                margin-bottom: 2rem;
-                transition: all 0.3s ease;
-            }
-
-            .github-graph-wrapper:hover {
-                border-color: rgba(255, 255, 255, 0.2);
-                box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
-            }
-
-            .github-graph-img {
-                width: 100%;
-                height: auto;
-                border-radius: 8px;
-                opacity: 0.9;
-                transition: opacity 0.3s ease;
-            }
-
-            .github-graph-wrapper:hover .github-graph-img {
-                opacity: 1;
-            }
-
-            .github-link {
-                display: inline-flex;
-                align-items: center;
-                gap: 0.8rem;
-                padding: 1rem 2rem;
-                background: rgba(255, 255, 255, 0.05);
-                border: 1px solid rgba(255, 255, 255, 0.1);
-                border-radius: 50px;
-                color: #fff;
-                text-decoration: none;
-                font-weight: 500;
-                transition: all 0.3s ease;
-            }
-
-            .github-link:hover {
-                background: rgba(255, 255, 255, 0.1);
-                transform: translateY(-2px);
-                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            }
-
-            .github-link svg {
-                transition: transform 0.3s ease;
-            }
-
-            .github-link:hover svg {
-                transform: translateX(3px);
-            }
-
-            /* FAQ Section */
-            .faq-section {
-                padding: 100px 5%;
-                background: rgba(10, 10, 10, 0.6);
-                position: relative;
+                min-width: 120px;
+                padding: 1rem 1.5rem;
             }
 
             .faq-container {
@@ -2352,44 +2410,6 @@
 
             .faq-item.active .faq-icon {
                 transform: rotate(45deg);
-            }
-
-            /* Mobile Responsive Styles */
-            @media (max-width: 768px) {
-                .timeline-item,
-                .timeline-item:nth-child(even) {
-                    padding-left: 50px;
-                    padding-right: 0;
-                    justify-content: flex-start;
-                }
-
-            .timeline-content,
-            .timeline-item:nth-child(even) .timeline-content {
-                margin-left: 0;
-                margin-right: 0;
-                max-width: 100%;
-            }
-
-            .timeline-dot {
-                left: 20px;
-            }
-
-            .achievements-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1rem;
-            }
-
-            .testimonials-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .github-stats {
-                gap: 1rem;
-            }
-
-            .github-stat {
-                min-width: 120px;
-                padding: 1rem 1.5rem;
             }
         }
 
@@ -3258,69 +3278,6 @@
                     <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="transition: transform 0.3s ease;">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                     </svg>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Certifications & Education Section -->
-    <section id="certifications" class="certifications-section">
-        <div class="section-container">
-            <h2 class="section-title">Certifications & Education</h2>
-            <p class="section-subtitle">Professional credentials and continuous learning</p>
-            <div class="certifications-grid">
-                <div class="cert-card">
-                    <img src="https://images.credly.com/size/340x340/images/00634f82-b07f-4bbd-a6bb-53de397fc3a6/image.png" alt="AWS" class="cert-badge" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23232f3e%22 width=%22100%22 height=%22100%22 rx=%2210%22/><text x=%2250%22 y=%2255%22 text-anchor=%22middle%22 fill=%22%23ff9900%22 font-size=%2230%22 font-weight=%22bold%22>AWS</text></svg>'">
-                    <div class="cert-info">
-                        <h4>AWS Certified Solutions Architect</h4>
-                        <p>Amazon Web Services</p>
-                        <div class="cert-date">Issued 2023</div>
-                    </div>
-                </div>
-                <div class="cert-card">
-                    <img src="https://images.credly.com/size/340x340/images/024d0122-724d-4c5a-bd83-cfe3c4b7a073/image.png" alt="Google Cloud" class="cert-badge" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%234285f4%22 width=%22100%22 height=%22100%22 rx=%2210%22/><text x=%2250%22 y=%2255%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2225%22 font-weight=%22bold%22>GCP</text></svg>'">
-                    <div class="cert-info">
-                        <h4>Google Cloud Professional Data Engineer</h4>
-                        <p>Google Cloud</p>
-                        <div class="cert-date">Issued 2023</div>
-                    </div>
-                </div>
-                <div class="cert-card">
-                    <img src="https://images.credly.com/size/340x340/images/61f56aa4-16fd-403c-90bc-1d90dba1fa99/image.png" alt="TensorFlow" class="cert-badge" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23ff6f00%22 width=%22100%22 height=%22100%22 rx=%2210%22/><text x=%2250%22 y=%2255%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2215%22 font-weight=%22bold%22>TF</text></svg>'">
-                    <div class="cert-info">
-                        <h4>TensorFlow Developer Certificate</h4>
-                        <p>Google</p>
-                        <div class="cert-date">Issued 2022</div>
-                    </div>
-                </div>
-                <div class="cert-card">
-                    <img src="https://images.credly.com/size/340x340/images/2d178f89-4816-4190-8c4a-3bdbfec9db01/Dev_Skills_Network_-_Security_Analytics.png" alt="Security" class="cert-badge" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%231a1a2e%22 width=%22100%22 height=%22100%22 rx=%2210%22/><text x=%2250%22 y=%2255%22 text-anchor=%22middle%22 fill=%22%2300f5ff%22 font-size=%2230%22 font-weight=%22bold%22>🔒</text></svg>'">
-                    <div class="cert-info">
-                        <h4>CompTIA Security+</h4>
-                        <p>CompTIA</p>
-                        <div class="cert-date">Issued 2022</div>
-                    </div>
-                </div>
-                <div class="cert-card">
-                    <img src="https://images.credly.com/size/340x340/images/84ac9eff-b8a2-4571-9e9d-69f1c5a539c0/image.png" alt="Azure" class="cert-badge" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%230078d4%22 width=%22100%22 height=%22100%22 rx=%2210%22/><text x=%2250%22 y=%2255%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2220%22 font-weight=%22bold%22>Azure</text></svg>'">
-                    <div class="cert-info">
-                        <h4>Azure Data Scientist Associate</h4>
-                        <p>Microsoft</p>
-                        <div class="cert-date">Issued 2023</div>
-                    </div>
-                </div>
-                <div class="cert-card">
-                    <img src="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23006699%22 width=%22100%22 height=%22100%22 rx=%2210%22/><text x=%2250%22 y=%2255%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2215%22 font-weight=%22bold%22>M.S.</text></svg>" alt="Education" class="cert-badge">
-                    <div class="cert-info">
-                        <h4>M.S. in Data Science</h4>
-                        <p>University Name</p>
-                        <div class="cert-date">2019</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- GitHub Activity Section -->
     <section id="github" class="github-section">
         <div class="section-container">
