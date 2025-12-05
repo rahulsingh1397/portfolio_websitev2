@@ -2,7 +2,7 @@
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>Data Scientist Portfolio</title>
     <style>
         * {
@@ -11,19 +11,33 @@
             box-sizing: border-box;
         }
 
+        html {
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        html, body {
+            max-width: 100vw;
+            overscroll-behavior-x: none;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: #0a0a0a;
             color: #fff;
             overflow-x: hidden;
             position: relative;
+            -webkit-overflow-scrolling: touch;
         }
 
         /* Atmospheric Glow from Reference */
         body::before {
             content: "";
-            position: absolute;
-            inset: 40% -60% 0 -60%;
+            position: fixed;
+            top: 40%;
+            left: 0;
+            right: 0;
+            bottom: 0;
             background: radial-gradient(ellipse at bottom, rgba(0, 245, 255, 0.15), transparent 70%);
             opacity: 0.6;
             pointer-events: none;
@@ -35,8 +49,8 @@
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
+            width: 100vw;
+            height: 100vh;
             overflow: hidden;
             z-index: -2;
             pointer-events: none;
@@ -574,6 +588,8 @@
         .section-container {
             max-width: 1400px;
             margin: 0 auto;
+            padding: 0 1rem;
+            overflow-x: hidden;
         }
 
         .section-title {
@@ -1406,6 +1422,15 @@
 
         /* Touch Device Optimizations */
         @media (hover: none) and (pointer: coarse) {
+            * {
+                -webkit-tap-highlight-color: transparent;
+            }
+            
+            html, body {
+                touch-action: pan-y;
+                -webkit-overflow-scrolling: touch;
+            }
+            
             .btn:hover,
             .project-card:hover,
             .skill-card:hover,
@@ -1433,6 +1458,30 @@
                 display: inline-flex;
                 align-items: center;
                 justify-content: center;
+            }
+        }
+
+        /* iPad and Tablet Responsive */
+        @media (min-width: 768px) and (max-width: 1024px) {
+            section {
+                padding: 100px 4% 60px;
+            }
+            
+            .hero-title {
+                font-size: 3.5rem;
+            }
+            
+            .section-title {
+                font-size: 2.8rem;
+            }
+            
+            .skills-grid,
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .about-content {
+                gap: 2rem;
             }
         }
 
