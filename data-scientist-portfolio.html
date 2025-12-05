@@ -2553,6 +2553,125 @@
             background: rgba(34, 197, 94, 0.5);
         }
 
+        /* GitHub Section Mobile Optimization */
+        @media (max-width: 768px) {
+            .github-section {
+                padding: 60px 3%;
+            }
+
+            .github-container {
+                margin: 2rem auto 0;
+            }
+
+            .github-stats-carousel {
+                height: 220px;
+                margin-bottom: 2rem;
+                overflow: hidden;
+            }
+
+            .github-stat {
+                width: 160px;
+                padding: 1.25rem;
+            }
+
+            .github-stat.prev {
+                transform: translateX(-90%) scale(0.8) rotateY(20deg);
+            }
+
+            .github-stat.next {
+                transform: translateX(90%) scale(0.8) rotateY(-20deg);
+            }
+
+            .github-stat-icon {
+                font-size: 1.5rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .github-stat-number {
+                font-size: 1.8rem;
+            }
+
+            .github-stat-label {
+                font-size: 0.75rem;
+            }
+
+            .carousel-nav {
+                width: 36px;
+                height: 36px;
+            }
+
+            .carousel-nav.prev {
+                left: 5px;
+            }
+
+            .carousel-nav.next {
+                right: 5px;
+            }
+
+            .github-graph-wrapper {
+                padding: 1rem;
+                border-radius: 12px;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .github-graph-img {
+                min-width: 600px;
+                width: 100%;
+            }
+
+            .github-link {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.9rem;
+                gap: 0.5rem;
+            }
+
+            .carousel-indicators {
+                position: absolute;
+                bottom: -10px;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .github-stats-carousel {
+                height: 200px;
+            }
+
+            .github-stat {
+                width: 140px;
+                padding: 1rem;
+            }
+
+            .github-stat.prev {
+                transform: translateX(-80%) scale(0.75) rotateY(15deg);
+            }
+
+            .github-stat.next {
+                transform: translateX(80%) scale(0.75) rotateY(-15deg);
+            }
+
+            .github-stat-number {
+                font-size: 1.5rem;
+            }
+
+            .github-stat-label {
+                font-size: 0.7rem;
+                letter-spacing: 0;
+            }
+
+            .carousel-nav {
+                width: 32px;
+                height: 32px;
+            }
+
+            .carousel-nav svg {
+                width: 16px;
+                height: 16px;
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -3326,10 +3445,11 @@
                 </div>
 
                 <div class="github-graph-wrapper" style="background: rgba(30, 30, 30, 0.6);">
-                    <!-- GitHub Contribution Graph - Dark Gray & Green Theme -->
-                    <img id="gh-contrib-chart" class="github-graph-img" src="https://ghchart.rshah.org/22c55e/rahulsingh1397" alt="GitHub Contribution Graph" 
+                    <!-- GitHub Contribution Graph - Updates hourly with cache bust -->
+                    <img id="gh-contrib-chart" class="github-graph-img" alt="GitHub Contribution Graph" 
                          style="filter: brightness(0.85) contrast(1.1);" 
                          onerror="this.onerror=null; this.src='https://github-readme-stats.vercel.app/api?username=rahulsingh1397&show_icons=true&theme=dark&hide_border=true&title_color=22c55e&icon_color=22c55e&text_color=9ca3af&bg_color=1e1e1e';">
+                    <p style="text-align: center; font-size: 0.75rem; color: #64748b; margin-top: 0.5rem;">Updates every few hours</p>
                 </div>
 
                 <a href="https://github.com/rahulsingh1397" target="_blank" rel="noopener noreferrer" class="github-link">
@@ -5232,6 +5352,16 @@
         }
         
         fetchGitHubStats();
+
+        // Set GitHub contribution chart with cache busting (updates every hour)
+        (function loadGitHubChart() {
+            const chartImg = document.getElementById('gh-contrib-chart');
+            if (chartImg) {
+                // Use hourly cache busting to get fresher data
+                const hourlyTimestamp = Math.floor(Date.now() / 3600000); // Changes every hour
+                chartImg.src = `https://ghchart.rshah.org/22c55e/rahulsingh1397?t=${hourlyTimestamp}`;
+            }
+        })();
 
         // ============================================
         // HEXAGON GRID ANIMATED BACKGROUND
