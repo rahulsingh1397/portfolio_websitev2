@@ -2802,9 +2802,9 @@
                     <div class="achievement-label">Certifications</div>
                 </div>
                 <div class="achievement-card">
-                    <div class="achievement-icon">⭐</div>
-                    <div class="achievement-number" data-count="500">0</div>
-                    <div class="achievement-label">GitHub Stars</div>
+                    <div class="achievement-icon">☕</div>
+                    <div class="achievement-number" data-count="10000">0</div>
+                    <div class="achievement-label">Cups of Coffee</div>
                 </div>
             </div>
         </div>
@@ -3322,81 +3322,29 @@
         </div>
     </section>
 
-    <!-- Blog Preview Section -->
+    <!-- Blog Preview Section - Dynamically loaded from blogs.json -->
     <section id="blog-preview" style="padding: 80px 5%; background: rgba(10, 10, 10, 0.3);">
         <div class="section-container">
             <h2 class="section-title">Latest Insights</h2>
             <p class="section-subtitle">Exploring Data Science, AI, and Machine Learning</p>
             
-            <div class="blog-preview-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2.5rem; margin-top: 3rem;">
-                <!-- Blog Preview Card 1 -->
-                <div class="blog-preview-card" style="background: rgba(20, 20, 20, 0.6); backdrop-filter: blur(20px); border-radius: 20px; overflow: hidden; border: 1px solid rgba(0, 245, 255, 0.1); transition: all 0.4s ease; cursor: pointer;" onmouseover="this.style.transform='translateY(-10px)'; this.style.borderColor='rgba(0, 245, 255, 0.5)'; this.style.boxShadow='0 15px 40px rgba(0, 245, 255, 0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(0, 245, 255, 0.1)'; this.style.boxShadow='0 8px 32px rgba(0, 0, 0, 0.3)';">
-                    <div style="width: 100%; height: 200px; background: linear-gradient(135deg, #00f5ff, #0080ff); display: flex; align-items: center; justify-content: center; font-size: 3.5rem;">
-                        📊
-                    </div>
-                    <div style="padding: 2rem;">
-                        <div style="display: flex; gap: 1rem; margin-bottom: 1rem; font-size: 0.9rem; color: #9ca3af;">
-                            <span>📅 Coming Soon</span>
-                            <span>⏱️ 5 min read</span>
-                        </div>
-                        <h3 style="font-size: 1.4rem; margin-bottom: 1rem; color: #00f5ff;">The Future of AI in Data Science</h3>
-                        <p style="color: #b0b0b0; line-height: 1.6; margin-bottom: 1.5rem;">Exploring how artificial intelligence is revolutionizing data analysis and predictive modeling...</p>
-                        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem;">
-                            <span class="tag">AI</span>
-                            <span class="tag">Machine Learning</span>
-                            <span class="tag">Data Science</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Blog Preview Card 2 -->
-                <div class="blog-preview-card" style="background: rgba(20, 20, 20, 0.6); backdrop-filter: blur(20px); border-radius: 20px; overflow: hidden; border: 1px solid rgba(0, 245, 255, 0.1); transition: all 0.4s ease; cursor: pointer;" onmouseover="this.style.transform='translateY(-10px)'; this.style.borderColor='rgba(0, 245, 255, 0.5)'; this.style.boxShadow='0 15px 40px rgba(0, 245, 255, 0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(0, 245, 255, 0.1)'; this.style.boxShadow='0 8px 32px rgba(0, 0, 0, 0.3)';">
-                    <div style="width: 100%; height: 200px; background: linear-gradient(135deg, #00f5ff, #0080ff); display: flex; align-items: center; justify-content: center; font-size: 3.5rem;">
-                        🤖
-                    </div>
-                    <div style="padding: 2rem;">
-                        <div style="display: flex; gap: 1rem; margin-bottom: 1rem; font-size: 0.9rem; color: #9ca3af;">
-                            <span>📅 Coming Soon</span>
-                            <span>⏱️ 8 min read</span>
-                        </div>
-                        <h3 style="font-size: 1.4rem; margin-bottom: 1rem; color: #00f5ff;">Building Scalable ML Pipelines</h3>
-                        <p style="color: #b0b0b0; line-height: 1.6; margin-bottom: 1.5rem;">Best practices for designing and deploying production-ready machine learning pipelines...</p>
-                        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem;">
-                            <span class="tag">MLOps</span>
-                            <span class="tag">DevOps</span>
-                            <span class="tag">Cloud</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Blog Preview Card 3 -->
-                <div class="blog-preview-card" style="background: rgba(20, 20, 20, 0.6); backdrop-filter: blur(20px); border-radius: 20px; overflow: hidden; border: 1px solid rgba(0, 245, 255, 0.1); transition: all 0.4s ease; cursor: pointer;" onmouseover="this.style.transform='translateY(-10px)'; this.style.borderColor='rgba(0, 245, 255, 0.5)'; this.style.boxShadow='0 15px 40px rgba(0, 245, 255, 0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(0, 245, 255, 0.1)'; this.style.boxShadow='0 8px 32px rgba(0, 0, 0, 0.3)';">
-                    <div style="width: 100%; height: 200px; background: linear-gradient(135deg, #00f5ff, #0080ff); display: flex; align-items: center; justify-content: center; font-size: 3.5rem;">
-                        ⚡
-                    </div>
-                    <div style="padding: 2rem;">
-                        <div style="display: flex; gap: 1rem; margin-bottom: 1rem; font-size: 0.9rem; color: #9ca3af;">
-                            <span>📅 Coming Soon</span>
-                            <span>⏱️ 6 min read</span>
-                        </div>
-                        <h3 style="font-size: 1.4rem; margin-bottom: 1rem; color: #00f5ff;">Automating Data Workflows</h3>
-                        <p style="color: #b0b0b0; line-height: 1.6; margin-bottom: 1.5rem;">Learn how to leverage automation for streamlining your data processing and analysis tasks...</p>
-                        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem;">
-                            <span class="tag">Automation</span>
-                            <span class="tag">n8n</span>
-                            <span class="tag">Workflows</span>
-                        </div>
-                    </div>
-                </div>
+            <!-- Dynamic blog grid - populated by JavaScript -->
+            <div id="blog-preview-grid" class="blog-preview-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2.5rem; margin-top: 3rem;">
+                <!-- Blog cards will be loaded here dynamically -->
             </div>
 
             <!-- View All Blogs Button -->
-            <div style="text-align: center; margin-top: 3rem;">
+            <div id="blog-view-all" style="text-align: center; margin-top: 3rem; display: none;">
                 <a href="blog.html" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 0.8rem; padding: 1rem 2.5rem; font-size: 1.1rem; text-decoration: none;">
                     View All Blogs
                     <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="transition: transform 0.3s ease;">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                     </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
     <!-- GitHub Activity Section -->
     <section id="github" class="github-section">
         <div class="section-container">
@@ -5135,6 +5083,76 @@
                 label.textContent = "Hide Responsibilities";
             }
         };
+
+        // ============================================
+        // DYNAMIC BLOG PREVIEW LOADER
+        // ============================================
+        (async function loadBlogPreviews() {
+            const grid = document.getElementById('blog-preview-grid');
+            const viewAllBtn = document.getElementById('blog-view-all');
+            const blogSection = document.getElementById('blog-preview');
+            
+            if (!grid) return;
+            
+            try {
+                const response = await fetch('./blogs/blogs.json');
+                const data = await response.json();
+                
+                if (data.blogs && data.blogs.length > 0) {
+                    // Show only first 3 blogs on main page
+                    const previewBlogs = data.blogs.slice(0, 3);
+                    
+                    grid.innerHTML = previewBlogs.map(blog => `
+                        <a href="blogs/${blog.slug}.html" class="blog-preview-card" style="background: rgba(20, 20, 20, 0.6); backdrop-filter: blur(20px); border-radius: 20px; overflow: hidden; border: 1px solid rgba(0, 245, 255, 0.1); transition: all 0.4s ease; cursor: pointer; text-decoration: none;">
+                            <div style="width: 100%; height: 200px; background: ${blog.thumbnail ? `url('${blog.thumbnail}') center/cover` : 'linear-gradient(135deg, #00f5ff, #0080ff)'}; display: flex; align-items: center; justify-content: center; font-size: 3.5rem;">
+                                ${blog.thumbnail ? '' : (blog.icon || '📝')}
+                            </div>
+                            <div style="padding: 2rem;">
+                                <div style="display: flex; gap: 1rem; margin-bottom: 1rem; font-size: 0.9rem; color: #9ca3af;">
+                                    <span>📅 ${blog.date || 'Recent'}</span>
+                                    <span>⏱️ ${blog.readTime || '5 min read'}</span>
+                                </div>
+                                <h3 style="font-size: 1.4rem; margin-bottom: 1rem; color: #00f5ff;">${blog.title}</h3>
+                                <p style="color: #b0b0b0; line-height: 1.6; margin-bottom: 1.5rem;">${blog.excerpt || blog.description || ''}</p>
+                                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem;">
+                                    ${(blog.tags || []).map(tag => `<span class="tag">${tag}</span>`).join('')}
+                                </div>
+                            </div>
+                        </a>
+                    `).join('');
+                    
+                    // Show "View All" button if there are more than 3 blogs
+                    if (data.blogs.length > 3 && viewAllBtn) {
+                        viewAllBtn.style.display = 'block';
+                    }
+                    
+                    // Add hover effects
+                    grid.querySelectorAll('.blog-preview-card').forEach(card => {
+                        card.addEventListener('mouseenter', () => {
+                            card.style.transform = 'translateY(-10px)';
+                            card.style.borderColor = 'rgba(0, 245, 255, 0.5)';
+                            card.style.boxShadow = '0 15px 40px rgba(0, 245, 255, 0.3)';
+                        });
+                        card.addEventListener('mouseleave', () => {
+                            card.style.transform = 'translateY(0)';
+                            card.style.borderColor = 'rgba(0, 245, 255, 0.1)';
+                            card.style.boxShadow = 'none';
+                        });
+                    });
+                } else {
+                    // No blogs yet - hide the entire section
+                    if (blogSection) {
+                        blogSection.style.display = 'none';
+                    }
+                }
+            } catch (error) {
+                console.log('No blogs found or error loading blogs:', error.message);
+                // Hide blog section if no blogs
+                if (blogSection) {
+                    blogSection.style.display = 'none';
+                }
+            }
+        })();
 
         // ============================================
         // GITHUB STATS 3D CAROUSEL

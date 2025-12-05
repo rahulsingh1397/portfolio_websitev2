@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BLOG_TITLE - Rahul Singh Blog</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            line-height: 1.8;
+        }
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1.5rem 5%;
+            border-bottom: 1px solid rgba(0, 245, 255, 0.1);
+        }
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .back-link {
+            color: #00f5ff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .back-link:hover { opacity: 0.8; }
+        
+        .blog-article {
+            max-width: 800px;
+            margin: 120px auto 80px;
+            padding: 0 5%;
+        }
+        .blog-header {
+            margin-bottom: 3rem;
+        }
+        .blog-meta {
+            display: flex;
+            gap: 1.5rem;
+            color: #9ca3af;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        .blog-title {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #00f5ff, #0080ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1.5rem;
+            line-height: 1.3;
+        }
+        .blog-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .tag {
+            background: rgba(0, 245, 255, 0.1);
+            border: 1px solid rgba(0, 245, 255, 0.3);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #00f5ff;
+        }
+        .blog-content {
+            color: #d1d5db;
+        }
+        .blog-content h2 {
+            color: #00f5ff;
+            font-size: 1.8rem;
+            margin: 2.5rem 0 1rem;
+        }
+        .blog-content h3 {
+            color: #fff;
+            font-size: 1.4rem;
+            margin: 2rem 0 1rem;
+        }
+        .blog-content p {
+            margin-bottom: 1.5rem;
+        }
+        .blog-content ul, .blog-content ol {
+            margin: 1.5rem 0;
+            padding-left: 2rem;
+        }
+        .blog-content li {
+            margin-bottom: 0.5rem;
+        }
+        .blog-content code {
+            background: rgba(0, 245, 255, 0.1);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Consolas', monospace;
+            color: #00f5ff;
+        }
+        .blog-content pre {
+            background: rgba(20, 20, 20, 0.8);
+            padding: 1.5rem;
+            border-radius: 10px;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            border: 1px solid rgba(0, 245, 255, 0.1);
+        }
+        .blog-content pre code {
+            background: none;
+            padding: 0;
+        }
+        .blog-content blockquote {
+            border-left: 4px solid #00f5ff;
+            padding-left: 1.5rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+            color: #9ca3af;
+        }
+        .blog-content img {
+            max-width: 100%;
+            border-radius: 10px;
+            margin: 1.5rem 0;
+        }
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #9ca3af;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        @media (max-width: 768px) {
+            .blog-title { font-size: 1.8rem; }
+            .blog-content h2 { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="../blog.html" class="back-link">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+                Back to Blog
+            </a>
+            <a href="../data-scientist-portfolio.html" style="color: #fff; text-decoration: none; font-weight: 600;">Portfolio</a>
+        </div>
+    </nav>
+
+    <article class="blog-article">
+        <header class="blog-header">
+            <div class="blog-meta">
+                <span>📅 BLOG_DATE</span>
+                <span>⏱️ BLOG_READ_TIME</span>
+                <span>✍️ Rahul Singh</span>
+            </div>
+            <h1 class="blog-title">BLOG_TITLE</h1>
+            <div class="blog-tags">
+                <!-- BLOG_TAGS -->
+            </div>
+        </header>
+
+        <div class="blog-content">
+            <!-- BLOG_CONTENT -->
+        </div>
+    </article>
+
+    <footer>
+        <p>&copy; 2025 Rahul Singh. All rights reserved.</p>
+    </footer>
+</body>
+</html>
