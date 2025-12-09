@@ -1,6 +1,16 @@
 {
   "blogs": [
     {
+      "slug": "agentic-ai-takes-center-stage-2025",
+      "title": "Agentic AI Takes Center Stage: Market Growth, Enterprise Adoption, and My Picks for the Best Autonomous Agents",
+      "excerpt": "Deep dive into the explosive growth of agentic AI in 2025. Market projections hitting $93B by 2032, enterprise adoption stats, workflow automation trends, scaling challenges, and my top picks for autonomous agents.",
+      "date": "Dec 8, 2025",
+      "readTime": "10 min read",
+      "tags": ["Agentic AI", "Autonomous Agents", "Enterprise AI", "Workflow Automation"],
+      "icon": "🤖",
+      "thumbnail": null
+    },
+    {
       "slug": "ai-models-showdown-2025",
       "title": "The Ultimate AI Models Showdown: December 2025 Edition",
       "excerpt": "An honest, no-holds-barred comparison of Claude Opus 4.5, GPT-5.1, Gemini 3 Pro, and Grok 4.1. Real opinions from a data scientist who uses them daily.",
