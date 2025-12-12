@@ -62,6 +62,7 @@
             left: 0;
             width: 100%;
             height: 100%;
+            filter: blur(1.5px);  /* 20% blur effect */
         }
 
         .beam-grid-fade {
@@ -614,7 +615,55 @@
 
         /* About Section */
         #about {
-            background: rgba(10, 10, 10, 0.3);
+            background: rgba(10, 10, 10, 0.15);
+        }
+
+        /* About Me chalk-border box */
+        .about-chalk-box {
+            position: relative;
+            padding: 2rem 2.5rem;
+            background: rgba(10, 10, 10, 0.8);
+            border: 2px solid #00f5ff;
+            box-shadow: 0 0 15px rgba(0, 245, 255, 0.3);
+            z-index: 1;
+            overflow: visible;
+        }
+        
+        .about-chalk-box::after {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: -6px;
+            right: -6px;
+            bottom: -6px;
+            border: 1px solid rgba(0, 245, 255, 0.4);
+            border-radius: 2px;
+            pointer-events: none;
+            z-index: -1;
+            box-shadow: 0 0 5px 2px rgba(0, 245, 255, 0.1);
+            opacity: 0.6;
+        }
+
+        .about-chalk-box::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            right: -8px;
+            bottom: -8px;
+            border: 1px dashed rgba(0, 245, 255, 0.3);
+            pointer-events: none;
+            animation: borderFlicker 2s infinite alternate;
+        }
+
+        .about-chalk-box p {
+            color: #d1d5db;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .about-chalk-box p:last-child {
+            margin-bottom: 0;
         }
 
         .about-content {
@@ -757,7 +806,7 @@
 
         /* Contact Section */
         #contact {
-            background: rgba(10, 10, 10, 0.3);
+            background: rgba(10, 10, 10, 0.15);
         }
 
         .contact-content {
@@ -909,590 +958,1627 @@
             --accent-light: #00f5ff;
         }
 
-        /* Apply theme colors */
-        body {
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            transition: background-color 0.3s ease, color 0.3s ease;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        
-
-        /* Theme Toggle */
-        .theme-toggle {
-            display: none; /* Temporarily disabled */
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 60px;
-            height: 60px;
-            background: radial-gradient(
-                circle var(--spotlight-size, 200px) at var(--spotlight-x, 50%) var(--spotlight-y, 50%),
-                var(--spotlight-color, rgba(255, 255, 150, 0.8)) 0%,
-                transparent 80%
-            ), linear-gradient(135deg, var(--accent-light), var(--accent));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 999;
-            box-shadow: 0 5px 20px var(--shadow);
-            transition: all 0.3s ease;
-            font-size: 1.5rem;
-            color: white;
-            border: none;
-            outline: none;
-        }
-
-        .theme-toggle:hover {
-            transform: scale(1.1) rotate(15deg);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Hide sun icon by default */
-        .theme-toggle .sun-icon {
-            display: none;
-        }
-
-        /* Hide moon icon in dark mode */
-        [data-theme="dark"] .theme-toggle .sun-icon {
-            display: block;
-        }
-
-        [data-theme="dark"] .theme-toggle .moon-icon {
-            display: none;
-        }
-
-        /* Project Filter Buttons */
-        .project-filters {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin-bottom: 3rem;
-            flex-wrap: wrap;
-        }
-
-        .filter-btn {
-            padding: 0.7rem 1.5rem;
-            background: rgba(0, 245, 255, 0.1);
-            border: 1px solid rgba(0, 245, 255, 0.3);
-            border-radius: 25px;
-            color: #00f5ff;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 500;
-        }
-
-        .filter-btn:hover,
-        .filter-btn.active {
-            background: rgba(0, 245, 255, 0.2);
-            border-color: #00f5ff;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 245, 255, 0.3);
-        }
-
-        .project-card {
-            transition: all 0.5s ease;
-        }
-
-        .project-card.hidden {
-            opacity: 0;
-            transform: scale(0.8);
-            pointer-events: none;
-            height: 0;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-        }
-
-        /* Floating Labels for Contact Form */
-        .form-group {
-            position: relative;
-        }
-
-        .form-group.floating label {
-            position: absolute;
-            left: 1rem;
-            top: 1rem;
-            transition: all 0.3s ease;
-            pointer-events: none;
-            color: #b0b0b0;
-        }
-
-        .form-group.floating input:focus ~ label,
-        .form-group.floating input:not(:placeholder-shown) ~ label,
-        .form-group.floating textarea:focus ~ label,
-        .form-group.floating textarea:not(:placeholder-shown) ~ label {
-            top: -10px;
-            left: 0.5rem;
-            font-size: 0.85rem;
-            color: #00f5ff;
-            background: #0a0a0a;
-            padding: 0 0.5rem;
-        }
-
-        /* Success Animation */
-        .success-message {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0);
-            background: rgba(0, 245, 255, 0.95);
-            color: #000;
-            padding: 2rem 3rem;
-            border-radius: 20px;
-            font-size: 1.2rem;
-            font-weight: 600;
-            z-index: 9999;
-            box-shadow: 0 10px 40px rgba(0, 245, 255, 0.5);
-            transition: transform 0.3s ease;
-        }
-
-        .success-message.show {
-            transform: translate(-50%, -50%) scale(1);
-        }
-
-        /* Parallax Effect for Particles */
-        .particles {
-            will-change: transform;
-        }
-
-        /* Skills Grid & Cards with Glassmorphism */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .skill-card {
-            background: rgba(20, 20, 20, 0.4);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-radius: 20px;
-            padding: 2rem;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(0, 245, 255, 0.1);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .skill-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0, 245, 255, 0.3);
-            background: var(--bg-elevated);
-            border-color: var(--primary-cyan);
-        }
-
-        .skill-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            text-align: center;
-            display: block;
-        }
-
-        .skill-card h3 {
-            color: #00f5ff;
-            margin-bottom: 0.5rem;
-            font-size: 1.3rem;
-            text-align: center;
-        }
-
-        .skill-card p {
-            color: var(--text-secondary);
-            line-height: 1.6;
-            margin-bottom: 1rem;
-            flex-grow: 1;
-            text-align: center;
-        }
-
-        /* Projects Grid with Glassmorphism */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2.5rem;
-            margin-top: 3rem;
-        }
-
-        /* Skill & Project Tags */
-        .skill-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-top: auto;
-            margin-bottom: 1rem;
-        }
-
-        .skill-progress {
-            width: calc(100% - 4rem);
-            height: 8px;
-            background: rgba(0, 245, 255, 0.1);
-            border-radius: 10px;
-            margin-top: auto;
-            overflow: hidden;
-            position: absolute;
-            bottom: 2rem;
-            left: 2rem;
-        }
-
-        .tag {
-            padding: 0.4rem 1rem;
-            background: rgba(0, 245, 255, 0.1);
-            border: 1px solid rgba(0, 245, 255, 0.2);
-            border-radius: 20px;
-            font-size: 0.85rem;
-            color: #00f5ff;
-            transition: all 0.3s ease;
-        }
-
-        .tag:hover {
-            background: rgba(0, 245, 255, 0.2);
-            border-color: #00f5ff;
-        }
-
-        /* Calendar Modal Styles */
-        .calendar-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            z-index: 10000;
-            justify-content: center;
-            align-items: center;
-            backdrop-filter: blur(10px);
-        }
-
-        .calendar-modal.show {
-            display: flex;
-        }
-
-        .calendar-content {
-            background: #1a1a1a;
-            border-radius: 20px;
-            padding: 2rem;
-            max-width: 900px;
-            width: 90%;
-            max-height: 90vh;
-            overflow-y: auto;
-            border: 2px solid rgba(0, 245, 255, 0.3);
-            box-shadow: 0 20px 60px rgba(0, 245, 255, 0.3);
-            position: relative;
-            animation: modalSlideIn 0.3s ease;
-        }
-
-        @keyframes modalSlideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-50px) scale(0.9);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
-
-        .calendar-close {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: rgba(255, 255, 255, 0.1);
-            border: none;
-            color: #00f5ff;
-            font-size: 2rem;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-        }
-
-        .calendar-close:hover {
-            background: rgba(0, 245, 255, 0.2);
-            transform: rotate(90deg);
-        }
-
-        .calendar-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .calendar-header h2 {
-            color: #00f5ff;
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .calendar-header p {
-            color: #b0b0b0;
-        }
-
-        .calendar-iframe {
-            width: 100%;
-            height: 600px;
-            border: none;
-            border-radius: 10px;
-        }
-
-        /* Project Card Improvements */
-        .project-card {
-            background: rgba(20, 20, 20, 0.6);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(0, 245, 255, 0.1);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            display: flex;
-            flex-direction: column;
-        }
-
-        .project-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0, 245, 255, 0.2);
-        }
-
-        .project-content {
-            padding: 2rem;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-        }
-
-        .project-content h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: #00f5ff;
-        }
-
-        .project-content p {
-            color: #b0b0b0;
-            line-height: 1.6;
-            margin-bottom: 1.5rem;
-            flex-grow: 1;
-        }
-
-        .project-link {
-            display: inline-block;
-            margin-top: auto;
-            padding: 0.8rem 2rem;
-            background: linear-gradient(135deg, rgba(0, 245, 255, 0.1), rgba(0, 128, 255, 0.1));
-            border: 2px solid rgba(0, 245, 255, 0.3);
-            border-radius: 50px;
-            color: #00f5ff;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            text-align: center;
-        }
-
-        .project-link:hover {
-            background: linear-gradient(135deg, rgba(0, 245, 255, 0.2), rgba(0, 128, 255, 0.2));
-            border-color: #00f5ff;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 245, 255, 0.4);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .menu-toggle {
-                display: flex;
-            }
-
-            .work-with-me-btn {
-                display: none; /* Hide on mobile to save space */
-            }
-
-            .nav-center {
-                justify-content: flex-end;
-            }
-
-            .nav-links {
-                position: fixed;
-                top: 80px;
-                left: -100%;
-                flex-direction: column;
-                background: rgba(10, 10, 10, 0.98);
-                width: 100%;
-                padding: 2rem;
-                transition: left 0.3s ease;
-            }
-
-            .nav-links.active {
-                left: 0;
-            }
-
-            .hero-title {
-                font-size: 2.5rem;
-            }
-
-            .hero-subtitle {
-                font-size: 1rem;
-            }
-
-            .hero-description {
-                font-size: 1rem;
-            }
-
-            .cta-buttons {
-                flex-direction: column;
-            }
-
-
-            .hero-content {
-                margin-top: 250px;
-            }
-
-            .model-container {
-                width: clamp(250px, 80vw, 400px);
-                height: clamp(250px, 80vw, 400px);
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .about-content {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .skills-grid,
-            .projects-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .calendar-content {
-                width: 95%;
-                padding: 1.5rem;
-            }
-
-            .calendar-iframe {
-                height: 500px;
-            }
-
-            .project-content {
-                padding: 1.5rem;
-            }
-        }
-
-        /* Enhanced Mobile Optimization */
-        @media (max-width: 480px) {
-            .hero-title {
-                font-size: 2rem;
-            }
-
-            .section-title {
-                font-size: 1.8rem;
-            }
-
-            .btn {
-                padding: 0.8rem 1.5rem;
-                font-size: 1rem;
-            }
-
-            .chalk-border {
-                font-size: 0.7rem;
-                padding: 0.4rem 1rem;
-                letter-spacing: 2px;
-            }
-
-            .work-with-me-btn svg {
-                width: 20px;
-                height: 20px;
-            }
-        }
-
-        /* Touch Device Optimizations */
-        @media (hover: none) and (pointer: coarse) {
-            * {
-                -webkit-tap-highlight-color: transparent;
-            }
-            
-            html, body {
-                touch-action: pan-y;
-                -webkit-overflow-scrolling: touch;
-            }
-            
-            .btn:hover,
-            .project-card:hover,
-            .skill-card:hover,
-            .stat-item:hover {
-                transform: none;
-            }
-
-            .btn:active {
-                transform: scale(0.95);
-            }
-
-            .project-card:active,
-            .skill-card:active {
-                transform: translateY(-5px);
-            }
-        }
-
-        /* Improve tap targets for mobile */
-        @media (max-width: 768px) {
-            .nav-links a,
-            .btn,
-            .project-link,
-            .filter-btn {
-                min-height: 44px;
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-            }
-        }
-
-        /* iPad and Tablet Responsive */
-        @media (min-width: 768px) and (max-width: 1024px) {
-            section {
-                padding: 100px 4% 60px;
-            }
-            
-            .hero-title {
-                font-size: 3.5rem;
-            }
-            
-            .section-title {
-                font-size: 2.8rem;
-            }
-            
-            .skills-grid,
-            .projects-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .about-content {
-                gap: 2rem;
-            }
-        }
-
         /* ============================================
+           LIGHT MODE - Minimalist with Sharp Accent
+           Background: #F8F8F8 (light gray)
+           Text: #202124 (near-black)
+           UI/Subtext: #737373 (neutral gray)
+           Primary Accent: #AF5C00 (warm orange)
+           Secondary Accent: #FF5A5F (coral hover)
+           ============================================ */
+        [data-theme="light"] {
+            /* Primary Colors - Warm orange accent */
+            --primary-cyan: #AF5C00;      /* Warm orange (main accent) */
+            --primary-blue: #E67A35;      /* Darker orange */
+            --electric-purple: #FF5A5F;   /* Coral (hover/secondary) */
+            
+            /* Backgrounds - Soft light gray */
+            --bg-darkest: #F8F8F8;        /* Light gray base */
+            --bg-dark: #F0F0F0;           /* Slightly darker sections */
+            --bg-elevated: #FFFFFF;       /* White for cards */
+            
+            /* Accents & States */
+            --success-green: #22C55E;
+            --warning-amber: #AF5C00;
+            --error-red: #FF5A5F;
+            --info-blue: #3B82F6;
+            
+            /* Text */
+            --text-primary: #202124;      /* Near-black */
+            --text-secondary: #737373;    /* Neutral gray */
+            --text-muted: #9CA3AF;        /* Light gray */
+            
+            /* Effects */
+            --spotlight-color: rgba(175, 92, 0, 0.1);
+            --shadow: rgba(0, 0, 0, 0.06);
+            --card-bg: #FFFFFF;
+            --glow-color: rgba(175, 92, 0, 0.2);
+            --border-color: rgba(0, 0, 0, 0.08);
+            
+            /* Legacy compatibility */
+            --bg-primary: #F8F8F8;
+            --bg-secondary: #F0F0F0;
+            --accent: #AF5C00;
+            --accent-light: #FFB07A;
+        }
+
+        /* Light mode specific overrides - Minimalist */
+        [data-theme="light"] body {
+            background: #F8F8F8;
+            color: #202124;
+        }
+
+[data-theme="light"] body::before {
+    background: radial-gradient(ellipse at bottom, rgba(175, 92, 0, 0.03), transparent 70%);
+}
+
+/* Light mode - Hide beam grid (cyan lines) */
+[data-theme="light"] .beam-grid-container,
+[data-theme="light"] .beam-grid-canvas,
+[data-theme="light"] #beamGridContainer,
+[data-theme="light"] #beamGridCanvas {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+[data-theme="light"] nav {
+    background: rgba(255, 255, 255, 0.95);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] nav.scrolled {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .nav-links a {
+    color: #737373;
+}
+
+[data-theme="light"] .nav-links li.active a {
+    color: #202124;
+}
+
+[data-theme="light"] .nav-links li:not(.active):hover a {
+    color: #FF5A5F;
+    text-shadow: none;
+}
+
+[data-theme="light"] .navigation-menu .active-element {
+    background-color: #AF5C00;
+}
+
+[data-theme="light"] .navigation-menu .active-element > svg {
+    filter: blur(0.5px)
+        drop-shadow(2px 0px 8px rgba(175, 92, 0, 0.25))
+        drop-shadow(1px 0px 2px rgba(175, 92, 0, 0.5))
+        drop-shadow(0px 0px 3px rgba(175, 92, 0, 0.25))
+        drop-shadow(2px 0px 8px rgba(175, 92, 0, 0.27))
+        drop-shadow(8px 0px 16px rgba(175, 92, 0, 0.31)) !important;
+}
+
+[data-theme="light"] .nav-links li:not(.active):hover a {
+    text-shadow: 0 0 10px rgba(175, 92, 0, 0.6), 0 0 20px rgba(175, 92, 0, 0.4) !important;
+}
+
+[data-theme="light"] .hero-title {
+    background: radial-gradient(circle 500px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 176, 122, 0.9), transparent 50%), #AF5C00 !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    color: transparent !important;
+    text-shadow: none !important;
+}
+
+[data-theme="light"] .hero-description {
+    color: #737373;
+}
+
+[data-theme="light"] .chalk-border {
+    background: rgba(255, 255, 255, 0.95);
+    border-color: #AF5C00;
+    color: #AF5C00;
+    box-shadow: 0 4px 20px rgba(175, 92, 0, 0.15);
+    text-shadow: none;
+}
+
+[data-theme="light"] .chalk-border::after {
+    border-color: rgba(175, 92, 0, 0.25);
+    box-shadow: 0 0 5px 2px rgba(175, 92, 0, 0.08);
+}
+
+[data-theme="light"] .chalk-border::before {
+    border-color: rgba(175, 92, 0, 0.15);
+}
+
+[data-theme="light"] .section-title {
+    background: radial-gradient(circle 500px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 176, 122, 0.9), transparent 50%), linear-gradient(135deg, #AF5C00, #FFB07A) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    color: transparent !important;
+}
+
+[data-theme="light"] .section-title::after {
+    background: linear-gradient(90deg, #AF5C00, #FF5A5F);
+}
+
+[data-theme="light"] #about {
+    background: #F0F0F0;
+}
+
+[data-theme="light"] .about-chalk-box {
+    background: rgba(175, 92, 0, 0.06);
+    border-color: #AF5C00;
+    box-shadow: 0 4px 20px rgba(175, 92, 0, 0.12);
+}
+
+[data-theme="light"] .about-chalk-box::after {
+    border-color: rgba(175, 92, 0, 0.25);
+}
+
+[data-theme="light"] .about-chalk-box::before {
+    border-color: rgba(175, 92, 0, 0.15);
+}
+
+[data-theme="light"] .about-chalk-box p {
+    color: #737373;
+}
+
+[data-theme="light"] .skill-card {
+    background: rgba(175, 92, 0, 0.08);
+    border-color: rgba(175, 92, 0, 0.2);
+    box-shadow: 0 2px 10px rgba(175, 92, 0, 0.08);
+}
+
+[data-theme="light"] .skill-card:hover {
+    border-color: #AF5C00;
+    box-shadow: 0 10px 40px rgba(175, 92, 0, 0.12);
+}
+
+[data-theme="light"] .skill-card h3 {
+    color: #AF5C00;
+}
+
+[data-theme="light"] .skill-card p,
+[data-theme="light"] .skill-card li {
+    color: #737373;
+}
+
+[data-theme="light"] .project-card {
+    background: rgba(175, 92, 0, 0.06);
+    border-color: rgba(175, 92, 0, 0.15);
+    box-shadow: 0 2px 10px rgba(175, 92, 0, 0.08);
+}
+
+[data-theme="light"] .project-card:hover {
+    border-color: #FF5A5F;
+    box-shadow: 0 20px 50px rgba(255, 90, 95, 0.12);
+}
+
+[data-theme="light"] .project-card h3 {
+    color: #AF5C00;
+}
+
+[data-theme="light"] .project-card p {
+    color: #737373;
+}
+
+[data-theme="light"] .achievements-section {
+    background: #F0F0F0;
+}
+
+[data-theme="light"] .achievement-card {
+    background: rgba(175, 92, 0, 0.08);
+    border-color: rgba(175, 92, 0, 0.2);
+    box-shadow: 0 2px 10px rgba(175, 92, 0, 0.08);
+}
+
+[data-theme="light"] .achievement-card h3 {
+    color: #AF5C00;
+}
+
+[data-theme="light"] .achievement-card p {
+    color: var(--text-secondary);
+}
+
+[data-theme="light"] .timeline-section {
+    background: var(--bg-secondary);
+}
+
+[data-theme="light"] .timeline-spine {
+    background: linear-gradient(180deg, var(--primary-cyan), var(--primary-blue), var(--electric-purple));
+}
+
+[data-theme="light"] .tl-card {
+    background: var(--card-bg);
+    border-color: var(--border-color);
+    box-shadow: 0 2px 10px var(--shadow);
+}
+
+[data-theme="light"] .tl-card h3 {
+    color: var(--primary-cyan);
+}
+
+[data-theme="light"] .tl-card p,
+[data-theme="light"] .tl-card li {
+    color: var(--text-secondary);
+}
+
+[data-theme="light"] .timeline-year,
+[data-theme="light"] .tl-year,
+[data-theme="light"] .year-indicator {
+    color: var(--text-muted);
+    transition: color 0.3s ease;
+}
+
+[data-theme="light"] .timeline-item:hover .tl-year,
+[data-theme="light"] .tl-card:hover .tl-year,
+[data-theme="light"] .timeline-item:hover .year-indicator {
+    color: var(--primary-cyan);
+}
+
+[data-theme="light"] #contact {
+    background: #F0F0F0;
+}
+
+[data-theme="light"] .contact-form input,
+[data-theme="light"] .contact-form textarea {
+    background: #FFFFFF;
+    border-color: rgba(0, 0, 0, 0.1);
+    color: #202124;
+}
+
+[data-theme="light"] .contact-form input:focus,
+[data-theme="light"] .contact-form textarea:focus {
+    border-color: #AF5C00;
+    box-shadow: 0 0 0 3px rgba(175, 92, 0, 0.12);
+}
+
+[data-theme="light"] .contact-form label {
+    color: #AF5C00;
+}
+
+[data-theme="light"] footer {
+    background: #F0F0F0;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] footer p,
+[data-theme="light"] footer a {
+    color: #737373;
+}
+
+[data-theme="light"] footer a:hover {
+    color: #FF5A5F;
+}
+
+/* Light mode - Work with Me button uses warm orange */
+[data-theme="light"] .work-with-me-btn {
+    background: linear-gradient(135deg, #AF5C00, #FFB07A);
+    box-shadow: 0 4px 15px rgba(175, 92, 0, 0.4);
+}
+
+[data-theme="light"] .work-with-me-btn:hover {
+    box-shadow: 0 6px 20px rgba(255, 90, 95, 0.5);
+    background: linear-gradient(135deg, #FF5A5F, #AF5C00);
+}
+
+/* Light mode - Filter buttons use warm orange */
+[data-theme="light"] .filter-btn {
+    background: rgba(175, 92, 0, 0.1);
+    border: 1px solid rgba(175, 92, 0, 0.3);
+    color: #AF5C00;
+}
+
+[data-theme="light"] .filter-btn:hover,
+[data-theme="light"] .filter-btn.active {
+    background: rgba(255, 90, 95, 0.15);
+    border-color: #FF5A5F;
+    box-shadow: 0 5px 15px rgba(255, 90, 95, 0.25);
+    color: #FF5A5F;
+}
+
+/* Light mode - View Project button */
+[data-theme="light"] .project-card .btn,
+[data-theme="light"] .project-card a[href*="github"],
+[data-theme="light"] .view-project-btn {
+    background: linear-gradient(135deg, #AF5C00, #FFB07A);
+    color: #FFFFFF;
+    border: none;
+    box-shadow: 0 4px 15px rgba(175, 92, 0, 0.3);
+}
+
+[data-theme="light"] .project-card .btn:hover,
+[data-theme="light"] .project-card a[href*="github"]:hover,
+[data-theme="light"] .view-project-btn:hover {
+    background: linear-gradient(135deg, #FF5A5F, #AF5C00);
+    box-shadow: 0 6px 20px rgba(255, 90, 95, 0.4);
+}
+
+/* Light mode - Book a Call / Submit button */
+[data-theme="light"] .contact-form button,
+[data-theme="light"] .contact-form .submit-btn,
+[data-theme="light"] .book-call-btn {
+    background: linear-gradient(135deg, #AF5C00, #FFB07A);
+    color: #FFFFFF;
+    border: none;
+    box-shadow: 0 4px 15px rgba(175, 92, 0, 0.4);
+}
+
+[data-theme="light"] .contact-form button:hover,
+[data-theme="light"] .contact-form .submit-btn:hover,
+[data-theme="light"] .book-call-btn:hover {
+    background: linear-gradient(135deg, #FF5A5F, #AF5C00);
+    box-shadow: 0 6px 20px rgba(255, 90, 95, 0.5);
+}
+
+/* Light mode - Generic buttons */
+[data-theme="light"] .btn-primary,
+[data-theme="light"] button[type="submit"] {
+    background: linear-gradient(135deg, #AF5C00, #FFB07A);
+    color: #FFFFFF;
+    border: none;
+}
+
+[data-theme="light"] .btn-primary:hover,
+[data-theme="light"] button[type="submit"]:hover {
+    background: linear-gradient(135deg, #FF5A5F, #AF5C00);
+}
+
+/* Light mode - Testimonials Section */
+[data-theme="light"] .testimonials-section {
+    background: #F0F0F0;
+}
+
+[data-theme="light"] .testimonial-card {
+    background: rgba(175, 92, 0, 0.08);
+    border-color: rgba(175, 92, 0, 0.2);
+    box-shadow: 0 2px 10px rgba(175, 92, 0, 0.08);
+}
+
+[data-theme="light"] .testimonial-card:hover {
+    border-color: #AF5C00;
+    box-shadow: 0 10px 40px rgba(175, 92, 0, 0.15);
+}
+
+[data-theme="light"] .testimonial-card .client-name,
+[data-theme="light"] .testimonial-card h4 {
+    color: #AF5C00;
+}
+
+[data-theme="light"] .testimonial-card p,
+[data-theme="light"] .testimonial-card .testimonial-text {
+    color: #737373;
+}
+
+[data-theme="light"] .testimonial-card .client-role {
+    color: #9CA3AF;
+}
+
+/* Light mode - FAQ Section */
+[data-theme="light"] .faq-section {
+    background: #F8F8F8;
+}
+
+[data-theme="light"] .faq-item {
+    background: rgba(175, 92, 0, 0.08);
+    border-color: rgba(175, 92, 0, 0.2);
+    box-shadow: 0 2px 10px rgba(175, 92, 0, 0.08);
+}
+
+[data-theme="light"] .faq-item:hover {
+    border-color: #AF5C00;
+}
+
+[data-theme="light"] .faq-question,
+[data-theme="light"] .faq-item h3 {
+    color: #AF5C00;
+}
+
+[data-theme="light"] .faq-answer,
+[data-theme="light"] .faq-item p {
+    color: #737373;
+}
+
+[data-theme="light"] .faq-toggle {
+    color: #AF5C00;
+}
+
+/* Light mode - GitHub Section */
+[data-theme="light"] .github-section {
+    background: #F0F0F0;
+}
+
+[data-theme="light"] .github-container {
+    background: transparent;
+    border-color: rgba(175, 92, 0, 0.2);
+}
+
+[data-theme="light"] .github-stat-card,
+[data-theme="light"] .github-stats-carousel > div,
+[data-theme="light"] .github-stat {
+    background: #FFFFFF !important;
+    border: 1px solid rgba(175, 92, 0, 0.15) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08) !important;
+}
+
+[data-theme="light"] .github-stat-card h3,
+[data-theme="light"] .github-stat-number {
+    color: #AF5C00;
+}
+
+[data-theme="light"] .github-stat-card p,
+[data-theme="light"] .github-stat-label {
+    color: #737373;
+}
+
+[data-theme="light"] .github-link {
+    color: #AF5C00;
+}
+
+[data-theme="light"] .github-link:hover {
+    color: #FF5A5F;
+}
+
+/* Light mode - GitHub Stats Container */
+[data-theme="light"] .github-stats,
+[data-theme="light"] #github-stats-container {
+    background: linear-gradient(135deg, rgba(175, 92, 0, 0.08), rgba(255, 176, 122, 0.15)) !important;
+    border-radius: 16px;
+    padding: 1rem;
+    border: 1px solid rgba(175, 92, 0, 0.2);
+}
+
+/* Light mode - GitHub Graph Wrapper */
+[data-theme="light"] .github-graph-wrapper,
+[data-theme="light"] #github-graph-wrapper {
+    background: linear-gradient(135deg, rgba(175, 92, 0, 0.08), rgba(255, 176, 122, 0.15)) !important;
+    border-radius: 16px;
+    padding: 1rem;
+    border: 1px solid rgba(175, 92, 0, 0.2);
+}
+
+[data-theme="light"] .github-graph-img {
+    filter: brightness(1) contrast(1) !important;
+}
+
+/* Light mode - Blog Preview Section */
+[data-theme="light"] #blog-preview {
+    background: #F0F0F0 !important;
+}
+
+[data-theme="light"] .blog-card,
+[data-theme="light"] .blog-preview-card {
+    background: rgba(175, 92, 0, 0.08);
+    border-color: rgba(175, 92, 0, 0.2);
+    box-shadow: 0 2px 10px rgba(175, 92, 0, 0.08);
+}
+
+[data-theme="light"] .blog-card:hover,
+[data-theme="light"] .blog-preview-card:hover {
+    border-color: #FF5A5F;
+    box-shadow: 0 10px 40px rgba(255, 90, 95, 0.15);
+}
+
+[data-theme="light"] .blog-card h3,
+[data-theme="light"] .blog-preview-card h3 {
+    color: #AF5C00;
+}
+
+[data-theme="light"] .blog-card p,
+[data-theme="light"] .blog-preview-card p {
+    color: #737373;
+}
+
+[data-theme="light"] .blog-card .read-more,
+[data-theme="light"] .blog-preview-card a {
+    color: #AF5C00;
+}
+
+[data-theme="light"] .blog-card .read-more:hover,
+[data-theme="light"] .blog-preview-card a:hover {
+    color: #FF5A5F;
+}
+
+[data-theme="light"] .blog-tag {
+    background: rgba(175, 92, 0, 0.15);
+    color: #AF5C00;
+}
+
+/* Light mode - Section subtitles */
+[data-theme="light"] .section-subtitle {
+    color: #737373;
+}
+
+/* Light mode - Skills section background */
+[data-theme="light"] #skills {
+    background: #F8F8F8;
+}
+
+/* Light mode - Projects section background */
+[data-theme="light"] #projects {
+    background: #F8F8F8;
+}
+
+/* Light mode - Get In Touch button (hero section) */
+[data-theme="light"] .btn-primary {
+    background: linear-gradient(135deg, #AF5C00, #FFB07A);
+    color: #FFFFFF;
+    border: none;
+    box-shadow: 0 4px 15px rgba(175, 92, 0, 0.4);
+}
+
+[data-theme="light"] .btn-primary:hover {
+    background: linear-gradient(135deg, #FF5A5F, #AF5C00);
+    box-shadow: 0 6px 20px rgba(255, 90, 95, 0.5);
+}
+
+/* Light mode - About Me profile picture border */
+[data-theme="light"] .about-image img,
+[data-theme="light"] .profile-image,
+[data-theme="light"] .about-content img {
+    border: 3px solid #AF5C00;
+    box-shadow: 0 0 20px rgba(175, 92, 0, 0.3);
+}
+
+/* Light mode - By The Numbers: Card numbers */
+[data-theme="light"] .achievement-card .number,
+[data-theme="light"] .achievement-card .stat-number,
+[data-theme="light"] .achievement-number,
+[data-theme="light"] .stat-value {
+    color: #AF5C00;
+    -webkit-text-fill-color: #AF5C00;
+}
+
+/* Light mode - Experience: Year indicators */
+[data-theme="light"] .timeline-year,
+[data-theme="light"] .tl-year,
+[data-theme="light"] .year-indicator {
+    color: var(--text-muted);
+    transition: color 0.3s ease;
+}
+
+[data-theme="light"] .timeline-item:hover .timeline-year,
+[data-theme="light"] .tl-card:hover .tl-year,
+[data-theme="light"] .timeline-item:hover .year-indicator {
+    color: var(--primary-cyan);
+}
+
+/* Light mode - Academic Background */
+[data-theme="light"] .education-card,
+[data-theme="light"] .academic-card {
+    background: var(--card-bg);
+    border-color: var(--border-color);
+    box-shadow: 0 2px 10px var(--shadow);
+}
+
+[data-theme="light"] .education-card h3 {
+    color: #AF5C00;
+}
+
+/* Light mode - Skills & Expertise: Technology tags */
+[data-theme="light"] .skill-card .tech-tag,
+[data-theme="light"] .skill-card .skill-tag,
+[data-theme="light"] .skill-card code,
+[data-theme="light"] .tech-stack span,
+[data-theme="light"] .skill-tag {
+    background: rgba(175, 92, 0, 0.15);
+    color: #AF5C00;
+    border-color: rgba(175, 92, 0, 0.3);
+}
+
+/* Light mode - Featured Projects: Technology tags */
+[data-theme="light"] .project-card .tech-tag,
+[data-theme="light"] .project-card .project-tech span,
+[data-theme="light"] .project-tech-stack span,
+[data-theme="light"] .project-card code {
+    background: rgba(175, 92, 0, 0.15);
+    color: #AF5C00;
+    border-color: rgba(175, 92, 0, 0.3);
+}
+
+/* Light mode - Latest Insights: Blog cards */
+[data-theme="light"] .blog-card .blog-thumbnail,
+[data-theme="light"] .blog-preview-card .blog-thumbnail {
+    border: 2px solid rgba(175, 92, 0, 0.3);
+    background: linear-gradient(135deg, #AF5C00, #FFB07A) !important;
+}
+
+[data-theme="light"] .blog-card .blog-title,
+[data-theme="light"] .blog-preview-card .blog-title,
+[data-theme="light"] .blog-preview-card .blog-heading {
+    color: #AF5C00 !important;
+}
+
+[data-theme="light"] .blog-card .blog-excerpt,
+[data-theme="light"] .blog-preview-card .blog-excerpt {
+    color: #737373;
+}
+
+[data-theme="light"] .blog-card .blog-date,
+[data-theme="light"] .blog-preview-card .blog-date {
+    color: #AF5C00;
+}
+
+[data-theme="light"] .blog-preview-card {
+    background: rgba(255, 255, 255, 0.95) !important;
+    border-color: rgba(175, 92, 0, 0.2) !important;
+}
+
+[data-theme="light"] .blog-preview-card:hover {
+    border-color: rgba(175, 92, 0, 0.5) !important;
+    box-shadow: 0 15px 40px rgba(175, 92, 0, 0.2) !important;
+}
+
+[data-theme="light"] .blog-read-btn {
+    background: linear-gradient(135deg, #AF5C00, #FFB07A) !important;
+}
+
+[data-theme="light"] .blog-read-btn:hover {
+    background: linear-gradient(135deg, #8B4500, #E09050) !important;
+}
+
+/* ============================================
+   LIGHT MODE FIXES - Critical overrides
+   ============================================ */
+
+/* 1. Get In Touch button (btn-secondary) */
+[data-theme="light"] .btn-secondary {
+    background: transparent !important;
+    color: #AF5C00 !important;
+    border: 2px solid #AF5C00 !important;
+}
+
+[data-theme="light"] .btn-secondary:hover {
+    background: rgba(175, 92, 0, 0.1) !important;
+    color: #FF5A5F !important;
+    border-color: #FF5A5F !important;
+}
+
+/* 2. About Me profile picture border */
+[data-theme="light"] .about-image > div {
+    border-color: #AF5C00 !important;
+    box-shadow: 0 0 30px rgba(175, 92, 0, 0.3), 0 0 60px rgba(175, 92, 0, 0.2) !important;
+}
+
+/* 3. Experience: Year node */
+[data-theme="light"] .year-node {
+    color: #C0C0C0 !important;
+    border-color: #C0C0C0 !important;
+    background: rgba(192, 192, 192, 0.1) !important;
+    transition: all 0.3s ease !important;
+}
+
+[data-theme="light"] .tl-item:hover .year-node {
+    color: #AF5C00 !important;
+    border-color: #AF5C00 !important;
+    background: rgba(175, 92, 0, 0.1) !important;
+    box-shadow: 0 0 15px rgba(175, 92, 0, 0.4) !important;
+}
+
+/* 4. Experience: Card badge */
+[data-theme="light"] .tl-card-badge {
+    color: #C0C0C0 !important;
+    border-color: #C0C0C0 !important;
+    background: rgba(192, 192, 192, 0.1) !important;
+}
+
+[data-theme="light"] .tl-item:hover .tl-card-badge {
+    color: #AF5C00 !important;
+    border-color: #AF5C00 !important;
+    background: rgba(175, 92, 0, 0.1) !important;
+}
+
+/* 5. Academic Background */
+[data-theme="light"] .education-item,
+[data-theme="light"] .academic-item {
+    border-color: rgba(175, 92, 0, 0.2) !important;
+}
+
+/* Academic Background: Hide year badges only */
+[data-theme="light"] .academic-card .tl-card-badge,
+.academic-card .tl-card-badge {
+    display: none !important;
+}
+
+/* 6. Technology tags */
+[data-theme="light"] .tag,
+[data-theme="light"] .skill-tags .tag,
+[data-theme="light"] .tl-tech-tag {
+    background: rgba(175, 92, 0, 0.15) !important;
+    color: #AF5C00 !important;
+    border-color: rgba(175, 92, 0, 0.3) !important;
+}
+
+/* 7. Blog preview cards */
+[data-theme="light"] .blog-preview-card {
+    background: rgba(175, 92, 0, 0.08) !important;
+    border-color: rgba(175, 92, 0, 0.2) !important;
+}
+
+[data-theme="light"] .blog-preview-card > div:first-child {
+    border: 2px solid rgba(175, 92, 0, 0.3) !important;
+}
+
+/* 8. Comprehensive Light Mode - All cyan/blue to orange */
+[data-theme="light"] .stat-item {
+    background: rgba(175, 92, 0, 0.05) !important;
+    border-color: rgba(175, 92, 0, 0.1) !important;
+}
+
+[data-theme="light"] .stat-item:hover {
+    background: rgba(175, 92, 0, 0.1) !important;
+    border-color: rgba(175, 92, 0, 0.3) !important;
+}
+
+[data-theme="light"] .stat-circle-bg {
+    stroke: rgba(175, 92, 0, 0.1) !important;
+}
+
+[data-theme="light"] .filter-btn {
+    background: rgba(175, 92, 0, 0.1) !important;
+    border-color: rgba(175, 92, 0, 0.3) !important;
+    color: #AF5C00 !important;
+}
+
+[data-theme="light"] .filter-btn:hover,
+[data-theme="light"] .filter-btn.active {
+    background: rgba(175, 92, 0, 0.2) !important;
+    border-color: #AF5C00 !important;
+    box-shadow: 0 5px 15px rgba(175, 92, 0, 0.3) !important;
+}
+
+[data-theme="light"] .form-group label {
+    color: #AF5C00 !important;
+}
+
+[data-theme="light"] .form-group input,
+[data-theme="light"] .form-group textarea {
+    background: #FFFFFF !important;
+    border-color: rgba(175, 92, 0, 0.2) !important;
+}
+
+[data-theme="light"] .form-group input:focus,
+[data-theme="light"] .form-group textarea:focus {
+    border-color: #AF5C00 !important;
+    box-shadow: 0 0 20px rgba(175, 92, 0, 0.2) !important;
+}
+
+[data-theme="light"] .calendar-modal-content {
+    border-color: rgba(175, 92, 0, 0.3) !important;
+    box-shadow: 0 20px 60px rgba(175, 92, 0, 0.3) !important;
+}
+
+[data-theme="light"] .calendar-close:hover {
+    background: rgba(175, 92, 0, 0.2) !important;
+}
+
+[data-theme="light"] .project-link {
+    background: linear-gradient(135deg, rgba(175, 92, 0, 0.1), rgba(255, 176, 122, 0.1)) !important;
+    border-color: rgba(175, 92, 0, 0.3) !important;
+    color: #AF5C00 !important;
+}
+
+[data-theme="light"] .project-link:hover {
+    background: linear-gradient(135deg, rgba(175, 92, 0, 0.2), rgba(255, 176, 122, 0.2)) !important;
+    border-color: #AF5C00 !important;
+    box-shadow: 0 5px 15px rgba(175, 92, 0, 0.4) !important;
+}
+
+[data-theme="light"] .laser-line.cyan {
+    background: linear-gradient(90deg, #AF5C00, #FFB07A) !important;
+}
+
+[data-theme="light"] .tl-divider-label {
+    background: linear-gradient(135deg, #AF5C00, #FFB07A) !important;
+    border-color: #AF5C00 !important;
+}
+
+[data-theme="light"] .achievement-number {
+    background: linear-gradient(135deg, #AF5C00, #FFB07A) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+}
+
+[data-theme="light"] .project-image {
+    background: linear-gradient(135deg, #AF5C00, #FFB07A) !important;
+}
+
+[data-theme="light"] .success-message {
+    background: rgba(175, 92, 0, 0.95) !important;
+    box-shadow: 0 10px 40px rgba(175, 92, 0, 0.5) !important;
+}
+
+[data-theme="light"] .skill-card:hover {
+    box-shadow: 0 15px 40px rgba(175, 92, 0, 0.3) !important;
+    border-color: #AF5C00 !important;
+}
+
+[data-theme="light"] .skill-card h3 {
+    color: #AF5C00 !important;
+}
+
+[data-theme="light"] .form-group.floating input:focus ~ label,
+[data-theme="light"] .form-group.floating input:not(:placeholder-shown) ~ label,
+[data-theme="light"] .form-group.floating textarea:focus ~ label,
+[data-theme="light"] .form-group.floating textarea:not(:placeholder-shown) ~ label {
+    color: #AF5C00 !important;
+    background: #F8F8F8 !important;
+}
+
+/* ============================================
+   COMPREHENSIVE LIGHT MODE - All remaining cyan/blue overrides
+   ============================================ */
+
+/* Navigation & Menu */
+[data-theme="light"] .menu-toggle span {
+    background: #AF5C00 !important;
+}
+
+[data-theme="light"] .particle {
+    background: #AF5C00 !important;
+}
+
+/* Project Cards */
+[data-theme="light"] .project-content h3 {
+    color: #AF5C00 !important;
+}
+
+/* Calendar Modal */
+[data-theme="light"] .calendar-close {
+    color: #AF5C00 !important;
+}
+
+[data-theme="light"] .calendar-header h2 {
+    color: #AF5C00 !important;
+}
+
+/* Achievement Section */
+[data-theme="light"] .achievement-card::after {
+    background: linear-gradient(90deg, transparent, #AF5C00, transparent) !important;
+}
+
+/* Timeline/Experience */
+[data-theme="light"] .tl-item:hover .year-node {
+    background: linear-gradient(135deg, #AF5C00, #FFB07A) !important;
+    border-color: #AF5C00 !important;
+    box-shadow: 0 0 25px rgba(175, 92, 0, 0.6) !important;
+}
+
+[data-theme="light"] .tl-item:hover .tl-card-title {
+    color: #AF5C00 !important;
+}
+
+[data-theme="light"] .tl-card-badge.cyan {
+    background: rgba(175, 92, 0, 0.15) !important;
+    color: #AF5C00 !important;
+    border-color: rgba(175, 92, 0, 0.3) !important;
+}
+
+[data-theme="light"] .tl-card-badge.teal {
+    background: rgba(175, 92, 0, 0.15) !important;
+    color: #AF5C00 !important;
+    border-color: rgba(175, 92, 0, 0.3) !important;
+}
+
+[data-theme="light"] .tl-card-badge.purple {
+    background: rgba(255, 90, 95, 0.15) !important;
+    color: #FF5A5F !important;
+    border-color: rgba(255, 90, 95, 0.3) !important;
+}
+
+/* Laser lines */
+[data-theme="light"] .laser-line.teal {
+    background: linear-gradient(90deg, #AF5C00, #FFB07A) !important;
+}
+
+[data-theme="light"] .laser-line.purple {
+    background: linear-gradient(90deg, #FF5A5F, #AF5C00) !important;
+}
+
+/* GitHub section link */
+[data-theme="light"] .github-link {
+    color: #AF5C00 !important;
+}
+
+[data-theme="light"] .github-link:hover {
+    color: #FF5A5F !important;
+}
+
+/* FAQ toggle icon */
+[data-theme="light"] .faq-toggle,
+[data-theme="light"] .faq-icon {
+    color: #AF5C00 !important;
+}
+
+/* Testimonial stars/rating */
+[data-theme="light"] .testimonial-rating {
+    color: #AF5C00 !important;
+}
+
+/* Scroll indicator */
+[data-theme="light"] .scroll-indicator {
+    border-color: #AF5C00 !important;
+}
+
+[data-theme="light"] .scroll-indicator::before {
+    background: #AF5C00 !important;
+}
+
+/* Social links */
+[data-theme="light"] .social-link:hover {
+    color: #AF5C00 !important;
+    border-color: #AF5C00 !important;
+}
+
+/* Nav active indicator */
+[data-theme="light"] .nav-indicator {
+    background: #AF5C00 !important;
+}
+
+/* Loading spinner */
+[data-theme="light"] .loading-spinner {
+    border-top-color: #AF5C00 !important;
+}
+
+/* Tooltip */
+[data-theme="light"] .tooltip {
+    background: #AF5C00 !important;
+}
+
+/* Progress bars */
+[data-theme="light"] .skill-progress {
+    background: rgba(175, 92, 0, 0.15) !important;
+}
+
+[data-theme="light"] .skill-progress-bar {
+    background: linear-gradient(90deg, #AF5C00, #FFB07A) !important;
+    box-shadow: 0 0 20px rgba(175, 92, 0, 0.5) !important;
+}
+
+[data-theme="light"] .skill-progress-bar.animate {
+    animation: progressGlowOrange 2s ease-in-out infinite !important;
+}
+
+@keyframes progressGlowOrange {
+    0%, 100% {
+        box-shadow: 0 0 10px rgba(175, 92, 0, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(175, 92, 0, 0.8);
+    }
+}
+
+/* Skill tags - orange theme in light mode */
+[data-theme="light"] .tag {
+    background: rgba(175, 92, 0, 0.1) !important;
+    border: 1px solid rgba(175, 92, 0, 0.3) !important;
+    color: #AF5C00 !important;
+}
+
+[data-theme="light"] .tag:hover {
+    background: rgba(175, 92, 0, 0.2) !important;
+    border-color: #AF5C00 !important;
+}
+
+/* Contact section icons - orange in light mode */
+[data-theme="light"] .contact-item svg {
+    fill: #AF5C00 !important;
+}
+
+[data-theme="light"] .contact-item p {
+    color: #737373 !important;
+}
+
+/* Stat circles */
+[data-theme="light"] .stat-circle-progress {
+    stroke: #AF5C00 !important;
+}
+
+.theme-toggle.visible {
+    display: flex !important;
+}
+
+/* Theme Toggle Button - Base Styles */
+.theme-toggle {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid rgba(0, 245, 255, 0.3);
+    background: rgba(10, 10, 10, 0.9);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.theme-toggle:hover {
+    transform: scale(1.1);
+    border-color: #00f5ff;
+    box-shadow: 0 6px 20px rgba(0, 245, 255, 0.4);
+}
+
+[data-theme="light"] .theme-toggle {
+    background: rgba(255, 255, 255, 0.95);
+    border-color: rgba(175, 92, 0, 0.3);
+    box-shadow: 0 4px 15px rgba(175, 92, 0, 0.2);
+}
+
+[data-theme="light"] .theme-toggle:hover {
+    border-color: #AF5C00;
+    box-shadow: 0 6px 20px rgba(175, 92, 0, 0.4);
+}
+
+/* Sun/Moon icons */
+.theme-toggle .icon-sun,
+.theme-toggle .icon-moon {
+    position: absolute;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+[data-theme="dark"] .theme-toggle .icon-sun {
+    opacity: 1;
+    transform: rotate(0deg);
+}
+
+[data-theme="dark"] .theme-toggle .icon-moon {
+    opacity: 0;
+    transform: rotate(-90deg);
+}
+
+[data-theme="light"] .theme-toggle .icon-sun {
+    opacity: 0;
+    transform: rotate(90deg);
+}
+
+[data-theme="light"] .theme-toggle .icon-moon {
+    opacity: 1;
+    transform: rotate(0deg);
+}
+
+/* Apply theme colors */
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Project Filter Buttons */
+.project-filters {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 0.7rem 1.5rem;
+    background: rgba(0, 245, 255, 0.1);
+    border: 1px solid rgba(0, 245, 255, 0.3);
+    border-radius: 25px;
+    color: #00f5ff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+    background: rgba(0, 245, 255, 0.2);
+    border-color: #00f5ff;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 245, 255, 0.3);
+}
+
+.project-card {
+    transition: all 0.5s ease;
+}
+
+.project-card.hidden {
+    opacity: 0;
+    transform: scale(0.8);
+    pointer-events: none;
+    height: 0;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+/* Floating Labels for Contact Form */
+.form-group {
+    position: relative;
+}
+
+.form-group.floating label {
+    position: absolute;
+    left: 1rem;
+    top: 1rem;
+    transition: all 0.3s ease;
+    pointer-events: none;
+    color: #b0b0b0;
+}
+
+.form-group.floating input:focus ~ label,
+.form-group.floating input:not(:placeholder-shown) ~ label,
+.form-group.floating textarea:focus ~ label,
+.form-group.floating textarea:not(:placeholder-shown) ~ label {
+    top: -10px;
+    left: 0.5rem;
+    font-size: 0.85rem;
+    color: #00f5ff;
+    background: #0a0a0a;
+    padding: 0 0.5rem;
+}
+
+/* Success Animation */
+.success-message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    background: rgba(0, 245, 255, 0.95);
+    color: #000;
+    padding: 2rem 3rem;
+    border-radius: 20px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    z-index: 9999;
+    box-shadow: 0 10px 40px rgba(0, 245, 255, 0.5);
+    transition: transform 0.3s ease;
+}
+
+.success-message.show {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* Parallax Effect for Particles */
+.particles {
+    will-change: transform;
+}
+
+/* Skills Grid & Cards with Glassmorphism */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.skill-card {
+    background: rgba(20, 20, 20, 0.25);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 20px;
+    padding: 2rem;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0, 245, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.skill-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0, 245, 255, 0.3);
+    background: var(--bg-elevated);
+    border-color: var(--primary-cyan);
+}
+
+.skill-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    display: block;
+}
+
+.skill-card h3 {
+    color: #00f5ff;
+    margin-bottom: 0.5rem;
+    font-size: 1.3rem;
+    text-align: center;
+}
+
+.skill-card p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    flex-grow: 1;
+    text-align: center;
+}
+
+/* Projects Grid with Glassmorphism */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2.5rem;
+    margin-top: 3rem;
+}
+
+/* Skill & Project Tags */
+.skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: auto;
+    margin-bottom: 1rem;
+}
+
+.skill-progress {
+    width: calc(100% - 4rem);
+    height: 8px;
+    background: rgba(0, 245, 255, 0.1);
+    border-radius: 10px;
+    margin-top: auto;
+    overflow: hidden;
+    position: absolute;
+    bottom: 2rem;
+    left: 2rem;
+}
+
+.tag {
+    padding: 0.4rem 1rem;
+    background: rgba(0, 245, 255, 0.1);
+    border: 1px solid rgba(0, 245, 255, 0.2);
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: #00f5ff;
+    transition: all 0.3s ease;
+}
+
+.tag:hover {
+    background: rgba(0, 245, 255, 0.2);
+    border-color: #00f5ff;
+}
+
+/* Calendar Modal Styles */
+.calendar-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 10000;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(10px);
+}
+
+.calendar-modal.show {
+    display: flex;
+}
+
+.calendar-content {
+    background: #1a1a1a;
+    border-radius: 20px;
+    padding: 2rem;
+    max-width: 900px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    border: 2px solid rgba(0, 245, 255, 0.3);
+    box-shadow: 0 20px 60px rgba(0, 245, 255, 0.3);
+    position: relative;
+    animation: modalSlideIn 0.3s ease;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.calendar-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: #00f5ff;
+    font-size: 2rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.calendar-close:hover {
+    background: rgba(0, 245, 255, 0.2);
+    transform: rotate(90deg);
+}
+
+.calendar-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.calendar-header h2 {
+    color: #00f5ff;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.calendar-header p {
+    color: #b0b0b0;
+}
+
+.calendar-iframe {
+    width: 100%;
+    height: 600px;
+    border: none;
+    border-radius: 10px;
+}
+
+/* Project Card Improvements */
+.project-card {
+    background: rgba(20, 20, 20, 0.35);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0, 245, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+}
+
+.project-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0, 245, 255, 0.2);
+}
+
+.project-content {
+    padding: 2rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.project-content h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #00f5ff;
+}
+
+.project-content p {
+    color: #b0b0b0;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+}
+
+.project-link {
+    display: inline-block;
+    margin-top: auto;
+    padding: 0.8rem 2rem;
+    background: linear-gradient(135deg, rgba(0, 245, 255, 0.1), rgba(0, 128, 255, 0.1));
+    border: 2px solid rgba(0, 245, 255, 0.3);
+    border-radius: 50px;
+    color: #00f5ff;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.project-link:hover {
+    background: linear-gradient(135deg, rgba(0, 245, 255, 0.2), rgba(0, 128, 255, 0.2));
+    border-color: #00f5ff;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 245, 255, 0.4);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: flex;
+    }
+
+    .work-with-me-btn {
+        display: none; /* Hide on mobile to save space */
+    }
+
+    .nav-center {
+        justify-content: flex-end;
+    }
+
+    .nav-links {
+        position: fixed;
+        top: 80px;
+        left: -100%;
+        flex-direction: column;
+        background: rgba(10, 10, 10, 0.98);
+        width: 100%;
+        padding: 2rem;
+        transition: left 0.3s ease;
+    }
+
+    .nav-links.active {
+        left: 0;
+    }
+
+    .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+
+    .hero-description {
+        font-size: 1rem;
+    }
+
+    .cta-buttons {
+        flex-direction: column;
+    }
+
+    .hero-content {
+        margin-top: 250px;
+    }
+
+    .model-container {
+        width: clamp(250px, 80vw, 400px);
+        height: clamp(250px, 80vw, 400px);
+    }
+
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .about-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .skills-grid,
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .calendar-content {
+        width: 95%;
+        padding: 1.5rem;
+    }
+
+    .calendar-iframe {
+        height: 500px;
+    }
+
+    .project-content {
+        padding: 1.5rem;
+    }
+}
+
+/* Enhanced Mobile Optimization */
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+
+    .section-title {
+        font-size: 1.8rem;
+    }
+
+    .btn {
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+    }
+
+    .chalk-border {
+        font-size: 0.7rem;
+        padding: 0.4rem 1rem;
+        letter-spacing: 2px;
+    }
+
+    .work-with-me-btn svg {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) and (pointer: coarse) {
+    * {
+        -webkit-tap-highlight-color: transparent;
+    }
+    
+    html, body {
+        touch-action: pan-y;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .btn:hover,
+    .project-card:hover,
+    .skill-card:hover,
+    .stat-item:hover {
+        transform: none;
+    }
+
+    .btn:active {
+        transform: scale(0.95);
+    }
+
+    .project-card:active,
+    .skill-card:active {
+        transform: translateY(-5px);
+    }
+}
+
+/* Improve tap targets for mobile */
+@media (max-width: 768px) {
+    .nav-links a,
+    .btn,
+    .project-link,
+    .filter-btn {
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+/* iPad and Tablet Responsive */
+@media (min-width: 768px) and (max-width: 1024px) {
+    section {
+        padding: 100px 4% 60px;
+    }
+    
+    .hero-title {
+        font-size: 3.5rem;
+    }
+    
+    .section-title {
+        font-size: 2.8rem;
+    }
+    
+    .skills-grid,
+    .projects-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .about-content {
+        gap: 2rem;
+    }
+}
+
+/* ============================================
            NEW SECTIONS STYLES
            ============================================ */
 
         /* Achievements Section */
         .achievements-section {
             padding: 80px 5%;
-            background: rgba(10, 10, 10, 0.6);
+            background: rgba(10, 10, 10, 0.25);
             position: relative;
         }
 
@@ -1505,7 +2591,7 @@
         }
 
         .achievement-card {
-            background: rgba(20, 20, 20, 0.6);
+            background: rgba(20, 20, 20, 0.35);
             backdrop-filter: blur(20px);
             border-radius: 20px;
             padding: 2rem 1.5rem;
@@ -1561,7 +2647,7 @@
         /* Experience Timeline Section - Connected Design */
         .timeline-section {
             padding: 80px 5%;
-            background: rgba(10, 10, 10, 0.3); /* Changed from 0.6 to 0.3 */
+            background: rgba(10, 10, 10, 0.15);
             overflow-x: hidden;
         }
 
@@ -1579,7 +2665,7 @@
             bottom: 0;
             left: 2rem;
             width: 2px;
-            background: linear-gradient(180deg, rgba(0, 245, 255, 0.3), rgba(0, 128, 255, 0.3), rgba(139, 92, 246, 0.3));
+            background: linear-gradient(180deg, var(--primary-cyan), var(--primary-blue), var(--electric-purple));
             transform: translateX(-50%);
             z-index: 0;
         }
@@ -1758,7 +2844,7 @@
         }
 
         .tl-card {
-            background: rgba(20, 20, 20, 0.8);
+            background: rgba(20, 20, 20, 0.45);
             backdrop-filter: blur(20px);
             padding: 1.5rem;
             border-radius: 16px;
@@ -1980,16 +3066,17 @@
         }
 
         .tl-divider-label {
-            background: rgba(20, 20, 20, 0.9);
-            color: #64748b;
+            background: linear-gradient(135deg, var(--primary-cyan), var(--primary-blue));
+            color: white;
             font-size: 0.7rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
             padding: 0.5rem 1rem;
-            border-radius: 9999px;
-            border: 1px solid rgba(100, 116, 139, 0.3);
-            z-index: 20;
+            border-radius: 20px;
+            border: 1px solid var(--primary-cyan);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+            z-index: 1;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
         /* Education Card - Simplified */
@@ -2682,6 +3769,12 @@
         <div class="beam-grid-fade"></div>
     </div>
 
+    <!-- Theme Toggle Button (Hidden by default - add 'visible' class to show) -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <span class="icon-sun">☀️</span>
+        <span class="icon-moon">🌙</span>
+    </button>
+
     <!-- Navigation -->
     <nav id="navbar">
         <div class="nav-container">
@@ -2749,7 +3842,7 @@
                     </div>
                 </div>
                 <!-- About Text -->
-                <div class="about-text" style="flex: 1 1 400px; text-align: left; max-width: 600px;">
+                <div class="about-text about-chalk-box" style="flex: 1 1 400px; text-align: left; max-width: 600px;">
                     <p>
                         I'm an AI/ML Engineer and Data Scientist specializing in building real-world machine learning systems that move beyond prototypes and deliver results at scale. My work sits at the intersection of data engineering, machine learning, and MLOps—designing solutions that are not only accurate, but also efficient, reliable, and production-ready.
                     </p>
@@ -2998,12 +4091,20 @@
                 </div>
 
                 <!-- ITEM 4: Masters (Left) -->
-                <div class="tl-item">
+                <div class="tl-item academic-item">
                     <div class="tl-card-wrapper left">
-                        <div class="tl-edu-card">
-                            <h3 class="tl-edu-title">Masters in Information Systems</h3>
-                            <p class="tl-edu-school">Stevens Institute of Technology</p>
-                            <p class="tl-edu-location">Hoboken, New Jersey</p>
+                        <div class="tl-card amber-accent academic-card">
+                            <div class="tl-card-header">
+                                <h3 class="tl-card-title">Masters in Information Systems</h3>
+                                <span class="tl-card-badge">2022-2024</span>
+                            </div>
+                            <p class="tl-card-company">Stevens Institute of Technology</p>
+                            <p class="tl-card-description">Advanced studies in information systems with focus on data science and AI applications.</p>
+                            <div class="tl-tech-stack">
+                                <span class="tl-tech-tag">Data Science</span>
+                                <span class="tl-tech-tag">Machine Learning</span>
+                                <span class="tl-tech-tag">Information Systems</span>
+                            </div>
                         </div>
                     </div>
 
@@ -3016,22 +4117,24 @@
                     <div class="laser-connector mobile">
                         <div class="laser-line slate"></div>
                     </div>
-
-                    <!-- Year Node -->
-                    <div class="year-node-wrapper">
-                        <div class="year-node">2023</div>
-                    </div>
-
-                    <div class="tl-spacer"></div>
                 </div>
 
                 <!-- ITEM 5: Bachelors (Right) -->
-                <div class="tl-item">
-                    <div class="tl-spacer"></div>
-
-                    <!-- Year Node -->
-                    <div class="year-node-wrapper">
-                        <div class="year-node">2015</div>
+                <div class="tl-item academic-item">
+                    <div class="tl-card-wrapper right">
+                        <div class="tl-card amber-accent academic-card">
+                            <div class="tl-card-header">
+                                <h3 class="tl-card-title">Bachelors in Computer Science</h3>
+                                <span class="tl-card-badge">2018-2022</span>
+                            </div>
+                            <p class="tl-card-company">University of Mumbai</p>
+                            <p class="tl-card-description">Comprehensive computer science education with strong foundation in programming and algorithms.</p>
+                            <div class="tl-tech-stack">
+                                <span class="tl-tech-tag">Computer Science</span>
+                                <span class="tl-tech-tag">Algorithms</span>
+                                <span class="tl-tech-tag">Data Structures</span>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Laser Connector (Desktop Right) -->
@@ -3042,14 +4145,6 @@
                     <!-- Laser Connector (Mobile) -->
                     <div class="laser-connector mobile">
                         <div class="laser-line slate"></div>
-                    </div>
-
-                    <div class="tl-card-wrapper">
-                        <div class="tl-edu-card">
-                            <h3 class="tl-edu-title">Bachelors in Finance Market</h3>
-                            <p class="tl-edu-school">University of Mumbai</p>
-                            <p class="tl-edu-location">Mumbai, India</p>
-                        </div>
                     </div>
                 </div>
 
@@ -3392,7 +4487,7 @@
                     <div class="carousel-indicators" id="carousel-indicators"></div>
                 </div>
 
-                <div class="github-graph-wrapper" style="background: rgba(30, 30, 30, 0.6);">
+                <div class="github-graph-wrapper" style="background: rgba(30, 30, 30, 0.6);" id="github-graph-wrapper">
                     <!-- GitHub Contribution Graph - Updates hourly with cache bust -->
                     <img id="gh-contrib-chart" class="github-graph-img" alt="GitHub Contribution Graph" 
                          style="filter: brightness(0.85) contrast(1.1);" 
@@ -3608,6 +4703,50 @@
         let roboticEyeModel = null;
         let lightMaterial = null; // Store reference to light material for color cycling
         
+        // Store reference to lens material for theme switching
+        let lensMaterial = null;
+        
+        // Function to update eye color based on theme
+        function updateEyeColor() {
+            const isLightMode = document.documentElement.getAttribute('data-theme') === 'light';
+            if (lightMaterial) {
+                if (isLightMode) {
+                    // Same color as "Machine Learning and AI" section (#AF5C00)
+                    lightMaterial.color = new THREE.Color(0xAF5C00); // Warm orange - matches chalk-border
+                    lightMaterial.emissive = new THREE.Color(0xAF5C00);
+                    lightMaterial.emissiveIntensity = 1.0; // Low intensity
+                } else {
+                    // Blue/cyan for dark mode
+                    lightMaterial.color = new THREE.Color('#252525');
+                    lightMaterial.emissive = new THREE.Color(0x0080ff); // Blue
+                    lightMaterial.emissiveIntensity = 3000.0;
+                }
+            }
+            if (lensMaterial) {
+                if (isLightMode) {
+                    // Same color as "Machine Learning and AI" section (#AF5C00)
+                    lensMaterial.color = new THREE.Color(0xAF5C00); // Warm orange - matches chalk-border
+                    lensMaterial.emissive = new THREE.Color(0xAF5C00);
+                    lensMaterial.emissiveIntensity = 0.3;
+                } else {
+                    // Cyan for dark mode
+                    lensMaterial.color = new THREE.Color(0x00f5ff); // Cyan
+                    lensMaterial.emissive = new THREE.Color(0x00f5ff);
+                    lensMaterial.emissiveIntensity = 0.5;
+                }
+            }
+        }
+        
+        // Listen for theme changes via MutationObserver
+        const themeObserver = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.attributeName === 'data-theme') {
+                    updateEyeColor();
+                }
+            });
+        });
+        themeObserver.observe(document.documentElement, { attributes: true });
+        
         // Try to load the model from the reference path
         loader.load(
             './models/robotic_eye.glb',
@@ -3652,6 +4791,8 @@
                             mat.side = THREE.DoubleSide;
                             
                             lightMaterial = mat;
+                            // Set initial color based on current theme
+                            updateEyeColor();
                         });
                         return;
                     }
@@ -3688,9 +4829,9 @@
                                 mat.opacity = 0.5;
                                 break;
                             case 'Camera_Lens.001':
-                                mat.color = new THREE.Color('#00f5ff');
                                 mat.opacity = 1.0;
                                 mat.transparent = false;
+                                lensMaterial = mat; // Store reference for theme switching
                                 break;
                             default:
                                 mat.color = new THREE.Color(0x888ca0);
@@ -3707,6 +4848,9 @@
                 roboticEyeModel = model;
                 scene.add(model);
                 console.log('Robotic Eye Model loaded successfully');
+                
+                // Update eye color based on theme
+                updateEyeColor();
             },
             undefined,
             (error) => {
@@ -3731,10 +4875,10 @@
             const eyeSphere = new THREE.Mesh(eyeGeometry, eyeMaterial);
             eyeGroup.add(eyeSphere);
 
-            // Iris with cyan color
+            // Iris with purple color (matches light mode accent)
             const irisGeometry = new THREE.CircleGeometry(0.4, 32);
             const irisMaterial = new THREE.MeshBasicMaterial({ 
-                color: 0x00f5ff
+                color: 0x7c3aed
             });
             const iris = new THREE.Mesh(irisGeometry, irisMaterial);
             iris.position.z = 1.01;
@@ -3761,14 +4905,14 @@
             const lens = new THREE.Mesh(lensGeometry, lensMaterial);
             eyeGroup.add(lens);
 
-            // Mechanical rings with cyan accent
+            // Mechanical rings with purple accent
             for (let i = 0; i < 3; i++) {
                 const ringGeometry = new THREE.TorusGeometry(1.2 + (i * 0.15), 0.03, 16, 100);
                 const ringMaterial = new THREE.MeshStandardMaterial({ 
-                    color: i === 1 ? 0x00f5ff : 0x444444,
+                    color: i === 1 ? 0x7c3aed : 0x444444,
                     metalness: 0.8,
                     roughness: 0.2,
-                    emissive: i === 1 ? new THREE.Color(0x00f5ff) : new THREE.Color(0x000000),
+                    emissive: i === 1 ? new THREE.Color(0x7c3aed) : new THREE.Color(0x000000),
                     emissiveIntensity: i === 1 ? 0.3 : 0
                 });
                 const ring = new THREE.Mesh(ringGeometry, ringMaterial);
@@ -3911,7 +5055,36 @@
             
             // Load ANN Model
             let annModel = null;
+            let annNodeMaterials = []; // Store node materials for theme switching
             const annLoader = new GLTFLoader();
+            
+            // Function to update ANN node colors based on theme
+            function updateANNColors() {
+                const isLightMode = document.documentElement.getAttribute('data-theme') === 'light';
+                annNodeMaterials.forEach(mat => {
+                    if (isLightMode) {
+                        // Same color as "Machine Learning and AI" section (#AF5C00)
+                        mat.color = new THREE.Color(0xAF5C00); // Warm orange
+                        mat.emissive = new THREE.Color(0xAF5C00);
+                        mat.emissiveIntensity = 1.0;
+                    } else {
+                        // Cyan/Blue for dark mode
+                        mat.color = new THREE.Color(0x00f5ff); // Cyan
+                        mat.emissive = new THREE.Color(0x0080ff); // Blue glow
+                        mat.emissiveIntensity = 1.0;
+                    }
+                });
+            }
+            
+            // Listen for theme changes for ANN model
+            const annThemeObserver = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    if (mutation.attributeName === 'data-theme') {
+                        updateANNColors();
+                    }
+                });
+            });
+            annThemeObserver.observe(document.documentElement, { attributes: true });
             
             // Test cube removed - model is loading successfully
             
@@ -3972,14 +5145,21 @@
                                 });
                                 
                                 if (isNode) {
-                                    // Nodes: Cyan/Blue gradient from "Work with Me" button
-                                    newMaterial.color = new THREE.Color(0x00f5ff); // Cyan #00f5ff (website primary)
+                                    // Nodes: Theme-aware color (orange in light mode, cyan in dark mode)
+                                    const isLightMode = document.documentElement.getAttribute('data-theme') === 'light';
+                                    if (isLightMode) {
+                                        newMaterial.color = new THREE.Color(0xAF5C00); // Warm orange - matches chalk-border
+                                        newMaterial.emissive = new THREE.Color(0xAF5C00);
+                                    } else {
+                                        newMaterial.color = new THREE.Color(0x00f5ff); // Cyan #00f5ff (website primary)
+                                        newMaterial.emissive = new THREE.Color(0x0080ff); // Blue #0080ff emissive glow
+                                    }
                                     newMaterial.metalness = 0.6;
                                     newMaterial.roughness = 0.3;
-                                    newMaterial.emissive = new THREE.Color(0x0080ff); // Blue #0080ff emissive glow
-                                    newMaterial.emissiveIntensity = 1; // Strong glow for nodes
+                                    newMaterial.emissiveIntensity = 1.0; // Strong glow for nodes
                                     newMaterial.opacity = 0.95; // Solid appearance
-                                    console.log('  ✓ Applied CYAN/BLUE node:', child.name);
+                                    annNodeMaterials.push(newMaterial); // Store for theme switching
+                                    console.log('  ✓ Applied node:', child.name);
                                 } else {
                                     // Edges/Connections: White/Silver
                                     newMaterial.color = new THREE.Color(0xFFFFFF); // Pure white
@@ -4204,10 +5384,15 @@
                 ? Array.from(navigationMenu.querySelectorAll('#navLinks li a'))
                 : [];
 
-            const sparkleColor = '#00fffc';
+            // Theme-aware sparkle color
+            const getSparkleColor = () => {
+                const isLightMode = document.documentElement.getAttribute('data-theme') === 'light';
+                return isLightMode ? '#AF5C00' : '#00fffc';
+            };
 
             // Create the SVG beam and strike elements (exact Lightswind implementation)
             const createSVG = (element) => {
+                const sparkleColor = getSparkleColor();
                 element.innerHTML = `
                 <svg viewBox="0 0 116 5" preserveAspectRatio="none" class="beam">
                   <path d="M0.5 2.5L113 0.534929C114.099 0.515738 115 1.40113 115 2.5C115 3.59887 114.099 4.48426 113 4.46507L0.5 2.5Z" fill="url(#gradient-beam)"/>
@@ -4401,7 +5586,9 @@
                 const activeLink = document.querySelector(`.nav-links li.active a`);
                 
                 if (activeElement && activeLink && typeof gsap !== 'undefined') {
-                    const sparkleColor = '#00fffc';
+                    // Theme-aware sparkle color for scroll
+                    const isLightMode = document.documentElement.getAttribute('data-theme') === 'light';
+                    const sparkleColor = isLightMode ? '#AF5C00' : '#00fffc';
                     
                     // Create SVG for sparkle effect
                     const createSparkle = (element) => {
@@ -4828,9 +6015,14 @@
         // ============================================
         function animateCounter(element) {
             if (element.dataset.animated === 'true') return;
+            
+            const countValue = element.getAttribute('data-count');
+            // If no data-count or it's not a number (like '--'), don't animate yet
+            if (!countValue || isNaN(parseInt(countValue))) return;
+            
             element.dataset.animated = 'true';
             
-            const targetNumber = parseInt(element.getAttribute('data-count'));
+            const targetNumber = parseInt(countValue);
             const duration = 2000;
             const startTime = performance.now();
             
@@ -5102,9 +6294,15 @@
                     // Show only first 3 blogs on main page
                     const previewBlogs = data.blogs.slice(0, 3);
                     
+                    // Check if light mode for theme-aware colors
+                    const isLightMode = document.documentElement.getAttribute('data-theme') === 'light';
+                    const thumbnailGradient = isLightMode ? 'linear-gradient(135deg, #AF5C00, #FFB07A)' : 'linear-gradient(135deg, #00f5ff, #0080ff)';
+                    const headingColor = isLightMode ? '#AF5C00' : '#00f5ff';
+                    const buttonBg = isLightMode ? 'linear-gradient(135deg, #AF5C00, #FFB07A)' : 'linear-gradient(135deg, #00f5ff, #0080ff)';
+                    
                     grid.innerHTML = previewBlogs.map(blog => `
-                        <a href="blogs/${blog.slug}.html" class="blog-preview-card" style="background: rgba(20, 20, 20, 0.6); backdrop-filter: blur(20px); border-radius: 20px; overflow: hidden; border: 1px solid rgba(0, 245, 255, 0.1); transition: all 0.4s ease; cursor: pointer; text-decoration: none;">
-                            <div style="width: 100%; height: 200px; background: ${blog.thumbnail ? `url('${blog.thumbnail}') center/cover` : 'linear-gradient(135deg, #00f5ff, #0080ff)'}; display: flex; align-items: center; justify-content: center; font-size: 3.5rem;">
+                        <div class="blog-preview-card" style="background: rgba(20, 20, 20, 0.6); backdrop-filter: blur(20px); border-radius: 20px; overflow: hidden; border: 1px solid rgba(0, 245, 255, 0.1); transition: all 0.4s ease; text-decoration: none;">
+                            <div class="blog-thumbnail" style="width: 100%; height: 200px; background: ${blog.thumbnail ? `url('${blog.thumbnail}') center/cover` : thumbnailGradient}; display: flex; align-items: center; justify-content: center; font-size: 3.5rem;">
                                 ${blog.thumbnail ? '' : (blog.icon || '📝')}
                             </div>
                             <div style="padding: 2rem;">
@@ -5112,13 +6310,16 @@
                                     <span>📅 ${blog.date || 'Recent'}</span>
                                     <span>⏱️ ${blog.readTime || '5 min read'}</span>
                                 </div>
-                                <h3 style="font-size: 1.4rem; margin-bottom: 1rem; color: #00f5ff;">${blog.title}</h3>
+                                <h3 class="blog-heading" style="font-size: 1.4rem; margin-bottom: 1rem; color: ${headingColor};">${blog.title}</h3>
                                 <p style="color: #b0b0b0; line-height: 1.6; margin-bottom: 1.5rem;">${blog.excerpt || blog.description || ''}</p>
                                 <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem;">
                                     ${(blog.tags || []).map(tag => `<span class="tag">${tag}</span>`).join('')}
                                 </div>
+                                <a href="blogs/${blog.slug}.html" class="blog-read-btn" style="display: inline-block; padding: 0.75rem 1.5rem; background: ${buttonBg}; color: white; border-radius: 8px; text-decoration: none; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);">
+                                    Read Article →
+                                </a>
                             </div>
-                        </a>
+                        </div>
                     `).join('');
                     
                     // Show "View All" button if there are more than 3 blogs
@@ -5126,17 +6327,31 @@
                         viewAllBtn.style.display = 'block';
                     }
                     
-                    // Add hover effects
+                    // Add hover effects - theme aware
                     grid.querySelectorAll('.blog-preview-card').forEach(card => {
                         card.addEventListener('mouseenter', () => {
+                            const isLight = document.documentElement.getAttribute('data-theme') === 'light';
                             card.style.transform = 'translateY(-10px)';
-                            card.style.borderColor = 'rgba(0, 245, 255, 0.5)';
-                            card.style.boxShadow = '0 15px 40px rgba(0, 245, 255, 0.3)';
+                            card.style.borderColor = isLight ? 'rgba(175, 92, 0, 0.5)' : 'rgba(0, 245, 255, 0.5)';
+                            card.style.boxShadow = isLight ? '0 15px 40px rgba(175, 92, 0, 0.3)' : '0 15px 40px rgba(0, 245, 255, 0.3)';
                         });
                         card.addEventListener('mouseleave', () => {
+                            const isLight = document.documentElement.getAttribute('data-theme') === 'light';
                             card.style.transform = 'translateY(0)';
-                            card.style.borderColor = 'rgba(0, 245, 255, 0.1)';
+                            card.style.borderColor = isLight ? 'rgba(175, 92, 0, 0.2)' : 'rgba(0, 245, 255, 0.1)';
                             card.style.boxShadow = 'none';
+                        });
+                    });
+                    
+                    // Add hover effects to Read buttons
+                    grid.querySelectorAll('.blog-read-btn').forEach(btn => {
+                        btn.addEventListener('mouseenter', () => {
+                            btn.style.transform = 'translateY(-2px)';
+                            btn.style.boxShadow = '0 6px 20px rgba(0, 0, 0, 0.3)';
+                        });
+                        btn.addEventListener('mouseleave', () => {
+                            btn.style.transform = 'translateY(0)';
+                            btn.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.2)';
                         });
                     });
                 } else {
@@ -5353,6 +6568,14 @@
                         el.textContent = value;
                         el.setAttribute('data-count', value);
                         el.dataset.animated = 'false';
+                        // Trigger animation if visible
+                        const observer = new IntersectionObserver((entries) => {
+                            if (entries[0].isIntersecting) {
+                                animateCounter(el);
+                                observer.disconnect();
+                            }
+                        });
+                        observer.observe(el);
                     }
                 }
                 
@@ -5391,15 +6614,25 @@
 
             const ctx = canvas.getContext('2d');
             
+            // Check current theme to set initial colors - localStorage takes priority
+            const currentTheme = localStorage.getItem('portfolio-theme') || document.documentElement.getAttribute('data-theme') || 'dark';
+            const isLightMode = currentTheme === 'light';
+            console.log('🔷 Honeycomb init - Theme:', currentTheme, 'isLightMode:', isLightMode);
+            
             const config = {
-                hexSize: 50,
-                gridColor: 'rgba(192, 192, 192, 0.06)',
-                activeColor: 'rgba(0, 245, 255, 0.35)',
-                activeColorAlt: 'rgba(0, 128, 255, 0.35)',
+                hexSize: 85,
+                // Set colors based on current theme
+                gridColor: isLightMode ? 'rgba(169, 168, 155, 0.8)' : 'rgba(192, 192, 192, 0.08)',
+                gridFillColor: isLightMode ? 'rgba(229, 147, 21, 0.12)' : null,
+                activeColor: isLightMode ? 'rgba(244, 179, 21, 0.6)' : 'rgba(0, 245, 255, 0.35)',
+                activeColorAlt: isLightMode ? 'rgba(229, 147, 21, 0.5)' : 'rgba(0, 128, 255, 0.35)',
                 pulseSpeed: 0.006,
                 maxActive: 4,
                 interactive: true
             };
+            
+            // Expose config globally for theme switching
+            window.honeycombConfig = config;
 
             let width, height, cols, rows;
             let hexWidth, hexHeight;
@@ -5416,14 +6649,49 @@
                 rows = Math.ceil(height / (hexHeight * 0.75)) + 2;
             }
 
+            // Fishbowl distortion settings
+            const fishbowl = {
+                enabled: true,
+                strength: 0.3,  // 0 = no distortion, 1 = extreme
+                centerX: 0.5,   // 0-1, relative to canvas
+                centerY: 0.5
+            };
+
+            // Apply fishbowl lens distortion to a point
+            function applyFishbowl(px, py) {
+                if (!fishbowl.enabled) return { x: px, y: py };
+                
+                const cx = width * fishbowl.centerX;
+                const cy = height * fishbowl.centerY;
+                const maxRadius = Math.sqrt(cx * cx + cy * cy);
+                
+                // Get distance from center
+                const dx = px - cx;
+                const dy = py - cy;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                const normalizedDist = dist / maxRadius;
+                
+                // Barrel distortion formula (fishbowl/convex lens effect)
+                const distortion = 1 + fishbowl.strength * normalizedDist * normalizedDist;
+                
+                return {
+                    x: cx + dx * distortion,
+                    y: cy + dy * distortion
+                };
+            }
+
             function drawHex(x, y, size, strokeColor, fillColor) {
                 ctx.beginPath();
                 for (let i = 0; i < 6; i++) {
                     const angle = (Math.PI / 3) * i - Math.PI / 6; // Rotate 30deg to point up
-                    const px = x + size * Math.cos(angle);
-                    const py = y + size * Math.sin(angle);
-                    if (i === 0) ctx.moveTo(px, py);
-                    else ctx.lineTo(px, py);
+                    const rawX = x + size * Math.cos(angle);
+                    const rawY = y + size * Math.sin(angle);
+                    
+                    // Apply fishbowl distortion
+                    const distorted = applyFishbowl(rawX, rawY);
+                    
+                    if (i === 0) ctx.moveTo(distorted.x, distorted.y);
+                    else ctx.lineTo(distorted.x, distorted.y);
                 }
                 ctx.closePath();
                 if (fillColor) {
@@ -5432,7 +6700,7 @@
                 }
                 if (strokeColor) {
                     ctx.strokeStyle = strokeColor;
-                    ctx.lineWidth = 1;
+                    ctx.lineWidth = 2;  // Increased from 1 for better visibility
                     ctx.stroke();
                 }
             }
@@ -5477,7 +6745,7 @@
                         const x = c * hexWidth + xOffset - hexWidth;
                         const y = r * (hexHeight * 0.75) - hexHeight;
                         
-                        drawHex(x, y, config.hexSize, config.gridColor, null);
+                        drawHex(x, y, config.hexSize, config.gridColor, config.gridFillColor);
                     }
                 }
 
@@ -5578,6 +6846,68 @@
         })();
         
         console.log('✨ All enhancements loaded successfully!');
+
+        // ============================================
+        // THEME TOGGLE - Light/Dark Mode
+        // ============================================
+        (function initThemeToggle() {
+            const toggle = document.getElementById('themeToggle');
+            const html = document.documentElement;
+            
+            // Check for saved theme preference or default to dark
+            const savedTheme = localStorage.getItem('portfolio-theme') || 'dark';
+            html.setAttribute('data-theme', savedTheme);
+            
+            // Update honeycomb colors based on theme
+            function updateHoneycombColors(theme) {
+                // Access the config if it exists in the hexagon grid
+                if (window.honeycombConfig) {
+                    if (theme === 'light') {
+                        // Light mode - #F4B315 borders, #E59315 background
+                        window.honeycombConfig.gridColor = 'rgba(169, 168, 155, 0.8)';      // #a9a89b borders
+                        window.honeycombConfig.gridFillColor = 'rgba(229, 147, 21, 0.12)'; // #E59315 orange background fill
+                        window.honeycombConfig.activeColor = 'rgba(244, 179, 21, 0.6)';    // Yellow active glow
+                        window.honeycombConfig.activeColorAlt = 'rgba(229, 147, 21, 0.5)'; // Orange alt glow
+                    } else {
+                        window.honeycombConfig.gridColor = 'rgba(192, 192, 192, 0.08)';
+                        window.honeycombConfig.gridFillColor = null;  // No fill in dark mode
+                        window.honeycombConfig.activeColor = 'rgba(0, 245, 255, 0.35)';
+                        window.honeycombConfig.activeColorAlt = 'rgba(0, 128, 255, 0.35)';
+                    }
+                }
+            }
+            
+            // Apply initial honeycomb colors
+            updateHoneycombColors(savedTheme);
+            
+            if (toggle) {
+                toggle.addEventListener('click', () => {
+                    const currentTheme = html.getAttribute('data-theme');
+                    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                    
+                    html.setAttribute('data-theme', newTheme);
+                    localStorage.setItem('portfolio-theme', newTheme);
+                    
+                    // Update honeycomb colors
+                    updateHoneycombColors(newTheme);
+                    
+                    console.log(`🎨 Theme switched to: ${newTheme}`);
+                });
+            }
+            
+            // Secret keyboard shortcut to toggle visibility: Ctrl+Shift+T
+            document.addEventListener('keydown', (e) => {
+                if (e.ctrlKey && e.shiftKey && e.key === 'T') {
+                    e.preventDefault();
+                    if (toggle) {
+                        toggle.classList.toggle('visible');
+                        console.log(`🔘 Theme toggle button ${toggle.classList.contains('visible') ? 'shown' : 'hidden'}`);
+                    }
+                }
+            });
+            
+            console.log('🌓 Theme toggle initialized (Press Ctrl+Shift+T to show/hide toggle button)');
+        })();
     </script>
 </body>
 </html>
