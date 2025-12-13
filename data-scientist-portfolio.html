@@ -1778,6 +1778,7 @@
 
 [data-theme="light"] .achievement-number {
     background: linear-gradient(135deg, #AF5C00, #FFB07A) !important;
+    background-clip: text !important;
     -webkit-background-clip: text !important;
     -webkit-text-fill-color: transparent !important;
 }
@@ -6622,10 +6623,10 @@ body {
             const config = {
                 hexSize: 85,
                 // Set colors based on current theme
-                gridColor: isLightMode ? 'rgba(169, 168, 155, 0.8)' : 'rgba(192, 192, 192, 0.08)',
-                gridFillColor: isLightMode ? 'rgba(229, 147, 21, 0.12)' : null,
-                activeColor: isLightMode ? 'rgba(244, 179, 21, 0.6)' : 'rgba(0, 245, 255, 0.35)',
-                activeColorAlt: isLightMode ? 'rgba(229, 147, 21, 0.5)' : 'rgba(0, 128, 255, 0.35)',
+                gridColor: isLightMode ? 'rgba(175, 92, 0, 0.25)' : 'rgba(192, 192, 192, 0.08)',
+                gridFillColor: isLightMode ? 'rgba(255, 176, 122, 0.08)' : null,
+                activeColor: isLightMode ? 'rgba(175, 92, 0, 0.5)' : 'rgba(0, 245, 255, 0.35)',
+                activeColorAlt: isLightMode ? 'rgba(255, 140, 50, 0.4)' : 'rgba(0, 128, 255, 0.35)',
                 pulseSpeed: 0.006,
                 maxActive: 4,
                 interactive: true
@@ -6806,16 +6807,20 @@ body {
                         
                         const isCenter = i === 0;
                         
+                        // Get theme-aware highlight colors
+                        const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+                        const highlightColor = isLight ? '175, 92, 0' : '0, 245, 255';
+                        
                         if (isCenter) {
                             // Center hex - solid bright
                             ctx.shadowBlur = 15;
-                            ctx.shadowColor = 'rgba(0, 245, 255, 0.8)';
-                            drawHex(x, y, config.hexSize, 'rgba(0, 245, 255, 0.9)', 'rgba(0, 245, 255, 0.35)');
+                            ctx.shadowColor = `rgba(${highlightColor}, 0.8)`;
+                            drawHex(x, y, config.hexSize, `rgba(${highlightColor}, 0.9)`, `rgba(${highlightColor}, 0.35)`);
                             ctx.shadowBlur = 0;
                         } else {
                             // Neighbors - faded effect (lower opacity)
                             const fadeOpacity = 0.2; // Fade multiplier for neighbors
-                            drawHex(x, y, config.hexSize, `rgba(0, 245, 255, ${0.5 * fadeOpacity})`, `rgba(0, 245, 255, ${0.15 * fadeOpacity})`);
+                            drawHex(x, y, config.hexSize, `rgba(${highlightColor}, ${0.5 * fadeOpacity})`, `rgba(${highlightColor}, ${0.15 * fadeOpacity})`);
                         }
                     });
                 }
@@ -6863,11 +6868,11 @@ body {
                 // Access the config if it exists in the hexagon grid
                 if (window.honeycombConfig) {
                     if (theme === 'light') {
-                        // Light mode - #F4B315 borders, #E59315 background
-                        window.honeycombConfig.gridColor = 'rgba(169, 168, 155, 0.8)';      // #a9a89b borders
-                        window.honeycombConfig.gridFillColor = 'rgba(229, 147, 21, 0.12)'; // #E59315 orange background fill
-                        window.honeycombConfig.activeColor = 'rgba(244, 179, 21, 0.6)';    // Yellow active glow
-                        window.honeycombConfig.activeColorAlt = 'rgba(229, 147, 21, 0.5)'; // Orange alt glow
+                        // Light mode - Orange theme matching #AF5C00
+                        window.honeycombConfig.gridColor = 'rgba(175, 92, 0, 0.25)';       // Orange borders
+                        window.honeycombConfig.gridFillColor = 'rgba(255, 176, 122, 0.08)'; // Light orange fill
+                        window.honeycombConfig.activeColor = 'rgba(175, 92, 0, 0.5)';      // Orange active glow
+                        window.honeycombConfig.activeColorAlt = 'rgba(255, 140, 50, 0.4)'; // Lighter orange alt glow
                     } else {
                         window.honeycombConfig.gridColor = 'rgba(192, 192, 192, 0.08)';
                         window.honeycombConfig.gridFillColor = null;  // No fill in dark mode
