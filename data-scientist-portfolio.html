@@ -1012,14 +1012,14 @@
     background: radial-gradient(ellipse at bottom, rgba(175, 92, 0, 0.03), transparent 70%);
 }
 
-/* Light mode - Hide beam grid (cyan lines) */
+/* Light mode - Show beam grid with orange theme colors */
 [data-theme="light"] .beam-grid-container,
 [data-theme="light"] .beam-grid-canvas,
 [data-theme="light"] #beamGridContainer,
 [data-theme="light"] #beamGridCanvas {
-    display: none !important;
-    opacity: 0 !important;
-    visibility: hidden !important;
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
 }
 
 [data-theme="light"] nav {
