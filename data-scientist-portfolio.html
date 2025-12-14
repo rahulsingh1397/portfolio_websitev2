@@ -2946,10 +2946,10 @@ body {
             color: #f59e0b;
         }
 
-        .tl-card-company {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: #9ca3af;
+        [data-theme="dark"] .tl-item:hover .tl-card-title,
+        [data-theme="dark"] .tl-item:hover .tl-card.teal-accent .tl-card-title,
+        [data-theme="dark"] .tl-item:hover .tl-card.amber-accent .tl-card-title {
+            color: #fff !important;
         }
 
         .tl-card-badge {
@@ -2974,6 +2974,10 @@ body {
         .tl-card-badge.amber {
             background: rgba(245, 158, 11, 0.15);
             color: #f59e0b;
+        }
+
+        [data-theme="dark"] .tl-card-badge.amber {
+            color: #fff !important;
         }
 
         .tl-card-badge.slate {
@@ -3047,6 +3051,14 @@ body {
 
         .tl-accordion-btn.amber:hover {
             background: rgba(245, 158, 11, 0.1);
+        }
+
+        [data-theme="dark"] .tl-accordion-btn,
+        [data-theme="dark"] .tl-accordion-btn.cyan,
+        [data-theme="dark"] .tl-accordion-btn.teal,
+        [data-theme="dark"] .tl-accordion-btn.amber,
+        [data-theme="dark"] .tl-accordion-btn span {
+            color: #fff !important;
         }
 
         @media (min-width: 768px) {
