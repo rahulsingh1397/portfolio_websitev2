@@ -1444,6 +1444,45 @@
     filter: brightness(1) contrast(1) !important;
 }
 
+/* Dark mode - Blog Preview Section (cyan/blue theme) */
+[data-theme="dark"] .blog-preview-card {
+    background: rgba(20, 20, 20, 0.6) !important;
+    border-color: rgba(0, 245, 255, 0.1) !important;
+}
+
+[data-theme="dark"] .blog-preview-card:hover {
+    border-color: rgba(0, 245, 255, 0.5) !important;
+    box-shadow: 0 15px 40px rgba(0, 245, 255, 0.3) !important;
+}
+
+[data-theme="dark"] .blog-preview-card .blog-thumbnail {
+    background: linear-gradient(135deg, #00f5ff, #0080ff) !important;
+}
+
+[data-theme="dark"] .blog-preview-card .blog-heading,
+[data-theme="dark"] .blog-preview-card h3 {
+    color: #00f5ff !important;
+}
+
+[data-theme="dark"] .blog-preview-card p {
+    color: #b0b0b0 !important;
+}
+
+[data-theme="dark"] .blog-read-btn {
+    background: linear-gradient(135deg, #00f5ff, #0080ff) !important;
+}
+
+[data-theme="dark"] .blog-read-btn:hover {
+    background: linear-gradient(135deg, #0080ff, #00f5ff) !important;
+    box-shadow: 0 6px 20px rgba(0, 245, 255, 0.4) !important;
+}
+
+[data-theme="dark"] .blog-preview-card .tag {
+    background: rgba(0, 245, 255, 0.1) !important;
+    border-color: rgba(0, 245, 255, 0.2) !important;
+    color: #00f5ff !important;
+}
+
 /* Light mode - Blog Preview Section */
 [data-theme="light"] #blog-preview {
     background: rgba(240, 240, 240, 0.85) !important;
