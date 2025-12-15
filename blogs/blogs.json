@@ -1,6 +1,16 @@
 {
   "blogs": [
     {
+      "slug": "ai-coding-context-windows-2025",
+      "title": "Why AI Coding \"Sucks\": It's Not the Models, It's Your Prompts",
+      "excerpt": "A 2025 deep dive into context window abuse and the LLM skill gap. Learn why 84% of developers use AI tools but 66% struggle with almost-right outputs, and how to fix it.",
+      "date": "Dec 15, 2025",
+      "readTime": "12 min read",
+      "tags": ["AI Coding", "LLMs", "Context Windows", "Prompt Engineering", "Developer Tools"],
+      "icon": "🧠",
+      "thumbnail": null
+    },
+    {
       "slug": "agentic-ai-takes-center-stage-2025",
       "title": "Agentic AI Takes Center Stage: Market Growth, Enterprise Adoption, and My Picks for the Best Autonomous Agents",
       "excerpt": "Deep dive into the explosive growth of agentic AI in 2025. Market projections hitting $93B by 2032, enterprise adoption stats, workflow automation trends, scaling challenges, and my top picks for autonomous agents.",
