@@ -846,7 +846,7 @@
         const moonIcon = themeToggle.querySelector('.moon-icon');
 
         // Check for saved theme preference or default to dark
-        const savedTheme = localStorage.getItem('theme') || 'dark';
+        const savedTheme = localStorage.getItem('portfolio-theme') || 'dark';
         html.setAttribute('data-theme', savedTheme);
         updateThemeIcons(savedTheme);
 
@@ -854,10 +854,9 @@
             const currentTheme = html.getAttribute('data-theme');
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
             html.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
+            localStorage.setItem('portfolio-theme', newTheme);
             updateThemeIcons(newTheme);
-            
-            // Reinitialize beam grid with new colors
+
             if (typeof initBeamGrid === 'function') {
                 initBeamGrid();
             }
@@ -900,61 +899,239 @@
         // ============================================
         function initBeamGrid() {
             const canvas = document.getElementById('beamGridCanvas');
-            if (!canvas) return;
-            
-            const ctx = canvas.getContext('2d');
             const container = document.getElementById('beamGridContainer');
-            
-            function resize() {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-            }
-            
-            resize();
-            window.addEventListener('resize', resize);
-            
-            const isLightMode = document.documentElement.getAttribute('data-theme') === 'light';
-            const gridColor = isLightMode ? 'rgba(175, 92, 0, 0.08)' : 'rgba(0, 245, 255, 0.08)';
-            const glowColor = isLightMode ? 'rgba(175, 92, 0, 0.15)' : 'rgba(0, 245, 255, 0.15)';
-            
-            function drawGrid() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                
-                const spacing = 80;
-                const offsetX = (canvas.width % spacing) / 2;
-                const offsetY = (canvas.height % spacing) / 2;
-                
-                ctx.strokeStyle = gridColor;
-                ctx.lineWidth = 1;
-                
-                // Vertical lines
-                for (let x = offsetX; x < canvas.width; x += spacing) {
-                    ctx.beginPath();
-                    ctx.moveTo(x, 0);
-                    ctx.lineTo(x, canvas.height);
-                    ctx.stroke();
-                }
-                
-                // Horizontal lines
-                for (let y = offsetY; y < canvas.height; y += spacing) {
-                    ctx.beginPath();
-                    ctx.moveTo(0, y);
-                    ctx.lineTo(canvas.width, y);
-                    ctx.stroke();
-                }
-                
-                // Add glow at intersections
-                ctx.fillStyle = glowColor;
-                for (let x = offsetX; x < canvas.width; x += spacing) {
-                    for (let y = offsetY; y < canvas.height; y += spacing) {
-                        ctx.beginPath();
-                        ctx.arc(x, y, 2, 0, Math.PI * 2);
-                        ctx.fill();
+            if (!canvas || !container) return;
+
+            if (window.__honeycombInitialized) {
+                const theme = document.documentElement.getAttribute('data-theme') || 'dark';
+                if (window.honeycombConfig) {
+                    if (theme === 'light') {
+                        window.honeycombConfig.gridColor = 'rgba(175, 92, 0, 0.25)';
+                        window.honeycombConfig.gridFillColor = 'rgba(255, 176, 122, 0.08)';
+                        window.honeycombConfig.activeColor = 'rgba(175, 92, 0, 0.5)';
+                        window.honeycombConfig.activeColorAlt = 'rgba(255, 140, 50, 0.4)';
+                    } else {
+                        window.honeycombConfig.gridColor = 'rgba(192, 192, 192, 0.08)';
+                        window.honeycombConfig.gridFillColor = null;
+                        window.honeycombConfig.activeColor = 'rgba(0, 245, 255, 0.35)';
+                        window.honeycombConfig.activeColorAlt = 'rgba(0, 128, 255, 0.35)';
                     }
                 }
+                return;
             }
+
+            window.__honeycombInitialized = true;
+            const ctx = canvas.getContext('2d');
             
-            drawGrid();
+            function resize() {
+                const rect = container.getBoundingClientRect();
+                width = canvas.width = rect.width;
+                height = canvas.height = rect.height;
+                hexWidth = config.hexSize * Math.sqrt(3);
+                hexHeight = config.hexSize * 2;
+                cols = Math.ceil(width / hexWidth) + 2;
+                rows = Math.ceil(height / (hexHeight * 0.75)) + 2;
+            }
+
+            const currentTheme = localStorage.getItem('portfolio-theme') || document.documentElement.getAttribute('data-theme') || 'dark';
+            const isLightMode = currentTheme === 'light';
+            
+            const config = {
+                hexSize: 85,
+                gridColor: isLightMode ? 'rgba(175, 92, 0, 0.25)' : 'rgba(192, 192, 192, 0.08)',
+                gridFillColor: isLightMode ? 'rgba(255, 176, 122, 0.08)' : null,
+                activeColor: isLightMode ? 'rgba(175, 92, 0, 0.5)' : 'rgba(0, 245, 255, 0.35)',
+                activeColorAlt: isLightMode ? 'rgba(255, 140, 50, 0.4)' : 'rgba(0, 128, 255, 0.35)',
+                pulseSpeed: 0.006,
+                maxActive: 4,
+                interactive: true
+            };
+
+            window.honeycombConfig = config;
+
+            let width, height, cols, rows;
+            let hexWidth, hexHeight;
+            const mouse = { x: -1000, y: -1000 };
+            let activeHexes = [];
+
+            const fishbowl = {
+                enabled: true,
+                strength: 0.3,
+                centerX: 0.5,
+                centerY: 0.5
+            };
+
+            function applyFishbowl(px, py) {
+                if (!fishbowl.enabled) return { x: px, y: py };
+
+                const cx = width * fishbowl.centerX;
+                const cy = height * fishbowl.centerY;
+                const maxRadius = Math.sqrt(cx * cx + cy * cy);
+
+                const dx = px - cx;
+                const dy = py - cy;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                const normalizedDist = dist / maxRadius;
+
+                const distortion = 1 + fishbowl.strength * normalizedDist * normalizedDist;
+
+                return {
+                    x: cx + dx * distortion,
+                    y: cy + dy * distortion
+                };
+            }
+
+            function drawHex(x, y, size, strokeColor, fillColor) {
+                ctx.beginPath();
+                for (let i = 0; i < 6; i++) {
+                    const angle = (Math.PI / 3) * i - Math.PI / 6;
+                    const rawX = x + size * Math.cos(angle);
+                    const rawY = y + size * Math.sin(angle);
+
+                    const distorted = applyFishbowl(rawX, rawY);
+
+                    if (i === 0) ctx.moveTo(distorted.x, distorted.y);
+                    else ctx.lineTo(distorted.x, distorted.y);
+                }
+                ctx.closePath();
+                if (fillColor) {
+                    ctx.fillStyle = fillColor;
+                    ctx.fill();
+                }
+                if (strokeColor) {
+                    ctx.strokeStyle = strokeColor;
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+                }
+            }
+
+            function updateActiveHexes() {
+                activeHexes = activeHexes.filter(h => h.life > 0);
+
+                if (activeHexes.length < config.maxActive && Math.random() > 0.97) {
+                    activeHexes.push({
+                        col: Math.floor(Math.random() * cols),
+                        row: Math.floor(Math.random() * rows),
+                        life: 0,
+                        maxLife: 1,
+                        phase: 'in',
+                        color: Math.random() > 0.5 ? config.activeColor : config.activeColorAlt
+                    });
+                }
+
+                activeHexes.forEach(h => {
+                    if (h.phase === 'in') {
+                        h.life += config.pulseSpeed;
+                        if (h.life >= h.maxLife) {
+                            h.life = h.maxLife;
+                            h.phase = 'out';
+                        }
+                    } else {
+                        h.life -= config.pulseSpeed;
+                    }
+                });
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, width, height);
+
+                for (let r = 0; r < rows; r++) {
+                    for (let c = 0; c < cols; c++) {
+                        const xOffset = (r % 2) * (hexWidth / 2);
+                        const x = c * hexWidth + xOffset - hexWidth;
+                        const y = r * (hexHeight * 0.75) - hexHeight;
+
+                        drawHex(x, y, config.hexSize, config.gridColor, config.gridFillColor);
+                    }
+                }
+
+                activeHexes.forEach(h => {
+                    const xOffset = (h.row % 2) * (hexWidth / 2);
+                    const x = h.col * hexWidth + xOffset - hexWidth;
+                    const y = h.row * (hexHeight * 0.75) - hexHeight;
+                    const alpha = h.life;
+                    const baseColor = h.color.replace(/[\d.]+\)$/g, '');
+                    const color = `${baseColor}${alpha})`;
+
+                    ctx.shadowBlur = 10 * alpha;
+                    ctx.shadowColor = h.color;
+                    drawHex(x, y, config.hexSize, null, color);
+                    ctx.shadowBlur = 0;
+                });
+
+                if (config.interactive && mouse.x > 0 && mouse.y > 0) {
+                    const adjustedX = mouse.x + hexWidth + (hexWidth / 2);
+                    const adjustedY = mouse.y + hexHeight + (hexHeight * 0.375);
+
+                    const mRow = Math.floor(adjustedY / (hexHeight * 0.75));
+                    const rowXOffset = (mRow % 2) * (hexWidth / 2);
+                    const mCol = Math.floor((adjustedX - rowXOffset) / hexWidth);
+
+                    const isEvenRow = mRow % 2 === 0;
+                    const neighbors = isEvenRow ? [
+                        [0, 0],
+                        [-1, -1],
+                        [0, -1],
+                        [-1, 0],
+                        [1, 0],
+                        [-1, 1],
+                        [0, 1]
+                    ] : [
+                        [0, 0],
+                        [0, -1],
+                        [1, -1],
+                        [-1, 0],
+                        [1, 0],
+                        [0, 1],
+                        [1, 1]
+                    ];
+
+                    neighbors.forEach(([dc, dr], i) => {
+                        const col = mCol + dc;
+                        const row = mRow + dr;
+                        const xOffset = (row % 2) * (hexWidth / 2);
+                        const x = col * hexWidth + xOffset - hexWidth;
+                        const y = row * (hexHeight * 0.75) - hexHeight;
+
+                        const isCenter = i === 0;
+
+                        const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+                        const highlightColor = isLight ? '175, 92, 0' : '0, 245, 255';
+
+                        if (isCenter) {
+                            ctx.shadowBlur = 15;
+                            ctx.shadowColor = `rgba(${highlightColor}, 0.8)`;
+                            drawHex(x, y, config.hexSize, `rgba(${highlightColor}, 0.9)`, `rgba(${highlightColor}, 0.35)`);
+                            ctx.shadowBlur = 0;
+                        } else {
+                            const fadeOpacity = 0.2;
+                            drawHex(x, y, config.hexSize, `rgba(${highlightColor}, ${0.5 * fadeOpacity})`, `rgba(${highlightColor}, ${0.15 * fadeOpacity})`);
+                        }
+                    });
+                }
+
+                updateActiveHexes();
+                requestAnimationFrame(draw);
+            }
+
+            if (config.interactive) {
+                window.addEventListener('mousemove', (e) => {
+                    const rect = canvas.getBoundingClientRect();
+                    mouse.x = e.clientX - rect.left;
+                    mouse.y = e.clientY - rect.top;
+                });
+                window.addEventListener('touchmove', (e) => {
+                    if (e.touches.length > 0) {
+                        const rect = canvas.getBoundingClientRect();
+                        mouse.x = e.touches[0].clientX - rect.left;
+                        mouse.y = e.touches[0].clientY - rect.top;
+                    }
+                }, { passive: true });
+            }
+
+            resize();
+            window.addEventListener('resize', resize);
+            draw();
         }
 
         // ============================================

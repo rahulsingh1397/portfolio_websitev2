@@ -6548,6 +6548,7 @@ body {
             indicators: null,
             autoRotateInterval: null,
             isHovering: false,
+            themeObserver: null,
             
             async init() {
                 this.track = document.getElementById('blog-preview-grid');
@@ -6566,6 +6567,7 @@ body {
                         this.renderCards();
                         this.createIndicators();
                         this.updatePositions();
+                        this.addThemeObserver();
                         this.addTouchSupport();
                         this.addHoverPause();
                         this.startAutoRotate();
@@ -6581,6 +6583,54 @@ body {
                     console.log('No blogs found or error loading blogs:', error.message);
                     if (blogSection) blogSection.style.display = 'none';
                 }
+            },
+            
+            addThemeObserver() {
+                if (this.themeObserver) return;
+                this.themeObserver = new MutationObserver((mutations) => {
+                    for (const mutation of mutations) {
+                        if (mutation.attributeName === 'data-theme') {
+                            this.applyTheme();
+                        }
+                    }
+                });
+                this.themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+            },
+
+            applyTheme() {
+                if (!this.track || !this.blogs || this.blogs.length === 0) return;
+
+                const isLightMode = document.documentElement.getAttribute('data-theme') === 'light';
+                const thumbnailGradient = isLightMode ? 'linear-gradient(135deg, #AF5C00, #FFB07A)' : 'linear-gradient(135deg, #00f5ff, #0080ff)';
+                const headingColor = isLightMode ? '#AF5C00' : '#00f5ff';
+                const buttonBg = isLightMode ? 'linear-gradient(135deg, #AF5C00, #FFB07A)' : 'linear-gradient(135deg, #00f5ff, #0080ff)';
+
+                const cards = this.track.querySelectorAll('.blog-carousel-card');
+                cards.forEach((card, index) => {
+                    const blog = this.blogs[index];
+                    if (!blog) return;
+
+                    const thumb = card.querySelector('.blog-thumbnail');
+                    if (thumb) {
+                        if (blog.thumbnail) {
+                            thumb.style.background = `url('${blog.thumbnail}') center/cover`;
+                            thumb.innerHTML = '';
+                        } else {
+                            thumb.style.background = thumbnailGradient;
+                            thumb.innerHTML = blog.icon || '📝';
+                        }
+                    }
+
+                    const heading = card.querySelector('.blog-heading');
+                    if (heading) {
+                        heading.style.color = headingColor;
+                    }
+
+                    const btn = card.querySelector('.blog-read-btn');
+                    if (btn) {
+                        btn.style.background = buttonBg;
+                    }
+                });
             },
             
             renderCards() {
