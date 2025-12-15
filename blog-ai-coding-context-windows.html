@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why AI Coding "Sucks": It's Not the Models, It's Your Prompts - Blog</title>
+    <meta name="description" content="A 2025 deep dive into context window abuse and the LLM skill gap. Learn why 99% of AI coding frustrations stem from poor prompting, not model limitations.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+            line-height: 1.8;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1.5rem 5%;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(0, 245, 255, 0.1);
+        }
+
+        nav.scrolled {
+            padding: 1rem 5%;
+            box-shadow: 0 4px 30px rgba(0, 245, 255, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #00f5ff, #0080ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-center {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            justify-content: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #00f5ff, #0080ff);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        /* Article Container */
+        .article-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 120px 5% 80px;
+        }
+
+        /* Article Header */
+        .article-header {
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            color: #9ca3af;
+            font-size: 0.95rem;
+            flex-wrap: wrap;
+        }
+
+        .article-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .article-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #00f5ff, #0080ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.3;
+            margin-bottom: 1.5rem;
+        }
+
+        .article-tags {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .tag {
+            padding: 0.4rem 1rem;
+            background: rgba(0, 245, 255, 0.1);
+            border: 1px solid rgba(0, 245, 255, 0.2);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: #00f5ff;
+        }
+
+        /* Article Content */
+        .article-content {
+            color: #e0e0e0;
+            font-size: 1.1rem;
+        }
+
+        .article-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .article-content h2 {
+            font-size: 1.8rem;
+            color: #00f5ff;
+            margin: 3rem 0 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid rgba(0, 245, 255, 0.2);
+        }
+
+        .article-content h3 {
+            font-size: 1.4rem;
+            color: #0080ff;
+            margin: 2rem 0 1rem;
+        }
+
+        .article-content ul,
+        .article-content ol {
+            margin: 1.5rem 0;
+            padding-left: 2rem;
+        }
+
+        .article-content li {
+            margin-bottom: 0.8rem;
+        }
+
+        .article-content strong {
+            color: #00f5ff;
+        }
+
+        .article-content em {
+            color: #8B5CF6;
+        }
+
+        .article-content blockquote {
+            border-left: 4px solid #00f5ff;
+            padding: 1rem 1.5rem;
+            margin: 2rem 0;
+            background: rgba(0, 245, 255, 0.05);
+            border-radius: 0 10px 10px 0;
+            font-style: italic;
+            color: #b0b0b0;
+        }
+
+        .article-content code {
+            background: rgba(0, 245, 255, 0.1);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.95rem;
+            color: #00f5ff;
+        }
+
+        .article-content pre {
+            background: rgba(20, 20, 20, 0.8);
+            border: 1px solid rgba(0, 245, 255, 0.2);
+            border-radius: 10px;
+            padding: 1.5rem;
+            overflow-x: auto;
+            margin: 2rem 0;
+        }
+
+        .article-content pre code {
+            background: none;
+            padding: 0;
+        }
+
+        /* Stats Box */
+        .stats-box {
+            background: linear-gradient(135deg, rgba(0, 245, 255, 0.1), rgba(0, 128, 255, 0.05));
+            border: 1px solid rgba(0, 245, 255, 0.3);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .stats-box h4 {
+            color: #00f5ff;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #00f5ff, #0080ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #9ca3af;
+            margin-top: 0.3rem;
+        }
+
+        /* Highlight Box */
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(0, 245, 255, 0.05));
+            border: 2px solid rgba(139, 92, 246, 0.3);
+            border-radius: 15px;
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+        }
+
+        .highlight-box h4 {
+            color: #8B5CF6;
+            margin-bottom: 0.8rem;
+        }
+
+        /* Back to Blog */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #00f5ff;
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            transform: translateX(-5px);
+        }
+
+        .back-link svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Share Section */
+        .share-section {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(0, 245, 255, 0.2);
+            text-align: center;
+        }
+
+        .share-section h4 {
+            color: #9ca3af;
+            margin-bottom: 1rem;
+        }
+
+        .share-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .share-btn {
+            padding: 0.8rem 1.5rem;
+            background: rgba(0, 245, 255, 0.1);
+            border: 1px solid rgba(0, 245, 255, 0.3);
+            border-radius: 50px;
+            color: #00f5ff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .share-btn:hover {
+            background: rgba(0, 245, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            background: #000;
+            padding: 2rem 5%;
+            text-align: center;
+            color: #b0b0b0;
+            border-top: 1px solid rgba(0, 245, 255, 0.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .article-title {
+                font-size: 1.8rem;
+            }
+
+            .article-content h2 {
+                font-size: 1.4rem;
+            }
+
+            .article-meta {
+                gap: 1rem;
+            }
+
+            .nav-links {
+                gap: 1.5rem;
+                font-size: 0.9rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .article-container {
+                padding: 100px 4% 60px;
+            }
+
+            .article-title {
+                font-size: 1.5rem;
+            }
+
+            .article-content {
+                font-size: 1rem;
+            }
+
+            .share-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="data-scientist-portfolio.html" class="logo-link" style="text-decoration: none;">
+                <span style="font-size: 1.5rem; font-weight: 800; background: linear-gradient(135deg, #00f5ff, #0080ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Blog</span>
+            </a>
+            <div class="nav-center">
+                <ul class="nav-links">
+                    <li><a href="data-scientist-portfolio.html#home">Home</a></li>
+                    <li><a href="data-scientist-portfolio.html#about">About</a></li>
+                    <li><a href="data-scientist-portfolio.html#skills">Skills</a></li>
+                    <li><a href="data-scientist-portfolio.html#projects">Projects</a></li>
+                    <li><a href="blog.html" class="active">Blog</a></li>
+                    <li><a href="data-scientist-portfolio.html#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Article -->
+    <article class="article-container">
+        <a href="blog.html" class="back-link">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+            </svg>
+            Back to Blog
+        </a>
+
+        <header class="article-header">
+            <div class="article-meta">
+                <span>📅 December 12, 2025</span>
+                <span>⏱️ 12 min read</span>
+                <span>👤 Rahul Singh</span>
+            </div>
+            <h1 class="article-title">Why AI Coding "Sucks": It's Not the Models, It's Your Prompts – A 2025 Deep Dive into Context Window Abuse and the LLM Skill Gap</h1>
+            <div class="article-tags">
+                <span class="tag">AI</span>
+                <span class="tag">LLMs</span>
+                <span class="tag">Prompt Engineering</span>
+                <span class="tag">Developer Experience</span>
+                <span class="tag">2025 Trends</span>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>Hey folks, it's December 12, 2025, and if you've scrolled X or Reddit lately, you've probably seen it: that viral quip claiming <strong>"99% of the reason people think AI coding sucks is their lack of knowledge about how LLMs work."</strong> It points to one core culprit—abusing the context window with irrelevant junk, turning your shiny AI assistant into a confused mess. "In other words, a skill issue," the post smirks. I've been there myself, staring at a bloated prompt that spits out garbage code, only to realize I overloaded it with yesterday's coffee-fueled ramblings. But here's the thing: this isn't just meme fodder. It's a systemic blind spot in how developers interact with LLMs, backed by fresh 2025 surveys showing sky-high adoption clashing with plummeting trust.</p>
+
+            <p>In this article, I'll survey the latest research on AI coding frustrations, break down the mechanics of context windows (spoiler: they're not magic black boxes), explore how "crap-stuffing" leads to epic fails, and share my battle-tested tips for turning the tide. Drawing from Stack Overflow's 2025 Developer Survey, Qodo's State of AI Code Quality report, and a slew of dev forums, we'll see why 84% of you are using AI tools daily—but 66% are tearing your hair out over "almost-right" outputs. Let's fix this skill issue, one token at a time.</p>
+
+            <h2>The 2025 AI Coding Paradox: Booming Adoption, Bubbling Frustrations</h2>
+
+            <p>AI coding tools aren't a novelty anymore—they're the default. As of Q1 2025, 82% of developers report using AI assistants weekly, with 59% juggling three or more in parallel. Stack Overflow's massive 2025 survey (25,000+ respondents) ups that to 84% using or planning to use AI in their workflows, a 91% surge from 44% in 2023. At Google, 25% of code is now AI-assisted, boosting engineering velocity by 10%. Globally, <strong>41% of all code written in 2025 is AI-generated or influenced</strong>, with 65% of developers saying at least a quarter of their commits bear the AI stamp.</p>
+
+            <div class="stats-box">
+                <h4>📊 2025 AI Coding Adoption Stats</h4>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number">84%</div>
+                        <div class="stat-label">Devs using AI tools</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">41%</div>
+                        <div class="stat-label">Code AI-generated</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">66%</div>
+                        <div class="stat-label">Frustrated with outputs</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">46%</div>
+                        <div class="stat-label">Don't trust accuracy</div>
+                    </div>
+                </div>
+            </div>
+
+            <p>Small teams are leading the charge: 51% of active AI users hail from squads of 10 or fewer devs, proving you don't need Big Tech budgets to reap gains. Full-stack devs top adoption at 32%, followed by frontend (22%) and backend (8.9%), with younger coders (18-34) twice as likely to dive in. JetBrains' State of Developer Ecosystem echoes this: 85% regularly use AI for coding, and 62% lean on at least one assistant like Copilot or Cursor.</p>
+
+            <p>But here's the gut punch: while usage soars, trust craters. Positive sentiment for AI tools dipped to 60% in 2025, down from 70%+ in prior years. A whopping <strong>46% of devs don't trust AI outputs' accuracy</strong>, up from 31% last year. The top gripe? 66% battle "AI solutions that are almost right, but not quite," leading to the second-biggest headache: debugging AI code takes more time than writing it from scratch (45%). Atlassian's 2025 DevEx Report adds that 99% of devs save time with AI (68% over 10 hours/week), yet 90% lose 6+ hours to non-coding friction—often amplified by half-baked AI suggestions.</p>
+
+            <p>Qodo's research paints a quadrants of despair: over three-quarters of devs hit frequent hallucinations, ditching AI code without human checks, dragging ROI. Only 30% of AI-suggested code gets accepted, per GitHub data. It's clear: <em>AI coding doesn't suck—the way we're wielding it does.</em> Enter the context window, the unsung villain (or hero) of this saga.</p>
+
+            <h2>LLM Basics: What the Heck Is a Context Window, Anyway?</h2>
+
+            <p>To grasp why your prompts are backfiring, we need LLM 101. Large Language Models like GPT-5.1 or Claude Opus 4.5 don't "think" like humans—they predict tokens (word chunks) based on patterns in vast training data. The <strong>context window</strong> is their short-term memory: a fixed-size buffer (e.g., 128K tokens for many 2025 models) holding your prompt, conversation history, and output.</p>
+
+            <p>Tokens aren't free; they're compute-expensive. A simple prompt like "Write a Python function for fizzbuzz" is ~25 tokens—0.001% of a 1M-token window. But dump in a 10K-line codebase? You're burning through 20-50% capacity, risking overflow. Models process this via attention mechanisms, weighting token relevance. Crucially, <strong>not all positions are equal</strong>: info at the start/end gets priority; the middle? That's the "lost-in-the-middle" trap, where buried details fade into oblivion.</p>
+
+            <div class="highlight-box">
+                <h4>🧠 Key Insight: The "Lost in the Middle" Problem</h4>
+                <p>LLMs prioritize information at the beginning and end of context windows. Details buried in the middle often get deprioritized or ignored entirely—leading to incomplete or incorrect outputs.</p>
+            </div>
+
+            <p>As conversations grow, older tokens get truncated (usually from the front), evaporating context. Gemini 3.1 Ultra might auto-summarize long prompts, but that distorts nuances like user personas or edge cases. Reddit threads nail it: LLMs struggle with ambiguity in natural language, and large contexts amplify this, making probabilities for next tokens fuzzier. No wonder code degrades with complexity—it's not the model "forgetting," it's us overwhelming its focus.</p>
+
+            <h2>The Context Abuse Epidemic: How "Crap" Turns AI into a Hot Mess</h2>
+
+            <p>Here's the skill issue in neon: <strong>90% of devs misunderstand context windows</strong>, per a May 2025 Medium deep-dive interviewing dozens and auditing hundreds of apps. Mistake #1: Assuming uniform access. Stuff similar-structured info (e.g., multiple API docs with overlapping vocab), and you trigger "attention interference"—the model conflates chunks, ignoring or mangling key bits. Result? Hallucinated imports or logic loops that "feel" right but crash at runtime.</p>
+
+            <p>Mistake #2: Info dilution from excess text. DigitalOcean's August guide warns that bloated windows dilute priorities, with models overriding early instructions (e.g., "Keep it simple" gets buried under verbose examples). Overflow? Truncation kicks in, losing history and coherence. Dev.to's recent post on prompt length vs. limits cites real fails: vague outputs from ignored sections, hallucinations in long docs, or outright refusals.</p>
+
+            <p>Hacker News threads from late 2025 frame this as <strong>"context engineering"</strong> over mere prompting: incomplete, contradictory, or distracting inputs doom LLMs. Reddit's r/ChatGPTCoding concurs—cost-cutting shrinks effective windows, forcing insufficient summaries that confuse state management in complex systems. A October YouTube breakdown visualizes it: bloated middles deprioritize 80% of your "carefully curated" context. Viral posts amplify the meme: abusing with "crap" (irrelevant logs, unfiltered histories) creates confusion, not innovation.</p>
+
+            <h2>Evidence from the Trenches: Research Proves It's User Error, Not AI Flop</h2>
+
+            <p>The data doesn't lie—this is a promptcraft crisis. Stack Overflow's frustrations align perfectly: 66% on "almost-right" fixes stem from context muddles, not model limits. Qodo's 2025 report: 77% battle hallucinations from poor context, with small teams hit hardest due to rushed iterations. JetBrains flags inconsistent quality and limited complex logic grasp as top concerns—both traceable to diluted attention.</p>
+
+            <p>Real-world? LinkedIn and Facebook echo the viral explainer: 80-99% of gripes trace to LLM ignorance, like cramming chats without cleanup. Prompt injection vulnerabilities (malicious overrides in shared contexts) compound this, as Guidepoint notes—no boundaries mean equal-weight chaos. Bottom line: With 90% misunderstanding basics, no wonder trust lags adoption.</p>
+
+            <h2>My Take: Level Up Your Game with These Models and Hacks</h2>
+
+            <p>I've burned hours on this—GPT-5.1's overthinking shines in clean contexts but hallucinates in bloat, like it's "on weed." Gemini 3 Pro? Killer for multimodal code design, but watch length. Grok 4.1 handles general tasks reliably, sans fluff.</p>
+
+            <p>My fave? <strong>Claude Sonnet 4.5 for coding</strong>—precise, low-hallucination in tight windows. Opus 4.5 crushes enterprise agents.</p>
+
+            <div class="highlight-box">
+                <h4>🚀 Pro Tips for Better AI Coding</h4>
+                <ul>
+                    <li><strong>Engineer Context:</strong> Summarize histories, chunk docs, front-load instructions.</li>
+                    <li><strong>Test Iteratively:</strong> Start small, measure token burn.</li>
+                    <li><strong>Tools Over Toys:</strong> Use LangChain for dynamic windows.</li>
+                    <li><strong>Clean Your Prompts:</strong> Remove irrelevant logs, old conversation threads, and redundant examples.</li>
+                    <li><strong>Structure Matters:</strong> Put critical instructions at the start AND end of your prompt.</li>
+                </ul>
+            </div>
+
+            <p>It's skill-building time—master this, and AI coding transforms from suck to superpower.</p>
+
+            <h2>Final Thoughts: Own the Skill Issue, Unlock AI's Potential</h2>
+
+            <p>In 2025, AI coding's at 84% adoption with 41% of code AI-touched, yet frustrations like debugging marathons plague 45%. The fix? <strong>Ditch the crap, respect the context window</strong>—it's not abuse, it's engineering. As that viral post nails it, this is a skill issue we can all solve. Experiment with Claude or Gemini, refine your prompts, and watch productivity soar.</p>
+
+            <p>What's your biggest AI coding pet peeve? Drop it in the comments—let's crowdsource the wins. Stay coding smart!</p>
+        </div>
+
+        <!-- Share Section -->
+        <div class="share-section">
+            <h4>Share this article</h4>
+            <div class="share-buttons">
+                <a href="https://twitter.com/intent/tweet?text=Why%20AI%20Coding%20%22Sucks%22%3A%20It%27s%20Not%20the%20Models%2C%20It%27s%20Your%20Prompts&url=" class="share-btn" target="_blank">Twitter/X</a>
+                <a href="https://www.linkedin.com/sharing/share-offsite/?url=" class="share-btn" target="_blank">LinkedIn</a>
+                <a href="mailto:?subject=Check out this article&body=Why AI Coding Sucks - A 2025 Deep Dive" class="share-btn">Email</a>
+            </div>
+        </div>
+    </article>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Rahul Singh. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>
