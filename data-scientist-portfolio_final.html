@@ -397,9 +397,9 @@
             </div>
             
             <div class="mt-10 flex flex-col items-center gap-4 pointer-events-auto">
-                <div class="flex gap-4 justify-center flex-wrap">
-                    <a href="#work" class="px-8 py-4 bg-cyan-glow text-black rounded-full font-bold hover:scale-105 transition-transform light:bg-orange-accent light:text-white shadow-lg shadow-cyan-glow/20 light:shadow-orange-accent/20">View Client-Ready Case Studies</a>
-                    <a href="https://calendly.com" target="_blank" class="px-8 py-4 border border-white/20 rounded-full font-bold hover:bg-white/10 transition-all light:border-black/20 light:hover:bg-black/5 bg-black/20 backdrop-blur-sm light:bg-white/20">Book a 15-Minute Strategy Call</a>
+                <div class="flex flex-col md:flex-row gap-4 justify-center items-center">
+                    <a href="#work" class="px-8 py-4 bg-cyan-glow text-black rounded-full font-bold hover:scale-105 transition-transform light:bg-orange-accent light:text-white shadow-lg shadow-cyan-glow/20 light:shadow-orange-accent/20 text-center w-full md:w-auto">View Client-Ready Case Studies</a>
+                    <a href="https://calendly.com" target="_blank" class="px-8 py-4 border border-white/20 rounded-full font-bold hover:bg-white/10 transition-all light:border-black/20 light:hover:bg-black/5 bg-black/20 backdrop-blur-sm light:bg-white/20 text-center w-full md:w-auto">Book a 15-Minute Strategy Call</a>
                 </div>
                 <p class="text-xs text-gray-500 light:text-gray-600 max-w-md text-center font-mono mt-2">No pressure. I'll help you assess if AI or analytics actually makes sense for your problem.</p>
             </div>
@@ -940,7 +940,7 @@
                     LET'S<br>BUILD
                 </h2>
                 
-                <div class="flex gap-6 z-10">
+                <div class="flex gap-6 z-10 mb-24 md:mb-0">
                     <a href="mailto:contact@rahulai.com" class="px-8 py-4 bg-white text-black light:bg-void light:text-cream rounded-full font-bold text-lg hover:bg-cyan-glow light:hover:bg-orange-accent transition-colors hover:scale-110 transform duration-200">
                         Email Me
                     </a>
@@ -1217,17 +1217,18 @@
                 eyeModel.traverse((child) => {
                     if (!child.isMesh) return;
                     
-                    // Reduce overall opacity for "premium" feel
+                    // Make model solid
                     if(child.material) {
-                        child.material.transparent = true;
-                        child.material.opacity = 0.85; // Slight transparency to blend
+                        child.material.transparent = false;
+                        child.material.opacity = 1.0;
+                        child.material.side = THREE.FrontSide;
                     }
                     
                     const materials = Array.isArray(child.material) ? child.material : [child.material];
                     
                     if (child.name === 'Lens_Low_Poly_0') {
                         materials.forEach(mat => {
-                            mat.transparent = false;
+                            mat.transparent = true;
                             mat.opacity = 0.3;
                             mat.depthWrite = false;
                             mat.metalness = 0.1;
@@ -1258,23 +1259,31 @@
                     materials.forEach((mat) => {
                         switch (mat.name) {
                             case 'Camera_Plastic':
-                                mat.color = new THREE.Color('#252525');
+                                mat.color = new THREE.Color('#0d0d0d');
+                                mat.metalness = 0.6;
+                                mat.roughness = 0.25;
                                 break;
                             case 'Metal':
                             case 'Metal.001':
-                                mat.color = new THREE.Color('#C1C1C1');
+                                mat.color = new THREE.Color('#101010');
+                                mat.metalness = 0.9;
+                                mat.roughness = 0.2;
                                 break;
                             case 'Black_Plastic':
-                                mat.color = new THREE.Color('#3e3e3e');
+                                mat.color = new THREE.Color('#0a0a0a');
+                                mat.metalness = 0.3;
+                                mat.roughness = 0.35;
                                 break;
                             case 'Copper':
-                                mat.color = new THREE.Color('#fad0c0');
+                                mat.color = new THREE.Color('#111111');
+                                mat.metalness = 0.8;
+                                mat.roughness = 0.25;
                                 break;
                             case 'White_Plastic':
                                 mat.color = new THREE.Color('#000000');
                                 break;
                             case "BezierCurve.006_0":
-                                mat.color = new THREE.Color("#ffffff");
+                                mat.color = new THREE.Color("#0f0f0f");
                                 break;
                             case 'Camera_Lens':
                                 mat.color = new THREE.Color('#000000');
@@ -1286,11 +1295,11 @@
                                 lensMaterial = mat;
                                 break;
                             default:
-                                mat.color = new THREE.Color(0x888ca0);
-                                mat.metalness = 0.9;
-                                mat.roughness = 0.2;
-                                mat.transparent = true;
-                                mat.opacity = 0.0;
+                                mat.color = new THREE.Color(0x050505);
+                                mat.metalness = 0.85;
+                                mat.roughness = 0.15;
+                                mat.transparent = false;
+                                mat.opacity = 1.0;
                                 mat.side = THREE.FrontSide;
                                 break;
                         }
@@ -1524,7 +1533,7 @@
                 annModel.position.sub(center);
                 
                 const maxDim = Math.max(size.x, size.y, size.z) || 1;
-                const targetSize = 50.0;
+                const targetSize = 35.0;
                 const scale = targetSize / maxDim;
                 annModel.scale.setScalar(scale);
                 
