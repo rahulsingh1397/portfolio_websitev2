@@ -9,7 +9,7 @@
     <link href="https://api.fontshare.com/v2/css?f[]=clash-display@200,400,500,600,700&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -49,7 +49,7 @@
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
-                        display: ['Clash Display', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
                         mono: ['JetBrains Mono', 'monospace'],
                     }
                 }
@@ -140,6 +140,11 @@
             z-index: 9000;
             opacity: 0.05;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        @media (max-width: 768px) {
+            .grain { display: none; }
+            #cursor { display: none !important; }
         }
 
         /* Chalk Border Effect */
@@ -378,35 +383,47 @@
         <!-- 3D Container: Absolute & Full Screen -->
         <div id="robotic-eye-container" class="absolute inset-0 w-full h-full z-[1]"></div>
         
-        <div class="hero-content relative z-[20] text-center pointer-events-none dark:mix-blend-exclusion px-4 mt-[25vh] md:mt-[20vh]">
-            <div class="chalk-border mb-8 pointer-events-auto cursor-default tracking-widest [word-spacing:0.5em] glitch px-6 py-1.5 text-sm" data-text="Applied AI & Data Scientist">
-                Applied AI & Data Scientist
+        <div class="hero-content relative z-[20] text-center pointer-events-none dark:mix-blend-exclusion px-4 mt-[15vh] md:mt-[10vh]">
+            <div class="chalk-border mb-6 pointer-events-auto cursor-default tracking-widest [word-spacing:0.5em] glitch px-6 py-1.5 text-sm" data-text="APPLIED AI & DECISION SYSTEMS">
+                APPLIED AI & DECISION SYSTEMS
             </div>
-            <h1 class="font-display text-[5vw] md:text-[4vw] leading-[1.1] font-bold tracking-wide text-transparent bg-clip-text bg-gradient-to-br from-white to-gray-500 dark:from-white dark:to-gray-500 light:from-black light:to-gray-600 drop-shadow-2xl max-w-5xl mx-auto">
-                I help companies automate decisions, reduce risk, and
-                <span class="text-cyan-glow italic font-light light:text-orange-accent tracking-normal">unlock value from data</span>
+            <h1 class="font-display text-[5vw] md:text-[4vw] leading-[1.1] font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-white to-gray-400 dark:from-white dark:to-gray-400 light:from-black light:to-gray-700 drop-shadow-2xl max-w-5xl mx-auto">
+                I help companies turn messy data into
+                <span class="text-cyan-glow italic font-light light:text-orange-accent tracking-normal">confident, automated decisions.</span>
             </h1>
-            <div class="font-mono mt-8 text-sub light:text-gray-600 max-w-2xl mx-auto text-sm md:text-base leading-relaxed tracking-wide space-y-2">
-                <p>I design and build production-ready AI systems that move beyond dashboards and prototypes.</p>
-                <p>Delivering analytics, machine learning, and automation that leaders can actually use.</p>
+            <div class="font-mono mt-6 text-sub light:text-gray-600 max-w-2xl mx-auto text-sm md:text-base leading-relaxed tracking-wide space-y-2">
+                <p>I design and deploy production-ready AI systems that reduce risk, improve forecasts, and save teams weeks of manual work — not demos that die in notebooks.</p>
+                <p class="text-cyan-glow light:text-orange-accent font-bold mt-4">Trusted across finance, healthcare, automotive, and security-focused teams.</p>
             </div>
             
-            <!-- Tech Strip -->
-            <div class="mt-6 flex flex-wrap justify-center gap-4 text-xs font-mono text-cyan-glow/70 light:text-orange-accent/70 uppercase tracking-widest">
-                <span>Python</span> • <span>SQL</span> • <span>Machine Learning</span> • <span>Analytics</span> • <span>AI Compliance</span> • <span>Automation</span>
-            </div>
-            
-            <div class="mt-10 flex flex-col items-center gap-4 pointer-events-auto">
-                <div class="flex flex-col md:flex-row gap-4 justify-center items-center">
-                    <a href="#work" class="px-8 py-4 bg-cyan-glow text-black rounded-full font-bold hover:scale-105 transition-transform light:bg-orange-accent light:text-white shadow-lg shadow-cyan-glow/20 light:shadow-orange-accent/20 text-center w-full md:w-auto">View Client-Ready Case Studies</a>
-                    <a href="https://calendly.com" target="_blank" class="px-8 py-4 border border-white/20 rounded-full font-bold hover:bg-white/10 transition-all light:border-black/20 light:hover:bg-black/5 bg-black/20 backdrop-blur-sm light:bg-white/20 text-center w-full md:w-auto">Book a 15-Minute Strategy Call</a>
+            <!-- Value Stack -->
+            <div class="mt-6 flex flex-col md:flex-row justify-center gap-6 text-xs md:text-sm font-mono text-gray-400 light:text-gray-600">
+                <div class="flex items-center gap-2">
+                    <span class="text-cyan-glow light:text-orange-accent">✓</span> Predictive models leaders trust
                 </div>
-                <p class="text-xs text-gray-500 light:text-gray-600 max-w-md text-center font-mono mt-2">No pressure. I'll help you assess if AI or analytics actually makes sense for your problem.</p>
+                <div class="flex items-center gap-2">
+                    <span class="text-cyan-glow light:text-orange-accent">✓</span> Explainable AI for regulated ops
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-cyan-glow light:text-orange-accent">✓</span> Analytics that answer "What next?"
+                </div>
+            </div>
+            
+            <div class="mt-8 flex flex-col items-center gap-4 pointer-events-auto">
+                <div class="flex flex-col md:flex-row gap-4 justify-center items-center">
+                    <a href="#work" class="px-8 py-4 bg-cyan-glow text-black rounded-full font-bold hover:scale-105 transition-transform light:bg-orange-accent light:text-white shadow-lg shadow-cyan-glow/20 light:shadow-orange-accent/20 text-center w-full md:w-auto">View Real-World Case Studies</a>
+                    <a href="https://calendly.com" target="_blank" class="px-8 py-4 border border-white/20 rounded-full font-bold hover:bg-white/10 transition-all light:border-black/20 light:hover:bg-black/5 bg-black/20 backdrop-blur-sm light:bg-white/20 text-center w-full md:w-auto">Talk Through a Real Problem (15 min)</a>
+                </div>
+                <p class="text-xs text-gray-500 light:text-gray-600 max-w-md text-center font-mono mt-2">
+                    No sales pitch. We’ll sanity-check if AI even makes sense.
+                    <br>
+                    <span class="block mt-3 text-cyan-glow/90 light:text-orange-accent font-bold tracking-wider uppercase text-[10px] border border-cyan-glow/30 light:border-orange-accent/30 rounded px-2 py-1 inline-block">15+ production ML systems deployed</span>
+                </p>
             </div>
         </div>
 
         <!-- MARQUEE FOOTER -->
-        <div class="absolute bottom-0 w-full py-6 border-t border-white/5 light:border-black/5 bg-[#0a0a0a]/90 backdrop-blur-sm light:bg-[#F4F2E9]/90 z-20 overflow-hidden">
+        <div class="absolute bottom-0 w-full py-4 border-t border-white/5 light:border-black/5 bg-[#0a0a0a]/90 backdrop-blur-sm light:bg-[#F4F2E9]/90 z-20 overflow-hidden">
             <!-- Gradients to fade edges -->
             <div class="absolute top-0 left-0 w-20 h-full bg-gradient-to-r from-[#0a0a0a] light:from-[#F4F2E9] to-transparent z-30"></div>
             <div class="absolute top-0 right-0 w-20 h-full bg-gradient-to-l from-[#0a0a0a] light:from-[#F4F2E9] to-transparent z-30"></div>
@@ -414,32 +431,85 @@
             <div class="marquee-container flex whitespace-nowrap overflow-hidden">
                 <div class="marquee-content flex gap-12 items-center animate-marquee">
                     <!-- Content Set 1 -->
-                    <span class="text-4xl md:text-6xl font-display font-bold text-white/5 light:text-black/5 uppercase">Machine Learning</span>
+                    <span class="text-3xl md:text-5xl font-display font-bold text-white/5 light:text-black/5 uppercase">Machine Learning</span>
                     <span class="w-3 h-3 rounded-full bg-cyan-glow light:bg-orange-accent"></span>
-                    <span class="text-4xl md:text-6xl font-display font-bold text-white/20 light:text-black/20 uppercase">Data Science</span>
+                    <span class="text-3xl md:text-5xl font-display font-bold text-white/20 light:text-black/20 uppercase">Data Science</span>
                     <span class="w-3 h-3 rounded-full bg-cyan-glow light:bg-orange-accent"></span>
-                    <span class="text-4xl md:text-6xl font-display font-bold text-white/5 light:text-black/5 uppercase">Computer Vision</span>
+                    <span class="text-3xl md:text-5xl font-display font-bold text-white/5 light:text-black/5 uppercase">Computer Vision</span>
                     <span class="w-3 h-3 rounded-full bg-cyan-glow light:bg-orange-accent"></span>
-                    <span class="text-4xl md:text-6xl font-display font-bold text-white/20 light:text-black/20 uppercase">NLP</span>
+                    <span class="text-3xl md:text-5xl font-display font-bold text-white/20 light:text-black/20 uppercase">NLP</span>
                     <span class="w-3 h-3 rounded-full bg-cyan-glow light:bg-orange-accent"></span>
-                    <span class="text-4xl md:text-6xl font-display font-bold text-white/5 light:text-black/5 uppercase">Generative AI</span>
+                    <span class="text-3xl md:text-5xl font-display font-bold text-white/5 light:text-black/5 uppercase">Generative AI</span>
                     <span class="w-3 h-3 rounded-full bg-cyan-glow light:bg-orange-accent"></span>
-                    <span class="text-4xl md:text-6xl font-display font-bold text-white/20 light:text-black/20 uppercase">Analytics</span>
+                    <span class="text-3xl md:text-5xl font-display font-bold text-white/20 light:text-black/20 uppercase">Analytics</span>
                     <span class="w-3 h-3 rounded-full bg-cyan-glow light:bg-orange-accent"></span>
                     
                     <!-- Content Set 2 -->
-                    <span class="text-4xl md:text-6xl font-display font-bold text-white/5 light:text-black/5 uppercase">Machine Learning</span>
+                    <span class="text-3xl md:text-5xl font-display font-bold text-white/5 light:text-black/5 uppercase">Machine Learning</span>
                     <span class="w-3 h-3 rounded-full bg-cyan-glow light:bg-orange-accent"></span>
-                    <span class="text-4xl md:text-6xl font-display font-bold text-white/20 light:text-black/20 uppercase">Data Science</span>
+                    <span class="text-3xl md:text-5xl font-display font-bold text-white/20 light:text-black/20 uppercase">Data Science</span>
                     <span class="w-3 h-3 rounded-full bg-cyan-glow light:bg-orange-accent"></span>
-                    <span class="text-4xl md:text-6xl font-display font-bold text-white/5 light:text-black/5 uppercase">Computer Vision</span>
+                    <span class="text-3xl md:text-5xl font-display font-bold text-white/5 light:text-black/5 uppercase">Computer Vision</span>
                     <span class="w-3 h-3 rounded-full bg-cyan-glow light:bg-orange-accent"></span>
-                    <span class="text-4xl md:text-6xl font-display font-bold text-white/20 light:text-black/20 uppercase">NLP</span>
+                    <span class="text-3xl md:text-5xl font-display font-bold text-white/20 light:text-black/20 uppercase">NLP</span>
                     <span class="w-3 h-3 rounded-full bg-cyan-glow light:bg-orange-accent"></span>
-                    <span class="text-4xl md:text-6xl font-display font-bold text-white/5 light:text-black/5 uppercase">Generative AI</span>
+                    <span class="text-3xl md:text-5xl font-display font-bold text-white/5 light:text-black/5 uppercase">Generative AI</span>
                     <span class="w-3 h-3 rounded-full bg-cyan-glow light:bg-orange-accent"></span>
-                    <span class="text-4xl md:text-6xl font-display font-bold text-white/20 light:text-black/20 uppercase">Analytics</span>
+                    <span class="text-3xl md:text-5xl font-display font-bold text-white/20 light:text-black/20 uppercase">Analytics</span>
                     <span class="w-3 h-3 rounded-full bg-cyan-glow light:bg-orange-accent"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROOF SECTION -->
+    <section id="proof" class="py-16 px-4 bg-[#0a0a0a] light:bg-cream border-b border-white/5 light:border-black/5">
+        <div class="max-w-6xl mx-auto">
+            <h3 class="text-center font-mono text-sm uppercase tracking-widest text-sub light:text-gray-500 mb-10">Trusted by Data-Driven Teams</h3>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <!-- Metric 1 -->
+                <div class="text-center group">
+                    <div class="text-3xl md:text-4xl font-display font-bold text-white light:text-black mb-2 group-hover:text-cyan-glow light:group-hover:text-orange-accent transition-colors">
+                        18%
+                    </div>
+                    <div class="text-xs md:text-sm font-mono text-gray-400 light:text-gray-600 uppercase tracking-wide">
+                        Reduced Churn
+                        <span class="block text-[10px] opacity-60 mt-1">Fintech</span>
+                    </div>
+                </div>
+
+                <!-- Metric 2 -->
+                <div class="text-center group">
+                    <div class="text-3xl md:text-4xl font-display font-bold text-white light:text-black mb-2 group-hover:text-cyan-glow light:group-hover:text-orange-accent transition-colors">
+                        22%
+                    </div>
+                    <div class="text-xs md:text-sm font-mono text-gray-400 light:text-gray-600 uppercase tracking-wide">
+                        Forecast Accuracy
+                        <span class="block text-[10px] opacity-60 mt-1">Supply Chain</span>
+                    </div>
+                </div>
+
+                <!-- Metric 3 -->
+                <div class="text-center group">
+                    <div class="text-3xl md:text-4xl font-display font-bold text-white light:text-black mb-2 group-hover:text-cyan-glow light:group-hover:text-orange-accent transition-colors">
+                        40+ hrs
+                    </div>
+                    <div class="text-xs md:text-sm font-mono text-gray-400 light:text-gray-600 uppercase tracking-wide">
+                        Automated / Week
+                        <span class="block text-[10px] opacity-60 mt-1">Healthcare Ops</span>
+                    </div>
+                </div>
+
+                <!-- Metric 4 -->
+                <div class="text-center group">
+                    <div class="text-3xl md:text-4xl font-display font-bold text-white light:text-black mb-2 group-hover:text-cyan-glow light:group-hover:text-orange-accent transition-colors">
+                        3.4x
+                    </div>
+                    <div class="text-xs md:text-sm font-mono text-gray-400 light:text-gray-600 uppercase tracking-wide">
+                        Faster Response
+                        <span class="block text-[10px] opacity-60 mt-1">Cybersecurity</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -695,7 +765,6 @@
                                     Implemented customer segmentation models increasing engagement by 25%. Migrated legacy warehouses to Snowflake.
                                 </p>
                             </div>
-                        </div>
                          <!-- Date (Desktop Right) -->
                          <div class="hidden md:block text-left">
                             <span class="font-mono text-sub light:text-gray-600 text-lg">2020 - 2021</span>
@@ -748,20 +817,39 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[minmax(360px,1fr)]">
-                    <!-- MITRE-CORE -->
+                    <!-- MITRE-CORE (Teaser Version) -->
                     <div class="bento-card h-full min-h-[360px] md:col-span-2 group relative bg-[#111] light:bg-white border border-white/10 light:border-black/10 rounded-3xl overflow-hidden cursor-none">
-                        <div class="absolute inset-0 bg-[url('./assets/mitre-core.png')] bg-cover bg-center opacity-40 group-hover:opacity-30 transition-opacity duration-500 group-hover:scale-105 transform"></div>
-                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent light:from-white light:via-white/80 light:to-transparent"></div>
-                        <div class="absolute bottom-8 left-8 right-8 p-4">
-                            <div class="bg-cyan-glow light:bg-orange-accent text-black light:text-white px-3 py-1 text-xs font-bold uppercase rounded-full inline-block mb-3">AI-Driven Threat Detection</div>
-                            <h3 class="font-display text-3xl md:text-4xl mb-3 text-white light:text-black">MITRE ATT&CK Classification System</h3>
-                            <div class="text-gray-300 light:text-gray-600 max-w-2xl space-y-2 text-sm leading-relaxed">
-                                <p><strong class="text-white light:text-black">Problem:</strong> Security teams faced overwhelming alert volumes with no clear prioritization. Manual threat triage was slow, error-prone, and lacked structured mapping to adversarial techniques.</p>
-                                <p><strong class="text-white light:text-black">Solution:</strong> Built an end-to-end ML pipeline that automatically classifies threats and maps them to MITRE ATT&CK techniques. Designed for explainability, auditability, and production deployment.</p>
-                                <p><strong class="text-white light:text-black">Impact:</strong> Reduced manual analysis effort, enabled faster incident response (300+ events/min), and provided executive-level risk visibility. Production-ready architecture suitable for enterprise security workflows.</p>
+                        <div class="absolute inset-0 bg-[url('./assets/mitre-core.png')] bg-cover bg-center opacity-20 group-hover:opacity-10 transition-opacity duration-500"></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent light:from-white light:via-white/90 light:to-transparent"></div>
+                        
+                        <div class="absolute inset-0 p-8 flex flex-col justify-between">
+                            <!-- Header -->
+                            <div>
+                                <div class="bg-cyan-glow light:bg-orange-accent text-black light:text-white px-3 py-1 text-xs font-bold uppercase rounded-full inline-block mb-4">Enterprise Security</div>
+                                <h3 class="font-display text-3xl md:text-4xl font-bold text-white light:text-black mb-2">Automating Threat Classification</h3>
+                                <p class="text-sm font-mono text-gray-400 light:text-gray-600">Automated threat classification at SOC scale</p>
+                            </div>
+
+                            <!-- Impact Metrics Strip -->
+                            <div class="grid grid-cols-3 gap-4 border-t border-white/10 light:border-black/10 pt-4">
+                                <div>
+                                    <div class="text-2xl font-display font-bold text-cyan-glow light:text-orange-accent">71%</div>
+                                    <div class="text-[10px] text-gray-500 uppercase">Reduction in Triage Time</div>
+                                </div>
+                                <div>
+                                    <div class="text-2xl font-display font-bold text-cyan-glow light:text-orange-accent">5k+</div>
+                                    <div class="text-[10px] text-gray-500 uppercase">Daily Auto-Classified</div>
+                                </div>
+                                <div>
+                                    <div class="text-2xl font-display font-bold text-cyan-glow light:text-orange-accent">3.4x</div>
+                                    <div class="text-[10px] text-gray-500 uppercase">Faster Response</div>
+                                </div>
                             </div>
                         </div>
-                        <a href="https://github.com/rahulsingh1397/Mitre-Core" target="_blank" class="absolute top-6 right-6 w-12 h-12 border border-white/20 light:border-black/20 rounded-full flex items-center justify-center group-hover:bg-white group-hover:text-black light:group-hover:bg-black light:group-hover:text-white transition-all text-white light:text-black">↗</a>
+
+                        <a href="https://github.com/rahulsingh1397/Mitre-Core" target="_blank" class="absolute bottom-8 right-8 px-6 py-2 border border-white/20 light:border-black/20 rounded-full flex items-center gap-2 group-hover:bg-white group-hover:text-black light:group-hover:bg-black light:group-hover:text-white transition-all text-white light:text-black z-20 font-mono text-xs">
+                            View Case Study ↗
+                        </a>
                     </div>
 
                     <!-- AI Compliance -->
@@ -913,6 +1001,35 @@
                 </div>
             </section>
 
+            <!-- QUALIFICATION FILTER SECTION -->
+            <section id="best-fit" class="py-24 px-4 bg-[#050505] light:bg-[#F4F2E9] border-t border-white/5 light:border-black/5">
+                <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <!-- Best Fit -->
+                    <div class="p-8 rounded-3xl bg-[#111]/40 light:bg-white/40 border border-cyan-glow/10 light:border-orange-accent/10">
+                        <h2 class="font-display text-2xl font-bold text-white light:text-black mb-6 flex items-center gap-3">
+                            <span class="text-cyan-glow light:text-orange-accent">✓</span> Best fit if you are:
+                        </h2>
+                        <ul class="space-y-4 font-mono text-sm text-gray-400 light:text-gray-600">
+                            <li class="flex gap-3"><span class="text-cyan-glow light:text-orange-accent">▹</span> A data-rich company with real operational problems</li>
+                            <li class="flex gap-3"><span class="text-cyan-glow light:text-orange-accent">▹</span> A team moving ML models into production at scale</li>
+                            <li class="flex gap-3"><span class="text-cyan-glow light:text-orange-accent">▹</span> A regulated or risk-sensitive business (Fintech/Health/Sec)</li>
+                        </ul>
+                    </div>
+
+                    <!-- Not a Fit -->
+                    <div class="p-8 rounded-3xl bg-[#111]/20 light:bg-black/5 border border-white/5 light:border-black/5 opacity-80">
+                        <h2 class="font-display text-2xl font-bold text-white light:text-black mb-6 flex items-center gap-3 opacity-60">
+                            <span class="text-red-500/50">×</span> Not a fit if you need:
+                        </h2>
+                        <ul class="space-y-4 font-mono text-sm text-gray-500 light:text-gray-500">
+                            <li class="flex gap-3"><span>▹</span> One-off dashboards or basic reporting</li>
+                            <li class="flex gap-3"><span>▹</span> Academic demos or "notebook-only" projects</li>
+                            <li class="flex gap-3"><span>▹</span> Organizations "just experimenting" without a goal</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
             <!-- CTA SECTION -->
             <section id="cta" class="py-24 px-4 bg-[#0a0a0a] light:bg-cream relative overflow-hidden">
                 <div class="max-w-4xl mx-auto text-center relative z-10">
@@ -933,20 +1050,41 @@
             </section>
 
             <!-- FOOTER -->
-            <section id="contact" class="h-[70vh] flex flex-col justify-center items-center bg-[#0a0a0a] light:bg-cream text-white light:text-void relative overflow-hidden border-t border-white/10 light:border-black/10 transition-colors duration-500">
-                <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiLz48L3N2Zz4=')] light:bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMCwwLDAsMC4wNSkiLz48L3N2Zz4=')]"></div>
-                
-                <h2 class="font-display text-[10vw] leading-none mb-8 text-center opacity-80 text-white light:text-void">
-                    LET'S<br>BUILD
-                </h2>
-                
-                <div class="flex gap-6 z-10 mb-24 md:mb-0">
-                    <a href="mailto:contact@rahulai.com" class="px-8 py-4 bg-white text-black light:bg-void light:text-cream rounded-full font-bold text-lg hover:bg-cyan-glow light:hover:bg-orange-accent transition-colors hover:scale-110 transform duration-200">
-                        Email Me
-                    </a>
-                    <a href="https://calendly.com" class="px-8 py-4 border-2 border-white light:border-void text-white light:text-void rounded-full font-bold text-lg hover:bg-white hover:text-black light:hover:bg-void light:hover:text-cream transition-colors">
-                        Book a Call
-                    </a>
+            <section id="contact" class="py-24 px-4 bg-[#050505] light:bg-[#F4F2E9] border-t border-white/10 light:border-black/10 relative overflow-hidden">
+                <div class="max-w-6xl mx-auto">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-16 mb-24">
+                        <div>
+                            <h2 class="font-display text-5xl md:text-7xl font-bold text-white light:text-black mb-8 leading-tight">
+                                Ready to <span class="text-cyan-glow light:text-orange-accent">Scale?</span>
+                            </h2>
+                            <p class="text-gray-400 light:text-gray-600 text-lg max-w-md leading-relaxed">
+                                I help companies move from "AI curiosity" to production systems that actually drive revenue and reduce risk.
+                            </p>
+                        </div>
+                        <div class="flex flex-col justify-center items-start gap-6">
+                            <a href="mailto:contact@rahulai.com" class="text-2xl md:text-3xl font-display font-bold text-white light:text-black hover:text-cyan-glow light:hover:text-orange-accent transition-colors flex items-center gap-4 group">
+                                <span>contact@rahulai.com</span>
+                                <span class="opacity-0 group-hover:opacity-100 transition-opacity text-lg">↗</span>
+                            </a>
+                            <div class="flex gap-4">
+                                <a href="https://calendly.com" target="_blank" class="px-8 py-4 bg-cyan-glow text-black rounded-full font-bold hover:scale-105 transition-transform light:bg-orange-accent light:text-white">
+                                    Book Strategy Call
+                                </a>
+                                <a href="mailto:contact@rahulai.com" class="px-8 py-4 border border-white/20 light:border-black/20 text-white light:text-black rounded-full font-bold hover:bg-white/10 light:hover:bg-black/5 transition-colors">
+                                    Email Instead
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="border-t border-white/10 light:border-black/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-6 text-sm font-mono text-sub light:text-gray-500">
+                        <div class="flex gap-8">
+                            <a href="https://linkedin.com" target="_blank" class="hover:text-cyan-glow light:hover:text-orange-accent transition-colors">LinkedIn</a>
+                            <a href="https://github.com/rahulsingh1397" target="_blank" class="hover:text-cyan-glow light:hover:text-orange-accent transition-colors">GitHub</a>
+                            <a href="#" class="hover:text-cyan-glow light:hover:text-orange-accent transition-colors">Privacy Policy</a>
+                        </div>
+                        <p>&copy; 2024 Rahul Singh. All rights reserved.</p>
+                    </div>
                 </div>
             </section>
     
@@ -1483,9 +1621,9 @@
             scene.add(spotlight);
             scene.add(spotlight.target);
 
-            // Side view camera position matching reference
-            camera.position.set(45, 10, 1);
-            camera.lookAt(10, 12, 5);
+            // Side view camera position matching reference - Zoomed out for better visibility
+            camera.position.set(65, 20, 1);
+            camera.lookAt(0, 5, 0);
 
             const loader = new GLTFLoader();
             let annModel;
@@ -2304,13 +2442,24 @@
             }
             
             try {
-                initParticles();
+                // Critical Initializations (Hero & basic interactivity)
                 initRoboticEye();
-                initANN();
-                initExperienceString();
-                initSkillUniverse();
                 initCounters();
-                initBlog(); // Initialize blogs
+                
+                // Defer heavy 3D/Canvas elements until after first paint/idle
+                const loadDeferredContent = () => {
+                    initParticles();
+                    initANN();
+                    initExperienceString();
+                    initSkillUniverse();
+                    initBlog();
+                };
+
+                if ('requestIdleCallback' in window) {
+                    requestIdleCallback(loadDeferredContent, { timeout: 2000 });
+                } else {
+                    setTimeout(loadDeferredContent, 100);
+                }
                 
                 if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
                     initGSAP();
