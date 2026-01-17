@@ -114,6 +114,28 @@
             opacity: 0.8;
         }
 
+        /* Active Nav Link - Glass Effect */
+        .nav-link {
+            position: relative;
+            padding: 0.5rem 0.75rem;
+            border-radius: 9999px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link.active {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--primary) !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="light"] .nav-link.active {
+            background: rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            color: var(--primary) !important;
+        }
+
         /* Custom Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
@@ -157,7 +179,7 @@
             text-transform: uppercase;
             letter-spacing: 3px;
             box-shadow: 0 0 15px rgba(0, 245, 255, 0.3);
-            text-shadow: 0 0 10px rgba(0, 245, 255, 0.5);
+            text-shadow: 0 0 5px rgba(0, 245, 255, 1.0), 0 0 20px rgba(0, 245, 255, 0.5);
             font-family: 'JetBrains Mono', monospace;
             font-weight: bold;
             transform: rotate(-1deg);
@@ -167,7 +189,7 @@
 
         [data-theme="light"] .chalk-border {
             box-shadow: 0 0 15px rgba(175, 92, 0, 0.3);
-            text-shadow: 0 0 10px rgba(175, 92, 0, 0.5);
+            text-shadow: 0 0 5px rgba(175, 92, 0, 1.0), 0 0 20px rgba(175, 92, 0, 0.5);
             background: rgba(244, 242, 233, 0.9);
             color: var(--primary);
         }
@@ -365,12 +387,12 @@
     <!-- Floating Nav -->
     <nav class="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-md">
         <div class="glass-nav bg-[#111]/80 backdrop-blur-xl border border-white/10 rounded-full px-6 py-4 flex items-center justify-between shadow-2xl transition-colors duration-300 dark:bg-[#111]/80 dark:border-white/10 light:bg-[#F4F2E9]/80 light:border-black/10">
-            <a href="#home" class="nav-link text-sm font-medium hover:text-cyan-glow light:hover:text-orange-accent transition-colors dark:text-gray-300 light:text-gray-800">Home</a>
-            <a href="#about" class="nav-link text-sm font-medium hover:text-cyan-glow light:hover:text-orange-accent transition-colors dark:text-gray-300 light:text-gray-800">About</a>
-            <a href="#experience" class="nav-link text-sm font-medium hover:text-cyan-glow light:hover:text-orange-accent transition-colors dark:text-gray-300 light:text-gray-800">Journey</a>
-            <a href="#skills" class="nav-link text-sm font-medium hover:text-cyan-glow light:hover:text-orange-accent transition-colors dark:text-gray-300 light:text-gray-800">Skills</a>
-            <a href="#work" class="nav-link text-sm font-medium hover:text-cyan-glow light:hover:text-orange-accent transition-colors dark:text-gray-300 light:text-gray-800">Work</a>
-            <a href="#blog" class="nav-link text-sm font-medium hover:text-cyan-glow light:hover:text-orange-accent transition-colors dark:text-gray-300 light:text-gray-800">Blog</a>
+            <a href="#home" class="nav-link text-xs md:text-sm font-medium hover:text-cyan-glow light:hover:text-orange-accent transition-colors dark:text-gray-300 light:text-gray-800">Home</a>
+            <a href="#about" class="nav-link text-xs md:text-sm font-medium hover:text-cyan-glow light:hover:text-orange-accent transition-colors dark:text-gray-300 light:text-gray-800">About</a>
+            <a href="#experience" class="nav-link text-xs md:text-sm font-medium hover:text-cyan-glow light:hover:text-orange-accent transition-colors dark:text-gray-300 light:text-gray-800">Journey</a>
+            <a href="#skills" class="nav-link text-xs md:text-sm font-medium hover:text-cyan-glow light:hover:text-orange-accent transition-colors dark:text-gray-300 light:text-gray-800">Skills</a>
+            <a href="#work" class="nav-link text-xs md:text-sm font-medium hover:text-cyan-glow light:hover:text-orange-accent transition-colors dark:text-gray-300 light:text-gray-800">Work</a>
+            <a href="#blog" class="nav-link text-xs md:text-sm font-medium hover:text-cyan-glow light:hover:text-orange-accent transition-colors dark:text-gray-300 light:text-gray-800">Blog</a>
             <button id="themeToggle" class="p-2 rounded-full hover:bg-white/10 light:hover:bg-black/5 transition-colors" aria-label="Toggle Theme">
                 <span class="dark:block hidden">☀️</span>
                 <span class="dark:hidden block">🌙</span>
@@ -384,11 +406,11 @@
         <div id="robotic-eye-container" class="absolute inset-0 w-full h-full z-[1]"></div>
         
         <div class="hero-content relative z-[20] text-center pointer-events-none dark:mix-blend-exclusion px-4 mt-[15vh] md:mt-[10vh]">
-            <div class="chalk-border mb-6 pointer-events-auto cursor-default tracking-widest [word-spacing:0.5em] glitch px-6 py-1.5 text-sm" data-text="APPLIED AI & DECISION SYSTEMS">
-                APPLIED AI & DECISION SYSTEMS
+            <div class="chalk-border mb-6 pointer-events-auto cursor-default tracking-widest [word-spacing:0.5em] glitch px-6 py-1.5 text-sm" data-text="Applied AI & Decision Systems">
+                Applied AI & Decision Systems
             </div>
             <h1 class="font-display text-[5vw] md:text-[4vw] leading-[1.1] font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-white to-gray-400 dark:from-white dark:to-gray-400 light:from-black light:to-gray-700 drop-shadow-2xl max-w-5xl mx-auto">
-                I help companies turn messy data into
+                I help companies turn messy data into<br>
                 <span class="text-cyan-glow italic font-light light:text-orange-accent tracking-normal">confident, automated decisions.</span>
             </h1>
             <div class="font-mono mt-6 text-sub light:text-gray-600 max-w-2xl mx-auto text-sm md:text-base leading-relaxed tracking-wide space-y-2">
@@ -1062,15 +1084,15 @@
                             </p>
                         </div>
                         <div class="flex flex-col justify-center items-start gap-6">
-                            <a href="mailto:contact@rahulai.com" class="text-2xl md:text-3xl font-display font-bold text-white light:text-black hover:text-cyan-glow light:hover:text-orange-accent transition-colors flex items-center gap-4 group">
-                                <span>contact@rahulai.com</span>
+                            <a href="mailto:rahul.rs1397@gmail.com" class="text-2xl md:text-3xl font-display font-bold text-white light:text-black hover:text-cyan-glow light:hover:text-orange-accent transition-colors flex items-center gap-4 group">
+                                <span>rahul.rs1397@gmail.com</span>
                                 <span class="opacity-0 group-hover:opacity-100 transition-opacity text-lg">↗</span>
                             </a>
                             <div class="flex gap-4">
                                 <a href="https://calendly.com" target="_blank" class="px-8 py-4 bg-cyan-glow text-black rounded-full font-bold hover:scale-105 transition-transform light:bg-orange-accent light:text-white">
                                     Book Strategy Call
                                 </a>
-                                <a href="mailto:contact@rahulai.com" class="px-8 py-4 border border-white/20 light:border-black/20 text-white light:text-black rounded-full font-bold hover:bg-white/10 light:hover:bg-black/5 transition-colors">
+                                <a href="mailto:rahul.rs1397@gmail.com" class="px-8 py-4 border border-white/20 light:border-black/20 text-white light:text-black rounded-full font-bold hover:bg-white/10 light:hover:bg-black/5 transition-colors">
                                     Email Instead
                                 </a>
                             </div>
@@ -1083,7 +1105,7 @@
                             <a href="https://github.com/rahulsingh1397" target="_blank" class="hover:text-cyan-glow light:hover:text-orange-accent transition-colors">GitHub</a>
                             <a href="#" class="hover:text-cyan-glow light:hover:text-orange-accent transition-colors">Privacy Policy</a>
                         </div>
-                        <p>&copy; 2024 Rahul Singh. All rights reserved.</p>
+                        <p>&copy; 2026 Rahul Singh. All rights reserved.</p>
                     </div>
                 </div>
             </section>
@@ -1347,9 +1369,9 @@
                 clearTimeout(modelTimeout);
                 console.log('Robotic Eye Loaded Successfully');
                 eyeModel = gltf.scene;
-                eyeModel.scale.set(75, 75, 75); 
-                // Position model up to sit above text
-                eyeModel.position.set(0, 15, 0);
+                eyeModel.scale.set(60, 60, 60); 
+                // Position model slightly above text (20% lower than previous 22.5)
+                eyeModel.position.set(0, 18, 0);
                 
                 // Detailed material application from production
                 eyeModel.traverse((child) => {
@@ -1501,6 +1523,33 @@
                 }
             };
 
+            // --- NAVIGATION ACTIVE STATE OBSERVER ---
+            const observerOptions = {
+                root: null,
+                rootMargin: '-20% 0px -20% 0px', // Trigger when section is largely in view
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Get id
+                        const id = entry.target.getAttribute('id');
+                        // Find link
+                        document.querySelectorAll('.nav-link').forEach(link => {
+                            link.classList.remove('active');
+                            if(link.getAttribute('href') === '#' + id) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('section').forEach(section => {
+                observer.observe(section);
+            });
+
             const onClick = () => {
                 if (isScanning) return;
                 isScanning = true;
@@ -1558,7 +1607,7 @@
                     eyeModel.rotation.y = currentRotationY;
 
                     // Subtle breathing/floating animation
-                    eyeModel.position.y = 15 + Math.sin(Date.now() * 0.001) * 0.2;
+                    eyeModel.position.y = 18 + Math.sin(Date.now() * 0.001) * 0.2;
                 }
                 
                 renderer.render(scene, camera);
@@ -2358,7 +2407,7 @@
                     this.vx = (Math.random() - 0.5) * 0.5;
                     this.vy = (Math.random() - 0.5) * 0.5;
                     this.size = Math.random() * 2;
-                    this.alpha = Math.random() * 0.5;
+                    this.alpha = Math.random() * 0.25;
                 }
                 update() {
                     this.x += this.vx;
@@ -2368,8 +2417,21 @@
                 draw() {
                     const isLight = document.body.getAttribute('data-theme') === 'light';
                     ctx.fillStyle = isLight ? `rgba(175, 92, 0, ${this.alpha})` : `rgba(0, 245, 255, ${this.alpha})`;
+                    
+                    // Increase size near center (Headline Zone)
+                    const centerX = width / 2;
+                    const centerY = height / 2;
+                    const distX = Math.abs(this.x - centerX);
+                    const distY = Math.abs(this.y - centerY);
+                    
+                    let drawSize = this.size;
+                    // If within 300px horizontally and 150px vertically of center
+                    if (distX < 300 && distY < 150) {
+                        drawSize = this.size * 1.8;
+                    }
+
                     ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.arc(this.x, this.y, drawSize, 0, Math.PI * 2);
                     ctx.fill();
                 }
             }
