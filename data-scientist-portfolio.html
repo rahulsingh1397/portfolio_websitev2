@@ -120,6 +120,7 @@
             padding: 0.5rem 0.75rem;
             border-radius: 9999px;
             transition: all 0.3s ease;
+            white-space: nowrap;
         }
 
         .nav-link.active {
@@ -134,6 +135,126 @@
             background: rgba(0, 0, 0, 0.05);
             border: 1px solid rgba(0, 0, 0, 0.05);
             color: var(--primary) !important;
+        }
+
+        /* Navigation Responsive Fixes */
+        .glass-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+            flex-wrap: nowrap;
+            max-width: 100%;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        
+        .glass-nav::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Large tablets and small desktops (769px - 1024px) */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .glass-nav {
+                padding: 0.75rem 1.5rem !important;
+                gap: 0.75rem;
+            }
+            
+            .nav-link {
+                padding: 0.5rem 0.75rem;
+                font-size: 0.8rem;
+                flex-shrink: 0;
+            }
+            
+            #themeToggle {
+                padding: 0.5rem;
+                flex-shrink: 0;
+            }
+        }
+
+        /* Tablets and medium screens (481px - 768px) */
+        @media (max-width: 768px) {
+            .glass-nav {
+                padding: 0.4rem 0.75rem !important;
+                gap: 0.35rem;
+                justify-content: flex-start;
+            }
+            
+            .nav-link {
+                padding: 0.35rem 0.5rem;
+                font-size: 0.65rem;
+                flex-shrink: 0;
+                white-space: nowrap;
+            }
+            
+            #themeToggle {
+                padding: 0.35rem;
+                flex-shrink: 0;
+                margin-left: 0.25rem;
+            }
+        }
+
+        /* Small mobile - iPhone XR and similar (390px - 480px) */
+        @media (max-width: 480px) {
+            .glass-nav {
+                padding: 0.35rem 0.6rem !important;
+                gap: 0.25rem;
+                justify-content: flex-start;
+            }
+            
+            .nav-link {
+                padding: 0.3rem 0.45rem;
+                font-size: 0.6rem;
+                flex-shrink: 0;
+                letter-spacing: -0.02em;
+            }
+            
+            #themeToggle {
+                padding: 0.3rem;
+                flex-shrink: 0;
+                margin-left: 0.2rem;
+                font-size: 0.75rem;
+            }
+        }
+        
+        /* Extra small screens - iPhone SE and smaller (< 390px) */
+        @media (max-width: 389px) {
+            .glass-nav {
+                padding: 0.3rem 0.5rem !important;
+                gap: 0.2rem;
+            }
+            
+            .nav-link {
+                padding: 0.25rem 0.35rem;
+                font-size: 0.55rem;
+                letter-spacing: -0.03em;
+            }
+            
+            #themeToggle {
+                padding: 0.25rem;
+                margin-left: 0.15rem;
+                font-size: 0.7rem;
+            }
+        }
+        
+        /* Tiny screens (< 360px) */
+        @media (max-width: 359px) {
+            .glass-nav {
+                padding: 0.25rem 0.4rem !important;
+                gap: 0.15rem;
+            }
+            
+            .nav-link {
+                padding: 0.2rem 0.3rem;
+                font-size: 0.5rem;
+                letter-spacing: -0.04em;
+            }
+            
+            #themeToggle {
+                padding: 0.2rem;
+                margin-left: 0.1rem;
+                font-size: 0.65rem;
+            }
         }
 
         /* Custom Scrollbar */
@@ -335,13 +456,38 @@
 
         /* Bento Grid */
         .bento-card {
+            position: relative;
+            overflow: hidden;
             transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            --reveal-overlay: -130%;
+            --reveal-delay: 0ms;
         }
+        .bento-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(115deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.02) 55%, transparent 80%);
+            transform: translate3d(var(--reveal-overlay), 0, 0);
+            opacity: 0.75;
+            mix-blend-mode: screen;
+            pointer-events: none;
+            transition: transform 1s cubic-bezier(0.23, 1, 0.32, 1);
+            transition-delay: var(--reveal-delay);
+        }
+        [data-theme="light"] .bento-card::after {
+            background: linear-gradient(115deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.01) 55%, transparent 80%);
+            mix-blend-mode: multiply;
+        }
+        .bento-card.is-visible {
+            --reveal-overlay: 130%;
+        }
+        
         .bento-card:hover {
             transform: translateY(-4px) scale(1.01);
             border-color: var(--primary);
             box-shadow: 0 20px 40px -10px rgba(0, 245, 255, 0.1);
         }
+
         [data-theme="light"] .bento-card:hover {
             box-shadow: 0 20px 40px -10px rgba(175, 92, 0, 0.15);
         }
@@ -385,15 +531,15 @@
     <div id="debug-overlay"></div>
 
     <!-- Floating Nav -->
-    <nav class="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-md">
+    <nav class="fixed bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 z-50 w-[98%] sm:w-[96%] md:w-[90%] max-w-3xl">
         <div class="glass-nav bg-[#111]/80 backdrop-blur-xl border border-white/10 rounded-full px-6 py-4 flex items-center justify-between shadow-2xl transition-colors duration-300 dark:bg-[#111]/80 dark:border-white/10 light:bg-[#F4F2E9]/80 light:border-black/10">
-            <a href="#home" class="nav-link text-xs md:text-sm font-medium hover:text-cyan-glow light:hover:text-orange-accent transition-colors dark:text-gray-300 light:text-gray-800">Home</a>
-            <a href="#about" class="nav-link text-xs md:text-sm font-medium hover:text-cyan-glow light:hover:text-orange-accent transition-colors dark:text-gray-300 light:text-gray-800">About</a>
-            <a href="#experience" class="nav-link text-xs md:text-sm font-medium hover:text-cyan-glow light:hover:text-orange-accent transition-colors dark:text-gray-300 light:text-gray-800">Journey</a>
-            <a href="#skills" class="nav-link text-xs md:text-sm font-medium hover:text-cyan-glow light:hover:text-orange-accent transition-colors dark:text-gray-300 light:text-gray-800">Skills</a>
-            <a href="#work" class="nav-link text-xs md:text-sm font-medium hover:text-cyan-glow light:hover:text-orange-accent transition-colors dark:text-gray-300 light:text-gray-800">Work</a>
-            <a href="#blog" class="nav-link text-xs md:text-sm font-medium hover:text-cyan-glow light:hover:text-orange-accent transition-colors dark:text-gray-300 light:text-gray-800">Blog</a>
-            <button id="themeToggle" class="p-2 rounded-full hover:bg-white/10 light:hover:bg-black/5 transition-colors" aria-label="Toggle Theme">
+            <a href="#home" class="nav-link text-sm font-medium hover:text-cyan-glow light:hover:text-orange-accent transition-colors dark:text-gray-300 light:text-gray-800">Home</a>
+            <a href="#about" class="nav-link text-sm font-medium hover:text-cyan-glow light:hover:text-orange-accent transition-colors dark:text-gray-300 light:text-gray-800">About</a>
+            <a href="#experience" class="nav-link text-sm font-medium hover:text-cyan-glow light:hover:text-orange-accent transition-colors dark:text-gray-300 light:text-gray-800">Journey</a>
+            <a href="#skills" class="nav-link text-sm font-medium hover:text-cyan-glow light:hover:text-orange-accent transition-colors dark:text-gray-300 light:text-gray-800">Skills</a>
+            <a href="#work" class="nav-link text-sm font-medium hover:text-cyan-glow light:hover:text-orange-accent transition-colors dark:text-gray-300 light:text-gray-800">Work</a>
+            <a href="#blog" class="nav-link text-sm font-medium hover:text-cyan-glow light:hover:text-orange-accent transition-colors dark:text-gray-300 light:text-gray-800">Blog</a>
+            <button id="themeToggle" class="p-2 rounded-full hover:bg-white/10 light:hover:bg-black/5 transition-colors flex-shrink-0" aria-label="Toggle Theme">
                 <span class="dark:block hidden">☀️</span>
                 <span class="dark:hidden block">🌙</span>
             </button>
@@ -434,7 +580,7 @@
             <div class="mt-8 flex flex-col items-center gap-4 pointer-events-auto">
                 <div class="flex flex-col md:flex-row gap-4 justify-center items-center">
                     <a href="#work" class="px-8 py-4 bg-cyan-glow text-black rounded-full font-bold hover:scale-105 transition-transform light:bg-orange-accent light:text-white shadow-lg shadow-cyan-glow/20 light:shadow-orange-accent/20 text-center w-full md:w-auto">View Real-World Case Studies</a>
-                    <a href="https://calendly.com" target="_blank" class="px-8 py-4 border border-white/20 rounded-full font-bold hover:bg-white/10 transition-all light:border-black/20 light:hover:bg-black/5 bg-black/20 backdrop-blur-sm light:bg-white/20 text-center w-full md:w-auto">Talk Through a Real Problem (15 min)</a>
+                    <a href="https://calendly.com/rahul-rs1397/30min" target="_blank" class="px-8 py-4 border border-white/20 rounded-full font-bold hover:bg-white/10 transition-all light:border-black/20 light:hover:bg-black/5 bg-black/20 backdrop-blur-sm light:bg-white/20 text-center w-full md:w-auto">Talk Through a Real Problem (30 min)</a>
                 </div>
                 <p class="text-xs text-gray-500 light:text-gray-600 max-w-md text-center font-mono mt-2">
                     No sales pitch. We’ll sanity-check if AI even makes sense.
@@ -2276,14 +2422,186 @@
             });
         };
 
-        // --- 10. GSAP ANIMATIONS ---
+        // --- 10. CREATIVE INTERACTIONS ---
+        const initCreative = () => {
+            document.querySelectorAll('a.px-6, a.px-8, button, .nav-link').forEach(btn => {
+                btn.addEventListener('mousemove', (e) => {
+                    const rect = btn.getBoundingClientRect();
+                    const x = e.clientX - rect.left - rect.width / 2;
+                    const y = e.clientY - rect.top - rect.height / 2;
+                    gsap.to(btn, { x: x * 0.3, y: y * 0.3, duration: 0.3, ease: 'power2.out' });
+                });
+                btn.addEventListener('mouseleave', () => {
+                    gsap.to(btn, { x: 0, y: 0, duration: 0.8, ease: 'elastic.out(1, 0.3)' });
+                });
+            });
+
+            document.querySelectorAll('.bento-card, #blog article, #achievements .group, #experience .group, .profile-tilt').forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left; 
+                    const y = e.clientY - rect.top;
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    const rotateX = ((y - centerY) / centerY) * -5;
+                    const rotateY = ((x - centerX) / centerX) * 5;
+
+                    gsap.to(card, {
+                        transform: `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`,
+                        duration: 0.4, ease: 'power2.out'
+                    });
+                });
+                card.addEventListener('mouseleave', () => {
+                    gsap.to(card, {
+                        transform: 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)',
+                        duration: 0.8, ease: 'elastic.out(1, 0.7)'
+                    });
+                });
+            });
+        };
+
+        // --- 11. WORK SECTION REVEAL ---
+        const initWorkReveal = () => {
+            const workCards = document.querySelectorAll('#work .bento-card');
+            if (!workCards.length || typeof IntersectionObserver === 'undefined') return;
+
+            workCards.forEach((card, index) => {
+                card.style.setProperty('--reveal-delay', `${index * 70}ms`);
+            });
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                    } else {
+                        entry.target.classList.remove('is-visible');
+                    }
+                });
+            }, {
+                threshold: 0.35,
+                rootMargin: '0px 0px -10% 0px'
+            });
+
+            workCards.forEach(card => observer.observe(card));
+        };
+
+        // --- 12. PARTICLE BACKGROUND ---
+        const initParticles = () => {
+            const canvas = document.createElement('canvas');
+            const container = document.getElementById('particles-js');
+            if(!container) return;
+            container.appendChild(canvas);
+            const ctx = canvas.getContext('2d');
+
+            let particles = [];
+            let width, height;
+
+            const resize = () => {
+                width = window.innerWidth;
+                height = window.innerHeight;
+                canvas.width = width;
+                canvas.height = height;
+            };
+
+            class Particle {
+                constructor() {
+                    this.reset();
+                }
+                reset() {
+                    this.x = Math.random() * width;
+                    this.y = Math.random() * height;
+                    this.vx = (Math.random() - 0.5) * 0.5;
+                    this.vy = (Math.random() - 0.5) * 0.5;
+                    this.size = Math.random() * 2;
+                    this.alpha = Math.random() * 0.25;
+                }
+                update() {
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    if(this.x < 0 || this.x > width || this.y < 0 || this.y > height) this.reset();
+                }
+                draw() {
+                    const isLight = document.body.getAttribute('data-theme') === 'light';
+                    ctx.fillStyle = isLight ? `rgba(175, 92, 0, ${this.alpha})` : `rgba(0, 245, 255, ${this.alpha})`;
+                    
+                    let drawSize = this.size;
+                    const centerX = width / 2;
+                    const centerY = height / 2;
+                    const distX = Math.abs(this.x - centerX);
+                    const distY = Math.abs(this.y - centerY);
+                    
+                    if (distX < 300 && distY < 150) {
+                        drawSize = this.size * 1.8;
+                    }
+
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, drawSize, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+
+            const init = () => {
+                resize();
+                particles = [];
+                for(let i=0; i<100; i++) particles.push(new Particle());
+            };
+
+            const animate = () => {
+                ctx.clearRect(0, 0, width, height);
+                particles.forEach(p => {
+                    p.update();
+                    p.draw();
+                });
+                requestAnimationFrame(animate);
+            };
+
+            window.addEventListener('resize', resize);
+            init();
+            animate();
+        };
+
+        // --- 13. DYNAMIC BLOG LOADING ---
+        const initBlog = async () => {
+            const blogContainer = document.querySelector('#blog .grid');
+            if (!blogContainer) return;
+
+            try {
+                const response = await fetch('blogs/blogs.json');
+                const data = await response.json();
+                const blogs = data.blogs.slice(0, 3);
+
+                blogContainer.innerHTML = blogs.map(blog => `
+                    <article class="group cursor-pointer" onclick="window.location.href='blogs/${blog.slug}.html'">
+                        <div class="aspect-[4/3] bg-[#111] light:bg-white rounded-2xl overflow-hidden relative mb-6 border border-white/10 light:border-black/10">
+                            ${blog.thumbnail ? 
+                                `<img src="${blog.thumbnail}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-60 group-hover:opacity-100" alt="${blog.title}">` :
+                                `<div class="w-full h-full flex items-center justify-center text-6xl opacity-40 group-hover:opacity-100 transition-opacity">${blog.icon || '📝'}</div>`
+                            }
+                            <div class="absolute top-4 left-4 bg-black/50 backdrop-blur-md px-3 py-1 rounded-full text-xs border border-white/20 text-white">${blog.tags[0]}</div>
+                        </div>
+                        <div class="flex items-center gap-4 text-xs text-sub light:text-gray-500 mb-3 font-mono">
+                            <span>${blog.date}</span>
+                            <span>${blog.readTime}</span>
+                        </div>
+                        <h3 class="font-display text-2xl font-bold text-white light:text-black mb-2 group-hover:text-cyan-glow light:group-hover:text-orange-accent transition-colors">${blog.title}</h3>
+                        <p class="text-sub light:text-gray-600 line-clamp-2">${blog.excerpt}</p>
+                    </article>
+                `).join('');
+
+                if (typeof initCreative === 'function') initCreative();
+                
+            } catch (error) {
+                console.error('Error loading blogs:', error);
+            }
+        };
+
+        // --- 14. GSAP ANIMATIONS ---
         const initGSAP = () => {
             gsap.registerPlugin(ScrollTrigger);
             
             // Force refresh after a small delay to ensure DOM is ready
             setTimeout(() => ScrollTrigger.refresh(), 500);
 
-            // Hero Animation
             const tl = gsap.timeline();
             tl.from('.hero-content > *', {
                 y: 50, opacity: 0, duration: 1, stagger: 0.2, ease: "power3.out", delay: 0.2
@@ -2341,157 +2659,6 @@
             });
         };
 
-        // --- 11. CREATIVE INTERACTIONS ---
-        const initCreative = () => {
-            document.querySelectorAll('a.px-6, a.px-8, button, .nav-link').forEach(btn => {
-                btn.addEventListener('mousemove', (e) => {
-                    const rect = btn.getBoundingClientRect();
-                    const x = e.clientX - rect.left - rect.width / 2;
-                    const y = e.clientY - rect.top - rect.height / 2;
-                    gsap.to(btn, { x: x * 0.3, y: y * 0.3, duration: 0.3, ease: 'power2.out' });
-                });
-                btn.addEventListener('mouseleave', () => {
-                    gsap.to(btn, { x: 0, y: 0, duration: 0.8, ease: 'elastic.out(1, 0.3)' });
-                });
-            });
-
-            document.querySelectorAll('.bento-card, #blog article, #achievements .group, #experience .group, .profile-tilt').forEach(card => {
-                card.addEventListener('mousemove', (e) => {
-                    const rect = card.getBoundingClientRect();
-                    const x = e.clientX - rect.left; 
-                    const y = e.clientY - rect.top;
-                    const centerX = rect.width / 2;
-                    const centerY = rect.height / 2;
-                    const rotateX = ((y - centerY) / centerY) * -5;
-                    const rotateY = ((x - centerX) / centerX) * 5;
-
-                    gsap.to(card, {
-                        transform: `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`,
-                        duration: 0.4, ease: 'power2.out'
-                    });
-                });
-                card.addEventListener('mouseleave', () => {
-                    gsap.to(card, {
-                        transform: 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)',
-                        duration: 0.8, ease: 'elastic.out(1, 0.7)'
-                    });
-                });
-            });
-        };
-
-        // --- 11. PARTICLE BACKGROUND ---
-        const initParticles = () => {
-            const canvas = document.createElement('canvas');
-            const container = document.getElementById('particles-js');
-            if(!container) return;
-            container.appendChild(canvas);
-            const ctx = canvas.getContext('2d');
-
-            let particles = [];
-            let width, height;
-
-            const resize = () => {
-                width = window.innerWidth;
-                height = window.innerHeight;
-                canvas.width = width;
-                canvas.height = height;
-            };
-
-            class Particle {
-                constructor() {
-                    this.reset();
-                }
-                reset() {
-                    this.x = Math.random() * width;
-                    this.y = Math.random() * height;
-                    this.vx = (Math.random() - 0.5) * 0.5;
-                    this.vy = (Math.random() - 0.5) * 0.5;
-                    this.size = Math.random() * 2;
-                    this.alpha = Math.random() * 0.25;
-                }
-                update() {
-                    this.x += this.vx;
-                    this.y += this.vy;
-                    if(this.x < 0 || this.x > width || this.y < 0 || this.y > height) this.reset();
-                }
-                draw() {
-                    const isLight = document.body.getAttribute('data-theme') === 'light';
-                    ctx.fillStyle = isLight ? `rgba(175, 92, 0, ${this.alpha})` : `rgba(0, 245, 255, ${this.alpha})`;
-                    
-                    // Increase size near center (Headline Zone)
-                    const centerX = width / 2;
-                    const centerY = height / 2;
-                    const distX = Math.abs(this.x - centerX);
-                    const distY = Math.abs(this.y - centerY);
-                    
-                    let drawSize = this.size;
-                    // If within 300px horizontally and 150px vertically of center
-                    if (distX < 300 && distY < 150) {
-                        drawSize = this.size * 1.8;
-                    }
-
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, drawSize, 0, Math.PI * 2);
-                    ctx.fill();
-                }
-            }
-
-            const init = () => {
-                resize();
-                particles = [];
-                for(let i=0; i<100; i++) particles.push(new Particle());
-            };
-
-            const animate = () => {
-                ctx.clearRect(0, 0, width, height);
-                particles.forEach(p => {
-                    p.update();
-                    p.draw();
-                });
-                requestAnimationFrame(animate);
-            };
-
-            window.addEventListener('resize', resize);
-            init();
-            animate();
-        };
-
-        // --- 12. DYNAMIC BLOG LOADING ---
-        const initBlog = async () => {
-            const blogContainer = document.querySelector('#blog .grid');
-            if (!blogContainer) return;
-
-            try {
-                const response = await fetch('blogs/blogs.json');
-                const data = await response.json();
-                const blogs = data.blogs.slice(0, 3); // Get latest 3
-
-                blogContainer.innerHTML = blogs.map(blog => `
-                    <article class="group cursor-pointer" onclick="window.location.href='blogs/${blog.slug}.html'">
-                        <div class="aspect-[4/3] bg-[#111] light:bg-white rounded-2xl overflow-hidden relative mb-6 border border-white/10 light:border-black/10">
-                            ${blog.thumbnail ? 
-                                `<img src="${blog.thumbnail}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-60 group-hover:opacity-100" alt="${blog.title}">` :
-                                `<div class="w-full h-full flex items-center justify-center text-6xl opacity-40 group-hover:opacity-100 transition-opacity">${blog.icon || '📝'}</div>`
-                            }
-                            <div class="absolute top-4 left-4 bg-black/50 backdrop-blur-md px-3 py-1 rounded-full text-xs border border-white/20 text-white">${blog.tags[0]}</div>
-                        </div>
-                        <div class="flex items-center gap-4 text-xs text-sub light:text-gray-500 mb-3 font-mono">
-                            <span>${blog.date}</span>
-                            <span>${blog.readTime}</span>
-                        </div>
-                        <h3 class="font-display text-2xl font-bold text-white light:text-black mb-2 group-hover:text-cyan-glow light:group-hover:text-orange-accent transition-colors">${blog.title}</h3>
-                        <p class="text-sub light:text-gray-600 line-clamp-2">${blog.excerpt}</p>
-                    </article>
-                `).join('');
-
-                // Re-run interactions for new cards
-                if (typeof initCreative === 'function') initCreative();
-                
-            } catch (error) {
-                console.error('Error loading blogs:', error);
-            }
-        };
-
         // --- MASTER INITIALIZATION ---
         const mainInit = () => {
             console.log('App Loaded. Initializing...');
@@ -2526,6 +2693,7 @@
                 if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
                     initGSAP();
                     initCreative();
+                    initWorkReveal();
                 } else {
                     console.warn('GSAP or ScrollTrigger not loaded. Animations disabled.');
                 }
