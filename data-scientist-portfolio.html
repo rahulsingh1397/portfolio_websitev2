@@ -1471,6 +1471,8 @@
             const computeEyeYPosition = () => {
                 const width = window.innerWidth;
                 if (width >= 1700) return 28;
+                if (width >= 1650) return 27.5;
+                if (width >= 1600) return 27.2;
                 if (width >= 1500) return 27;
                 if (width >= 1300) return 26;
                 if (width >= 1100) return 25;
