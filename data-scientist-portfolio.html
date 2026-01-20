@@ -280,8 +280,8 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 9000;
-            opacity: 0.05;
+            z-index: 2;
+            opacity: 0.02;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
@@ -293,47 +293,55 @@
         /* Chalk Border Effect */
         .chalk-border {
             position: relative;
-            padding: 0.5rem 1.2rem;
-            background: rgba(10, 10, 10, 0.9);
-            border: 2px solid var(--primary);
-            color: var(--primary);
+            padding: 0.55rem 1.45rem;
+            background: radial-gradient(circle at 45% 55%, rgba(255, 255, 255, 0.15), rgba(0, 245, 255, 0.8) 45%, rgba(6, 26, 38, 0.75) 90%);
+            border: 2px solid rgba(0, 245, 255, 0.95);
+            color: #ffffff;
             text-transform: uppercase;
             letter-spacing: 3px;
-            box-shadow: 0 0 15px rgba(0, 245, 255, 0.3);
-            text-shadow: 0 0 5px rgba(0, 245, 255, 1.0), 0 0 20px rgba(0, 245, 255, 0.5);
+            box-shadow: 0 0 10px rgba(0, 245, 255, 0.9), 0 0 18px rgba(0, 148, 255, 0.65);
+            text-shadow: 0 0 4px rgba(255, 255, 255, 0.95), 0 0 9px rgba(0, 245, 255, 0.95), 0 0 16px rgba(0, 245, 255, 0.85);
             font-family: 'JetBrains Mono', monospace;
             font-weight: bold;
             transform: rotate(-1deg);
             display: inline-block;
             transition: all 0.3s ease;
+            filter: drop-shadow(0 0 7px rgba(0, 245, 255, 0.95));
+            isolation: isolate;
+            z-index: 200;
         }
 
         [data-theme="light"] .chalk-border {
-            box-shadow: 0 0 15px rgba(175, 92, 0, 0.3);
-            text-shadow: 0 0 5px rgba(175, 92, 0, 1.0), 0 0 20px rgba(175, 92, 0, 0.5);
-            background: rgba(244, 242, 233, 0.9);
+            background: radial-gradient(circle at 40% 50%, rgba(255, 167, 94, 0.55), rgba(244, 242, 233, 0.95));
             color: var(--primary);
+            box-shadow: 0 0 7px rgba(175, 92, 0, 0.55), 0 0 11px rgba(255, 150, 70, 0.3);
+            text-shadow: 0 0 3px rgba(175, 92, 0, 1), 0 0 7px rgba(255, 130, 40, 0.9), 0 0 14px rgba(255, 77, 0, 0.65);
+            filter: drop-shadow(0 0 4px rgba(175, 92, 0, 0.85));
         }
 
         .chalk-border::after {
             content: '';
             position: absolute;
             top: -4px; left: -4px; right: -4px; bottom: -4px;
-            border: 1px solid var(--primary);
+            border: 1px solid rgba(0, 245, 255, 0.85);
             border-radius: 2px;
-            opacity: 0.6;
+            opacity: 1;
             pointer-events: none;
             transition: all 0.3s ease;
+            box-shadow: 0 0 8px rgba(0, 245, 255, 0.7), inset 0 0 5px rgba(0, 245, 255, 0.45);
+            filter: drop-shadow(0 0 4px rgba(0, 245, 255, 0.75));
+            background: transparent;
         }
 
         .chalk-border::before {
             content: '';
             position: absolute;
             top: -6px; left: -6px; right: -6px; bottom: -6px;
-            border: 1px dashed var(--primary);
-            opacity: 0.4;
+            border: 1px dashed rgba(0, 245, 255, 0.7);
+            opacity: 0.6;
             pointer-events: none;
             animation: borderFlicker 2s infinite alternate;
+            mix-blend-mode: screen;
         }
         
         @keyframes borderFlicker {
@@ -442,7 +450,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 0;
+            z-index: 150;
             pointer-events: none;
             min-height: 500px;
         }
@@ -549,10 +557,10 @@
     <!-- HERO: Robotic Eye -->
     <section id="home" class="relative w-full h-screen overflow-hidden flex flex-col justify-center items-center light:bg-cream">
         <!-- 3D Container: Absolute & Full Screen -->
-        <div id="robotic-eye-container" class="absolute inset-0 w-full h-full z-[1]"></div>
+        <div id="robotic-eye-container" class="absolute inset-0 w-full h-full z-[150]"></div>
         
-        <div class="hero-content relative z-[20] text-center pointer-events-none dark:mix-blend-exclusion px-4 mt-[15vh] md:mt-[10vh]">
-            <div class="chalk-border mb-6 pointer-events-auto cursor-default tracking-widest [word-spacing:0.5em] glitch px-6 py-1.5 text-sm" data-text="Applied AI & Decision Systems">
+        <div class="hero-content relative z-[20] text-center pointer-events-none px-4">
+            <div class="chalk-border mb-6 mt-[12vh] md:mt-[8vh] pointer-events-auto cursor-default tracking-widest [word-spacing:0.5em] text-sm" data-text="Applied AI & Decision Systems">
                 Applied AI & Decision Systems
             </div>
             <h1 class="font-display text-[5vw] md:text-[4vw] leading-[1.1] font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-white to-gray-400 dark:from-white dark:to-gray-400 light:from-black light:to-gray-700 drop-shadow-2xl max-w-5xl mx-auto">
@@ -1434,22 +1442,22 @@
             container.appendChild(renderer.domElement);
             
             // Lighting setup matching production
-            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.75);
             scene.add(ambientLight);
 
-            const directionalLight = new THREE.DirectionalLight(0xffffff, 2.5);
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 3.0);
             directionalLight.position.set(0, 10, 5);
             scene.add(directionalLight);
 
-            const backLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            const backLight = new THREE.DirectionalLight(0xffffff, 1.3);
             backLight.position.set(0, -5, -5);
             scene.add(backLight);
 
-            const pointLight = new THREE.PointLight(0xffffff, 1.2, 100);
+            const pointLight = new THREE.PointLight(0xffffff, 1.6, 120);
             pointLight.position.set(0, 8, 0);
             scene.add(pointLight);
 
-            const spotlight = new THREE.SpotLight(0xffffff, 2, 20, Math.PI / 6, 0.5, 2);
+            const spotlight = new THREE.SpotLight(0xffffff, 2.8, 22, Math.PI / 5.5, 0.45, 1.8);
             spotlight.position.set(0, 5, 3);
             spotlight.target.position.set(0, 0.58, 0.1);
             scene.add(spotlight);
@@ -1485,29 +1493,29 @@
                     if (isLightMode) {
                         lightMaterial.color = new THREE.Color(0xAF5C00); 
                         lightMaterial.emissive = new THREE.Color(0xAF5C00);
-                        lightMaterial.emissiveIntensity = 0.6; 
+                        lightMaterial.emissiveIntensity = 1.5; 
                     } else {
-                        lightMaterial.color = new THREE.Color('#252525');
-                        lightMaterial.emissive = new THREE.Color(0x0080ff); 
-                        lightMaterial.emissiveIntensity = 3000.0;
+                        lightMaterial.color = new THREE.Color('#1a1f29');
+                        lightMaterial.emissive = new THREE.Color(0x00cfff); 
+                        lightMaterial.emissiveIntensity = 8000.0;
                     }
                 }
                 if (lensMaterial) {
                     if (isLightMode) {
                         lensMaterial.color = new THREE.Color(0xAF5C00);
                         lensMaterial.emissive = new THREE.Color(0xAF5C00);
-                        lensMaterial.emissiveIntensity = 0.2;
+                        lensMaterial.emissiveIntensity = 0.35;
                     } else {
-                        lensMaterial.color = new THREE.Color(0x00f5ff);
+                        lensMaterial.color = new THREE.Color(0x8bf8ff);
                         lensMaterial.emissive = new THREE.Color(0x00f5ff);
-                        lensMaterial.emissiveIntensity = 0.5;
+                        lensMaterial.emissiveIntensity = 2.5;
                     }
                 }
                 
                 // Update point light to match theme
                 if(pointLight) {
                     pointLight.color.setHex(colors.primary);
-                    pointLight.intensity = isLightMode ? 0.5 : 1.2; // Reduce intensity in light mode to prevent washout
+                    pointLight.intensity = isLightMode ? 1.2 : 2.2;
                 }
             };
 
@@ -1516,8 +1524,8 @@
                 console.log('Robotic Eye Loaded Successfully');
                 eyeModel = gltf.scene;
                 eyeModel.scale.set(60, 60, 60); 
-                // Position model slightly above text (20% lower than previous 22.5)
-                eyeModel.position.set(0, 18, 0);
+                // Position model higher in viewport to avoid overlap with tag
+                eyeModel.position.set(0, 19.5, 0);
                 
                 // Detailed material application from production
                 eyeModel.traverse((child) => {
@@ -1535,12 +1543,12 @@
                     if (child.name === 'Lens_Low_Poly_0') {
                         materials.forEach(mat => {
                             mat.transparent = true;
-                            mat.opacity = 0.3;
+                            mat.opacity = 0.5;
                             mat.depthWrite = false;
-                            mat.metalness = 0.1;
-                            mat.roughness = 0.05;
+                            mat.metalness = 0.05;
+                            mat.roughness = 0.08;
                             mat.side = THREE.DoubleSide;
-                            mat.color = new THREE.Color(0x000000);
+                            mat.color = new THREE.Color(0x021821);
                          });
                          return;
                     }
@@ -1549,9 +1557,9 @@
                         materials.forEach(mat => {
                             mat.map = null;
                             mat.emissiveMap = null;
-                            mat.emissive = new THREE.Color(0x0080ff);
-                            mat.color = new THREE.Color('#252525');
-                            mat.emissiveIntensity = 3000.0;
+                            mat.emissive = new THREE.Color(0x16f5ff);
+                            mat.color = new THREE.Color('#0e1822');
+                            mat.emissiveIntensity = 8000.0;
                             mat.metalness = 0.0;
                             mat.roughness = 1.0;
                             mat.transparent = true;
@@ -1753,7 +1761,7 @@
                     eyeModel.rotation.y = currentRotationY;
 
                     // Subtle breathing/floating animation
-                    eyeModel.position.y = 18 + Math.sin(Date.now() * 0.001) * 0.2;
+                    eyeModel.position.y = 19.5 + Math.sin(Date.now() * 0.001) * 0.2;
                 }
                 
                 renderer.render(scene, camera);
@@ -2603,7 +2611,7 @@
             setTimeout(() => ScrollTrigger.refresh(), 500);
 
             const tl = gsap.timeline();
-            tl.from('.hero-content > *', {
+            tl.from('.hero-content > h1, .hero-content > p, .hero-content > .flex', {
                 y: 50, opacity: 0, duration: 1, stagger: 0.2, ease: "power3.out", delay: 0.2
             });
 
