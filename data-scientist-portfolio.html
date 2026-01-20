@@ -1467,6 +1467,21 @@
             let eyeModel;
             let lightMaterial = null;
             let lensMaterial = null;
+
+            const computeEyeYPosition = () => {
+                const width = window.innerWidth;
+                if (width >= 1700) return 24;
+                if (width >= 1500) return 22.5;
+                if (width >= 1300) return 21.5;
+                if (width >= 1100) return 20.5;
+                return 19.5;
+            };
+
+            const updateEyePosition = () => {
+                if (eyeModel) {
+                    eyeModel.position.y = computeEyeYPosition();
+                }
+            };
             
             // TIMEOUT FALLBACK
             const modelTimeout = setTimeout(() => {
@@ -1480,6 +1495,7 @@
                         emissiveIntensity: 0.8
                     });
                     eyeModel = new THREE.Mesh(geometry, material);
+                    updateEyePosition();
                     scene.add(eyeModel);
                 }
             }, 3000); 
@@ -1525,7 +1541,7 @@
                 eyeModel = gltf.scene;
                 eyeModel.scale.set(60, 60, 60); 
                 // Position model higher in viewport to avoid overlap with tag
-                eyeModel.position.set(0, 19.5, 0);
+                eyeModel.position.set(0, computeEyeYPosition(), 0);
                 
                 // Detailed material application from production
                 eyeModel.traverse((child) => {
@@ -1621,6 +1637,7 @@
                 });
 
                 scene.add(eyeModel);
+                updateEyePosition();
                 updateEyeColor(); // Apply initial colors
             }, 
             undefined,
@@ -1635,8 +1652,19 @@
                     emissiveIntensity: 0.8
                 });
                 eyeModel = new THREE.Mesh(geometry, material);
+                updateEyePosition();
                 scene.add(eyeModel);
             });
+
+            const handleResize = () => {
+                if (!container) return;
+                camera.aspect = container.clientWidth / container.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.clientWidth, container.clientHeight);
+                updateEyePosition();
+            };
+
+            window.addEventListener('resize', handleResize);
 
             // Target rotation for smooth interpolation
             let targetRotationX = 0;
