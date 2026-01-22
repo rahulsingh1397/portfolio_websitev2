@@ -1,0 +1,21 @@
+# robots.txt for Rahul Singh Portfolio
+# https://rahulsingh1397.github.io/portfolio_websitev2/
+
+User-agent: *
+Allow: /
+
+# Specific bot permissions
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+# Sitemap location
+Sitemap: https://rahulsingh1397.github.io/portfolio_websitev2/sitemap.xml
+
+# Crawl delay (optional, in seconds)
+Crawl-delay: 1
