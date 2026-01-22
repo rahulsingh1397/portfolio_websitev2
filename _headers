@@ -1,6 +1,7 @@
 # CORS Headers for all routes
+# Security: Restricted to self-origin only (change to your domain in production)
 /*
-  Access-Control-Allow-Origin: *
+  Access-Control-Allow-Origin: https://rahulsingh1397.github.io
   Access-Control-Allow-Methods: GET, POST, OPTIONS
   Access-Control-Allow-Headers: Content-Type
 
@@ -11,6 +12,8 @@
   X-XSS-Protection: 1; mode=block
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: geolocation=(), microphone=(), camera=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://api.fontshare.com https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com https://api.fontshare.com data:; img-src 'self' https: data: blob:; connect-src 'self' https://api.github.com https://ghchart.rshah.org; frame-ancestors 'self'; base-uri 'self'; form-action 'self'
 
 # Cache Control for 3D Models (1 year)
 /*.glb

@@ -33,8 +33,8 @@
         }
     }
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha512-7eHRwcbYkK4d9g/6tD/mhkf++eoTHwpNM9woBxtPUBWm67zeAfFC+HrdoE2GanKeocly/VxeLvIqwvCdk7qScg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha512-onMTRKJBKz8M1TnqqDuGBlowlH0ohFzMXYRNebz+yOcc5TQr/zAKsthzhuv0hiyUKEiQEQXEynnXCvNTOk50dg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- Removed Matter.js -->
 
     <script>
@@ -1292,39 +1292,44 @@
         });
         
         // --- DEBUG OVERLAY SETUP ---
-        const debugOverlay = document.getElementById('debug-overlay');
-        const originalLog = console.log;
-        const originalError = console.error;
-        const originalWarn = console.warn;
+        // Security: Disable debug logging in production
+        const IS_PRODUCTION = true; // Set to false for development debugging
+        
+        if (!IS_PRODUCTION) {
+            const debugOverlay = document.getElementById('debug-overlay');
+            const originalLog = console.log;
+            const originalError = console.error;
+            const originalWarn = console.warn;
 
-        const addLog = (msg, type = 'normal') => {
-            if (!debugOverlay) return;
-            const entry = document.createElement('div');
-            entry.className = 'log-entry ' + (type === 'error' ? 'log-error' : type === 'warn' ? 'log-warn' : '');
-            entry.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
-            debugOverlay.appendChild(entry);
-            debugOverlay.scrollTop = debugOverlay.scrollHeight;
-        };
+            const addLog = (msg, type = 'normal') => {
+                if (!debugOverlay) return;
+                const entry = document.createElement('div');
+                entry.className = 'log-entry ' + (type === 'error' ? 'log-error' : type === 'warn' ? 'log-warn' : '');
+                entry.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
+                debugOverlay.appendChild(entry);
+                debugOverlay.scrollTop = debugOverlay.scrollHeight;
+            };
 
-        // Capture logs
-        console.log = function(...args) {
-            originalLog.apply(console, args);
-            addLog(args.join(' '));
-        };
-        console.error = function(...args) {
-            originalError.apply(console, args);
-            addLog(args.join(' '), 'error');
-            if(debugOverlay) debugOverlay.style.display = 'block'; // Auto-show on error
-        };
-        console.warn = function(...args) {
-            originalWarn.apply(console, args);
-            addLog(args.join(' '), 'warn');
-        };
+            // Capture logs
+            console.log = function(...args) {
+                originalLog.apply(console, args);
+                addLog(args.join(' '));
+            };
+            console.error = function(...args) {
+                originalError.apply(console, args);
+                addLog(args.join(' '), 'error');
+                if(debugOverlay) debugOverlay.style.display = 'block';
+            };
+            console.warn = function(...args) {
+                originalWarn.apply(console, args);
+                addLog(args.join(' '), 'warn');
+            };
 
-        // Expose toggle
-        window.debug = (visible) => {
-            if(debugOverlay) debugOverlay.style.display = visible ? 'block' : 'none';
-        };
+            // Expose toggle
+            window.debug = (visible) => {
+                if(debugOverlay) debugOverlay.style.display = visible ? 'block' : 'none';
+            };
+        }
 
         // --- CENTRALIZED STATE & UTILS ---
         const state = {
@@ -1403,10 +1408,30 @@
         async function fetchGitHubStats() {
             try {
                 const userResponse = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}`);
+                
+                // Security: Validate response status
+                if (!userResponse.ok) {
+                    if (userResponse.status === 403) {
+                        throw new Error('GitHub API rate limit exceeded');
+                    }
+                    throw new Error(`GitHub API error: ${userResponse.status}`);
+                }
+                
                 const userData = await userResponse.json();
+                
+                // Security: Validate response structure
+                if (!userData || typeof userData.public_repos !== 'number') {
+                    throw new Error('Invalid GitHub API response format');
+                }
+                
                 const repoCount = document.getElementById('gh-repos');
                 if(repoCount) repoCount.textContent = userData.public_repos || '20+';
-            } catch (e) { console.warn('GitHub fetch failed', e); }
+            } catch (e) { 
+                console.warn('GitHub fetch failed', e);
+                // Security: Set fallback value on error
+                const repoCount = document.getElementById('gh-repos');
+                if(repoCount) repoCount.textContent = '20+';
+            }
         }
         
         const updateGithubChart = () => {
@@ -1429,10 +1454,24 @@
                 return;
             }
 
-            // Force visual indicator if empty
-            if(container.childNodes.length === 0) {
-                 container.innerHTML = '<div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); color:var(--primary); font-family:\'JetBrains Mono\', monospace; text-align:center;">Loading Model...<br><span style="font-size:10px; opacity:0.5">Please wait</span></div>';
+            // Mobile WebGL detection
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            
+            // Check WebGL support
+            const canvas = document.createElement('canvas');
+            const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+            if (!gl) {
+                console.warn('WebGL not supported on this device');
+                container.innerHTML = '<div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); color:var(--primary); font-family:\'JetBrains Mono\', monospace; text-align:center; font-size:12px;">3D Model<br><span style="font-size:10px; opacity:0.5">Not supported on this device</span></div>';
+                return;
             }
+
+            // Loading indicator
+            const loadingDiv = document.createElement('div');
+            loadingDiv.id = 'eye-loading';
+            loadingDiv.style.cssText = 'position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); color:var(--primary); font-family:\'JetBrains Mono\', monospace; text-align:center; z-index:1000;';
+            loadingDiv.innerHTML = 'Loading Model...<br><span style="font-size:10px; opacity:0.5">Please wait</span>';
+            container.appendChild(loadingDiv);
 
             const scene = new THREE.Scene();
             
@@ -1442,13 +1481,16 @@
             camera.position.set(0, 5, 60);
             camera.lookAt(0, 0, 0);
 
-            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            // Mobile-optimized renderer settings
+            const renderer = new THREE.WebGLRenderer({ 
+                alpha: true, 
+                antialias: !isMobile, // Disable antialiasing on mobile for performance
+                powerPreference: isMobile ? 'low-power' : 'high-performance'
+            });
             renderer.setSize(container.clientWidth, container.clientHeight);
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.5 : 2)); // Lower pixel ratio on mobile
             renderer.setClearColor(0x000000, 0);
             
-            // Clear container before appending
-            while(container.firstChild) container.removeChild(container.firstChild);
             container.appendChild(renderer.domElement);
             
             // Lighting setup matching production
@@ -1495,10 +1537,15 @@
                 }
             };
             
-            // TIMEOUT FALLBACK
+            // TIMEOUT FALLBACK (longer timeout for mobile)
             const modelTimeout = setTimeout(() => {
                 if(!eyeModel) {
                     console.warn('Robotic Eye load timed out. Showing fallback.');
+                    
+                    // Remove loading indicator
+                    const loadingIndicator = document.getElementById('eye-loading');
+                    if(loadingIndicator) loadingIndicator.remove();
+                    
                     const geometry = new THREE.IcosahedronGeometry(15, 1);
                     const material = new THREE.MeshStandardMaterial({ 
                         color: getThemeColors().primary, 
@@ -1510,7 +1557,7 @@
                     updateEyePosition();
                     scene.add(eyeModel);
                 }
-            }, 3000); 
+            }, isMobile ? 8000 : 3000); // Longer timeout on mobile 
 
             // Function to update eye color based on theme (Production Logic)
             const updateEyeColor = () => {
@@ -1550,6 +1597,11 @@
             loader.load('./models/robotic_eye.glb', (gltf) => {
                 clearTimeout(modelTimeout);
                 console.log('Robotic Eye Loaded Successfully');
+                
+                // Remove loading indicator
+                const loadingIndicator = document.getElementById('eye-loading');
+                if(loadingIndicator) loadingIndicator.remove();
+                
                 eyeModel = gltf.scene;
                 eyeModel.scale.set(60, 60, 60); 
                 // Position model higher in viewport to avoid overlap with tag
@@ -1652,11 +1704,24 @@
                 updateEyePosition();
                 updateEyeColor(); // Apply initial colors
             }, 
-            undefined,
+            (progress) => {
+                // Update loading progress
+                const loadingIndicator = document.getElementById('eye-loading');
+                if(loadingIndicator && progress.total > 0) {
+                    const percent = Math.round((progress.loaded / progress.total) * 100);
+                    loadingIndicator.innerHTML = `Loading Model...<br><span style="font-size:10px; opacity:0.5">${percent}%</span>`;
+                }
+            },
             (error) => {
                 clearTimeout(modelTimeout);
                 console.error('Error loading Robotic Eye:', error);
-                const geometry = new THREE.IcosahedronGeometry(2, 1);
+                
+                // Remove loading indicator
+                const loadingIndicator = document.getElementById('eye-loading');
+                if(loadingIndicator) loadingIndicator.remove();
+                
+                // Show fallback geometry
+                const geometry = new THREE.IcosahedronGeometry(15, 1);
                 const material = new THREE.MeshStandardMaterial({ 
                     color: getThemeColors().primary, 
                     wireframe: true,
@@ -2613,33 +2678,58 @@
             const blogContainer = document.querySelector('#blog .grid');
             if (!blogContainer) return;
 
+            // Security: HTML sanitization function to prevent XSS
+            const sanitizeHTML = (str) => {
+                if (!str) return '';
+                const div = document.createElement('div');
+                div.textContent = str;
+                return div.innerHTML;
+            };
+
             try {
                 const response = await fetch('blogs/blogs.json');
+                if (!response.ok) throw new Error('Failed to fetch blogs');
+                
                 const data = await response.json();
+                
+                // Validate response structure
+                if (!data || !Array.isArray(data.blogs)) {
+                    throw new Error('Invalid blog data structure');
+                }
+                
                 const blogs = data.blogs.slice(0, 3);
 
                 blogContainer.innerHTML = blogs.map(blog => `
-                    <article class="group cursor-pointer" onclick="window.location.href='blogs/${blog.slug}.html'">
+                    <article class="group cursor-pointer" data-slug="${sanitizeHTML(blog.slug)}">
                         <div class="aspect-[4/3] bg-[#111] light:bg-white rounded-2xl overflow-hidden relative mb-6 border border-white/10 light:border-black/10">
                             ${blog.thumbnail ? 
-                                `<img src="${blog.thumbnail}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-60 group-hover:opacity-100" alt="${blog.title}">` :
-                                `<div class="w-full h-full flex items-center justify-center text-6xl opacity-40 group-hover:opacity-100 transition-opacity">${blog.icon || '📝'}</div>`
+                                `<img src="${sanitizeHTML(blog.thumbnail)}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-60 group-hover:opacity-100" alt="${sanitizeHTML(blog.title)}">` :
+                                `<div class="w-full h-full flex items-center justify-center text-6xl opacity-40 group-hover:opacity-100 transition-opacity">${sanitizeHTML(blog.icon || '📝')}</div>`
                             }
-                            <div class="absolute top-4 left-4 bg-black/50 backdrop-blur-md px-3 py-1 rounded-full text-xs border border-white/20 text-white">${blog.tags[0]}</div>
+                            <div class="absolute top-4 left-4 bg-black/50 backdrop-blur-md px-3 py-1 rounded-full text-xs border border-white/20 text-white">${sanitizeHTML(blog.tags[0])}</div>
                         </div>
                         <div class="flex items-center gap-4 text-xs text-sub light:text-gray-500 mb-3 font-mono">
-                            <span>${blog.date}</span>
-                            <span>${blog.readTime}</span>
+                            <span>${sanitizeHTML(blog.date)}</span>
+                            <span>${sanitizeHTML(blog.readTime)}</span>
                         </div>
-                        <h3 class="font-display text-2xl font-bold text-white light:text-black mb-2 group-hover:text-cyan-glow light:group-hover:text-orange-accent transition-colors">${blog.title}</h3>
-                        <p class="text-sub light:text-gray-600 line-clamp-2">${blog.excerpt}</p>
+                        <h3 class="font-display text-2xl font-bold text-white light:text-black mb-2 group-hover:text-cyan-glow light:group-hover:text-orange-accent transition-colors">${sanitizeHTML(blog.title)}</h3>
+                        <p class="text-sub light:text-gray-600 line-clamp-2">${sanitizeHTML(blog.excerpt)}</p>
                     </article>
                 `).join('');
+
+                // Security: Event delegation instead of inline onclick
+                blogContainer.addEventListener('click', (e) => {
+                    const article = e.target.closest('article');
+                    if (article && article.dataset.slug) {
+                        window.location.href = `blogs/${article.dataset.slug}.html`;
+                    }
+                });
 
                 if (typeof initCreative === 'function') initCreative();
                 
             } catch (error) {
                 console.error('Error loading blogs:', error);
+                blogContainer.innerHTML = '<p class="text-center text-gray-500 col-span-full">Unable to load blog posts. Please try again later.</p>';
             }
         };
 
