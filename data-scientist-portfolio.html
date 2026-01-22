@@ -1628,7 +1628,7 @@
                     updateEyePosition();
                     scene.add(eyeModel);
                 }
-            }, isMobile ? 8000 : 3000); // Longer timeout on mobile 
+            }, isMobile ? 15000 : 3000); // Longer timeout on mobile (15s for slow connections) 
 
             // Function to update eye color based on theme (Production Logic)
             const updateEyeColor = () => {
@@ -1665,7 +1665,7 @@
                 }
             };
 
-            loader.load('./models/robotic_eye.glb', (gltf) => {
+            loader.load('/models/robotic_eye.glb', (gltf) => {
                 clearTimeout(modelTimeout);
                 console.log('Robotic Eye Loaded Successfully');
                 
@@ -1786,6 +1786,8 @@
             (error) => {
                 clearTimeout(modelTimeout);
                 console.error('Error loading Robotic Eye:', error);
+                console.error('Attempted path: /models/robotic_eye.glb');
+                console.error('Device:', isMobile ? 'Mobile' : 'Desktop');
                 
                 // Remove loading indicator
                 const loadingIndicator = document.getElementById('eye-loading');
@@ -2037,7 +2039,7 @@
                 }
             }, 3000);
 
-            loader.load('./models/artificial_neural_network_ann/scene.gltf', (gltf) => {
+            loader.load('/models/artificial_neural_network_ann/scene.gltf', (gltf) => {
                 clearTimeout(modelTimeout);
                 console.log('ANN Loaded Successfully');
                 annModel = gltf.scene;
