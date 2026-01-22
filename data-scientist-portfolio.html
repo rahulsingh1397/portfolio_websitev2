@@ -14,6 +14,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self';
+        script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://www.googletagmanager.com https://www.google-analytics.com;
+        style-src 'self' 'unsafe-inline' https://api.fontshare.com https://fonts.googleapis.com https://cdn.tailwindcss.com;
+        font-src 'self' https://cdn.fontshare.com https://fonts.gstatic.com data:;
+        img-src 'self' data: https: blob:;
+        connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com blob:;
+        worker-src 'self' blob:;
+        child-src 'self' blob:;
+        frame-src 'self';
+        object-src 'none';
+        base-uri 'self';
+    ">
+    
     <!-- SEO Meta Tags -->
     <title>Rahul Singh - AI & Data Scientist | Freelance ML Engineer | Applied AI Expert</title>
     <meta name="description" content="Rahul Singh is a freelance data scientist and machine learning engineer specializing in applied AI, predictive analytics, and production ML systems. Trusted by finance, healthcare, and automotive teams.">
