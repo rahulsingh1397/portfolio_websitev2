@@ -360,6 +360,7 @@
 
         [data-theme="light"] .chalk-border {
             background: radial-gradient(circle at 40% 50%, rgba(255, 167, 94, 0.55), rgba(244, 242, 233, 0.95));
+            border: 2px solid rgba(175, 92, 0, 0.95);
             color: var(--primary);
             box-shadow: 0 0 7px rgba(175, 92, 0, 0.55), 0 0 11px rgba(255, 150, 70, 0.3);
             text-shadow: 0 0 3px rgba(175, 92, 0, 1), 0 0 7px rgba(255, 130, 40, 0.9), 0 0 14px rgba(255, 77, 0, 0.65);
@@ -389,6 +390,17 @@
             pointer-events: none;
             animation: borderFlicker 2s infinite alternate;
             mix-blend-mode: screen;
+        }
+
+        [data-theme="light"] .chalk-border::after {
+            border-color: rgba(175, 92, 0, 0.85);
+            box-shadow: 0 0 8px rgba(175, 92, 0, 0.6), inset 0 0 5px rgba(255, 125, 40, 0.45);
+            filter: drop-shadow(0 0 4px rgba(255, 125, 40, 0.65));
+        }
+
+        [data-theme="light"] .chalk-border::before {
+            border-color: rgba(255, 125, 40, 0.7);
+            mix-blend-mode: multiply;
         }
         
         @keyframes borderFlicker {
@@ -1023,7 +1035,7 @@
                         </div>
 
                         <!-- Dot -->
-                        <div class="absolute left-6 md:left-1/2 -translate-x-1/2 w-4 h-4 bg-black light:bg-cream border-2 border-white/50 light:border-black/50 rounded-full z-30 group-hover:scale-150 group-hover:bg-white light:group-hover:bg-black transition-all duration-300"></div>
+                        <div class="absolute left-6 md:left-1/2 -translate-x-1/2 w-4 h-4 bg-black light:bg-cream border-2 border-cyan-glow light:border-orange-accent rounded-full z-30 group-hover:scale-150 group-hover:bg-cyan-glow light:group-hover:bg-orange-accent transition-all duration-300 shadow-[0_0_10px_var(--primary)]"></div>
                         
                         <!-- Date/Content (Mobile) -->
                         <div class="md:hidden">
@@ -1037,8 +1049,10 @@
                                     Implemented customer segmentation models increasing engagement by 25%. Migrated legacy warehouses to Snowflake.
                                 </p>
                             </div>
-                         <!-- Date (Desktop Right) -->
-                         <div class="hidden md:block text-left">
+                        </div>
+                        
+                        <!-- Date (Desktop Right) -->
+                        <div class="hidden md:block text-left">
                             <span class="font-mono text-sub light:text-gray-600 text-lg">2020 - 2021</span>
                         </div>
                     </div>
@@ -1051,7 +1065,7 @@
                         </div>
 
                         <!-- Dot -->
-                        <div class="absolute left-6 md:left-1/2 -translate-x-1/2 w-4 h-4 bg-black light:bg-cream border-2 border-white/50 light:border-black/50 rounded-full z-30 group-hover:scale-150 group-hover:bg-white light:group-hover:bg-black transition-all duration-300"></div>
+                        <div class="absolute left-6 md:left-1/2 -translate-x-1/2 w-4 h-4 bg-black light:bg-cream border-2 border-cyan-glow light:border-orange-accent rounded-full z-30 group-hover:scale-150 group-hover:bg-cyan-glow light:group-hover:bg-orange-accent transition-all duration-300 shadow-[0_0_10px_var(--primary)]"></div>
 
                         <!-- Content -->
                         <div class="md:text-left">
