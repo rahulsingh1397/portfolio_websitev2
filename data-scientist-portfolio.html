@@ -2031,8 +2031,8 @@
             scene.add(spotlight);
             scene.add(spotlight.target);
 
-            // Side view camera position matching reference - Zoomed out for better visibility
-            camera.position.set(65, 20, 1);
+            // Side view camera position adjusted again for a tighter framing while keeping full model visible
+            camera.position.set(48, 16, 1.5);
             camera.lookAt(0, 5, 0);
 
             const loader = new GLTFLoader();
