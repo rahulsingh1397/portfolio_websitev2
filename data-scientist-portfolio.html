@@ -1102,7 +1102,7 @@
                     </p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[minmax(360px,1fr)]">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[minmax(360px,1fr)]" id="projects-grid">
                     <!-- MITRE-CORE (Teaser Version) -->
                     <div class="bento-card h-full min-h-[360px] md:col-span-2 group relative bg-[#111] light:bg-white border border-white/10 light:border-black/10 rounded-3xl overflow-hidden cursor-none">
                         <div class="absolute inset-0 bg-[url('./assets/mitre-core.png')] bg-cover bg-center opacity-20 group-hover:opacity-10 transition-opacity duration-500"></div>
@@ -1138,7 +1138,47 @@
                         </a>
                     </div>
 
-                    <!-- AI Compliance -->
+                    <!-- AeroSentinal -->
+                    <div class="bento-card h-full min-h-[360px] md:col-span-1 group relative bg-[#0C1A1F] light:bg-[#FFECD9] border border-white/10 light:border-black/10 rounded-3xl overflow-hidden p-8 flex flex-col justify-between">
+                        <div class="absolute inset-0 bg-[url('./assets/aerosentinal.jpg')] bg-cover bg-center opacity-25 group-hover:opacity-15 transition-opacity"></div>
+                        <div class="relative z-10 h-full flex flex-col justify-between">
+                            <div class="flex items-center gap-3 text-xs font-mono uppercase tracking-wide text-cyan-glow light:text-orange-accent">
+                                <span class="px-3 py-1 border border-cyan-glow/40 light:border-orange-accent/40 rounded-full">Autonomous Ops</span>
+                                <span>React · FastAPI · YOLOv8</span>
+                            </div>
+                            <div>
+                                <h3 class="font-display text-2xl mb-2 text-white light:text-black">AeroSentinal Cockpit</h3>
+                                <p class="text-sub light:text-gray-600 text-sm mb-4">Autonomous drone mission planning GCS that halves field response time.</p>
+                                <div class="flex gap-2 flex-wrap text-[11px] font-mono">
+                                    <span class="px-2 py-1 border border-white/10 light:border-black/10 rounded text-gray-400 light:text-gray-600">Telemetry HUD</span>
+                                    <span class="px-2 py-1 border border-white/10 light:border-black/10 rounded text-gray-400 light:text-gray-600">Android Bridge</span>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="https://github.com/rahulsingh1397/AeroSentinal" target="_blank" rel="noopener" class="absolute inset-0 z-10"></a>
+                    </div>
+
+                    <!-- Community Rule Classification -->
+                    <div class="bento-card h-full min-h-[360px] md:col-span-1 group relative bg-[#15102A] light:bg-[#FDF1FF] border border-white/10 light:border-black/10 rounded-3xl overflow-hidden p-8 flex flex-col justify-between">
+                        <div class="absolute inset-0 bg-[url('./assets/community-rules.jpg')] bg-cover bg-center opacity-30 group-hover:opacity-20 transition-opacity"></div>
+                        <div class="relative z-10 h-full flex flex-col justify-between">
+                            <div class="flex items-center gap-3 text-xs font-mono uppercase tracking-wide text-cyan-glow light:text-orange-accent">
+                                <span class="px-3 py-1 border border-cyan-glow/40 light:border-orange-accent/40 rounded-full">AI Compliance</span>
+                                <span>Transformers · Kaggle</span>
+                            </div>
+                            <div>
+                                <h3 class="font-display text-2xl mb-2 text-white light:text-black">Community Rule Classification</h3>
+                                <p class="text-sub light:text-gray-600 text-sm mb-4">Rule-aware NLP scoring that flags community violations with 92% precision.</p>
+                                <div class="flex gap-2 flex-wrap text-[11px] font-mono">
+                                    <span class="px-2 py-1 border border-white/10 light:border-black/10 rounded text-gray-400 light:text-gray-600">Explainable NLP</span>
+                                    <span class="px-2 py-1 border border-white/10 light:border-black/10 rounded text-gray-400 light:text-gray-600">Rule Transfer</span>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="https://github.com/rahulsingh1397/Community_rule_classification" target="_blank" rel="noopener" class="absolute inset-0 z-10"></a>
+                    </div>
+
+                    <!-- AI Compliance (Restored) -->
                     <div class="bento-card h-full min-h-[360px] md:col-span-1 bg-cyan-glow light:bg-orange-accent text-black light:text-white group relative rounded-3xl overflow-hidden p-8 flex flex-col justify-center items-center text-center">
                         <div class="absolute inset-0 bg-[url('./assets/ai-compliance.webp')] bg-cover bg-center opacity-20"></div>
                         <div class="absolute inset-0 bg-grid-slate-100 opacity-20"></div>
@@ -1151,8 +1191,8 @@
                         <a href="private.html" class="absolute inset-0 z-10"></a>
                     </div>
 
-                    <!-- Energy Prediction -->
-                    <div class="bento-card h-full min-h-[360px] md:col-span-1 group relative bg-[#151515] light:bg-[#e0e0e0] border border-white/10 light:border-black/10 rounded-3xl overflow-hidden p-8 flex flex-col justify-between">
+                    <!-- Energy Prediction (Restored) -->
+                    <div class="bento-card hidden-project h-full min-h-[360px] md:col-span-1 group relative bg-[#151515] light:bg-[#e0e0e0] border border-white/10 light:border-black/10 rounded-3xl overflow-hidden p-8 flex flex-col justify-between hidden opacity-0 transition-all duration-500">
                         <div class="absolute inset-0 bg-[url('./assets/energy-consumption.jpeg')] bg-cover bg-center opacity-30 group-hover:opacity-20 transition-opacity"></div>
                         <div class="relative z-10 h-full flex flex-col justify-between">
                             <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-blue-600 light:from-orange-accent light:to-orange-bright flex items-center justify-center text-3xl shadow-lg shadow-purple-500/20 light:shadow-orange-accent/20">⚡</div>
@@ -1169,7 +1209,7 @@
                     </div>
 
                     <!-- Fine-Tune BERT -->
-                    <div class="bento-card h-full min-h-[360px] md:col-span-2 bg-[#0F0F0F] light:bg-[#F0F0F0] group relative rounded-3xl overflow-hidden border border-white/10 light:border-black/10">
+                    <div class="bento-card hidden-project h-full min-h-[360px] md:col-span-2 bg-[#0F0F0F] light:bg-[#F0F0F0] group relative rounded-3xl overflow-hidden border border-white/10 light:border-black/10 hidden opacity-0 transition-all duration-500">
                         <div class="absolute inset-0 bg-[url('./assets/agentic.webp')] bg-cover bg-center opacity-30 group-hover:opacity-20 transition-opacity"></div>
                         <div class="absolute inset-0 flex items-center justify-center opacity-20 group-hover:opacity-10 transition-opacity">
                              <!-- Placeholder SVG for NLP -->
@@ -1188,6 +1228,14 @@
                         </div>
                         <a href="https://github.com/rahulsingh1397/Fine_tune_Bert" class="absolute inset-0 z-10"></a>
                     </div>
+                </div>
+                
+                <!-- View More Button -->
+                <div class="text-center mt-12">
+                    <button id="view-more-projects" class="px-8 py-3 border border-white/20 light:border-black/20 rounded-full hover:bg-white/10 light:hover:bg-black/5 transition-all text-white light:text-black font-mono text-sm group flex items-center gap-2 mx-auto">
+                        <span id="view-more-text">View More Projects</span>
+                        <span id="view-more-arrow" class="transition-transform duration-300">↓</span>
+                    </button>
                 </div>
             </section>
 
@@ -2392,7 +2440,40 @@
             counters.forEach(c => observer.observe(c));
         };
 
-        // --- 9. SKILL UNIVERSE (3D Cloud) ---
+        // --- 9. VIEW MORE PROJECTS TOGGLE ---
+        const initViewMoreProjects = () => {
+            const viewMoreBtn = document.getElementById('view-more-projects');
+            const viewMoreText = document.getElementById('view-more-text');
+            const viewMoreArrow = document.getElementById('view-more-arrow');
+            const hiddenProjects = document.querySelectorAll('.hidden-project');
+            
+            if (!viewMoreBtn || hiddenProjects.length === 0) return;
+            
+            let isExpanded = false;
+            
+            viewMoreBtn.addEventListener('click', () => {
+                isExpanded = !isExpanded;
+                
+                hiddenProjects.forEach(project => {
+                    if (isExpanded) {
+                        project.classList.remove('hidden', 'opacity-0');
+                        project.classList.add('opacity-100');
+                    } else {
+                        project.classList.add('opacity-0');
+                        project.classList.remove('opacity-100');
+                        setTimeout(() => {
+                            project.classList.add('hidden');
+                        }, 500);
+                    }
+                });
+                
+                // Update button text and arrow
+                viewMoreText.textContent = isExpanded ? 'View Less Projects' : 'View More Projects';
+                viewMoreArrow.style.transform = isExpanded ? 'rotate(180deg)' : 'rotate(0deg)';
+            });
+        };
+
+        // --- 10. SKILL UNIVERSE (3D Cloud) ---
         const initSkillUniverse = () => {
             const container = document.getElementById('skills-container');
             if(!container) return;
@@ -2914,6 +2995,7 @@
                 // Critical Initializations (Hero & basic interactivity)
                 initRoboticEye();
                 initCounters();
+                initViewMoreProjects();
                 
                 // Defer heavy 3D/Canvas elements until after first paint/idle
                 const loadDeferredContent = () => {
