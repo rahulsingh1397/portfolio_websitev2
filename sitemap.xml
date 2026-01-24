@@ -7,23 +7,25 @@
   <!-- Homepage -->
   <url>
     <loc>https://rahulaiportfolio.netlify.app/</loc>
-    <lastmod>2026-01-22</lastmod>
+    <lastmod>2026-01-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
   <!-- Main Portfolio Page -->
+
+
   <url>
     <loc>https://rahulaiportfolio.netlify.app/data-scientist-portfolio.html</loc>
-    <lastmod>2026-01-22</lastmod>
+    <lastmod>2026-01-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
   <!-- Blog Index -->
   <url>
-    <loc>https://rahulaiportfolio.netlify.app/blogs/index.html</loc>
-    <lastmod>2026-01-22</lastmod>
+    <loc>https://rahulaiportfolio.netlify.app/blog.html</loc>
+    <lastmod>2026-01-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
