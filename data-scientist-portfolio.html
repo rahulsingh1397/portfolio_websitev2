@@ -1183,7 +1183,7 @@
 
             <!-- WORK (BENTO GRID) -->
             <section id="work" class="px-4 md:px-12 py-32 max-w-[1600px] mx-auto">
-                <div class="flex flex-col md:flex-row justify-between items-end mb-16">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16">
                     <h2 class="font-display text-5xl md:text-7xl font-medium text-white light:text-black">Client-Ready<br>Case Studies</h2>
                     <p class="text-sub light:text-gray-600 font-mono mt-4 md:mt-0 max-w-xs text-right">
                         Production systems solving real business problems.
@@ -1199,24 +1199,24 @@
                         <div class="absolute inset-0 p-8 flex flex-col justify-between">
                             <!-- Header -->
                             <div>
-                                <div class="bg-cyan-glow light:bg-orange-accent text-black light:text-white px-3 py-1 text-xs font-bold uppercase rounded-full inline-block mb-4">Enterprise Security</div>
-                                <h3 class="font-display text-3xl md:text-4xl font-bold text-white light:text-black mb-2">Automating Threat Classification</h3>
-                                <p class="text-sm font-mono text-gray-400 light:text-gray-600">Automated threat classification at SOC scale</p>
+                                <div class="bg-cyan-glow light:bg-orange-accent text-black light:text-white px-3 py-1 text-xs font-bold uppercase rounded-full inline-block mb-4">Threat Intelligence</div>
+                                <h3 class="font-display text-3xl md:text-4xl font-bold text-white light:text-black mb-2">MITRE-CORE Attack Correlation Engine</h3>
+                                <p class="text-sm font-mono text-gray-400 light:text-gray-600">Maps noisy alerts into MITRE ATT&CK chains with ML-driven anomaly detection.</p>
                             </div>
 
                             <!-- Impact Metrics Strip -->
                             <div class="grid grid-cols-3 gap-4 border-t border-white/10 light:border-black/10 pt-4">
                                 <div>
-                                    <div class="text-2xl font-display font-bold text-cyan-glow light:text-orange-accent">71%</div>
-                                    <div class="text-[10px] text-gray-500 uppercase">Reduction in Triage Time</div>
+                                    <div class="text-2xl font-display font-bold text-cyan-glow light:text-orange-accent">100%</div>
+                                    <div class="text-[10px] text-gray-500 uppercase">Accuracy (64-alert run)</div>
                                 </div>
                                 <div>
-                                    <div class="text-2xl font-display font-bold text-cyan-glow light:text-orange-accent">5k+</div>
-                                    <div class="text-[10px] text-gray-500 uppercase">Daily Auto-Classified</div>
+                                    <div class="text-2xl font-display font-bold text-cyan-glow light:text-orange-accent">40</div>
+                                    <div class="text-[10px] text-gray-500 uppercase">Attacks Correlated in 1m51s</div>
                                 </div>
                                 <div>
-                                    <div class="text-2xl font-display font-bold text-cyan-glow light:text-orange-accent">3.4x</div>
-                                    <div class="text-[10px] text-gray-500 uppercase">Faster Response</div>
+                                    <div class="text-2xl font-display font-bold text-cyan-glow light:text-orange-accent">APT</div>
+                                    <div class="text-[10px] text-gray-500 uppercase">MITRE ATT&CK Coverage</div>
                                 </div>
                             </div>
                         </div>
@@ -2098,27 +2098,31 @@
             let isScanning = false;
             let scanProgress = 0;
 
+            // Calibration: model center sits slightly below container midpoint
+            const MODEL_CENTER_OFFSET_Y = 0.90;
+
             // Mouse tracking - listen to Hero Section for full landing page coverage
             const heroSection = document.getElementById('home');
             
             const onMouseMove = (event) => {
-                if (!heroSection) return;
-                const rect = heroSection.getBoundingClientRect();
+                if (!container) return;
+                const rect = container.getBoundingClientRect();
                 
                 const mouseX = ((event.clientX - rect.left) / rect.width) * 2 - 1;
                 const mouseY = -((event.clientY - rect.top) / rect.height) * 2 + 1;
 
                 // Calibration matching reference website but adjusted for relative position
                 // Eye is at y=15, Camera at y=5. Eye must tilt DOWN to see center (Positive X).
-                const basePitch = 0.2; 
+                const basePitch = 0; 
                 
                 // Sensitivity multipliers (user-approved calibration)
-                const sensitivityX = -Math.PI / 2.5; // Pitch: Negative (Mouse Up -> Rot -X -> Look Up)
-                const sensitivityY = Math.PI / 2.5; // Yaw: Positive (Mouse Right -> Rot +Y -> Look Right)
+                const sensitivityX = -Math.PI / 2; // Pitch: Negative (Mouse Up -> Rot -X -> Look Up)
+                const sensitivityY = Math.PI / 2; // Yaw: Positive (Mouse Right -> Rot +Y -> Look Right)
                 
                 // Clamp angles to prevent unnatural rotation (matching reference limits)
-                targetRotationY = THREE.MathUtils.clamp(mouseX * sensitivityY, -Math.PI / 2.5, Math.PI / 2.5);
-                targetRotationX = basePitch + THREE.MathUtils.clamp(mouseY * sensitivityX, -Math.PI / 2.5, Math.PI / 2.5);
+                targetRotationY = THREE.MathUtils.clamp(mouseX * sensitivityY, -Math.PI / 2.2, Math.PI / 2.2);
+                const adjustedMouseY = mouseY - MODEL_CENTER_OFFSET_Y;
+                targetRotationX = basePitch + THREE.MathUtils.clamp(adjustedMouseY * sensitivityX, -Math.PI / 2.2, Math.PI / 2.2);
 
                 // Update pupil dilation based on mouse distance
                 if (lensMaterial) {
@@ -2176,19 +2180,20 @@
             };
 
             const onTouchMove = (event) => {
-                if (!heroSection || event.touches.length === 0) return;
+                if (!container || event.touches.length === 0) return;
                 const touch = event.touches[0];
-                const rect = heroSection.getBoundingClientRect();
+                const rect = container.getBoundingClientRect();
                 
                 const touchX = ((touch.clientX - rect.left) / rect.width) * 2 - 1;
                 const touchY = -((touch.clientY - rect.top) / rect.height) * 2 + 1;
                 
-                const basePitch = 0.2; 
-                const sensitivityX = -Math.PI / 2.5;
-                const sensitivityY = Math.PI / 2.5;
+                const basePitch = 0; 
+                const sensitivityX = -Math.PI / 2;
+                const sensitivityY = Math.PI / 2;
 
-                targetRotationY = THREE.MathUtils.clamp(touchX * sensitivityY, -Math.PI / 2.5, Math.PI / 2.5);
-                targetRotationX = basePitch + THREE.MathUtils.clamp(touchY * sensitivityX, -Math.PI / 2.5, Math.PI / 2.5);
+                targetRotationY = THREE.MathUtils.clamp(touchX * sensitivityY, -Math.PI / 2.2, Math.PI / 2.2);
+                const adjustedTouchY = touchY - MODEL_CENTER_OFFSET_Y;
+                targetRotationX = basePitch + THREE.MathUtils.clamp(adjustedTouchY * sensitivityX, -Math.PI / 2.2, Math.PI / 2.2);
             };
 
             // Bind to Hero Section (not container) for full landing page tracking
@@ -2203,7 +2208,7 @@
                 
                 if (eyeModel) {
                     // Smooth interpolation for natural eye movement (lerp)
-                    const lerpFactor = 0.1; // Smooth following
+                    const lerpFactor = 0.3; // Faster smoothing for tighter tracking
                     currentRotationX += (targetRotationX - currentRotationX) * lerpFactor;
                     currentRotationY += (targetRotationY - currentRotationY) * lerpFactor;
                     
@@ -3055,19 +3060,19 @@
         const caseStudies = {
             "mitre-core": {
                 category: "Enterprise Security",
-                title: "Automating Threat Classification",
-                date: "2024",
-                problem: "Security Operations Centers (SOCs) are overwhelmed by thousands of daily alerts, making manual triage impossible and leading to 'alert fatigue' where critical threats are missed.",
-                objective: "Automate the mapping of unstructured threat reports to the MITRE ATT&CK framework to accelerate triage and standardization.",
-                approach: "• Built a fine-tuned NLP pipeline using BERT/RoBERTa to classify text segments into specific MITRE tactics and techniques.\n• Implemented a confidence scoring mechanism to route uncertain predictions for human review.\n• Designed a modular API for easy integration with existing SIEM tools.",
-                tech: ["Python", "Transformers", "PyTorch", "Pandas", "Scikit-learn", "MITRE API"],
+                title: "MITRE-CORE Attack Correlation Engine",
+                date: "2025",
+                problem: "SOC teams drown in thousands of disconnected alerts with no shared context, forcing analysts to guess whether events belong to the same APT campaign.",
+                objective: "Transform raw SIEM output into MITRE ATT&CK attack chains that highlight true campaigns, anomalies, and remediation paths within minutes.",
+                approach: "• Preprocess raw CSV alerts (64–300+ rows) into normalized entities, then feed them into a correlation engine that clusters by host/user/IP relationships.\n• Map each grouped event to MITRE ATT&CK tactics/techniques using curated ATT&CK + VERIS references (center-for-threat-informed-defense attack-flow examples).\n• Layer anomaly detection + NetworkX visuals so analysts can inspect attack chains, export plots, and ship PDF/PPT briefs straight from Resources/ scripts.",
+                tech: ["Python", "Pandas", "scikit-learn", "NetworkX", "Plotly", "MITRE ATT&CK", "VERIS", "Attack Flow"],
                 results: [
-                    "71% reduction in triage time",
-                    "5,000+ alerts auto-classified daily",
-                    "92% accuracy on top 10 techniques",
-                    "Standardized threat reporting across teams"
+                    "5 attacks (64 alerts) processed in 11s at 100% chain accuracy",
+                    "40 simulated attacks (301 alerts) correlated in 1m51s with full ATT&CK coverage",
+                    "Automated visual reports + PDF/PPT decks for exec-ready briefings",
+                    "Plug-and-play project structure (Data/, src/, tests/) for enterprise adoption"
                 ],
-                why: "Shifting from reactive 'whack-a-mole' to proactive, standardized threat intelligence allows security teams to focus on actual defense strategy rather than data entry.",
+                why: "Instead of eyeballing spreadsheets, analysts get an automated view of how high-end adversaries traverse their estate—accelerating threat response and audit readiness in a single workflow.",
                 github: "https://github.com/rahulsingh1397/Mitre-Core"
             },
             "aerosentinal": {
