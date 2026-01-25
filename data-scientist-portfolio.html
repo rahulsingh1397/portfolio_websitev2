@@ -200,6 +200,37 @@
             display: none;
         }
 
+        /* Custom Scrollbar for Modal */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+        }
+        
+        [data-theme="light"] .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+        
+        [data-theme="light"] .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.2);
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        [data-theme="light"] .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
         /* Large tablets and small desktops (769px - 1024px) */
         @media (min-width: 769px) and (max-width: 1024px) {
             .glass-nav {
@@ -1161,7 +1192,7 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[minmax(360px,1fr)]" id="projects-grid">
                     <!-- MITRE-CORE (Teaser Version) -->
-                    <div class="bento-card h-full min-h-[360px] md:col-span-2 group relative bg-[#111] light:bg-white border border-white/10 light:border-black/10 rounded-3xl overflow-hidden cursor-none">
+                    <div class="bento-card h-full min-h-[360px] md:col-span-2 group relative bg-[#111] light:bg-white border border-white/10 light:border-black/10 rounded-3xl overflow-hidden">
                         <div class="absolute inset-0 bg-[url('./assets/mitre-core.png')] bg-cover bg-center opacity-20 group-hover:opacity-10 transition-opacity duration-500"></div>
                         <div class="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent light:from-white light:via-white/90 light:to-transparent"></div>
                         
@@ -1190,7 +1221,7 @@
                             </div>
                         </div>
 
-                        <a href="https://github.com/rahulsingh1397/Mitre-Core" target="_blank" rel="noopener noreferrer" class="absolute bottom-8 right-8 px-6 py-2 border border-white/20 light:border-black/20 rounded-full flex items-center gap-2 group-hover:bg-white group-hover:text-black light:group-hover:bg-black light:group-hover:text-white transition-all text-white light:text-black z-20 font-mono text-xs" aria-label="View Mitre-Core case study on GitHub">
+                        <a href="#" onclick="openCaseStudy(event, 'mitre-core')" class="absolute bottom-8 right-8 px-6 py-2 border border-white/20 light:border-black/20 rounded-full flex items-center gap-2 group-hover:bg-white group-hover:text-black light:group-hover:bg-black light:group-hover:text-white transition-all text-white light:text-black z-20 font-mono text-xs" aria-label="View Mitre-Core case study">
                             View Case Study ↗
                         </a>
                     </div>
@@ -1212,7 +1243,9 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="https://github.com/rahulsingh1397/AeroSentinal" target="_blank" rel="noopener" class="absolute inset-0 z-10"></a>
+                        <a href="#" onclick="openCaseStudy(event, 'aerosentinal')" class="absolute bottom-8 right-8 px-6 py-2 border border-white/20 light:border-black/20 rounded-full flex items-center gap-2 group-hover:bg-white group-hover:text-black light:group-hover:bg-black light:group-hover:text-white transition-all text-white light:text-black z-20 font-mono text-xs" aria-label="View AeroSentinal case study">
+                            View Case Study ↗
+                        </a>
                     </div>
 
                     <!-- Community Rule Classification -->
@@ -1232,7 +1265,9 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="https://github.com/rahulsingh1397/Community_rule_classification" target="_blank" rel="noopener" class="absolute inset-0 z-10"></a>
+                        <a href="#" onclick="openCaseStudy(event, 'community-rule')" class="absolute bottom-8 right-8 px-6 py-2 border border-white/20 light:border-black/20 rounded-full flex items-center gap-2 group-hover:bg-white group-hover:text-black light:group-hover:bg-black light:group-hover:text-white transition-all text-white light:text-black z-20 font-mono text-xs" aria-label="View Community Rule case study">
+                            View Case Study ↗
+                        </a>
                     </div>
 
                     <!-- AI Compliance (Restored) -->
@@ -1245,7 +1280,9 @@
                             <h4 class="font-bold text-lg">AI Compliance Monitor</h4>
                             <p class="text-sm opacity-60 mt-2">Automated ethics & bias detection for production ML systems</p>
                         </div>
-                        <a href="private.html" class="absolute inset-0 z-10"></a>
+                        <a href="#" onclick="openCaseStudy(event, 'ai-compliance')" class="absolute bottom-8 right-8 px-6 py-2 border border-black/20 light:border-white/20 rounded-full flex items-center gap-2 hover:bg-black hover:text-white light:hover:bg-white light:hover:text-black transition-all text-black light:text-white z-20 font-mono text-xs" aria-label="View AI Compliance Monitor case study">
+                            View Case Study ↗
+                        </a>
                     </div>
 
                     <!-- Energy Prediction (Restored) -->
@@ -1262,7 +1299,9 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="private.html" class="absolute inset-0 z-10"></a>
+                        <a href="#" onclick="openCaseStudy(event, 'energy-forecast')" class="absolute bottom-8 right-8 px-6 py-2 border border-white/20 light:border-black/20 rounded-full flex items-center gap-2 group-hover:bg-white group-hover:text-black light:group-hover:bg-black light:group-hover:text-white transition-all text-white light:text-black z-20 font-mono text-xs" aria-label="View Energy Demand Forecasting case study">
+                            View Case Study ↗
+                        </a>
                     </div>
 
                     <!-- Fine-Tune BERT -->
@@ -1283,7 +1322,9 @@
                                 NLP Architecture
                             </div>
                         </div>
-                        <a href="https://github.com/rahulsingh1397/Fine_tune_Bert" class="absolute inset-0 z-10"></a>
+                        <a href="#" onclick="openCaseStudy(event, 'bert')" class="absolute bottom-8 right-8 px-6 py-2 border border-white/20 light:border-black/20 rounded-full flex items-center gap-2 group-hover:bg-white group-hover:text-black light:group-hover:bg-black light:group-hover:text-white transition-all text-white light:text-black z-20 font-mono text-xs" aria-label="View BERT Fine-Tuning case study">
+                            View Case Study ↗
+                        </a>
                     </div>
                 </div>
                 
@@ -1479,6 +1520,103 @@
                 </div>
             </section>
     
+    <!-- CASE STUDY MODAL -->
+    <div id="case-study-modal" class="fixed inset-0 z-[200] hidden opacity-0 transition-opacity duration-300" role="dialog" aria-modal="true">
+        <!-- Backdrop -->
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" id="modal-backdrop"></div>
+        
+        <!-- Modal Content -->
+        <div class="relative z-10 w-full h-full flex items-center justify-center p-4 md:p-8 pointer-events-none">
+            <div class="bg-[#111] light:bg-white w-full max-w-5xl max-h-[90vh] rounded-3xl border border-white/10 light:border-black/10 shadow-2xl overflow-hidden flex flex-col pointer-events-auto transform scale-95 transition-transform duration-300" id="modal-card">
+                
+                <!-- Header -->
+                <div class="p-6 md:p-8 border-b border-white/10 light:border-black/10 flex justify-between items-start gap-4 bg-[#111] light:bg-white sticky top-0 z-20">
+                    <div>
+                        <div class="flex items-center gap-3 mb-2">
+                            <span id="modal-tag" class="px-3 py-1 text-xs font-mono uppercase tracking-wide border rounded-full text-cyan-glow light:text-orange-accent border-cyan-glow/30 light:border-orange-accent/30">
+                                Category
+                            </span>
+                            <span id="modal-date" class="text-xs text-gray-500 font-mono hidden md:inline-block">2024</span>
+                        </div>
+                        <h2 id="modal-title" class="font-display text-3xl md:text-4xl font-bold text-white light:text-black leading-tight">
+                            Project Title
+                        </h2>
+                    </div>
+                    <button id="modal-close" class="p-2 rounded-full hover:bg-white/10 light:hover:bg-black/5 transition-colors text-white light:text-black" aria-label="Close modal">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
+                </div>
+
+                <!-- Scrollable Body -->
+                <div class="overflow-y-auto p-6 md:p-8 space-y-12 custom-scrollbar bg-[#0a0a0a] light:bg-[#FAFAFA]">
+                    
+                    <!-- 1. The Hook (Problem & Objective) -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+                        <div>
+                            <h3 class="text-sm font-mono uppercase tracking-widest text-cyan-glow light:text-orange-accent mb-4">The Problem</h3>
+                            <p id="modal-problem" class="text-gray-300 light:text-gray-700 leading-relaxed text-lg">
+                                Description of the pain point...
+                            </p>
+                        </div>
+                        <div>
+                            <h3 class="text-sm font-mono uppercase tracking-widest text-cyan-glow light:text-orange-accent mb-4">The Objective</h3>
+                            <div class="pl-4 border-l-2 border-white/10 light:border-black/10">
+                                <p id="modal-objective" class="text-white light:text-black font-medium text-lg italic">
+                                    "Goal statement..."
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. Tech Stack & Approach -->
+                    <div class="bg-[#111] light:bg-white p-6 rounded-2xl border border-white/5 light:border-black/5">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            <div class="md:col-span-1">
+                                <h3 class="text-sm font-mono uppercase tracking-widest text-sub mb-4">Tech Stack</h3>
+                                <div id="modal-tech" class="flex flex-wrap gap-2">
+                                    <!-- Tech tags injected here -->
+                                </div>
+                            </div>
+                            <div class="md:col-span-2">
+                                 <h3 class="text-sm font-mono uppercase tracking-widest text-sub mb-4">The Approach</h3>
+                                 <p id="modal-approach" class="text-gray-400 light:text-gray-600 text-sm leading-relaxed whitespace-pre-line">
+                                    How we solved it...
+                                 </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. Results & Why It Matters -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                        <div>
+                            <h3 class="text-sm font-mono uppercase tracking-widest text-cyan-glow light:text-orange-accent mb-6">Impact & Results</h3>
+                            <ul id="modal-results" class="space-y-4">
+                                <!-- List items -->
+                            </ul>
+                        </div>
+                        <div class="bg-gradient-to-br from-cyan-glow/10 to-transparent light:from-orange-accent/10 p-6 rounded-2xl border border-cyan-glow/20 light:border-orange-accent/20">
+                             <h3 class="text-sm font-bold uppercase tracking-widest text-white light:text-black mb-3 flex items-center gap-2">
+                                <span class="text-xl">💡</span> Why It Matters
+                             </h3>
+                             <p id="modal-why" class="text-gray-300 light:text-gray-700 text-sm font-medium leading-relaxed">
+                                Business context...
+                             </p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Footer Action -->
+                <div class="p-6 border-t border-white/10 light:border-black/10 bg-[#111] light:bg-white flex justify-end">
+                    <a id="modal-github" href="#" target="_blank" rel="noopener noreferrer" class="px-8 py-3 bg-white text-black hover:bg-gray-200 light:bg-black light:text-white light:hover:bg-gray-800 rounded-full font-bold transition-colors flex items-center gap-2">
+                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        Request Access to Git Repo
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Scripts -->
     <script type="module">
         import * as THREE from 'three';
@@ -1972,11 +2110,11 @@
 
                 // Calibration matching reference website but adjusted for relative position
                 // Eye is at y=15, Camera at y=5. Eye must tilt DOWN to see center (Positive X).
-                const basePitch = 0.6; 
+                const basePitch = 0.2; 
                 
-                // Sensitivity multipliers
+                // Sensitivity multipliers (user-approved calibration)
                 const sensitivityX = -Math.PI / 2.5; // Pitch: Negative (Mouse Up -> Rot -X -> Look Up)
-                const sensitivityY = Math.PI / 2.5; // Yaw: Positive (Mouse Right -> Rot -Y -> Look Right)
+                const sensitivityY = Math.PI / 2.5; // Yaw: Positive (Mouse Right -> Rot +Y -> Look Right)
                 
                 // Clamp angles to prevent unnatural rotation (matching reference limits)
                 targetRotationY = THREE.MathUtils.clamp(mouseX * sensitivityY, -Math.PI / 2.5, Math.PI / 2.5);
@@ -2045,7 +2183,7 @@
                 const touchX = ((touch.clientX - rect.left) / rect.width) * 2 - 1;
                 const touchY = -((touch.clientY - rect.top) / rect.height) * 2 + 1;
                 
-                const basePitch = 0.6; 
+                const basePitch = 0.2; 
                 const sensitivityX = -Math.PI / 2.5;
                 const sensitivityY = Math.PI / 2.5;
 
@@ -2912,6 +3050,170 @@
             init();
             animate();
         };
+
+        // --- 11. CASE STUDY MODAL LOGIC ---
+        const caseStudies = {
+            "mitre-core": {
+                category: "Enterprise Security",
+                title: "Automating Threat Classification",
+                date: "2024",
+                problem: "Security Operations Centers (SOCs) are overwhelmed by thousands of daily alerts, making manual triage impossible and leading to 'alert fatigue' where critical threats are missed.",
+                objective: "Automate the mapping of unstructured threat reports to the MITRE ATT&CK framework to accelerate triage and standardization.",
+                approach: "• Built a fine-tuned NLP pipeline using BERT/RoBERTa to classify text segments into specific MITRE tactics and techniques.\n• Implemented a confidence scoring mechanism to route uncertain predictions for human review.\n• Designed a modular API for easy integration with existing SIEM tools.",
+                tech: ["Python", "Transformers", "PyTorch", "Pandas", "Scikit-learn", "MITRE API"],
+                results: [
+                    "71% reduction in triage time",
+                    "5,000+ alerts auto-classified daily",
+                    "92% accuracy on top 10 techniques",
+                    "Standardized threat reporting across teams"
+                ],
+                why: "Shifting from reactive 'whack-a-mole' to proactive, standardized threat intelligence allows security teams to focus on actual defense strategy rather than data entry.",
+                github: "https://github.com/rahulsingh1397/Mitre-Core"
+            },
+            "aerosentinal": {
+                category: "Autonomous Systems",
+                title: "AeroSentinal Cockpit",
+                date: "2023",
+                problem: "Drone operators struggle with fragmented tooling—using separate apps for mission planning, telemetry monitoring, and object detection, leading to slow response times in field operations.",
+                objective: "Create a unified Ground Control Station (GCS) that integrates autonomous mission planning with real-time computer vision analysis.",
+                approach: "• Developed a React-based frontend for mission planning communicating with a Python/FastAPI backend.\n• Integrated YOLOv8 for real-time object detection on the video feed and MAVLink for drone telemetry.\n• Built a WebSocket bridge to stream data with <100ms latency.",
+                tech: ["React", "FastAPI", "YOLOv8", "MAVLink", "WebSocket", "Leaflet"],
+                results: [
+                    "Halved field response time",
+                    "Enabled single-screen operations",
+                    "Real-time person/vehicle detection",
+                    "Successful deployment in SAR simulations"
+                ],
+                why: "In search-and-rescue or perimeter security, every second counts. A unified autonomous interface removes cognitive load from the pilot, allowing the AI to handle the 'seeing' while the human handles the 'deciding'.",
+                github: "https://github.com/rahulsingh1397/AeroSentinal"
+            },
+            "community-rule": {
+                category: "AI Compliance",
+                title: "Community Rule Classification",
+                date: "2023",
+                problem: "Online communities struggle to enforce complex, nuance-heavy rules (e.g., 'no hate speech' vs 'no political debates'), and generic content moderation APIs often lack context.",
+                objective: "Build a rule-aware classification system that understands the specific semantic context of a community's guidelines.",
+                approach: "• Utilized transfer learning on transformer models, training on a dataset of labeled community violations.\n• Employed 'Explanation-First' design where the model outputs *why* a post violates a rule.\n• Benchmarked against standard toxicity classifiers.",
+                tech: ["Python", "PyTorch", "Transformers", "Kaggle", "NLTK"],
+                results: [
+                    "92% precision in flagging violations",
+                    "Reduced moderator workload by ~60%",
+                    "Consistent enforcement across timezones",
+                    "Lower false-positive rate than keyword filters"
+                ],
+                why: "Scalable moderation is key to community health. Context-aware AI moves beyond keyword banning to understanding intent, preserving free speech while stopping abuse.",
+                github: "https://github.com/rahulsingh1397/Community_rule_classification"
+            },
+            "ai-compliance": {
+                category: "AI Compliance",
+                title: "AI Compliance Monitor",
+                date: "2024",
+                problem: "Enterprise AI programs were shipping models without a unified way to monitor logs, privacy exposure, or regulatory documentation—leaving SOC2 / ISO auditors with spreadsheets and guesswork.",
+                objective: "Stand up an extensible, agent-based monitoring layer that keeps every AI system provably compliant while plugging directly into existing enterprise tooling.",
+                approach: "• Composed six specialized agents (Data Discovery, Monitoring, Privacy, Remediation, Reporting, UI) that coordinate via a shared event bus.\n• Wired integrations for QRadar, JIRA, Slack/email, and external compliance data feeds so alerts flow into the ops stack teams already use.\n• Added Resources/ scripts to auto-generate PDF + PPT decks from Markdown so audit packets stay in sync with the latest scans.",
+                tech: ["Python 3.9", "FastAPI", "Kafka", "Slack API", "QRadar", "python-pptx", "xhtml2pdf"],
+                results: [
+                    "Agent-driven scans discover sensitive assets before audits start",
+                    "Automated remediation + reporting loops reduce manual review hours",
+                    "Notification bridges (Slack/email) surface violations in real time",
+                    "One-click PDF/PPT exports keep regulators supplied with fresh evidence"
+                ],
+                why: "By turning compliance into an always-on workflow—rather than an end-of-quarter scramble—teams can ship AI features faster while still satisfying every regulator in the room.",
+                github: "https://github.com/rahulsingh1397/AI_Compliance_Monitor"
+            },
+            "energy-forecast": {
+                category: "Forecasting",
+                title: "Energy Demand Forecasting",
+                date: "2021",
+                problem: "Utility planners were over-purchasing peak-hour capacity because legacy spreadsheets couldn’t anticipate weather and usage volatility.",
+                objective: "Create an ensemble forecasting system that predicts 48-hour demand curves with actionable confidence intervals.",
+                approach: "• Aggregated smart-meter, weather, and tariff data into a feature store processed via Spark.\n• Trained stacked regressors (Prophet, XGBoost, LSTM) with auto-weighting based on seasonality regimes.\n• Delivered planners a scenario simulator embedded in existing dashboards.",
+                tech: ["Python", "Prophet", "XGBoost", "TensorFlow", "Snowflake"],
+                results: [
+                    "18% reduction in peak over-procurement",
+                    "<2% MAPE on day-ahead forecasts",
+                    "45 min faster planning cycles",
+                    "Dynamic pricing pilots unlocked"
+                ],
+                why: "Precise demand foresight frees capital for growth projects and keeps regulators satisfied with transparent methodology.",
+                github: "https://github.com/rahulsingh1397/Energy_Demand_Forecasting"
+            },
+            "bert": {
+                category: "NLP Architecture",
+                title: "Domain-Specific LLM (BERT)",
+                date: "2024",
+                problem: "General-purpose LLMs often fail to grasp domain-specific jargon (e.g., legal, medical, or proprietary technical docs), leading to hallucinations or surface-level summaries.",
+                objective: "Create a pipeline to fine-tune BERT models on specialized corpora to improve entity extraction and understanding in niche domains.",
+                approach: "• Implemented a Masked Language Modeling (MLM) pre-training step on domain documents.\n• Followed by task-specific fine-tuning (NER/Classification).\n• Optimized for inference speed using quantization and distillation.",
+                tech: ["HuggingFace", "PyTorch", "Accelerate", "W&B", "Python"],
+                results: [
+                    "15% improvement in F1 score over base BERT",
+                    "40% faster inference than large generative models",
+                    "Deployment-ready on CPU hardware",
+                    "Higher privacy (local execution)"
+                ],
+                why: "Even with high-end frontier models (GPT-4.1, Gemini Ultra) hitting the market, a finely tuned BERT delivers tighter accuracy, lower latency, and better data control for regulated workflows—so you get flagship performance without flagship burn.",
+                github: "https://github.com/rahulsingh1397/Fine_tune_Bert"
+            }
+        };
+
+        window.openCaseStudy = (e, projectId) => {
+            e.preventDefault();
+            const data = caseStudies[projectId];
+            if(!data) return;
+
+            // Populate
+            document.getElementById('modal-tag').textContent = data.category;
+            document.getElementById('modal-title').textContent = data.title;
+            document.getElementById('modal-date').textContent = data.date;
+            document.getElementById('modal-problem').textContent = data.problem;
+            document.getElementById('modal-objective').textContent = data.objective;
+            document.getElementById('modal-approach').textContent = data.approach;
+            document.getElementById('modal-why').textContent = data.why;
+            document.getElementById('modal-github').href = data.github;
+
+            // Tech
+            const techContainer = document.getElementById('modal-tech');
+            techContainer.innerHTML = data.tech.map(t => 
+                `<span class="px-3 py-1 bg-white/5 light:bg-black/5 border border-white/10 light:border-black/10 rounded text-xs font-mono text-gray-400 light:text-gray-600">${t}</span>`
+            ).join('');
+
+            // Results
+            const resContainer = document.getElementById('modal-results');
+            resContainer.innerHTML = data.results.map(r => 
+                `<li class="flex gap-3 text-sm text-gray-400 light:text-gray-600"><span class="text-cyan-glow light:text-orange-accent">✓</span> ${r}</li>`
+            ).join('');
+
+            // Show
+            const modal = document.getElementById('case-study-modal');
+            modal.classList.remove('hidden');
+            // small delay for transition
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                document.getElementById('modal-card').classList.remove('scale-95');
+                document.getElementById('modal-card').classList.add('scale-100');
+            }, 10);
+            
+            document.body.style.overflow = 'hidden'; // Prevent body scroll
+        };
+
+        window.closeCaseStudy = () => {
+            const modal = document.getElementById('case-study-modal');
+            modal.classList.add('opacity-0');
+            document.getElementById('modal-card').classList.add('scale-95');
+            document.getElementById('modal-card').classList.remove('scale-100');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                document.body.style.overflow = '';
+            }, 300);
+        };
+
+        document.getElementById('modal-close').addEventListener('click', closeCaseStudy);
+        document.getElementById('modal-backdrop').addEventListener('click', closeCaseStudy);
+        document.addEventListener('keydown', (e) => {
+            if(e.key === 'Escape') closeCaseStudy();
+        });
 
         // --- 13. DYNAMIC BLOG LOADING ---
         const initBlog = async () => {
