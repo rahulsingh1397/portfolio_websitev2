@@ -1,642 +1,204 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <title>Blog - Rahul Singh | Data Scientist</title>
-    <meta name="description" content="Exploring Data Science, AI, and Machine Learning - Blog posts and insights by Rahul Singh">
+    
+    <title>Blog | Rahul Singh - Applied AI & Decision Systems</title>
+    <meta name="description" content="Insights on AI, Machine Learning, Data Science, and emerging technologies by Rahul Singh.">
+    <meta name="keywords" content="AI Blog, Machine Learning, Data Science, LLMs, Agentic AI, Rahul Singh">
+    <meta name="author" content="Rahul Singh">
+    <link rel="canonical" href="https://rahulaiportfolio.netlify.app/blog.html">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Blog | Rahul Singh - Applied AI & Decision Systems">
+    <meta property="og:description" content="Insights on AI, Machine Learning, Data Science, and emerging technologies.">
+    <meta property="og:url" content="https://rahulaiportfolio.netlify.app/blog.html">
+    <meta property="og:type" content="website">
+    
+    <!-- Fonts -->
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@200,400,500,600,700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: ['class', '[data-theme="dark"]'],
+            plugins: [
+                function({ addVariant }) {
+                    addVariant('light', 'body[data-theme="light"] &');
+                }
+            ],
+            theme: {
+                extend: {
+                    colors: {
+                        'void': '#0a0a0a',
+                        'cyan-glow': '#00f5ff',
+                        'blue-glow': '#0080ff',
+                        'cream': '#F4F2E9',
+                        'orange-accent': '#AF5C00',
+                        'orange-bright': '#FF4D00',
+                        'card-dark': '#111111',
+                        'sub': '#888888'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            overflow-x: hidden;
-            scroll-behavior: smooth;
-        }
-
-        html, body {
-            max-width: 100vw;
-            overscroll-behavior-x: none;
-        }
-
-        /* Theme Variables - Enhanced Cyber Tech Palette */
         :root {
-            /* Primary Colors */
-            --primary-cyan: #00f5ff;
-            --primary-blue: #0080ff;
-            --electric-purple: #8B5CF6;
-            
-            /* Backgrounds */
-            --bg-darkest: #0a0a0a;
-            --bg-dark: #1a1a1a;
-            --bg-elevated: #242424;
-            
-            /* Accents & States */
-            --success-green: #10b981;
-            --warning-amber: #f59e0b;
-            --error-red: #ef4444;
-            
-            /* Text */
-            --text-primary: #f0f0f0;
-            --text-secondary: #9ca3af;
-            --text-muted: #6b7280;
-            
-            /* Legacy compatibility */
-            --bg-primary: #0a0a0a;
-            --bg-secondary: #1a1a1a;
-            --accent: #0080ff;
-            --accent-light: #00f5ff;
-            --shadow: rgba(0, 0, 0, 0.3);
-            --card-bg: #1a1a1a;
+            --cursor-size: 20px;
+            --primary: #00f5ff;
+            --secondary: #0080ff;
+            --bg-color: #0a0a0a;
+            --text-color: #ffffff;
         }
 
-        [data-theme="dark"] {
-            --primary-cyan: #00f5ff;
-            --primary-blue: #0080ff;
-            --electric-purple: #8B5CF6;
-            --bg-darkest: #0a0a0a;
-            --bg-dark: #1a1a1a;
-            --bg-elevated: #242424;
-            --text-primary: #f0f0f0;
-            --text-secondary: #9ca3af;
-            --text-muted: #6b7280;
-            --shadow: rgba(0, 0, 0, 0.3);
-            --card-bg: #1a1a1a;
-        }
-
-        /* Light Mode */
         [data-theme="light"] {
-            --primary-cyan: #AF5C00;
-            --primary-blue: #E67A35;
-            --electric-purple: #FF5A5F;
-            --bg-darkest: #F8F8F8;
-            --bg-dark: #F0F0F0;
-            --bg-elevated: #FFFFFF;
-            --text-primary: #202124;
-            --text-secondary: #737373;
-            --text-muted: #9CA3AF;
-            --shadow: rgba(0, 0, 0, 0.06);
-            --card-bg: #FFFFFF;
-            --border-color: rgba(0, 0, 0, 0.08);
-            --glow-color: rgba(175, 92, 0, 0.2);
+            --primary: #AF5C00;
+            --secondary: #FF4D00;
+            --bg-color: #F4F2E9;
+            --text-color: #1a1a1a;
         }
-
+        
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: var(--bg-darkest);
-            color: var(--text-primary);
+            background-color: var(--bg-color);
+            color: var(--text-color);
             overflow-x: hidden;
-            position: relative;
-            -webkit-overflow-scrolling: touch;
-            min-height: 100vh;
+            cursor: auto;
+            transition: background-color 0.5s ease, color 0.5s ease;
         }
 
-        /* Atmospheric Glow */
-        body::before {
-            content: "";
+        body.cursor-active {
+            cursor: none;
+        }
+
+        /* Custom Cursor */
+        #cursor {
             position: fixed;
-            top: 40%;
+            top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(ellipse at bottom, rgba(0, 245, 255, 0.15), transparent 70%);
-            opacity: 0.6;
+            width: var(--cursor-size);
+            height: var(--cursor-size);
+            border: 1px solid var(--primary);
+            border-radius: 50%;
             pointer-events: none;
-            z-index: -1;
-        }
-
-        [data-theme="light"] body {
-            background: #F8F8F8;
-            color: #202124;
-        }
-
-        [data-theme="light"] body::before {
-            background: radial-gradient(ellipse at bottom, rgba(175, 92, 0, 0.03), transparent 70%);
-        }
-
-        /* Beam Grid Background */
-        .beam-grid-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            overflow: hidden;
-            z-index: -2;
-            pointer-events: none;
-        }
-
-        .beam-grid-canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            filter: blur(1.5px);
-        }
-
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(10, 10, 10, 0.8);
-            backdrop-filter: blur(12px);
-            z-index: 1000;
-            padding: 1.5rem 5%;
-            transition: all 0.3s ease;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        nav.scrolled {
-            padding: 1rem 5%;
-            box-shadow: 0 4px 30px rgba(0, 255, 255, 0.1);
-        }
-
-        [data-theme="light"] nav {
-            background: rgba(255, 255, 255, 0.95);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-        }
-
-        [data-theme="light"] nav.scrolled {
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-        }
-
-        .nav-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .nav-center {
-            display: flex;
-            align-items: center;
-            flex: 1;
-            justify-content: center;
-        }
-
-        .navigation-menu {
-            margin: 0;
-            position: relative;
-            z-index: 1;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 40px;
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-
-        .nav-links li {
-            list-style: none;
-        }
-
-        .nav-links a {
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-            border: none;
-            cursor: pointer;
-            background-color: transparent;
-            padding: 0;
-            margin: 0;
-            line-height: 22px;
-            font: inherit;
-            color: #e5e7eb;
-            text-decoration: none;
-            transition: color 0.25s;
-            font-weight: 500;
-        }
-
-        .nav-links li.active a {
-            color: #ffffff;
-        }
-
-        .nav-links li:not(.active):hover a {
-            text-shadow: 0 0 10px #00fffc, 0 0 20px #00fffc;
-        }
-
-        [data-theme="light"] .nav-links a {
-            color: #737373;
-        }
-
-        [data-theme="light"] .nav-links li.active a {
-            color: #202124;
-        }
-
-        [data-theme="light"] .nav-links li:not(.active):hover a {
-            color: #FF5A5F;
-            text-shadow: 0 0 10px rgba(175, 92, 0, 0.6), 0 0 20px rgba(175, 92, 0, 0.4);
-        }
-
-        .navigation-menu .active-element {
-            position: absolute;
-            left: 0;
-            top: 34px;
-            height: 3px;
-            width: 36px;
-            border-radius: 2px;
-            background-color: #00fffc;
-            opacity: var(--active-element-show, 0);
-            transition: all 0.3s ease;
-        }
-
-        [data-theme="light"] .navigation-menu .active-element {
-            background-color: #AF5C00;
-        }
-
-        /* Theme Toggle */
-        .theme-toggle {
-            background: rgba(0, 245, 255, 0.1);
-            border: 1px solid rgba(0, 245, 255, 0.3);
-            border-radius: 50px;
-            padding: 0.5rem 1rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--primary-cyan);
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-        }
-
-        .theme-toggle:hover {
-            background: rgba(0, 245, 255, 0.2);
-            border-color: var(--primary-cyan);
-        }
-
-        [data-theme="light"] .theme-toggle {
-            background: rgba(175, 92, 0, 0.1);
-            border-color: rgba(175, 92, 0, 0.3);
-            color: #AF5C00;
-        }
-
-        [data-theme="light"] .theme-toggle:hover {
-            background: rgba(175, 92, 0, 0.2);
-            border-color: #AF5C00;
-        }
-
-        /* Mobile Menu Toggle */
-        .menu-toggle {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            cursor: pointer;
-            z-index: 1001;
-        }
-
-        .menu-toggle span {
-            width: 25px;
-            height: 3px;
-            background: var(--primary-cyan);
-            transition: all 0.3s ease;
-        }
-
-        /* Main Content */
-        .blog-section {
-            min-height: 100vh;
-            padding: 140px 5% 80px;
-        }
-
-        .section-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 1rem;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .section-title {
-            font-size: 3.5rem;
-            font-weight: 800;
-            text-align: center;
-            background: linear-gradient(135deg, var(--primary-cyan), var(--primary-blue));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 1rem;
-        }
-
-        [data-theme="light"] .section-title {
-            background: linear-gradient(135deg, #AF5C00, #FFB07A);
-            -webkit-background-clip: text;
-            background-clip: text;
-        }
-
-        .section-subtitle {
-            text-align: center;
-            color: var(--text-secondary);
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-        }
-
-        .blog-count {
-            display: inline-block;
-            padding: 0.5rem 1.5rem;
-            background: rgba(0, 245, 255, 0.1);
-            border: 1px solid rgba(0, 245, 255, 0.3);
-            border-radius: 50px;
-            color: var(--primary-cyan);
-            font-weight: 600;
-            font-size: 0.9rem;
-            margin-top: 1rem;
-        }
-
-        [data-theme="light"] .blog-count {
-            background: rgba(175, 92, 0, 0.1);
-            border-color: rgba(175, 92, 0, 0.3);
-            color: #AF5C00;
-        }
-
-        /* Blog Grid */
-        .blogs-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-            gap: 2.5rem;
-        }
-
-        .blog-card {
-            background: rgba(20, 20, 20, 0.6);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            overflow: hidden;
-            transition: all 0.4s ease;
-            border: 1px solid rgba(0, 245, 255, 0.1);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            cursor: pointer;
-            position: relative;
-        }
-
-        .blog-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(0, 245, 255, 0.05), rgba(0, 128, 255, 0.05));
+            z-index: 9999;
+            mix-blend-mode: difference;
+            transition: transform 0.1s ease, width 0.3s, height 0.3s, border-color 0.3s;
+            transform: translate(-50%, -50%);
             opacity: 0;
-            transition: opacity 0.4s ease;
-            z-index: 0;
         }
 
-        .blog-card:hover::before {
+        body.cursor-active #cursor {
             opacity: 1;
         }
 
+        #cursor.hovered {
+            background-color: var(--primary);
+            width: 50px;
+            height: 50px;
+            mix-blend-mode: normal;
+            opacity: 0.8;
+        }
+
+        /* Nav Link Active State */
+        .nav-link {
+            position: relative;
+            padding: 0.5rem 0.75rem;
+            border-radius: 9999px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .nav-link.active {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--primary) !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="light"] .nav-link.active {
+            background: rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            color: var(--primary) !important;
+        }
+
+        /* Grain Overlay */
+        .grain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9000;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        @media (max-width: 768px) {
+            .grain { display: none; }
+            #cursor { display: none !important; }
+        }
+
+        /* Blog Card Hover Effects */
+        .blog-card {
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s ease;
+        }
+
         .blog-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 50px rgba(0, 245, 255, 0.3);
+            transform: translateY(-8px);
+        }
+
+        /* Smooth image zoom */
+        .blog-card img {
+            transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.4s ease;
+        }
+
+        .blog-card:hover img {
+            transform: scale(1.08);
+            opacity: 1 !important;
+        }
+
+        /* Tag pills */
+        .tag-pill {
+            transition: all 0.3s ease;
+        }
+
+        .blog-card:hover .tag-pill {
+            background: rgba(0, 245, 255, 0.2);
             border-color: rgba(0, 245, 255, 0.5);
         }
 
-        [data-theme="light"] .blog-card {
-            background: rgba(255, 255, 255, 0.9);
-            border-color: rgba(175, 92, 0, 0.15);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-        }
-
-        [data-theme="light"] .blog-card::before {
-            background: linear-gradient(135deg, rgba(175, 92, 0, 0.05), rgba(255, 90, 95, 0.05));
-        }
-
-        [data-theme="light"] .blog-card:hover {
-            box-shadow: 0 20px 50px rgba(175, 92, 0, 0.15);
+        [data-theme="light"] .blog-card:hover .tag-pill {
+            background: rgba(175, 92, 0, 0.15);
             border-color: rgba(175, 92, 0, 0.4);
         }
 
-        .blog-thumbnail {
-            width: 100%;
-            height: 220px;
-            background: linear-gradient(135deg, var(--primary-cyan), var(--primary-blue));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        [data-theme="light"] .blog-thumbnail {
-            background: linear-gradient(135deg, #AF5C00, #FFB07A);
-        }
-
-        .blog-thumbnail img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .blog-card:hover .blog-thumbnail img {
-            transform: scale(1.05);
-        }
-
-        .blog-content {
-            padding: 2rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .blog-meta {
-            display: flex;
-            gap: 1.5rem;
-            margin-bottom: 1rem;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            flex-wrap: wrap;
-        }
-
-        .blog-meta span {
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-        }
-
-        .blog-content h3 {
-            font-size: 1.4rem;
-            margin-bottom: 1rem;
-            color: var(--primary-cyan);
-            line-height: 1.4;
-            transition: color 0.3s ease;
-        }
-
-        [data-theme="light"] .blog-content h3 {
-            color: #AF5C00;
-        }
-
-        .blog-card:hover .blog-content h3 {
-            color: var(--primary-blue);
-        }
-
-        [data-theme="light"] .blog-card:hover .blog-content h3 {
-            color: #FF5A5F;
-        }
-
-        .blog-preview {
-            color: var(--text-secondary);
-            line-height: 1.7;
-            margin-bottom: 1.5rem;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .blog-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .tag {
-            padding: 0.4rem 1rem;
-            background: rgba(0, 245, 255, 0.1);
-            border: 1px solid rgba(0, 245, 255, 0.2);
-            border-radius: 20px;
-            font-size: 0.8rem;
-            color: var(--primary-cyan);
-            transition: all 0.3s ease;
-        }
-
-        .blog-card:hover .tag {
-            background: rgba(0, 245, 255, 0.2);
-            border-color: rgba(0, 245, 255, 0.4);
-        }
-
-        [data-theme="light"] .tag {
-            background: rgba(175, 92, 0, 0.1);
-            border-color: rgba(175, 92, 0, 0.2);
-            color: #AF5C00;
-        }
-
-        [data-theme="light"] .blog-card:hover .tag {
-            background: rgba(175, 92, 0, 0.2);
-            border-color: rgba(175, 92, 0, 0.4);
-        }
-
-        .read-more-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.8rem 2rem;
-            background: linear-gradient(135deg, rgba(0, 245, 255, 0.1), rgba(0, 128, 255, 0.1));
-            border: 2px solid rgba(0, 245, 255, 0.3);
-            border-radius: 50px;
-            color: var(--primary-cyan);
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .read-more-btn:hover {
-            background: linear-gradient(135deg, var(--primary-cyan), var(--primary-blue));
-            border-color: transparent;
-            color: #000;
-            transform: translateX(5px);
-            box-shadow: 0 5px 20px rgba(0, 245, 255, 0.4);
-        }
-
-        [data-theme="light"] .read-more-btn {
-            background: linear-gradient(135deg, rgba(175, 92, 0, 0.1), rgba(255, 176, 122, 0.1));
-            border-color: rgba(175, 92, 0, 0.3);
-            color: #AF5C00;
-        }
-
-        [data-theme="light"] .read-more-btn:hover {
-            background: linear-gradient(135deg, #AF5C00, #FFB07A);
-            color: #fff;
-            box-shadow: 0 5px 20px rgba(175, 92, 0, 0.4);
-        }
-
-        .read-more-btn svg {
-            width: 16px;
-            height: 16px;
-            transition: transform 0.3s ease;
-        }
-
-        .read-more-btn:hover svg {
-            transform: translateX(3px);
-        }
-
-        /* Back to Portfolio Button */
-        .back-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.6rem 1.5rem;
-            background: transparent;
-            border: 1px solid rgba(0, 245, 255, 0.3);
-            border-radius: 50px;
-            color: var(--primary-cyan);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-        }
-
-        .back-btn:hover {
-            background: rgba(0, 245, 255, 0.1);
-            border-color: var(--primary-cyan);
-        }
-
-        [data-theme="light"] .back-btn {
-            border-color: rgba(175, 92, 0, 0.3);
-            color: #AF5C00;
-        }
-
-        [data-theme="light"] .back-btn:hover {
-            background: rgba(175, 92, 0, 0.1);
-            border-color: #AF5C00;
-        }
-
-        /* Empty State */
-        .empty-state {
-            text-align: center;
-            padding: 4rem 2rem;
-            color: var(--text-secondary);
-        }
-
-        .empty-state svg {
-            width: 80px;
-            height: 80px;
-            margin-bottom: 1.5rem;
-            opacity: 0.5;
-            color: var(--primary-cyan);
-        }
-
-        /* Loading Animation */
-        .loading {
-            display: none;
-            text-align: center;
-            padding: 3rem;
-            color: var(--primary-cyan);
-        }
-
-        .loading.active {
-            display: block;
-        }
-
+        /* Loading spinner */
         .spinner {
             border: 3px solid rgba(0, 245, 255, 0.1);
-            border-top: 3px solid var(--primary-cyan);
+            border-top: 3px solid var(--primary);
             border-radius: 50%;
-            width: 50px;
-            height: 50px;
+            width: 40px;
+            height: 40px;
             animation: spin 1s linear infinite;
-            margin: 0 auto 1rem;
         }
 
         @keyframes spin {
@@ -644,196 +206,119 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Footer */
-        footer {
-            background: rgba(0, 0, 0, 0.5);
-            padding: 2rem 5%;
-            text-align: center;
-            color: var(--text-secondary);
-            border-top: 1px solid rgba(0, 245, 255, 0.1);
+        /* Stagger animation for cards */
+        .blog-card {
+            opacity: 0;
+            transform: translateY(40px);
         }
 
-        [data-theme="light"] footer {
-            background: rgba(240, 240, 240, 0.85);
-            border-top-color: rgba(0, 0, 0, 0.06);
-        }
-
-        footer a {
-            color: var(--primary-cyan);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        footer a:hover {
-            color: var(--primary-blue);
-        }
-
-        [data-theme="light"] footer a {
-            color: #AF5C00;
-        }
-
-        [data-theme="light"] footer a:hover {
-            color: #FF5A5F;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .section-title {
-                font-size: 2.2rem;
-            }
-
-            .section-subtitle {
-                font-size: 1rem;
-            }
-
-            .blogs-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: rgba(10, 10, 10, 0.98);
-                flex-direction: column;
-                padding: 2rem;
-                gap: 1.5rem;
-                border-bottom: 1px solid rgba(0, 245, 255, 0.1);
-            }
-
-            .nav-links.active {
-                display: flex;
-            }
-
-            [data-theme="light"] .nav-links {
-                background: rgba(255, 255, 255, 0.98);
-            }
-
-            .menu-toggle {
-                display: flex;
-            }
-
-            .blog-thumbnail {
-                height: 180px;
-            }
-
-            .blog-content {
-                padding: 1.5rem;
-            }
-
-            .blog-content h3 {
-                font-size: 1.2rem;
-            }
-
-            .theme-toggle span {
-                display: none;
-            }
-
-            .back-btn span {
-                display: none;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .section-title {
-                font-size: 1.8rem;
-            }
-
-            .blog-meta {
-                gap: 1rem;
-                font-size: 0.8rem;
-            }
-
-            .read-more-btn {
-                width: 100%;
-                justify-content: center;
-            }
+        .blog-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
     </style>
 </head>
-<body>
-    <!-- Beam Grid Background -->
-    <div class="beam-grid-container" id="beamGridContainer">
-        <canvas class="beam-grid-canvas" id="beamGridCanvas"></canvas>
-    </div>
+<body data-theme="dark">
+    <!-- Grain Overlay -->
+    <div class="grain"></div>
+    
+    <!-- Custom Cursor -->
+    <div id="cursor"></div>
 
     <!-- Navigation -->
-    <nav id="navbar">
-        <div class="nav-container">
-            <a href="data-scientist-portfolio.html" class="back-btn">
-                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                </svg>
-                <span>Portfolio</span>
-            </a>
-            <div class="nav-center">
-                <div class="navigation-menu">
-                    <ul class="nav-links" id="navLinks">
-                        <li><a href="data-scientist-portfolio.html#home">Home</a></li>
-                        <li><a href="data-scientist-portfolio.html#about">About</a></li>
-                        <li><a href="data-scientist-portfolio.html#skills">Skills</a></li>
-                        <li><a href="data-scientist-portfolio.html#projects">Projects</a></li>
-                        <li class="active"><a href="blog.html">Blog</a></li>
-                        <li><a href="data-scientist-portfolio.html#contact">Contact</a></li>
-                    </ul>
-                    <div class="active-element"></div>
+    <nav class="fixed top-0 w-full z-50 px-4 py-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex items-center justify-between bg-white/5 light:bg-black/5 backdrop-blur-xl border border-white/10 light:border-black/10 rounded-full px-6 py-3">
+                <!-- Back to Portfolio -->
+                <a href="data-scientist-portfolio.html" class="flex items-center gap-2 text-white light:text-black hover:text-cyan-glow light:hover:text-orange-accent transition-colors font-medium">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                    </svg>
+                    <span class="hidden sm:inline">Portfolio</span>
+                </a>
+
+                <!-- Center Nav -->
+                <div class="hidden md:flex items-center gap-1">
+                    <a href="data-scientist-portfolio.html#home" class="nav-link text-sm text-gray-300 light:text-gray-600 hover:text-white light:hover:text-black">Home</a>
+                    <a href="data-scientist-portfolio.html#about" class="nav-link text-sm text-gray-300 light:text-gray-600 hover:text-white light:hover:text-black">About</a>
+                    <a href="data-scientist-portfolio.html#skills" class="nav-link text-sm text-gray-300 light:text-gray-600 hover:text-white light:hover:text-black">Skills</a>
+                    <a href="data-scientist-portfolio.html#projects" class="nav-link text-sm text-gray-300 light:text-gray-600 hover:text-white light:hover:text-black">Projects</a>
+                    <a href="blog.html" class="nav-link active text-sm">Blog</a>
+                    <a href="data-scientist-portfolio.html#contact" class="nav-link text-sm text-gray-300 light:text-gray-600 hover:text-white light:hover:text-black">Contact</a>
                 </div>
-            </div>
-            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-                <svg class="sun-icon" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: none;">
-                    <circle cx="12" cy="12" r="5"/>
-                    <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
-                </svg>
-                <svg class="moon-icon" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
-                </svg>
-                <span>Theme</span>
-            </button>
-            <div class="menu-toggle" id="menuToggle">
-                <span></span>
-                <span></span>
-                <span></span>
+
+                <!-- Theme Toggle -->
+                <button id="themeToggle" class="flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 light:border-black/20 hover:bg-white/10 light:hover:bg-black/5 transition-all text-white light:text-black" aria-label="Toggle theme">
+                    <svg class="sun-icon w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: none;">
+                        <circle cx="12" cy="12" r="5"/>
+                        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                    </svg>
+                    <svg class="moon-icon w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+                    </svg>
+                </button>
             </div>
         </div>
     </nav>
 
-    <!-- Blog Section -->
-    <section class="blog-section">
-        <div class="section-container">
-            <div class="section-header">
-                <h1 class="section-title">Blog & Insights</h1>
-                <p class="section-subtitle">Exploring Data Science, AI, and Machine Learning</p>
-                <span class="blog-count" id="blogCount">Loading...</span>
+    <!-- Hero Section -->
+    <section class="min-h-[50vh] flex items-end pb-16 pt-32 px-4">
+        <div class="max-w-7xl mx-auto w-full">
+            <div class="flex flex-col md:flex-row justify-between items-end gap-8">
+                <div>
+                    <p class="text-cyan-glow light:text-orange-accent font-mono text-sm uppercase tracking-widest mb-4">Insights & Articles</p>
+                    <h1 class="font-display text-5xl md:text-7xl font-bold text-white light:text-black leading-tight">
+                        Blog<span class="text-sub light:text-gray-400">.</span>
+                    </h1>
+                    <p class="text-sub light:text-gray-600 text-lg mt-4 max-w-lg">
+                        Thoughts on AI, Engineering, and the future of tech. Deep dives into what actually works.
+                    </p>
+                </div>
+                <div class="flex items-center gap-4">
+                    <span id="blogCount" class="px-4 py-2 rounded-full border border-cyan-glow/30 light:border-orange-accent/30 text-cyan-glow light:text-orange-accent font-mono text-sm">
+                        Loading...
+                    </span>
+                </div>
             </div>
+        </div>
+    </section>
 
+    <!-- Blog Grid Section -->
+    <section class="py-16 px-4 bg-[#050505] light:bg-cream">
+        <div class="max-w-7xl mx-auto">
             <!-- Loading State -->
-            <div class="loading" id="loading">
-                <div class="spinner"></div>
-                <p>Loading blog posts...</p>
+            <div id="loading" class="flex flex-col items-center justify-center py-20">
+                <div class="spinner mb-4"></div>
+                <p class="text-sub light:text-gray-500 font-mono text-sm">Loading articles...</p>
             </div>
 
             <!-- Blog Grid -->
-            <div class="blogs-grid" id="blogsGrid">
+            <div id="blogsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Blog cards will be dynamically inserted here -->
             </div>
 
             <!-- Empty State -->
-            <div class="empty-state" id="emptyState" style="display: none;">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+            <div id="emptyState" class="hidden flex-col items-center justify-center py-20 text-center">
+                <svg class="w-16 h-16 text-sub light:text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                 </svg>
-                <h3>No blog posts yet</h3>
-                <p>Check back soon for new content!</p>
+                <h3 class="font-display text-2xl font-bold text-white light:text-black mb-2">No articles yet</h3>
+                <p class="text-sub light:text-gray-600">Check back soon for new content.</p>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer>
-        <p>&copy; 2025 Rahul Singh. All rights reserved. | <a href="data-scientist-portfolio.html">Back to Portfolio</a></p>
+    <footer class="py-12 px-4 border-t border-white/5 light:border-black/5">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-sub light:text-gray-500 text-sm font-mono">
+                &copy; 2026 Rahul Singh. All rights reserved.
+            </p>
+            <a href="data-scientist-portfolio.html" class="text-cyan-glow light:text-orange-accent hover:underline text-sm">
+                Back to Portfolio
+            </a>
+        </div>
     </footer>
 
     <script>
@@ -841,25 +326,20 @@
         // THEME TOGGLE
         // ============================================
         const themeToggle = document.getElementById('themeToggle');
-        const html = document.documentElement;
+        const body = document.body;
         const sunIcon = themeToggle.querySelector('.sun-icon');
         const moonIcon = themeToggle.querySelector('.moon-icon');
 
-        // Check for saved theme preference or default to dark
         const savedTheme = localStorage.getItem('portfolio-theme') || 'dark';
-        html.setAttribute('data-theme', savedTheme);
+        body.setAttribute('data-theme', savedTheme);
         updateThemeIcons(savedTheme);
 
         themeToggle.addEventListener('click', () => {
-            const currentTheme = html.getAttribute('data-theme');
+            const currentTheme = body.getAttribute('data-theme');
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            html.setAttribute('data-theme', newTheme);
+            body.setAttribute('data-theme', newTheme);
             localStorage.setItem('portfolio-theme', newTheme);
             updateThemeIcons(newTheme);
-
-            if (typeof initBeamGrid === 'function') {
-                initBeamGrid();
-            }
         });
 
         function updateThemeIcons(theme) {
@@ -873,265 +353,22 @@
         }
 
         // ============================================
-        // MOBILE MENU TOGGLE
+        // CUSTOM CURSOR
         // ============================================
-        const menuToggle = document.getElementById('menuToggle');
-        const navLinks = document.getElementById('navLinks');
-
-        menuToggle.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-        });
-
-        // ============================================
-        // NAVBAR SCROLL EFFECT
-        // ============================================
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
-
-        // ============================================
-        // BEAM GRID BACKGROUND
-        // ============================================
-        function initBeamGrid() {
-            const canvas = document.getElementById('beamGridCanvas');
-            const container = document.getElementById('beamGridContainer');
-            if (!canvas || !container) return;
-
-            if (window.__honeycombInitialized) {
-                const theme = document.documentElement.getAttribute('data-theme') || 'dark';
-                if (window.honeycombConfig) {
-                    if (theme === 'light') {
-                        window.honeycombConfig.gridColor = 'rgba(175, 92, 0, 0.25)';
-                        window.honeycombConfig.gridFillColor = 'rgba(255, 176, 122, 0.08)';
-                        window.honeycombConfig.activeColor = 'rgba(175, 92, 0, 0.5)';
-                        window.honeycombConfig.activeColorAlt = 'rgba(255, 140, 50, 0.4)';
-                    } else {
-                        window.honeycombConfig.gridColor = 'rgba(192, 192, 192, 0.08)';
-                        window.honeycombConfig.gridFillColor = null;
-                        window.honeycombConfig.activeColor = 'rgba(0, 245, 255, 0.35)';
-                        window.honeycombConfig.activeColorAlt = 'rgba(0, 128, 255, 0.35)';
-                    }
-                }
-                return;
-            }
-
-            window.__honeycombInitialized = true;
-            const ctx = canvas.getContext('2d');
+        const cursor = document.getElementById('cursor');
+        
+        if (window.innerWidth > 768) {
+            document.body.classList.add('cursor-active');
             
-            function resize() {
-                const rect = container.getBoundingClientRect();
-                width = canvas.width = rect.width;
-                height = canvas.height = rect.height;
-                hexWidth = config.hexSize * Math.sqrt(3);
-                hexHeight = config.hexSize * 2;
-                cols = Math.ceil(width / hexWidth) + 2;
-                rows = Math.ceil(height / (hexHeight * 0.75)) + 2;
-            }
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            });
 
-            const currentTheme = localStorage.getItem('portfolio-theme') || document.documentElement.getAttribute('data-theme') || 'dark';
-            const isLightMode = currentTheme === 'light';
-            
-            const config = {
-                hexSize: 85,
-                gridColor: isLightMode ? 'rgba(175, 92, 0, 0.25)' : 'rgba(192, 192, 192, 0.08)',
-                gridFillColor: isLightMode ? 'rgba(255, 176, 122, 0.08)' : null,
-                activeColor: isLightMode ? 'rgba(175, 92, 0, 0.5)' : 'rgba(0, 245, 255, 0.35)',
-                activeColorAlt: isLightMode ? 'rgba(255, 140, 50, 0.4)' : 'rgba(0, 128, 255, 0.35)',
-                pulseSpeed: 0.006,
-                maxActive: 4,
-                interactive: true
-            };
-
-            window.honeycombConfig = config;
-
-            let width, height, cols, rows;
-            let hexWidth, hexHeight;
-            const mouse = { x: -1000, y: -1000 };
-            let activeHexes = [];
-
-            const fishbowl = {
-                enabled: true,
-                strength: 0.3,
-                centerX: 0.5,
-                centerY: 0.5
-            };
-
-            function applyFishbowl(px, py) {
-                if (!fishbowl.enabled) return { x: px, y: py };
-
-                const cx = width * fishbowl.centerX;
-                const cy = height * fishbowl.centerY;
-                const maxRadius = Math.sqrt(cx * cx + cy * cy);
-
-                const dx = px - cx;
-                const dy = py - cy;
-                const dist = Math.sqrt(dx * dx + dy * dy);
-                const normalizedDist = dist / maxRadius;
-
-                const distortion = 1 + fishbowl.strength * normalizedDist * normalizedDist;
-
-                return {
-                    x: cx + dx * distortion,
-                    y: cy + dy * distortion
-                };
-            }
-
-            function drawHex(x, y, size, strokeColor, fillColor) {
-                ctx.beginPath();
-                for (let i = 0; i < 6; i++) {
-                    const angle = (Math.PI / 3) * i - Math.PI / 6;
-                    const rawX = x + size * Math.cos(angle);
-                    const rawY = y + size * Math.sin(angle);
-
-                    const distorted = applyFishbowl(rawX, rawY);
-
-                    if (i === 0) ctx.moveTo(distorted.x, distorted.y);
-                    else ctx.lineTo(distorted.x, distorted.y);
-                }
-                ctx.closePath();
-                if (fillColor) {
-                    ctx.fillStyle = fillColor;
-                    ctx.fill();
-                }
-                if (strokeColor) {
-                    ctx.strokeStyle = strokeColor;
-                    ctx.lineWidth = 2;
-                    ctx.stroke();
-                }
-            }
-
-            function updateActiveHexes() {
-                activeHexes = activeHexes.filter(h => h.life > 0);
-
-                if (activeHexes.length < config.maxActive && Math.random() > 0.97) {
-                    activeHexes.push({
-                        col: Math.floor(Math.random() * cols),
-                        row: Math.floor(Math.random() * rows),
-                        life: 0,
-                        maxLife: 1,
-                        phase: 'in',
-                        color: Math.random() > 0.5 ? config.activeColor : config.activeColorAlt
-                    });
-                }
-
-                activeHexes.forEach(h => {
-                    if (h.phase === 'in') {
-                        h.life += config.pulseSpeed;
-                        if (h.life >= h.maxLife) {
-                            h.life = h.maxLife;
-                            h.phase = 'out';
-                        }
-                    } else {
-                        h.life -= config.pulseSpeed;
-                    }
-                });
-            }
-
-            function draw() {
-                ctx.clearRect(0, 0, width, height);
-
-                for (let r = 0; r < rows; r++) {
-                    for (let c = 0; c < cols; c++) {
-                        const xOffset = (r % 2) * (hexWidth / 2);
-                        const x = c * hexWidth + xOffset - hexWidth;
-                        const y = r * (hexHeight * 0.75) - hexHeight;
-
-                        drawHex(x, y, config.hexSize, config.gridColor, config.gridFillColor);
-                    }
-                }
-
-                activeHexes.forEach(h => {
-                    const xOffset = (h.row % 2) * (hexWidth / 2);
-                    const x = h.col * hexWidth + xOffset - hexWidth;
-                    const y = h.row * (hexHeight * 0.75) - hexHeight;
-                    const alpha = h.life;
-                    const baseColor = h.color.replace(/[\d.]+\)$/g, '');
-                    const color = `${baseColor}${alpha})`;
-
-                    ctx.shadowBlur = 10 * alpha;
-                    ctx.shadowColor = h.color;
-                    drawHex(x, y, config.hexSize, null, color);
-                    ctx.shadowBlur = 0;
-                });
-
-                if (config.interactive && mouse.x > 0 && mouse.y > 0) {
-                    const adjustedX = mouse.x + hexWidth + (hexWidth / 2);
-                    const adjustedY = mouse.y + hexHeight + (hexHeight * 0.375);
-
-                    const mRow = Math.floor(adjustedY / (hexHeight * 0.75));
-                    const rowXOffset = (mRow % 2) * (hexWidth / 2);
-                    const mCol = Math.floor((adjustedX - rowXOffset) / hexWidth);
-
-                    const isEvenRow = mRow % 2 === 0;
-                    const neighbors = isEvenRow ? [
-                        [0, 0],
-                        [-1, -1],
-                        [0, -1],
-                        [-1, 0],
-                        [1, 0],
-                        [-1, 1],
-                        [0, 1]
-                    ] : [
-                        [0, 0],
-                        [0, -1],
-                        [1, -1],
-                        [-1, 0],
-                        [1, 0],
-                        [0, 1],
-                        [1, 1]
-                    ];
-
-                    neighbors.forEach(([dc, dr], i) => {
-                        const col = mCol + dc;
-                        const row = mRow + dr;
-                        const xOffset = (row % 2) * (hexWidth / 2);
-                        const x = col * hexWidth + xOffset - hexWidth;
-                        const y = row * (hexHeight * 0.75) - hexHeight;
-
-                        const isCenter = i === 0;
-
-                        const isLight = document.documentElement.getAttribute('data-theme') === 'light';
-                        const highlightColor = isLight ? '175, 92, 0' : '0, 245, 255';
-
-                        if (isCenter) {
-                            ctx.shadowBlur = 15;
-                            ctx.shadowColor = `rgba(${highlightColor}, 0.8)`;
-                            drawHex(x, y, config.hexSize, `rgba(${highlightColor}, 0.9)`, `rgba(${highlightColor}, 0.35)`);
-                            ctx.shadowBlur = 0;
-                        } else {
-                            const fadeOpacity = 0.2;
-                            drawHex(x, y, config.hexSize, `rgba(${highlightColor}, ${0.5 * fadeOpacity})`, `rgba(${highlightColor}, ${0.15 * fadeOpacity})`);
-                        }
-                    });
-                }
-
-                updateActiveHexes();
-                requestAnimationFrame(draw);
-            }
-
-            if (config.interactive) {
-                window.addEventListener('mousemove', (e) => {
-                    const rect = canvas.getBoundingClientRect();
-                    mouse.x = e.clientX - rect.left;
-                    mouse.y = e.clientY - rect.top;
-                });
-                window.addEventListener('touchmove', (e) => {
-                    if (e.touches.length > 0) {
-                        const rect = canvas.getBoundingClientRect();
-                        mouse.x = e.touches[0].clientX - rect.left;
-                        mouse.y = e.touches[0].clientY - rect.top;
-                    }
-                }, { passive: true });
-            }
-
-            resize();
-            window.addEventListener('resize', resize);
-            draw();
+            document.querySelectorAll('a, button, .blog-card').forEach(el => {
+                el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
+                el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
+            });
         }
 
         // ============================================
@@ -1144,78 +381,76 @@
             const blogCount = document.getElementById('blogCount');
             
             try {
-                loading.classList.add('active');
-                
                 const response = await fetch('./blogs/blogs.json');
+                if (!response.ok) throw new Error('Failed to load blogs');
+                
                 const data = await response.json();
+                const blogs = data.blogs;
                 
-                loading.classList.remove('active');
+                loading.style.display = 'none';
                 
-                if (data.blogs && data.blogs.length > 0) {
-                    blogCount.textContent = `${data.blogs.length} Article${data.blogs.length > 1 ? 's' : ''}`;
+                if (blogs && blogs.length > 0) {
+                    blogCount.textContent = `${blogs.length} Article${blogs.length > 1 ? 's' : ''}`;
                     
-                    blogsGrid.innerHTML = data.blogs.map(blog => {
-                        const isLightMode = document.documentElement.getAttribute('data-theme') === 'light';
-                        const thumbnailGradient = isLightMode 
-                            ? 'linear-gradient(135deg, #AF5C00, #FFB07A)' 
-                            : 'linear-gradient(135deg, #00f5ff, #0080ff)';
-                        
-                        return `
-                            <article class="blog-card" onclick="window.location.href='blogs/${blog.slug}.html'">
-                                <div class="blog-thumbnail" style="${blog.thumbnail ? `background-image: url('${blog.thumbnail}'); background-size: cover; background-position: center;` : `background: ${thumbnailGradient};`}">
-                                    ${blog.thumbnail ? '' : (blog.icon || '📝')}
+                    blogsGrid.innerHTML = blogs.map((blog, index) => `
+                        <article class="blog-card group cursor-pointer" onclick="window.location.href='blogs/${blog.slug}.html'" style="transition-delay: ${index * 100}ms">
+                            <div class="aspect-[4/3] bg-[#111] light:bg-white rounded-2xl overflow-hidden relative mb-6 border border-white/10 light:border-black/10">
+                                ${blog.thumbnail ? 
+                                    `<img src="${blog.thumbnail}" class="w-full h-full object-cover opacity-70" alt="${blog.title}" loading="lazy">` :
+                                    `<div class="w-full h-full flex items-center justify-center text-6xl opacity-40">${blog.icon || '📝'}</div>`
+                                }
+                                <div class="absolute top-4 left-4 flex gap-2">
+                                    ${(blog.tags || []).slice(0, 2).map(tag => 
+                                        `<span class="tag-pill bg-black/50 backdrop-blur-md px-3 py-1 rounded-full text-xs border border-white/20 text-white">${tag}</span>`
+                                    ).join('')}
                                 </div>
-                                <div class="blog-content">
-                                    <div class="blog-meta">
-                                        <span>📅 ${blog.date || 'Recent'}</span>
-                                        <span>⏱️ ${blog.readTime || '5 min read'}</span>
-                                    </div>
-                                    <h3>${blog.title}</h3>
-                                    <p class="blog-preview">${blog.excerpt || blog.description || ''}</p>
-                                    <div class="blog-tags">
-                                        ${(blog.tags || []).slice(0, 4).map(tag => `<span class="tag">${tag}</span>`).join('')}
-                                    </div>
-                                    <a href="blogs/${blog.slug}.html" class="read-more-btn" onclick="event.stopPropagation();">
-                                        Read Article
-                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                                        </svg>
-                                    </a>
-                                </div>
-                            </article>
-                        `;
-                    }).join('');
+                            </div>
+                            <div class="flex items-center gap-4 text-xs text-sub light:text-gray-600 mb-3 font-mono">
+                                <span>${blog.date || 'Recent'}</span>
+                                <span class="w-1 h-1 rounded-full bg-cyan-glow light:bg-orange-accent"></span>
+                                <span>${blog.readTime || '5 min read'}</span>
+                            </div>
+                            <h3 class="font-display text-xl font-bold text-white light:text-black mb-2 group-hover:text-cyan-glow light:group-hover:text-orange-accent transition-colors line-clamp-2">
+                                ${blog.title}
+                            </h3>
+                            <p class="text-sub light:text-gray-600 text-sm line-clamp-2">
+                                ${blog.excerpt || ''}
+                            </p>
+                        </article>
+                    `).join('');
+
+                    // Animate cards in
+                    setTimeout(() => {
+                        document.querySelectorAll('.blog-card').forEach((card, i) => {
+                            setTimeout(() => card.classList.add('visible'), i * 100);
+                        });
+                    }, 100);
+
+                    // Add cursor hover to new cards
+                    if (window.innerWidth > 768) {
+                        document.querySelectorAll('.blog-card').forEach(el => {
+                            el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
+                            el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
+                        });
+                    }
                     
-                    emptyState.style.display = 'none';
                 } else {
                     blogCount.textContent = '0 Articles';
-                    emptyState.style.display = 'block';
+                    emptyState.classList.remove('hidden');
+                    emptyState.classList.add('flex');
                 }
                 
             } catch (error) {
                 console.error('Error loading blogs:', error);
-                loading.classList.remove('active');
+                loading.style.display = 'none';
                 blogCount.textContent = '0 Articles';
-                emptyState.style.display = 'block';
+                emptyState.classList.remove('hidden');
+                emptyState.classList.add('flex');
             }
         }
 
         // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            initBeamGrid();
-            loadBlogs();
-        });
-
-        // Re-render blogs when theme changes to update gradient colors
-        const observer = new MutationObserver((mutations) => {
-            mutations.forEach((mutation) => {
-                if (mutation.attributeName === 'data-theme') {
-                    initBeamGrid();
-                    loadBlogs();
-                }
-            });
-        });
-        observer.observe(document.documentElement, { attributes: true });
+        document.addEventListener('DOMContentLoaded', loadBlogs);
     </script>
 </body>
 </html>

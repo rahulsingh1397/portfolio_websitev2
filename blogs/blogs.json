@@ -8,7 +8,7 @@
       "readTime": "12 min read",
       "tags": ["AI Coding", "LLMs", "Context Windows", "Prompt Engineering", "Developer Tools"],
       "icon": "🧠",
-      "thumbnail": null
+      "thumbnail": "assets/Why_AI_Coding_Sucks.webp"
     },
     {
       "slug": "agentic-ai-takes-center-stage-2025",
@@ -18,7 +18,7 @@
       "readTime": "10 min read",
       "tags": ["Agentic AI", "Autonomous Agents", "Enterprise AI", "Workflow Automation"],
       "icon": "🤖",
-      "thumbnail": null
+      "thumbnail": "assets/Agentic_AI_Takes_Center_Stage.jpg"
     },
     {
       "slug": "ai-models-showdown-2025",
@@ -28,7 +28,7 @@
       "readTime": "12 min read",
       "tags": ["AI", "LLMs", "Claude", "GPT-5", "Gemini", "Grok"],
       "icon": "🤖",
-      "thumbnail": null
+      "thumbnail": "assets/The_Ultimate_AI_Models_Showdown.jpg"
     }
   ]
 }
