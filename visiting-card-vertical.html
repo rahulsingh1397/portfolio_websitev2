@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rahul Singh — Vertical Visiting Card</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Outfit:wght@200;300;400;500;600&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+    <script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.160.0/examples/jsm/"}}</script>
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --void: #0a0a0a;
+            --card-bg: #111111;
+            --card-surface: #181818;
+            --cyan: #00f5ff;
+            --blue: #0080ff;
+            --sub: #555;
+            --muted: #333;
+            --white: #eee;
+        }
+
+        body {
+            background: #080808;
+            font-family: 'Outfit', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 48px 20px 80px;
+            color: var(--white);
+        }
+
+        .page-header { text-align: center; margin-bottom: 48px; }
+        .page-header h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 600;
+            color: var(--sub);
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+        .page-header p {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.5rem;
+            color: var(--muted);
+            letter-spacing: 0.06em;
+        }
+
+        .cards-row {
+            display: flex;
+            gap: 72px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .card-group { display: flex; flex-direction: column; align-items: center; }
+
+        .card-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.45rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.4em;
+            margin-bottom: 14px;
+        }
+
+        /* ===== CARD ===== */
+        .card {
+            width: 2.2in;
+            height: 3.5in;
+            border-radius: 18px;
+            position: relative;
+            overflow: hidden;
+            box-shadow:
+                0 18px 45px rgba(0, 0, 0, 0.6),
+                0 0 80px rgba(0, 245, 255, 0.12),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+            background: var(--card-bg);
+        }
+
+        .window-controls {
+            position: absolute;
+            top: 10px;
+            right: 16px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        .win-btn {
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            color: rgba(255, 255, 255, 0.45);
+        }
+
+        .win-btn.minimize::after {
+            content: '';
+            width: 12px;
+            height: 1px;
+            background: currentColor;
+        }
+
+        .win-btn.maximize::after {
+            content: '';
+            width: 10px;
+            height: 10px;
+            border: 1px solid currentColor;
+        }
+
+        .win-btn.close::before,
+        .win-btn.close::after {
+            content: '';
+            position: absolute;
+            width: 12px;
+            height: 1.5px;
+            background: currentColor;
+        }
+
+        .win-btn.close::before { transform: rotate(45deg); }
+        .win-btn.close::after { transform: rotate(-45deg); }
+
+        /* ============================================
+           FRONT — Cinematic, asymmetric, bold
+           ============================================ */
+        .card-front { background: var(--card-bg); }
+
+        /* Angled accent slab — left edge, cuts diagonally */
+        .card-front::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--cyan) 0%, var(--blue) 50%, transparent 100%);
+            z-index: 3;
+        }
+
+        /* Subtle radial glow from bottom-left */
+        .card-front::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -30%;
+            width: 120%;
+            height: 80%;
+            background: radial-gradient(ellipse at center, rgba(0,245,255,0.04) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .front-inner {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: 26px 18px 30px 24px;
+            gap: 8px;
+        }
+
+        /* Monogram — top, small, ghosted */
+        .monogram {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.58rem;
+            font-weight: 800;
+            color: var(--cyan);
+            letter-spacing: 0.16em;
+            opacity: 0.45;
+        }
+
+        /* 3D Eye container — fixed size matching QR code */
+        .eye-canvas-wrap {
+            width: 96px;
+            height: 96px;
+            margin: auto 0;
+            align-self: center;
+            position: relative;
+        }
+
+        .eye-canvas-wrap canvas {
+            width: 100% !important;
+            height: 100% !important;
+            display: block;
+        }
+
+
+        /* Name — stacked, massive contrast */
+        .hero-name { margin-bottom: 4px; }
+
+        .hero-name .first {
+            display: block;
+            font-family: 'Syne', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--white);
+            letter-spacing: -0.03em;
+            line-height: 0.95;
+        }
+
+        .hero-name .last {
+            display: block;
+            font-family: 'Syne', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 0.95;
+            background: linear-gradient(135deg, var(--cyan), var(--blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Accent dash */
+        .hero-rule {
+            width: 70px;
+            height: 2px;
+            background: var(--cyan);
+            margin: 10px 0 8px;
+            border: none;
+        }
+
+        /* Role */
+        .hero-role {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.5rem;
+            font-weight: 500;
+            color: var(--white);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        /* Tags — bottom, tight */
+        .front-tags {
+            display: flex;
+            gap: 3px;
+            margin-top: 12px;
+            flex-wrap: nowrap;
+            white-space: nowrap;
+        }
+
+        .ftag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.3rem;
+            font-weight: 500;
+            color: rgba(0,245,255,0.7);
+            padding: 3px 7px;
+            border: 1px solid rgba(0,245,255,0.18);
+            border-radius: 2px;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        /* Decorative corner marks on front */
+        .corner-mark {
+            position: absolute;
+            z-index: 4;
+        }
+        .corner-mark.tl {
+            top: 14px; left: 14px;
+            width: 12px; height: 12px;
+            border-top: 1.5px solid rgba(0,245,255,0.2);
+            border-left: 1.5px solid rgba(0,245,255,0.2);
+        }
+        .corner-mark.br {
+            bottom: 14px; right: 14px;
+            width: 12px; height: 12px;
+            border-bottom: 1.5px solid rgba(0,245,255,0.12);
+            border-right: 1.5px solid rgba(0,245,255,0.12);
+        }
+
+        /* ============================================
+           BACK — QR hero center, contacts below
+           ============================================ */
+        .card-back { background: var(--card-bg); }
+
+        /* Right edge accent (mirrors front left) */
+        .card-back::before {
+            content: '';
+            position: absolute;
+            top: 0; right: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(180deg, transparent 0%, var(--blue) 50%, var(--cyan) 100%);
+            z-index: 3;
+        }
+
+        .back-inner {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+            padding: 18px 16px 14px 16px;
+        }
+
+        /* QR — centered hero with gradient ring */
+        .qr-hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .qr-frame {
+            width: 88px;
+            height: 88px;
+            padding: 3px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--cyan), var(--blue), var(--cyan));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qr-frame-inner {
+            width: 100%;
+            height: 100%;
+            border-radius: 7px;
+            background: var(--card-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px;
+        }
+
+        .qr-frame-inner img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 4px;
+            filter: invert(1);
+        }
+
+        .qr-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.34rem;
+            font-weight: 500;
+            color: rgba(0,128,255,0.75);
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            margin-top: 8px;
+        }
+
+        /* Skills bar under QR */
+        .skills-bar {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.36rem;
+            font-weight: 500;
+            color: rgba(255,255,255,0.65);
+            letter-spacing: 0.08em;
+            margin-top: 6px;
+            text-align: center;
+        }
+
+        /* Divider */
+        .back-divider {
+            width: 40px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0,245,255,0.15), transparent);
+            margin-bottom: 10px;
+        }
+
+        /* Contact rows — expanded to fill space */
+        .contact-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+            width: 100%;
+            flex: 1;
+            justify-content: center;
+        }
+
+        .c-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .c-row .c-ico {
+            width: 30px;
+            height: 30px;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .c-row .c-ico svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .c-row:nth-child(1) .c-ico svg { color: #EA4335; }
+        .contact-stack .c-row:nth-child(2) .c-ico svg { color: #00C7B7; }
+        .contact-stack .c-row:nth-child(3) .c-ico svg { color: #FFFFFF; }
+        .contact-stack .c-row:nth-child(4) .c-ico svg { color: #006BFF; }
+
+        .c-row .c-info {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.44rem;
+            color: rgba(255,255,255,0.75);
+            font-weight: 600;
+            letter-spacing: 0.01em;
+            line-height: 1.35;
+        }
+
+        /* Footer */
+        .back-footer {
+            margin-top: auto;
+            padding-top: 8px;
+            width: 100%;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+        }
+
+        .back-footer .bf-text {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.26rem;
+            color: rgba(255,255,255,0.15);
+            font-weight: 300;
+            line-height: 1.5;
+        }
+
+        .back-footer .bf-mark {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.68rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, rgba(0,245,255,0.35), rgba(0,128,255,0.25));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 0.06em;
+        }
+
+        /* ===== PRINT ===== */
+        @media print {
+            body { background: white; padding: 0.4in; }
+            .page-header, .card-label { display: none; }
+            .cards-row { gap: 0.4in; }
+            .card {
+                box-shadow: none !important;
+                border: 1px solid #ddd;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .qr-frame-inner img { filter: none; }
+        }
+
+        @media (max-width: 500px) {
+            .cards-row { flex-direction: column; gap: 48px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page-header">
+        <h1>Visiting Card</h1>
+        <p>2 in &times; 3.5 in &bull; vertical &bull; print-ready</p>
+    </div>
+
+    <div class="cards-row">
+
+        <!-- ========== FRONT ========== -->
+        <div class="card-group">
+            <div class="card-label">Front</div>
+            <div class="card card-front">
+                <div class="window-controls">
+                    <span class="win-btn minimize"></span>
+                    <span class="win-btn maximize"></span>
+                    <span class="win-btn close"></span>
+                </div>
+                <!-- Corner marks -->
+                <div class="corner-mark tl"></div>
+                <div class="corner-mark br"></div>
+
+                <div class="front-inner">
+                    <div class="monogram">RS</div>
+
+                    <!-- 3D Robotic Eye — brand logo -->
+                    <div class="eye-canvas-wrap" id="eye-container"></div>
+
+                    <div class="hero-name">
+                        <span class="first">Rahul</span>
+                        <span class="last">Singh</span>
+                    </div>
+
+                    <div class="hero-rule"></div>
+
+                    <div class="hero-role">
+                        <span class="hero-prompt">C:\&gt;</span>
+                        <span>Applied AI &amp; Decision Systems</span>
+                    </div>
+
+                    <div class="front-tags">
+                        <span class="ftag">ML Systems</span>
+                        <span class="ftag">AI Compliance</span>
+                        <span class="ftag">Analytics</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== BACK ========== -->
+        <div class="card-group">
+            <div class="card-label">Back</div>
+            <div class="card card-back">
+                <div class="back-inner">
+
+                    <!-- QR — centered hero -->
+                    <div class="qr-hero">
+                        <div class="qr-frame">
+                            <div class="qr-frame-inner">
+                                <img src="assets/qr-code.png" alt="QR Code">
+                            </div>
+                        </div>
+                        <span class="qr-label">rahulaiportfolio.netlify.app</span>
+                        <span class="skills-bar">Production ML &nbsp;|&nbsp; LLMs &nbsp;|&nbsp; Analytics</span>
+                    </div>
+
+                    <div class="back-divider"></div>
+
+                    <!-- Contact Stack — custom SVG icons -->
+                    <div class="contact-stack">
+
+                        <!-- Email -->
+                        <div class="c-row">
+                            <div class="c-ico">
+                                <svg viewBox="0 0 64 64" aria-hidden="true">
+                                    <rect x="6" y="12" width="52" height="40" rx="6" fill="none" stroke="currentColor" stroke-width="4"/>
+                                    <path d="M6 17l26 20L58 17" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M6 52l18-20" fill="none" stroke="currentColor" stroke-width="4"/>
+                                    <path d="M58 52L40 32" fill="none" stroke="currentColor" stroke-width="4"/>
+                                </svg>
+                            </div>
+                            <span class="c-info">rahul.rs1397@gmail.com</span>
+                        </div>
+
+                        <!-- Portfolio -->
+                        <div class="c-row">
+                            <div class="c-ico">
+                                <svg viewBox="0 0 64 64" aria-hidden="true">
+                                    <path d="M10 36L32 8l22 28-22 20-22-20z" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/>
+                                    <path d="M22 36l10-12 10 12-10 9z" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <span class="c-info">rahulaiportfolio.netlify.app</span>
+                        </div>
+
+                        <!-- GitHub -->
+                        <div class="c-row">
+                            <div class="c-ico">
+                                <svg viewBox="0 0 64 64" aria-hidden="true">
+                                    <path d="M32 6c-13.2 0-24 10.8-24 24 0 10.6 6.9 19.6 16.5 22.8.6.1.9-.2.9-.6v-4.6c-3.4.8-4.2-1.4-4.2-1.4-.6-1.4-1.4-1.8-1.4-1.8-1.2-.8.1-.8.1-.8 1.3.1 2 1.3 2 1.3 1.1 1.9 2.9 1.4 3.6 1.1.1-.8.4-1.4.7-1.7-5.5-.6-11.3-2.7-11.3-12 0-2.7 1-5 2.6-6.7-.3-.6-1.1-3.1.3-6.4 0 0 2.1-.7 6.9 2.6A24 24 0 0132 18c2.2 0 4.5.3 6.6.9 4.8-3.3 6.9-2.6 6.9-2.6 1.4 3.3.5 5.8.3 6.4 1.6 1.7 2.6 4 2.6 6.7 0 9.3-5.8 11.4-11.4 12 .5.4.9 1.3.9 2.7v5.4c0 .4.3.7.9.6C49.1 49.6 56 40.6 56 30 56 16.8 45.2 6 32 6z" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <span class="c-info">rahulsingh1397</span>
+                        </div>
+
+                        <!-- Calendly -->
+                        <div class="c-row">
+                            <div class="c-ico">
+                                <svg viewBox="0 0 64 64" aria-hidden="true">
+                                    <rect x="10" y="12" width="44" height="40" rx="10" fill="none" stroke="currentColor" stroke-width="4"/>
+                                    <path d="M44 22c-2.8-2.7-6.8-4-11.6-4-10.4 0-16.4 7.4-16.4 14 0 6.3 5.6 14 16.2 14 4.7 0 8.8-1.5 11.8-4.3" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <span class="c-info">calendly.com/rahul-rs1397</span>
+                        </div>
+
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="back-footer">
+                        <span class="bf-mark">RS</span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+        const container = document.getElementById('eye-container');
+        if (container) {
+            const scene = new THREE.Scene();
+
+            const S = 96;
+            const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
+            camera.position.set(0, 0.3, 4.2);
+            camera.lookAt(0, 0.3, 0);
+
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(S, S);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.setClearColor(0x000000, 0);
+            renderer.toneMapping = THREE.NoToneMapping;
+            renderer.outputColorSpace = THREE.SRGBColorSpace;
+            container.appendChild(renderer.domElement);
+
+            // Lighting — strong for silver reflections
+            scene.add(new THREE.AmbientLight(0xffffff, 1.2));
+
+            const key = new THREE.DirectionalLight(0xffffff, 4.0);
+            key.position.set(3, 5, 8);
+            scene.add(key);
+
+            const fill = new THREE.DirectionalLight(0xffffff, 2.0);
+            fill.position.set(-4, 2, 5);
+            scene.add(fill);
+
+            const rim = new THREE.DirectionalLight(0xffffff, 2.5);
+            rim.position.set(1, -1, -6);
+            scene.add(rim);
+
+            const topRim = new THREE.DirectionalLight(0xffffff, 1.5);
+            topRim.position.set(-1, 6, -3);
+            scene.add(topRim);
+
+            const cyanAccent = new THREE.PointLight(0x00f5ff, 2.0, 12);
+            cyanAccent.position.set(0, 0.3, 2);
+            scene.add(cyanAccent);
+
+            const loader = new GLTFLoader();
+
+            let eyeModel;
+
+            loader.load('models/robotic_eye.glb', (gltf) => {
+                eyeModel = gltf.scene;
+                eyeModel.scale.set(20, 20, 20);
+                eyeModel.position.set(0, 0, 0);
+                eyeModel.rotation.set(0.18, 0, 0);
+
+                eyeModel.traverse((child) => {
+                    if (!child.isMesh) return;
+                    if (child.material) {
+                        child.material.transparent = false;
+                        child.material.opacity = 1.0;
+                        child.material.side = THREE.FrontSide;
+                    }
+                    const mats = Array.isArray(child.material) ? child.material : [child.material];
+
+                    // Lens — neutral dark glass, no silver
+                    if (child.name === 'Lens_Low_Poly_0') {
+                        mats.forEach(m => {
+                            m.transparent = true;
+                            m.opacity = 0.2;
+                            m.depthWrite = false;
+                            m.metalness = 0.02;
+                            m.roughness = 0.06;
+                            m.side = THREE.DoubleSide;
+                            m.color = new THREE.Color(0x020202);
+                        });
+                        return;
+                    }
+
+                    // Inner ring — bright cyan, illuminated
+                    if (child.name === 'Light_Low_Poly_0') {
+                        mats.forEach(m => {
+                            m.map = null; m.emissiveMap = null;
+                            m.color = new THREE.Color(0x00f5ff);
+                            m.emissive = new THREE.Color(0x00f5ff);
+                            m.emissiveIntensity = 8.0;
+                            m.metalness = 0.0;
+                            m.roughness = 0.3;
+                            m.transparent = false;
+                            m.opacity = 1.0;
+                            m.side = THREE.DoubleSide;
+                        });
+                        return;
+                    }
+
+                    // Body — stealth black with subtle contrast
+                    mats.forEach(m => {
+                        switch (m.name) {
+                            case 'Camera_Plastic':
+                                m.color = new THREE.Color('#050505');
+                                m.metalness = 0.55;
+                                m.roughness = 0.2;
+                                break;
+                            case 'Metal':
+                            case 'Metal.001':
+                                m.color = new THREE.Color('#1a1f22');
+                                m.metalness = 0.9;
+                                m.roughness = 0.12;
+                                break;
+                            case 'Black_Plastic':
+                                m.color = new THREE.Color('#0c0c0c');
+                                m.metalness = 0.35;
+                                m.roughness = 0.24;
+                                break;
+                            case 'Copper':
+                                m.color = new THREE.Color('#181818');
+                                m.metalness = 0.92;
+                                m.roughness = 0.16;
+                                break;
+                            case 'White_Plastic':
+                                m.color = new THREE.Color('#232323');
+                                m.metalness = 0.45;
+                                m.roughness = 0.22;
+                                break;
+                            case 'BezierCurve.006_0':
+                                m.color = new THREE.Color('#141414');
+                                m.metalness = 0.65;
+                                m.roughness = 0.2;
+                                break;
+                            case 'Camera_Lens':
+                                m.color = new THREE.Color('#020202');
+                                m.opacity = 0.4;
+                                m.transparent = true;
+                                m.metalness = 0.05;
+                                m.roughness = 0.08;
+                                break;
+                            case 'Camera_Lens.001':
+                                m.color = new THREE.Color('#050505');
+                                m.metalness = 0.1;
+                                m.roughness = 0.05;
+                                m.opacity = 0.35;
+                                m.transparent = true;
+                                break;
+                            default:
+                                m.color = new THREE.Color('#121212');
+                                m.metalness = 0.78;
+                                m.roughness = 0.17;
+                                m.transparent = false;
+                                m.opacity = 1.0;
+                                m.side = THREE.FrontSide;
+                                break;
+                        }
+                    });
+                });
+
+                scene.add(eyeModel);
+            });
+
+            // Animation loop for proper rendering
+            const animate = () => {
+                requestAnimationFrame(animate);
+                renderer.render(scene, camera);
+            };
+            animate();
+        }
+    </script>
+</body>
+</html>
