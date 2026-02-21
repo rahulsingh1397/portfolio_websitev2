@@ -368,82 +368,15 @@
             #cursor { display: none !important; }
         }
 
-        /* Chalk Border Effect */
-        .chalk-border {
-            position: relative;
-            padding: 0.55rem 1.45rem;
-            background: radial-gradient(circle at 45% 55%, rgba(255, 255, 255, 0.15), rgba(0, 245, 255, 0.8) 45%, rgba(6, 26, 38, 0.75) 90%);
-            border: 2px solid rgba(0, 245, 255, 0.95);
-            color: #ffffff;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            box-shadow: 0 0 10px rgba(0, 245, 255, 0.9), 0 0 18px rgba(0, 148, 255, 0.65);
-            text-shadow: 0 0 4px rgba(255, 255, 255, 0.95), 0 0 9px rgba(0, 245, 255, 0.95), 0 0 16px rgba(0, 245, 255, 0.85);
-            font-family: 'JetBrains Mono', monospace;
-            font-weight: bold;
-            transform: rotate(-1deg);
-            display: inline-block;
-            transition: all 0.3s ease;
-            filter: drop-shadow(0 0 7px rgba(0, 245, 255, 0.95));
-            isolation: isolate;
-            z-index: 200;
-        }
-
-        [data-theme="light"] .chalk-border {
-            background: radial-gradient(circle at 40% 50%, rgba(255, 167, 94, 0.55), rgba(244, 242, 233, 0.95));
-            border: 2px solid rgba(175, 92, 0, 0.95);
-            color: var(--primary);
-            box-shadow: 0 0 7px rgba(175, 92, 0, 0.55), 0 0 11px rgba(255, 150, 70, 0.3);
-            text-shadow: 0 0 3px rgba(175, 92, 0, 1), 0 0 7px rgba(255, 130, 40, 0.9), 0 0 14px rgba(255, 77, 0, 0.65);
-            filter: drop-shadow(0 0 4px rgba(175, 92, 0, 0.85));
-        }
-
-        .chalk-border::after {
-            content: '';
-            position: absolute;
-            top: -4px; left: -4px; right: -4px; bottom: -4px;
-            border: 1px solid rgba(0, 245, 255, 0.85);
-            border-radius: 2px;
-            opacity: 1;
-            pointer-events: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 8px rgba(0, 245, 255, 0.7), inset 0 0 5px rgba(0, 245, 255, 0.45);
-            filter: drop-shadow(0 0 4px rgba(0, 245, 255, 0.75));
-            background: transparent;
-        }
-
-        .chalk-border::before {
-            content: '';
-            position: absolute;
-            top: -6px; left: -6px; right: -6px; bottom: -6px;
-            border: 1px dashed rgba(0, 245, 255, 0.7);
-            opacity: 0.6;
-            pointer-events: none;
-            animation: borderFlicker 2s infinite alternate;
-            mix-blend-mode: screen;
-        }
-
-        [data-theme="light"] .chalk-border::after {
-            border-color: rgba(175, 92, 0, 0.85);
-            box-shadow: 0 0 8px rgba(175, 92, 0, 0.6), inset 0 0 5px rgba(255, 125, 40, 0.45);
-            filter: drop-shadow(0 0 4px rgba(255, 125, 40, 0.65));
-        }
-
-        [data-theme="light"] .chalk-border::before {
-            border-color: rgba(255, 125, 40, 0.7);
-            mix-blend-mode: multiply;
-        }
-        
-        @keyframes borderFlicker {
-            0% { opacity: 0.3; transform: scale(1); }
+        @keyframes subtlePulse {
+            0% { opacity: 0.6; transform: scale(1.02); }
+            50% { opacity: 0.9; transform: scale(1.04); }
             100% { opacity: 0.6; transform: scale(1.02); }
         }
-        
-        .chalk-border:hover {
-            transform: rotate(0deg) scale(1.05);
-            background: var(--primary);
-            color: var(--bg-color);
-            box-shadow: 0 0 30px var(--primary);
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         /* Glitch Effect for Surprise */
@@ -755,9 +688,26 @@
         <!-- 3D Container: Absolute & Full Screen -->
         <div id="robotic-eye-container" class="absolute inset-0 w-full h-full z-[150]"></div>
         
-        <div class="hero-content relative z-[20] text-center pointer-events-none px-4">
-            <div class="chalk-border mb-6 mt-[12vh] md:mt-[8vh] pointer-events-auto cursor-default tracking-widest [word-spacing:0.5em] text-sm" data-text="Applied AI & Decision Systems">
-                Applied AI & Decision Systems
+        <div class="hero-content relative z-[20] text-center pointer-events-none px-4 flex flex-col items-center justify-center">
+            <div class="mb-8 mt-[12vh] md:mt-[8vh] pointer-events-auto cursor-default group">
+                <div class="relative inline-flex items-center justify-center py-2 px-6 rounded-full overflow-hidden border border-white/10 dark:border-white/10 light:border-black/10 bg-white/5 dark:bg-white/5 light:bg-black/5 backdrop-blur-md shadow-[0_4px_24px_rgba(0,0,0,0.4)] transition-all duration-500 hover:scale-105 hover:border-cyan-glow/50 light:hover:border-orange-accent/50 hover:shadow-[0_0_30px_rgba(0,245,255,0.2)] light:hover:shadow-[0_0_30px_rgba(175,92,0,0.2)]">
+                    
+                    <!-- Inner subtle glow effect -->
+                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-glow/10 light:via-orange-accent/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+
+                    <div class="relative flex items-center gap-3">
+                        <!-- Minimal pulsing dot -->
+                        <span class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-glow light:bg-orange-accent opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-cyan-glow light:bg-orange-accent shadow-[0_0_8px_var(--primary)]"></span>
+                        </span>
+                        
+                        <!-- Main Text -->
+                        <span class="font-mono tracking-[0.2em] uppercase text-xs md:text-sm font-semibold text-white dark:text-white light:text-gray-900 group-hover:text-cyan-glow light:group-hover:text-orange-accent transition-colors duration-300">
+                            Applied AI & Decision Systems
+                        </span>
+                    </div>
+                </div>
             </div>
             <h1 class="font-display text-[4.2vw] md:text-[3.5vw] leading-[1.15] font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-white to-gray-400 dark:from-white dark:to-gray-400 light:from-black light:to-gray-700 drop-shadow-2xl max-w-5xl mx-auto">
                 I help companies turn messy data into<br>
@@ -1002,9 +952,9 @@
             <section id="about" class="py-24 px-4 bg-[#0a0a0a] light:bg-cream relative overflow-hidden">
                 <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-16">
                     <!-- Profile Image -->
-                    <div class="relative group profile-tilt">
-                        <div class="w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-cyan-glow/50 light:border-orange-accent/50 profile-glow relative z-10 bg-black">
-                            <img src="./assets/Rahul.png" alt="Rahul Singh - Data Scientist and Machine Learning Engineer specializing in Applied AI" class="w-[115%] h-[115%] object-cover object-[center_35%] -ml-[7.5%] -mt-[5%] transition-all duration-500 hover:scale-105" loading="lazy">
+                    <div class="relative group">
+                        <div class="w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-cyan-glow/50 light:border-orange-accent/50 profile-glow relative z-10 bg-black flex items-center justify-center">
+                            <img src="./assets/Rahul.png" alt="Rahul Singh - Data Scientist and Machine Learning Engineer specializing in Applied AI" class="w-full h-full object-cover object-center" loading="lazy">
                         </div>
                         <div class="absolute -inset-4 bg-cyan-glow/20 light:bg-orange-accent/20 rounded-full blur-xl -z-0"></div>
                     </div>
@@ -1756,7 +1706,7 @@
             });
 
             const addHoverListeners = () => {
-                const hoverElements = heroSection.querySelectorAll('a, button, .bento-card, .chalk-border');
+                const hoverElements = heroSection.querySelectorAll('a, button, .bento-card');
                 hoverElements.forEach(el => {
                     el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
                     el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
@@ -2954,7 +2904,7 @@
                 });
             });
 
-            document.querySelectorAll('.bento-card, #blog article, #achievements .group, #experience .group, .profile-tilt').forEach(card => {
+            document.querySelectorAll('.bento-card, #blog article, #achievements .group, #experience .group').forEach(card => {
                 card.addEventListener('mousemove', (e) => {
                     const rect = card.getBoundingClientRect();
                     const x = e.clientX - rect.left; 
