@@ -952,7 +952,7 @@
             <section id="about" class="py-24 px-4 bg-[#0a0a0a] light:bg-cream relative overflow-hidden">
                 <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-16">
                     <!-- Profile Image -->
-                    <div class="relative group">
+                    <div class="relative group mx-auto">
                         <div class="w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-cyan-glow/50 light:border-orange-accent/50 profile-glow relative z-10 bg-black flex items-center justify-center">
                             <img src="./assets/Rahul.png" alt="Rahul Singh - Data Scientist and Machine Learning Engineer specializing in Applied AI" class="w-full h-full object-cover object-center" loading="lazy">
                         </div>
@@ -1048,7 +1048,7 @@
                                 <span class="font-mono text-cyan-glow light:text-orange-accent text-sm">2021 - Present</span>
                             </div>
                             <div class="bg-[#111]/50 light:bg-white/50 backdrop-blur-sm border border-white/10 light:border-black/10 p-6 rounded-2xl hover:border-cyan-glow light:hover:border-orange-accent transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-cyan-glow/10 light:hover:shadow-orange-accent/10">
-                                <h3 class="font-display text-2xl font-bold text-white light:text-black mb-1">Data Scientist</h3>
+                                <h3 class="font-display text-2xl font-bold text-white light:text-black mb-1">AI Engineer</h3>
                                 <p class="text-lg text-gray-400 light:text-gray-600 mb-4 font-medium">Syneos Health</p>
                                 <ul class="text-sub light:text-gray-700 text-sm leading-relaxed list-disc pl-4 space-y-2 font-sans">
                                     <li>Architected AI agent workflows using <strong>LangChain</strong> for automated decision support.</li>
@@ -1064,7 +1064,7 @@
                         <!-- Content (Desktop Left) -->
                         <div class="hidden md:block text-right">
                             <div class="bg-[#111]/50 light:bg-white/50 backdrop-blur-sm border border-white/10 light:border-black/10 p-6 rounded-2xl hover:border-cyan-glow light:hover:border-orange-accent transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-cyan-glow/10 light:hover:shadow-orange-accent/10">
-                                <h3 class="font-display text-2xl font-bold text-white light:text-black mb-1">Data Analyst</h3>
+                                <h3 class="font-display text-2xl font-bold text-white light:text-black mb-1">AI Security Engineer</h3>
                                 <p class="text-lg text-gray-400 light:text-gray-600 mb-4 font-medium">Sequretek</p>
                                 <p class="text-sub light:text-gray-700 text-sm leading-relaxed font-sans">
                                     Implemented customer segmentation models increasing engagement by 25%. Migrated legacy warehouses to Snowflake, improving query performance.
@@ -1081,7 +1081,7 @@
                                 <span class="font-mono text-sub light:text-gray-600 text-sm">2020 - 2021</span>
                             </div>
                             <div class="bg-[#111]/50 light:bg-white/50 backdrop-blur-sm border border-white/10 light:border-black/10 p-6 rounded-2xl">
-                                <h3 class="font-display text-2xl font-bold text-white light:text-black mb-1">Data Analyst</h3>
+                                <h3 class="font-display text-2xl font-bold text-white light:text-black mb-1">AI Security Engineer</h3>
                                 <p class="text-lg text-gray-400 light:text-gray-600 mb-4 font-medium">Sequretek</p>
                                 <p class="text-sub light:text-gray-700 text-sm leading-relaxed font-sans">
                                     Implemented customer segmentation models increasing engagement by 25%. Migrated legacy warehouses to Snowflake.
@@ -1111,7 +1111,7 @@
                                 <span class="font-mono text-sub light:text-gray-600 text-sm">2018 - 2020</span>
                             </div>
                             <div class="bg-[#111]/50 light:bg-white/50 backdrop-blur-sm border border-white/10 light:border-black/10 p-6 rounded-2xl hover:border-cyan-glow light:hover:border-orange-accent transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-cyan-glow/10 light:hover:shadow-orange-accent/10">
-                                <h3 class="font-display text-2xl font-bold text-white light:text-black mb-1">Data Analyst</h3>
+                                <h3 class="font-display text-2xl font-bold text-white light:text-black mb-1">Data Scientist</h3>
                                 <p class="text-lg text-gray-400 light:text-gray-600 mb-4 font-medium">Clover Infotech</p>
                                 <p class="text-sub light:text-gray-700 text-sm leading-relaxed font-sans">
                                     Developed interactive Tableau dashboards for KPIs. Improved operational efficiency by 20% through data-driven BI solutions.
@@ -1145,7 +1145,7 @@
                         <div class="absolute inset-0 bg-[url('./assets/mitre-core.png')] bg-cover bg-center opacity-20 group-hover:opacity-10 transition-opacity duration-500"></div>
                         <div class="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent light:from-white light:via-white/90 light:to-transparent"></div>
                         
-                        <div class="absolute inset-0 p-8 flex flex-col justify-between">
+                        <div class="p-8 flex flex-col justify-between">
                             <!-- Header -->
                             <div>
                                 <div class="bg-cyan-glow light:bg-orange-accent text-black light:text-white px-3 py-1 text-xs font-bold uppercase rounded-full inline-block mb-4">Threat Intelligence</div>
@@ -1168,44 +1168,49 @@
                                     <div class="text-[10px] text-gray-500 uppercase">MITRE ATT&CK Coverage</div>
                                 </div>
                             </div>
-                        </div>
 
-                        <a href="#" onclick="openCaseStudy(event, 'mitre-core')" class="absolute bottom-8 right-8 px-6 py-2 border border-white/20 light:border-black/20 rounded-full flex items-center gap-2 group-hover:bg-white group-hover:text-black light:group-hover:bg-black light:group-hover:text-white transition-all text-white light:text-black z-20 font-mono text-xs" aria-label="View Mitre-Core case study">
-                            View Case Study ↗
-                        </a>
+                            <div class="pt-6 mt-auto flex justify-start">
+                                <a href="#" onclick="openCaseStudy(event, 'mitre-core')" class="px-6 py-3 border border-white/20 light:border-black/20 rounded-full inline-flex items-center gap-2 group-hover:bg-white group-hover:text-black light:group-hover:bg-black light:group-hover:text-white transition-all text-white light:text-black z-20 font-mono text-xs backdrop-blur-sm bg-black/20 light:bg-white/40" aria-label="View Mitre-Core case study">
+                                    View Case Study ↗
+                                </a>
+                            </div>
+                        </div>
                     </div>
 
-                    <!-- AeroSentinal -->
-                    <div class="bento-card h-full min-h-[360px] md:col-span-1 group relative bg-[#0C1A1F] light:bg-[#FFECD9] border border-white/10 light:border-black/10 rounded-3xl overflow-hidden p-8 flex flex-col justify-between">
-                        <div class="absolute inset-0 bg-[url('./assets/aerosentinal.jpg')] bg-cover bg-center opacity-25 group-hover:opacity-15 transition-opacity"></div>
-                        <div class="relative z-10 h-full flex flex-col justify-between">
-                            <div class="flex items-center gap-3 text-xs font-mono uppercase tracking-wide text-cyan-glow light:text-orange-accent">
-                                <span class="px-3 py-1 border border-cyan-glow/40 light:border-orange-accent/40 rounded-full">Autonomous Ops</span>
-                                <span>React · FastAPI · YOLOv8</span>
+                    <!-- Enterprise LLM Security Auditor -->
+                    <div class="bento-card h-full min-h-[360px] md:col-span-1 group relative bg-[#0C1A1F] light:bg-[#FFECD9] border border-white/10 light:border-black/10 rounded-3xl overflow-hidden p-8 flex flex-col">
+                        <div class="absolute inset-0 bg-[url('./assets/project-enterprise-llm-security-auditor.jpg')] bg-cover bg-center opacity-25 group-hover:opacity-15 transition-opacity"></div>
+                        <div class="relative z-10 h-full flex flex-col">
+                            <div class="flex items-center gap-3 text-xs font-mono uppercase tracking-wide text-cyan-glow light:text-orange-accent min-h-[40px]">
+                                <span class="px-3 py-1 border border-cyan-glow/40 light:border-orange-accent/40 rounded-full">AI Security</span>
+                                <span>Python · LLM Security · Streamlit</span>
                             </div>
-                            <div>
-                                <h3 class="font-display text-2xl mb-2 text-white light:text-black">AeroSentinal Cockpit</h3>
-                                <p class="text-sub light:text-gray-600 text-sm mb-4">Autonomous drone mission planning GCS that halves field response time.</p>
+                            <div class="mt-6 flex-1 flex flex-col justify-start">
+                                <h3 class="font-display text-2xl mb-2 text-white light:text-black">Enterprise LLM Security Auditor</h3>
+                                <p class="text-sub light:text-gray-600 text-sm mb-4">Client-ready platform for evaluating prompt injection, data leakage, and enterprise LLM security posture.</p>
                                 <div class="flex gap-2 flex-wrap text-[11px] font-mono">
-                                    <span class="px-2 py-1 border border-white/10 light:border-black/10 rounded text-gray-400 light:text-gray-600">Telemetry HUD</span>
-                                    <span class="px-2 py-1 border border-white/10 light:border-black/10 rounded text-gray-400 light:text-gray-600">Android Bridge</span>
+                                    <span class="px-2 py-1 border border-white/10 light:border-black/10 rounded text-gray-400 light:text-gray-600">Prompt Injection Testing</span>
+                                    <span class="px-2 py-1 border border-white/10 light:border-black/10 rounded text-gray-400 light:text-gray-600">Risk Reporting</span>
                                 </div>
                             </div>
+
+                            <div class="pt-6 mt-auto flex justify-start">
+                                <a href="#" onclick="openCaseStudy(event, 'enterprise-llm-security-auditor')" class="px-6 py-3 border border-white/20 light:border-black/20 rounded-full inline-flex items-center gap-2 group-hover:bg-white group-hover:text-black light:group-hover:bg-black light:group-hover:text-white transition-all text-white light:text-black z-20 font-mono text-xs backdrop-blur-sm bg-black/20 light:bg-white/40" aria-label="View Enterprise LLM Security Auditor case study">
+                                    View Casestudy ↗
+                                </a>
+                            </div>
                         </div>
-                        <a href="#" onclick="openCaseStudy(event, 'aerosentinal')" class="absolute bottom-8 right-8 px-6 py-2 border border-white/20 light:border-black/20 rounded-full flex items-center gap-2 group-hover:bg-white group-hover:text-black light:group-hover:bg-black light:group-hover:text-white transition-all text-white light:text-black z-20 font-mono text-xs" aria-label="View AeroSentinal case study">
-                            View Case Study ↗
-                        </a>
                     </div>
 
                     <!-- Community Rule Classification -->
-                    <div class="bento-card h-full min-h-[360px] md:col-span-1 group relative bg-[#15102A] light:bg-[#FDF1FF] border border-white/10 light:border-black/10 rounded-3xl overflow-hidden p-8 flex flex-col justify-between">
+                    <div class="bento-card h-full min-h-[360px] md:col-span-1 group relative bg-[#15102A] light:bg-[#FDF1FF] border border-white/10 light:border-black/10 rounded-3xl overflow-hidden p-8 flex flex-col">
                         <div class="absolute inset-0 bg-[url('./assets/community-rules.jpg')] bg-cover bg-center opacity-30 group-hover:opacity-20 transition-opacity"></div>
-                        <div class="relative z-10 h-full flex flex-col justify-between">
-                            <div class="flex items-center gap-3 text-xs font-mono uppercase tracking-wide text-cyan-glow light:text-orange-accent">
+                        <div class="relative z-10 h-full flex flex-col">
+                            <div class="flex items-center gap-3 text-xs font-mono uppercase tracking-wide text-cyan-glow light:text-orange-accent min-h-[40px]">
                                 <span class="px-3 py-1 border border-cyan-glow/40 light:border-orange-accent/40 rounded-full">AI Compliance</span>
                                 <span>Transformers · Kaggle</span>
                             </div>
-                            <div>
+                            <div class="mt-6 flex-1 flex flex-col justify-start">
                                 <h3 class="font-display text-2xl mb-2 text-white light:text-black">Community Rule Classification</h3>
                                 <p class="text-sub light:text-gray-600 text-sm mb-4">Rule-aware NLP scoring that flags community violations with 92% precision.</p>
                                 <div class="flex gap-2 flex-wrap text-[11px] font-mono">
@@ -1213,21 +1218,24 @@
                                     <span class="px-2 py-1 border border-white/10 light:border-black/10 rounded text-gray-400 light:text-gray-600">Rule Transfer</span>
                                 </div>
                             </div>
+
+                            <div class="pt-6 mt-auto flex justify-start">
+                                <a href="#" onclick="openCaseStudy(event, 'community-rule')" class="px-6 py-3 border border-white/20 light:border-black/20 rounded-full inline-flex items-center gap-2 group-hover:bg-white group-hover:text-black light:group-hover:bg-black light:group-hover:text-white transition-all text-white light:text-black z-20 font-mono text-xs backdrop-blur-sm bg-black/20 light:bg-white/40" aria-label="View Community Rule case study">
+                                    View Case Study ↗
+                                </a>
+                            </div>
                         </div>
-                        <a href="#" onclick="openCaseStudy(event, 'community-rule')" class="absolute bottom-8 right-8 px-6 py-2 border border-white/20 light:border-black/20 rounded-full flex items-center gap-2 group-hover:bg-white group-hover:text-black light:group-hover:bg-black light:group-hover:text-white transition-all text-white light:text-black z-20 font-mono text-xs" aria-label="View Community Rule case study">
-                            View Case Study ↗
-                        </a>
                     </div>
 
                     <!-- Reinforcement Learning Anomaly Detection -->
-                    <div class="bento-card h-full min-h-[360px] md:col-span-1 group relative bg-[#0D161C] light:bg-[#F5F5F5] border border-white/10 light:border-black/10 rounded-3xl overflow-hidden p-8 flex flex-col justify-between">
+                    <div class="bento-card h-full min-h-[360px] md:col-span-1 group relative bg-[#0D161C] light:bg-[#F5F5F5] border border-white/10 light:border-black/10 rounded-3xl overflow-hidden p-8 flex flex-col">
                         <div class="absolute inset-0 bg-gradient-to-br from-cyan-500/20 via-transparent to-purple-500/10 light:from-orange-accent/40 light:via-transparent light:to-orange-bright/20 opacity-60"></div>
-                        <div class="relative z-10 h-full flex flex-col justify-between">
-                            <div class="flex items-center gap-3 text-xs font-mono uppercase tracking-wide text-cyan-glow light:text-orange-accent">
+                        <div class="relative z-10 h-full flex flex-col">
+                            <div class="flex items-center gap-3 text-xs font-mono uppercase tracking-wide text-cyan-glow light:text-orange-accent min-h-[40px]">
                                 <span class="px-3 py-1 border border-cyan-glow/40 light:border-orange-accent/40 rounded-full">Security Analytics</span>
                                 <span>RL · Python · SIEM</span>
                             </div>
-                            <div>
+                            <div class="mt-6 flex-1 flex flex-col justify-start">
                                 <h3 class="font-display text-2xl mb-2 text-white light:text-black">RL Logon Anomaly Detection</h3>
                                 <p class="text-sub light:text-gray-600 text-sm mb-4">Reinforcement learning engine that adapts thresholds to flag unusual user logon sources, destinations, and time windows.</p>
                                 <div class="flex gap-2 flex-wrap text-[11px] font-mono">
@@ -1235,27 +1243,34 @@
                                     <span class="px-2 py-1 border border-white/10 light:border-black/10 rounded text-gray-400 light:text-gray-600">Feedback Loop</span>
                                 </div>
                             </div>
+
+                            <div class="pt-6 mt-auto flex justify-start">
+                                <a href="#" onclick="openCaseStudy(event, 'rl-anomaly')" class="px-6 py-3 border border-white/20 light:border-black/20 rounded-full inline-flex items-center gap-2 group-hover:bg-white group-hover:text-black light:group-hover:bg-black light:group-hover:text-white transition-all text-white light:text-black z-20 font-mono text-xs backdrop-blur-sm bg-black/20 light:bg-white/40" aria-label="View RL anomaly detection case study">
+                                    View Case Study ↗
+                                </a>
+                            </div>
                         </div>
-                        <a href="#" onclick="openCaseStudy(event, 'rl-anomaly')" class="absolute bottom-8 right-8 px-6 py-2 border border-white/20 light:border-black/20 rounded-full flex items-center gap-2 group-hover:bg-white group-hover:text-black light:group-hover:bg-black light:group-hover:text-white transition-all text-white light:text-black z-20 font-mono text-xs" aria-label="View RL anomaly detection case study">
-                            View Case Study ↗
-                        </a>
                     </div>
 
                     <!-- AI Compliance (Restored) -->
-                    <div class="bento-card h-full min-h-[360px] md:col-span-1 bg-cyan-glow light:bg-orange-accent text-black light:text-white group relative rounded-3xl overflow-hidden p-8 flex flex-col justify-center items-center text-center">
+                    <div class="bento-card h-full min-h-[360px] md:col-span-1 bg-cyan-glow light:bg-orange-accent text-black light:text-white group relative rounded-3xl overflow-hidden p-8 flex flex-col text-center">
                         <div class="absolute inset-0 bg-[url('./assets/ai-compliance.webp')] bg-cover bg-center opacity-20"></div>
                         <div class="absolute inset-0 bg-grid-slate-100 opacity-20"></div>
-                        <h3 class="font-display text-6xl font-bold mb-2 relative z-10">95%</h3>
-                        <p class="font-mono text-sm uppercase tracking-wide relative z-10 opacity-70">Model Accuracy</p>
-                        <div class="mt-8 relative z-10">
+                        <div class="relative z-10 min-h-[40px]"></div>
+                        <div class="relative z-10 mt-6 flex-1 flex flex-col justify-start items-center">
+                            <h3 class="font-display text-6xl font-bold mb-2">95%</h3>
+                            <p class="font-mono text-sm uppercase tracking-wide opacity-70">Model Accuracy</p>
+                            <div class="mt-8">
                             <h4 class="font-bold text-lg">AI Compliance Monitor</h4>
                             <p class="text-sm opacity-60 mt-2">Automated ethics & bias detection for production ML systems</p>
                         </div>
-                        <a href="#" onclick="openCaseStudy(event, 'ai-compliance')" class="absolute bottom-8 right-8 px-6 py-2 border border-black/20 light:border-white/20 rounded-full flex items-center gap-2 hover:bg-black hover:text-white light:hover:bg-white light:hover:text-black transition-all text-black light:text-white z-20 font-mono text-xs" aria-label="View AI Compliance Monitor case study">
-                            View Case Study ↗
-                        </a>
+                        </div>
+                        <div class="mt-auto pt-6 relative z-10 w-full flex justify-center md:justify-start">
+                            <a href="#" onclick="openCaseStudy(event, 'ai-compliance')" class="px-6 py-3 border border-black/20 light:border-white/20 rounded-full inline-flex items-center gap-2 hover:bg-black hover:text-white light:hover:bg-white light:hover:text-black transition-all text-black light:text-white font-mono text-xs backdrop-blur-sm bg-white/30 light:bg-black/20" aria-label="View AI Compliance Monitor case study">
+                                View Case Study ↗
+                            </a>
+                        </div>
                     </div>
-
                     <!-- Energy Prediction (Restored) -->
                     <div class="bento-card hidden-project h-full min-h-[360px] md:col-span-1 group relative bg-[#151515] light:bg-[#e0e0e0] border border-white/10 light:border-black/10 rounded-3xl overflow-hidden p-8 flex flex-col justify-between hidden opacity-0 transition-all duration-500">
                         <div class="absolute inset-0 bg-[url('./assets/energy-consumption.jpeg')] bg-cover bg-center opacity-30 group-hover:opacity-20 transition-opacity"></div>
@@ -1269,10 +1284,13 @@
                                     <span class="text-[10px] border border-white/10 light:border-black/10 px-2 py-1 rounded text-gray-400 light:text-gray-600">Time-Series</span>
                                 </div>
                             </div>
+
+                            <div class="pt-6 flex justify-end">
+                                <a href="#" onclick="openCaseStudy(event, 'energy-forecast')" class="px-6 py-3 border border-white/20 light:border-black/20 rounded-full inline-flex items-center gap-2 group-hover:bg-white group-hover:text-black light:group-hover:bg-black light:group-hover:text-white transition-all text-white light:text-black z-20 font-mono text-xs backdrop-blur-sm bg-black/20 light:bg-white/40" aria-label="View Energy Demand Forecasting case study">
+                                    View Case Study ↗
+                                </a>
+                            </div>
                         </div>
-                        <a href="#" onclick="openCaseStudy(event, 'energy-forecast')" class="absolute bottom-8 right-8 px-6 py-2 border border-white/20 light:border-black/20 rounded-full flex items-center gap-2 group-hover:bg-white group-hover:text-black light:group-hover:bg-black light:group-hover:text-white transition-all text-white light:text-black z-20 font-mono text-xs" aria-label="View Energy Demand Forecasting case study">
-                            View Case Study ↗
-                        </a>
                     </div>
 
                     <!-- Fine-Tune BERT -->
@@ -1284,18 +1302,16 @@
                                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
                              </svg>
                         </div>
-                        <div class="absolute bottom-0 left-0 w-full p-8 flex justify-between items-end">
-                            <div>
+                        <div class="absolute bottom-0 left-0 w-full p-8 flex flex-col md:flex-row justify-between md:items-end gap-4">
+                            <div class="max-w-2xl">
                                 <h3 class="font-display text-3xl mb-1 text-white light:text-black">Domain-Specific LLM (BERT)</h3>
                                 <p class="text-sub light:text-gray-600">Custom fine-tuning for specialized corpus understanding and entity extraction.</p>
                             </div>
-                            <div class="bg-white light:bg-black text-black light:text-white rounded-full px-4 py-2 font-bold text-sm group-hover:bg-cyan-glow group-hover:text-black light:group-hover:bg-orange-accent light:group-hover:text-white transition-colors">
-                                NLP Architecture
-                            </div>
+
+                            <a href="#" onclick="openCaseStudy(event, 'bert')" class="self-start md:self-auto px-6 py-3 border border-white/20 light:border-black/20 rounded-full inline-flex items-center gap-2 group-hover:bg-white group-hover:text-black light:group-hover:bg-black light:group-hover:text-white transition-all text-white light:text-black z-20 font-mono text-xs backdrop-blur-sm bg-black/20 light:bg-white/40" aria-label="View BERT Fine-Tuning case study">
+                                View Case Study ↗
+                            </a>
                         </div>
-                        <a href="#" onclick="openCaseStudy(event, 'bert')" class="absolute bottom-8 right-8 px-6 py-2 border border-white/20 light:border-black/20 rounded-full flex items-center gap-2 group-hover:bg-white group-hover:text-black light:group-hover:bg-black light:group-hover:text-white transition-all text-white light:text-black z-20 font-mono text-xs" aria-label="View BERT Fine-Tuning case study">
-                            View Case Study ↗
-                        </a>
                     </div>
                 </div>
                 
@@ -3046,22 +3062,22 @@
                 why: "Instead of eyeballing spreadsheets, analysts get an automated view of how high-end adversaries traverse their estate—accelerating threat response and audit readiness in a single workflow.",
                 github: "https://github.com/rahulsingh1397/Mitre-Core"
             },
-            "aerosentinal": {
-                category: "Autonomous Systems",
-                title: "AeroSentinal Cockpit",
-                date: "2023",
-                problem: "Drone operators struggle with fragmented tooling—using separate apps for mission planning, telemetry monitoring, and object detection, leading to slow response times in field operations.",
-                objective: "Create a unified Ground Control Station (GCS) that integrates autonomous mission planning with real-time computer vision analysis.",
-                approach: "• Developed a React-based frontend for mission planning communicating with a Python/FastAPI backend.\n• Integrated YOLOv8 for real-time object detection on the video feed and MAVLink for drone telemetry.\n• Built a WebSocket bridge to stream data with <100ms latency.",
-                tech: ["React", "FastAPI", "YOLOv8", "MAVLink", "WebSocket", "Leaflet"],
+            "enterprise-llm-security-auditor": {
+                category: "AI Security",
+                title: "Enterprise LLM Security Auditor",
+                date: "2026",
+                problem: "Companies are deploying AI chatbots, copilots, and RAG systems without structured security testing, so prompt injection, jailbreaks, system prompt leakage, data exfiltration, PII exposure, and RAG weaknesses often go undetected until production.",
+                objective: "Create an automated red-team platform that can test any LLM endpoint, evaluate security failures semantically, and produce executive-ready audit reports with risk scoring and remediation guidance in minutes.",
+                approach: "• Built a FastAPI backend that orchestrates up to 61 adversarial prompts across six vulnerability classes, persists findings to SQLite, and streams live progress over WebSockets.\n• Used Claude as an analyzer model to evaluate whether each target LLM response actually exposed a vulnerability, avoiding brittle regex-only detection.\n• Delivered a React + Vite frontend for new-audit workflows, live scan monitoring, tabbed findings review, and HTML/PDF-ready security reports.",
+                tech: ["FastAPI", "React", "Vite", "WebSockets", "SQLite", "Anthropic Claude"],
                 results: [
-                    "Halved field response time",
-                    "Enabled single-screen operations",
-                    "Real-time person/vehicle detection",
-                    "Successful deployment in SAR simulations"
+                    "Runs 61 adversarial tests across 6 LLM vulnerability categories",
+                    "Completes full audits in ~5–10 minutes with real-time scan visibility",
+                    "Generates professional audit reports with evidence, risk score, and remediation steps",
+                    "Supports consultants and internal security teams with a repeatable LLM assurance workflow"
                 ],
-                why: "In search-and-rescue or perimeter security, every second counts. A unified autonomous interface removes cognitive load from the pilot, allowing the AI to handle the 'seeing' while the human handles the 'deciding'.",
-                github: "https://github.com/rahulsingh1397/AeroSentinal"
+                why: "LLM security is becoming a real enterprise requirement, but most teams still rely on manual prompt poking or one-off checks. This project turns LLM red-teaming into a production-grade assessment workflow that is faster, more repeatable, and client-ready.",
+                github: "https://github.com/rahulsingh1397/Enterprise_LLM_Security_Auditor"
             },
             "community-rule": {
                 category: "AI Compliance",
@@ -3153,9 +3169,8 @@
         window.openCaseStudy = (e, projectId) => {
             e.preventDefault();
             const data = caseStudies[projectId];
-            if(!data) return;
+            if (!data) return;
 
-            // Populate
             document.getElementById('modal-tag').textContent = data.category;
             document.getElementById('modal-title').textContent = data.title;
             document.getElementById('modal-date').textContent = data.date;
@@ -3165,29 +3180,25 @@
             document.getElementById('modal-why').textContent = data.why;
             document.getElementById('modal-github').href = data.github;
 
-            // Tech
             const techContainer = document.getElementById('modal-tech');
-            techContainer.innerHTML = data.tech.map(t => 
+            techContainer.innerHTML = data.tech.map(t =>
                 `<span class="px-3 py-1 bg-white/5 light:bg-black/5 border border-white/10 light:border-black/10 rounded text-xs font-mono text-gray-400 light:text-gray-600">${t}</span>`
             ).join('');
 
-            // Results
             const resContainer = document.getElementById('modal-results');
-            resContainer.innerHTML = data.results.map(r => 
+            resContainer.innerHTML = data.results.map(r =>
                 `<li class="flex gap-3 text-sm text-gray-400 light:text-gray-600"><span class="text-cyan-glow light:text-orange-accent">✓</span> ${r}</li>`
             ).join('');
 
-            // Show
             const modal = document.getElementById('case-study-modal');
             modal.classList.remove('hidden');
-            // small delay for transition
             setTimeout(() => {
                 modal.classList.remove('opacity-0');
                 document.getElementById('modal-card').classList.remove('scale-95');
                 document.getElementById('modal-card').classList.add('scale-100');
             }, 10);
-            
-            document.body.style.overflow = 'hidden'; // Prevent body scroll
+
+            document.body.style.overflow = 'hidden';
         };
 
         window.closeCaseStudy = () => {
@@ -3195,7 +3206,7 @@
             modal.classList.add('opacity-0');
             document.getElementById('modal-card').classList.add('scale-95');
             document.getElementById('modal-card').classList.remove('scale-100');
-            
+
             setTimeout(() => {
                 modal.classList.add('hidden');
                 document.body.style.overflow = '';
@@ -3205,7 +3216,7 @@
         document.getElementById('modal-close').addEventListener('click', closeCaseStudy);
         document.getElementById('modal-backdrop').addEventListener('click', closeCaseStudy);
         document.addEventListener('keydown', (e) => {
-            if(e.key === 'Escape') closeCaseStudy();
+            if (e.key === 'Escape') closeCaseStudy();
         });
 
         // --- 13. DYNAMIC BLOG LOADING ---

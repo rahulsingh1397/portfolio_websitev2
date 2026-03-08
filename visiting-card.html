@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rahul Singh — Visiting Card</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        /* ===== RESET & BASE ===== */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --void: #0a0a0a;
+            --cyan: #00f5ff;
+            --blue: #0080ff;
+            --sub: #888888;
+            --card-dark: #111111;
+            --white: #ffffff;
+        }
+
+        body {
+            background: #111;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 40px 20px 80px;
+            color: var(--white);
+        }
+
+        /* ===== VARIANT SWITCHER ===== */
+        .variant-switcher {
+            display: flex;
+            gap: 4px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 4px;
+            margin-bottom: 40px;
+        }
+
+        .variant-btn {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 10px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: transparent;
+            color: var(--sub);
+            transition: all 0.3s ease;
+        }
+
+        .variant-btn:hover {
+            color: var(--white);
+        }
+
+        .variant-btn.active {
+            background: rgba(0, 245, 255, 0.1);
+            color: var(--cyan);
+            box-shadow: 0 0 20px rgba(0, 245, 255, 0.08);
+        }
+
+        .variant-btn.active.founder {
+            background: rgba(0, 245, 255, 0.15);
+            box-shadow: 0 0 30px rgba(0, 245, 255, 0.12);
+        }
+
+        .variant-description {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.72rem;
+            color: var(--sub);
+            text-align: center;
+            margin-bottom: 36px;
+            max-width: 400px;
+            line-height: 1.6;
+        }
+
+        h1.page-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 400;
+            color: var(--sub);
+            margin-bottom: 8px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+
+        .cards-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 48px;
+            align-items: center;
+        }
+
+        .card-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            color: rgba(136,136,136,0.6);
+            text-transform: uppercase;
+            letter-spacing: 0.25em;
+            margin-bottom: 14px;
+            text-align: center;
+        }
+
+        /* ===== CARD DIMENSIONS (Standard 3.5 x 2 inches at 96dpi) ===== */
+        .card {
+            width: 3.5in;
+            height: 2in;
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+            transition: box-shadow 0.4s ease;
+        }
+
+        /* ===== VARIANT: RECRUITER (default) ===== */
+        .card.recruiter {
+            box-shadow:
+                0 4px 24px rgba(0, 0, 0, 0.6),
+                0 0 30px rgba(0, 245, 255, 0.04),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.07);
+        }
+
+        /* ===== VARIANT: FOUNDER ===== */
+        .card.founder {
+            box-shadow:
+                0 4px 32px rgba(0, 0, 0, 0.6),
+                0 0 60px rgba(0, 245, 255, 0.1),
+                0 0 120px rgba(0, 128, 255, 0.04),
+                inset 0 0 0 1px rgba(0, 245, 255, 0.12);
+        }
+
+        /* ===== FRONT SIDE ===== */
+        .card-front {
+            background: linear-gradient(145deg, #0c0c0c 0%, #0a0a0a 40%, #0d1117 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 0;
+        }
+
+        /* Top accent line — Recruiter: subtle */
+        .card-front.recruiter::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--cyan), var(--blue), var(--cyan));
+            opacity: 0.7;
+        }
+
+        /* Top accent line — Founder: stronger glow */
+        .card-front.founder::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--cyan), var(--blue), var(--cyan), transparent);
+            opacity: 1;
+            box-shadow: 0 0 12px rgba(0, 245, 255, 0.4), 0 0 30px rgba(0, 245, 255, 0.15);
+        }
+
+        /* Subtle grid pattern */
+        .card-front::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.012) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px);
+            background-size: 20px 20px;
+            pointer-events: none;
+        }
+
+        .front-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+            padding: 18px 22px 14px 22px;
+        }
+
+        .front-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .name-block {
+            flex: 1;
+        }
+
+        .name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.18rem;
+            font-weight: 700;
+            color: var(--white);
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        /* [UPGRADE #2] Role line: more spacing, reduced brightness, thin rule */
+        .title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.44rem;
+            color: rgba(0, 245, 255, 0.65);
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            margin-top: 5px;
+            font-weight: 400;
+        }
+
+        /* Founder variant: brighter title */
+        .founder .title {
+            color: rgba(0, 245, 255, 0.85);
+            text-shadow: 0 0 8px rgba(0, 245, 255, 0.2);
+        }
+
+        .title-rule {
+            width: 100%;
+            max-width: 180px;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(0, 245, 255, 0.25), rgba(0, 128, 255, 0.1), transparent);
+            margin-top: 5px;
+            border: none;
+        }
+
+        .founder .title-rule {
+            background: linear-gradient(90deg, rgba(0, 245, 255, 0.4), rgba(0, 128, 255, 0.2), transparent);
+            box-shadow: 0 0 6px rgba(0, 245, 255, 0.1);
+        }
+
+        /* Decorative corner element */
+        .corner-accent {
+            width: 28px;
+            height: 28px;
+            position: relative;
+            opacity: 0.35;
+        }
+        .corner-accent::before {
+            content: '';
+            position: absolute;
+            top: 0; right: 0;
+            width: 16px;
+            height: 1px;
+            background: var(--cyan);
+        }
+        .corner-accent::after {
+            content: '';
+            position: absolute;
+            top: 0; right: 0;
+            width: 1px;
+            height: 16px;
+            background: var(--cyan);
+        }
+
+        .founder .corner-accent {
+            opacity: 0.55;
+        }
+
+        /* [UPGRADE #1] Tagline — more concrete */
+        .tagline {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.5rem;
+            color: rgba(255, 255, 255, 0.4);
+            font-weight: 300;
+            line-height: 1.65;
+            max-width: 210px;
+            margin-top: 8px;
+            font-style: italic;
+        }
+
+        /* Bottom bar */
+        .front-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .services {
+            display: flex;
+            gap: 6px;
+        }
+
+        /* [UPGRADE #3] Tag chips with icons + depth */
+        .service-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.36rem;
+            color: rgba(255, 255, 255, 0.55);
+            padding: 3px 7px;
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 4px;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            background: rgba(255, 255, 255, 0.02);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.3), 0 1px 0 rgba(255,255,255,0.03);
+        }
+
+        .service-tag:hover {
+            border-color: rgba(0, 245, 255, 0.3);
+            color: rgba(0, 245, 255, 0.8);
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.3), 0 0 10px rgba(0, 245, 255, 0.08);
+        }
+
+        .service-tag .tag-icon {
+            font-size: 0.4rem;
+            opacity: 0.5;
+            line-height: 1;
+        }
+
+        .service-tag:hover .tag-icon {
+            opacity: 0.8;
+        }
+
+        /* Founder: tags glow more */
+        .founder .service-tag {
+            border-color: rgba(0, 245, 255, 0.1);
+            color: rgba(255, 255, 255, 0.65);
+        }
+
+        .founder .service-tag:hover {
+            border-color: rgba(0, 245, 255, 0.4);
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.3), 0 0 16px rgba(0, 245, 255, 0.12);
+        }
+
+        /* [UPGRADE #8] RS Monogram — seal treatment */
+        .initials-mark {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.6rem;
+            font-weight: 700;
+            color: rgba(0, 245, 255, 0.12);
+            letter-spacing: 0.12em;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(0, 245, 255, 0.08);
+            border-radius: 50%;
+            transition: all 0.4s ease;
+        }
+
+        .initials-mark:hover {
+            color: rgba(0, 245, 255, 0.4);
+            border-color: rgba(0, 245, 255, 0.25);
+            box-shadow: 0 0 12px rgba(0, 245, 255, 0.1);
+            transform: rotate(10deg);
+        }
+
+        .founder .initials-mark {
+            color: rgba(0, 245, 255, 0.18);
+            border-color: rgba(0, 245, 255, 0.12);
+        }
+
+        /* [UPGRADE #7] Credibility signal */
+        .credibility {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.36rem;
+            color: rgba(255, 255, 255, 0.22);
+            letter-spacing: 0.04em;
+            margin-top: 2px;
+        }
+
+        .founder .credibility {
+            color: rgba(0, 245, 255, 0.3);
+        }
+
+        /* ===== BACK SIDE ===== */
+        .card-back {
+            background: linear-gradient(145deg, #0c0c0c 0%, #0a0a0a 40%, #0d1117 100%);
+        }
+
+        .card-back.recruiter::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--blue), var(--cyan), var(--blue));
+            opacity: 0.7;
+        }
+
+        .card-back.founder::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--blue), var(--cyan), var(--blue), transparent);
+            opacity: 1;
+            box-shadow: 0 0 12px rgba(0, 245, 255, 0.4), 0 0 30px rgba(0, 245, 255, 0.15);
+        }
+
+        .back-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            height: 100%;
+            padding: 16px 20px 12px 20px;
+        }
+
+        /* Left column: Contact info */
+        .back-left {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .contact-block {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .contact-icon {
+            width: 14px;
+            height: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .contact-icon svg {
+            width: 10px;
+            height: 10px;
+            stroke: var(--cyan);
+            fill: none;
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .founder .contact-icon svg {
+            filter: drop-shadow(0 0 3px rgba(0, 245, 255, 0.3));
+        }
+
+        .contact-text {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.44rem;
+            color: rgba(255, 255, 255, 0.65);
+            letter-spacing: 0.02em;
+        }
+
+        .contact-text a {
+            color: rgba(255, 255, 255, 0.65);
+            text-decoration: none;
+        }
+
+        /* [UPGRADE #4] Calendly de-emphasized */
+        .contact-item.secondary {
+            opacity: 0.55;
+        }
+
+        .contact-item.secondary .contact-text {
+            font-size: 0.4rem;
+        }
+
+        .back-bottom-left {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .credibility-back {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.36rem;
+            color: rgba(255, 255, 255, 0.2);
+            letter-spacing: 0.03em;
+            font-style: italic;
+        }
+
+        .founder .credibility-back {
+            color: rgba(0, 245, 255, 0.25);
+        }
+
+        /* Right column: QR Code placeholder */
+        .back-right {
+            width: 92px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .qr-placeholder {
+            width: 76px;
+            height: 76px;
+            border: 1.5px dashed rgba(0, 245, 255, 0.25);
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 245, 255, 0.015);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .founder .qr-placeholder {
+            border-color: rgba(0, 245, 255, 0.35);
+            background: rgba(0, 245, 255, 0.025);
+            box-shadow: 0 0 20px rgba(0, 245, 255, 0.04);
+        }
+
+        .qr-placeholder svg {
+            width: 26px;
+            height: 26px;
+            stroke: rgba(0, 245, 255, 0.2);
+            fill: none;
+            stroke-width: 1.5;
+        }
+
+        .qr-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.3rem;
+            color: rgba(0, 245, 255, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            margin-top: 2px;
+        }
+
+        /* [UPGRADE #6] Outcome-driven scan label */
+        .scan-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.32rem;
+            color: var(--sub);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            text-align: center;
+            line-height: 1.4;
+        }
+
+        .founder .scan-label {
+            color: rgba(0, 245, 255, 0.45);
+        }
+
+        /* Divider between left and right */
+        .back-divider {
+            width: 1px;
+            align-self: stretch;
+            margin: 0 14px;
+            background: linear-gradient(to bottom, transparent, rgba(0, 245, 255, 0.12), transparent);
+        }
+
+        .founder .back-divider {
+            background: linear-gradient(to bottom, transparent, rgba(0, 245, 255, 0.25), transparent);
+            box-shadow: 0 0 6px rgba(0, 245, 255, 0.05);
+        }
+
+        /* ===== PRINT STYLES ===== */
+        @media print {
+            body {
+                background: white;
+                padding: 0.5in;
+            }
+            h1.page-title, .card-label, .variant-switcher, .variant-description {
+                display: none;
+            }
+            .cards-wrapper {
+                gap: 0.3in;
+            }
+            .card {
+                box-shadow: none !important;
+                border: 1px solid #ddd;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+
+        /* ===== RESPONSIVE (screen preview only) ===== */
+        @media (max-width: 400px) {
+            .card {
+                width: 100%;
+                max-width: 3.5in;
+                height: auto;
+                aspect-ratio: 3.5 / 2;
+            }
+            .variant-switcher {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1 class="page-title">Visiting Card Preview</h1>
+
+    <!-- Variant Switcher -->
+    <div class="variant-switcher">
+        <button class="variant-btn active" onclick="setVariant('recruiter')" id="btn-recruiter">Recruiter-Optimized</button>
+        <button class="variant-btn" onclick="setVariant('founder')" id="btn-founder">Founder / Builder</button>
+    </div>
+    <p class="variant-description" id="variant-desc">Clean contrast, enterprise-ready. Ideal for healthcare, fintech, and enterprise AI roles.</p>
+
+    <div class="cards-wrapper">
+
+        <!-- ===== FRONT ===== -->
+        <div>
+            <div class="card-label">Front</div>
+            <div class="card card-front recruiter" id="card-front">
+                <div class="front-content">
+                    <div>
+                        <div class="front-top">
+                            <div class="name-block">
+                                <div class="name">Rahul Singh</div>
+                                <div class="title">Applied AI &amp; Decision Systems</div>
+                                <div class="title-rule"></div>
+                            </div>
+                            <div class="corner-accent"></div>
+                        </div>
+                        <div class="tagline">
+                            Turning messy data into confident,<br>automated decisions — at scale.
+                        </div>
+                    </div>
+                    <div class="front-bottom">
+                        <div>
+                            <div class="services">
+                                <span class="service-tag"><span class="tag-icon">&#9881;</span> ML Systems</span>
+                                <span class="service-tag"><span class="tag-icon">&#9737;</span> AI Compliance</span>
+                                <span class="service-tag"><span class="tag-icon">&#9636;</span> Analytics</span>
+                            </div>
+                            <div class="credibility">Healthcare &middot; FinTech &middot; Security &middot; 5+ yrs production AI</div>
+                        </div>
+                        <div class="initials-mark">RS</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== BACK ===== -->
+        <div>
+            <div class="card-label">Back</div>
+            <div class="card card-back recruiter" id="card-back">
+                <div class="back-content">
+                    <div class="back-left">
+                        <div class="contact-block">
+                            <!-- Email -->
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="22,4 12,13 2,4"/></svg>
+                                </div>
+                                <span class="contact-text">rahul.rs1397@gmail.com</span>
+                            </div>
+                            <!-- Portfolio -->
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                                </div>
+                                <span class="contact-text">rahulsingh.ai</span>
+                            </div>
+                            <!-- LinkedIn -->
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                                </div>
+                                <span class="contact-text">linkedin.com/in/rahulsingh1397</span>
+                            </div>
+                            <!-- GitHub -->
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                                </div>
+                                <span class="contact-text">github.com/rahulsingh1397</span>
+                            </div>
+                            <!-- Calendly (de-emphasized) -->
+                            <div class="contact-item secondary">
+                                <div class="contact-icon">
+                                    <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                                </div>
+                                <span class="contact-text">calendly.com/rahul-rs1397</span>
+                            </div>
+                        </div>
+                        <div class="back-bottom-left">
+                            <span class="credibility-back">Production AI across healthcare, security &amp; analytics</span>
+                        </div>
+                    </div>
+
+                    <div class="back-divider"></div>
+
+                    <div class="back-right">
+                        <div class="qr-placeholder">
+                            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="2" width="8" height="8" rx="1"/>
+                                <rect x="14" y="2" width="8" height="8" rx="1"/>
+                                <rect x="2" y="14" width="8" height="8" rx="1"/>
+                                <rect x="14" y="14" width="4" height="4" rx="0.5"/>
+                                <line x1="22" y1="14" x2="22" y2="18"/>
+                                <line x1="18" y1="22" x2="22" y2="22"/>
+                            </svg>
+                            <span class="qr-label">Your QR Here</span>
+                        </div>
+                        <span class="scan-label">Scan for live<br>case studies</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function setVariant(variant) {
+            const front = document.getElementById('card-front');
+            const back = document.getElementById('card-back');
+            const btnR = document.getElementById('btn-recruiter');
+            const btnF = document.getElementById('btn-founder');
+            const desc = document.getElementById('variant-desc');
+
+            front.classList.remove('recruiter', 'founder');
+            back.classList.remove('recruiter', 'founder');
+            front.classList.add(variant);
+            back.classList.add(variant);
+
+            btnR.classList.remove('active', 'founder');
+            btnF.classList.remove('active', 'founder');
+
+            if (variant === 'recruiter') {
+                btnR.classList.add('active');
+                desc.textContent = 'Clean contrast, enterprise-ready. Ideal for healthcare, fintech, and enterprise AI roles.';
+            } else {
+                btnF.classList.add('active', 'founder');
+                desc.textContent = 'Stronger glow, systems emphasis. Ideal for startups, AI platforms, and founding engineer roles.';
+            }
+        }
+    </script>
+
+</body>
+</html>
