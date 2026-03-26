@@ -2278,12 +2278,12 @@
                 annNodeMaterials.forEach(mat => {
                     if (isLightMode) {
                         mat.color = new THREE.Color(0xAF5C00);
-                        mat.emissive = new THREE.Color(0xAF5C00);
+                        mat.emissive = new THREE.Color(0x000000);
                     } else {
                         mat.color = new THREE.Color(0x00f5ff);
-                        mat.emissive = new THREE.Color(0x0080ff);
+                        mat.emissive = new THREE.Color(0x000000);
                     }
-                    mat.emissiveIntensity = 1.0;
+                    mat.emissiveIntensity = 0;
                 });
             }
             
