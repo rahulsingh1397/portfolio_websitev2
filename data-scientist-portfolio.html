@@ -2351,9 +2351,9 @@
                                 newMaterial.color = new THREE.Color(0xFFFFFF);
                                 newMaterial.metalness = 0.8;
                                 newMaterial.roughness = 0.2;
-                                newMaterial.emissive = new THREE.Color(0x0080ff);
-                                newMaterial.emissiveIntensity = 0.3;
-                                newMaterial.opacity = 0.50;
+                                newMaterial.emissive = new THREE.Color(0x000000);
+                                newMaterial.emissiveIntensity = 0;
+                                newMaterial.opacity = 0.80;
                             }
                             child.material = newMaterial;
                         }
@@ -2977,10 +2977,79 @@
             workCards.forEach(card => observer.observe(card));
         };
 
-        // --- 12. PARTICLE BACKGROUND (TEMPORARILY DISABLED) ---
+        // --- 12. PARTICLE BACKGROUND ---
         const initParticles = () => {
-            console.log('Particles disabled for testing');
-            return; // Exit early to disable particles
+            const canvas = document.createElement('canvas');
+            const container = document.getElementById('particles-js');
+            if(!container) return;
+            container.appendChild(canvas);
+            const ctx = canvas.getContext('2d');
+
+            let particles = [];
+            let width, height;
+
+            const resize = () => {
+                width = window.innerWidth;
+                height = window.innerHeight;
+                canvas.width = width;
+                canvas.height = height;
+            };
+
+            class Particle {
+                constructor() {
+                    this.reset();
+                }
+                reset() {
+                    this.x = Math.random() * width;
+                    this.y = Math.random() * height;
+                    this.vx = (Math.random() - 0.5) * 0.5;
+                    this.vy = (Math.random() - 0.5) * 0.5;
+                    this.size = Math.random() * 2;
+                    this.alpha = Math.random() * 0.25;
+                }
+                update() {
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    if(this.x < 0 || this.x > width || this.y < 0 || this.y > height) this.reset();
+                }
+                draw() {
+                    const isLight = document.body.getAttribute('data-theme') === 'light';
+                    ctx.fillStyle = isLight ? `rgba(175, 92, 0, ${this.alpha})` : `rgba(0, 245, 255, ${this.alpha})`;
+                    
+                    let drawSize = this.size;
+                    const centerX = width / 2;
+                    const centerY = height / 2;
+                    const distX = Math.abs(this.x - centerX);
+                    const distY = Math.abs(this.y - centerY);
+                    
+                    if (distX < 300 && distY < 150) {
+                        drawSize = this.size * 1.8;
+                    }
+
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, drawSize, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+
+            const init = () => {
+                resize();
+                particles = [];
+                for(let i=0; i<100; i++) particles.push(new Particle());
+            };
+
+            const animate = () => {
+                ctx.clearRect(0, 0, width, height);
+                particles.forEach(p => {
+                    p.update();
+                    p.draw();
+                });
+                requestAnimationFrame(animate);
+            };
+
+            window.addEventListener('resize', resize);
+            init();
+            animate();
         };
 
         // --- 11. CASE STUDY MODAL LOGIC ---
