@@ -1028,7 +1028,8 @@
                 
                 <!-- String Canvas Overlay -->
                 <div id="experience-string-container" class="absolute top-0 left-6 md:left-1/2 -translate-x-1/2 w-[100px] md:w-[200px] h-full z-10 pointer-events-auto cursor-grab opacity-50 light:opacity-100"></div>
-                <div class="absolute top-0 left-6 md:left-1/2 -translate-x-1/2 w-[1px] h-full bg-gradient-to-b from-transparent via-cyan-glow/30 light:via-orange-accent/30 to-transparent -z-10"></div>
+                <!-- TEMPORARILY DISABLED: Vertical gradient line that might be causing blue spear pattern -->
+                <!-- <div class="absolute top-0 left-6 md:left-1/2 -translate-x-1/2 w-[1px] h-full bg-gradient-to-b from-transparent via-cyan-glow/30 light:via-orange-accent/30 to-transparent -z-10"></div> -->
 
                 <div class="relative z-20 space-y-24">
                     <!-- Honda -->
@@ -2225,9 +2226,7 @@
 
         // --- 6. THREE.JS SCENE 2 (ANN - ACHIEVEMENTS) ---
         const initANN = () => {
-            console.log('ANN Model Temporarily Disabled for Debugging');
-            return; // TEMPORARILY DISABLE ANN MODEL
-            /*
+            console.log('Initializing ANN...');
             const container = document.getElementById('ann-container');
             if(!container) {
                 console.error('ANN container not found!');
@@ -2399,7 +2398,6 @@
             window.addEventListener('themeChanged', (e) => {
                 updateANNMaterials();
             });
-            */ // END OF DISABLED ANN CODE
         };
 
         // --- 7. EXPERIENCE STRING (CANVAS INTERACTION) ---
