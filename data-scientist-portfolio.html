@@ -2225,7 +2225,9 @@
 
         // --- 6. THREE.JS SCENE 2 (ANN - ACHIEVEMENTS) ---
         const initANN = () => {
-            console.log('Initializing ANN...');
+            console.log('ANN Model Temporarily Disabled for Debugging');
+            return; // TEMPORARILY DISABLE ANN MODEL
+            /*
             const container = document.getElementById('ann-container');
             if(!container) {
                 console.error('ANN container not found!');
@@ -2278,12 +2280,12 @@
                 annNodeMaterials.forEach(mat => {
                     if (isLightMode) {
                         mat.color = new THREE.Color(0xAF5C00);
-                        mat.emissive = new THREE.Color(0x000000);
+                        mat.emissive = new THREE.Color(0xAF5C00);
                     } else {
                         mat.color = new THREE.Color(0x00f5ff);
-                        mat.emissive = new THREE.Color(0x000000);
+                        mat.emissive = new THREE.Color(0x0080ff);
                     }
-                    mat.emissiveIntensity = 0;
+                    mat.emissiveIntensity = 1.0;
                 });
             }
             
@@ -2397,6 +2399,7 @@
             window.addEventListener('themeChanged', (e) => {
                 updateANNMaterials();
             });
+            */ // END OF DISABLED ANN CODE
         };
 
         // --- 7. EXPERIENCE STRING (CANVAS INTERACTION) ---
