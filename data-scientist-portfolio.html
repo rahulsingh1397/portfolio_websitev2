@@ -3022,6 +3022,15 @@
                     const distX = Math.abs(this.x - centerX);
                     const distY = Math.abs(this.y - centerY);
                     
+                    // Check if particle is in achievements section area (roughly middle of screen)
+                    const achievementsTop = height * 0.4; // Approximate top of achievements section
+                    const achievementsBottom = height * 0.7; // Approximate bottom of achievements section
+                    
+                    // Skip drawing particles in achievements section area
+                    if (this.y > achievementsTop && this.y < achievementsBottom) {
+                        return;
+                    }
+                    
                     if (distX < 300 && distY < 150) {
                         drawSize = this.size * 1.8;
                     }
