@@ -7,7 +7,6 @@
       "date": "Dec 15, 2025",
       "readTime": "12 min read",
       "tags": ["AI Coding", "LLMs", "Context Windows", "Prompt Engineering", "Developer Tools"],
-      "icon": "🧠",
       "thumbnail": "assets/Why_AI_Coding_Sucks.webp"
     },
     {
@@ -17,7 +16,6 @@
       "date": "Dec 8, 2025",
       "readTime": "10 min read",
       "tags": ["Agentic AI", "Autonomous Agents", "Enterprise AI", "Workflow Automation"],
-      "icon": "🤖",
       "thumbnail": "assets/Agentic_AI_Takes_Center_Stage.jpg"
     },
     {
@@ -27,7 +25,6 @@
       "date": "Dec 5, 2025",
       "readTime": "12 min read",
       "tags": ["AI", "LLMs", "Claude", "GPT-5", "Gemini", "Grok"],
-      "icon": "🤖",
       "thumbnail": "assets/The_Ultimate_AI_Models_Showdown.jpg"
     }
   ]

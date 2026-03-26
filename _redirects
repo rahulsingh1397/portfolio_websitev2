@@ -4,8 +4,8 @@
 /  /data-scientist-portfolio.html  200
 
 # Blog routes
-/blog  /blog.html  200
-/blogs  /blog.html  200
+/blog  /blogs/blog.html  200
+/blogs  /blogs/blog.html  200
 
 # Handle 404s - redirect to main page
 /*  /data-scientist-portfolio.html  404

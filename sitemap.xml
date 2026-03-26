@@ -24,8 +24,8 @@
 
   <!-- Blog Index -->
   <url>
-    <loc>https://rahulaiportfolio.netlify.app/blog.html</loc>
-    <lastmod>2026-01-24</lastmod>
+    <loc>https://rahulaiportfolio.netlify.app/blog</loc>
+    <lastmod>2026-01-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

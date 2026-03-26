@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    
+    <title>Blog | Rahul Singh - Applied AI & Decision Systems</title>
+    <meta name="description" content="Insights on AI, Machine Learning, Data Science, and emerging technologies by Rahul Singh.">
+    <meta name="keywords" content="AI Blog, Machine Learning, Data Science, LLMs, Agentic AI, Rahul Singh">
+    <meta name="author" content="Rahul Singh">
+    <link rel="canonical" href="https://rahulaiportfolio.netlify.app/blog">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Blog | Rahul Singh - Applied AI & Decision Systems">
+    <meta property="og:description" content="Insights on AI, Machine Learning, Data Science, and emerging technologies.">
+    <meta property="og:url" content="https://rahulaiportfolio.netlify.app/blog">
+    <meta property="og:type" content="website">
+    
+    <!-- Fonts -->
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@200,400,500,600,700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: ['class', '[data-theme="dark"]'],
+            plugins: [
+                function({ addVariant }) {
+                    addVariant('light', 'body[data-theme="light"] &');
+                }
+            ],
+            theme: {
+                extend: {
+                    colors: {
+                        'void': '#0a0a0a',
+                        'cyan-glow': '#00f5ff',
+                        'blue-glow': '#0080ff',
+                        'cream': '#F4F2E9',
+                        'orange-accent': '#AF5C00',
+                        'orange-bright': '#FF4D00',
+                        'card-dark': '#111111',
+                        'sub': '#888888'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --cursor-size: 20px;
+            --primary: #00f5ff;
+            --secondary: #0080ff;
+            --bg-color: #0a0a0a;
+            --text-color: #ffffff;
+        }
+
+        [data-theme="light"] {
+            --primary: #AF5C00;
+            --secondary: #FF4D00;
+            --bg-color: #F4F2E9;
+            --text-color: #1a1a1a;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            cursor: auto;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        body.cursor-active {
+            cursor: none;
+        }
+
+        /* Custom Cursor */
+        #cursor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: var(--cursor-size);
+            height: var(--cursor-size);
+            border: 1px solid var(--primary);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+            transition: transform 0.1s ease, width 0.3s, height 0.3s, border-color 0.3s;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+        }
+
+        body.cursor-active #cursor {
+            opacity: 1;
+        }
+
+        #cursor.hovered {
+            background-color: var(--primary);
+            width: 50px;
+            height: 50px;
+            mix-blend-mode: normal;
+            opacity: 0.8;
+        }
+
+        /* Nav Link Active State */
+        .nav-link {
+            position: relative;
+            padding: 0.5rem 0.75rem;
+            border-radius: 9999px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .nav-link.active {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--primary) !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="light"] .nav-link.active {
+            background: rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            color: var(--primary) !important;
+        }
+
+        /* Grain Overlay */
+        .grain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9000;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        @media (max-width: 768px) {
+            .grain { display: none; }
+            #cursor { display: none !important; }
+        }
+
+        /* Blog Card Hover Effects */
+        .blog-card {
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s ease;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-8px);
+        }
+
+        /* Smooth image zoom */
+        .blog-card img {
+            transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.4s ease;
+        }
+
+        .blog-card:hover img {
+            transform: scale(1.08);
+            opacity: 1 !important;
+        }
+
+        /* Tag pills */
+        .tag-pill {
+            transition: all 0.3s ease;
+        }
+
+        .blog-card:hover .tag-pill {
+            background: rgba(0, 245, 255, 0.2);
+            border-color: rgba(0, 245, 255, 0.5);
+        }
+
+        [data-theme="light"] .blog-card:hover .tag-pill {
+            background: rgba(175, 92, 0, 0.15);
+            border-color: rgba(175, 92, 0, 0.4);
+        }
+
+        /* Loading spinner */
+        .spinner {
+            border: 3px solid rgba(0, 245, 255, 0.1);
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Stagger animation for cards */
+        .blog-card {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .blog-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+    </style>
+</head>
+<body data-theme="dark">
+    <!-- Grain Overlay -->
+    <div class="grain"></div>
+    
+    <!-- Custom Cursor -->
+    <div id="cursor"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 px-4 py-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex items-center justify-between bg-white/5 light:bg-black/5 backdrop-blur-xl border border-white/10 light:border-black/10 rounded-full px-6 py-3">
+                <!-- Back to Portfolio -->
+                <a href="../data-scientist-portfolio.html" class="flex items-center gap-2 text-white light:text-black hover:text-cyan-glow light:hover:text-orange-accent transition-colors font-medium">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                    </svg>
+                    <span class="hidden sm:inline">Portfolio</span>
+                </a>
+
+                <!-- Center Nav -->
+                <div class="hidden md:flex items-center gap-1">
+                    <a href="../data-scientist-portfolio.html#home" class="nav-link text-sm text-gray-300 light:text-gray-600 hover:text-white light:hover:text-black">Home</a>
+                    <a href="../data-scientist-portfolio.html#about" class="nav-link text-sm text-gray-300 light:text-gray-600 hover:text-white light:hover:text-black">About</a>
+                    <a href="../data-scientist-portfolio.html#skills" class="nav-link text-sm text-gray-300 light:text-gray-600 hover:text-white light:hover:text-black">Skills</a>
+                    <a href="../data-scientist-portfolio.html#projects" class="nav-link text-sm text-gray-300 light:text-gray-600 hover:text-white light:hover:text-black">Projects</a>
+                    <a href="blog.html" class="nav-link active text-sm">Blog</a>
+                    <a href="../data-scientist-portfolio.html#contact" class="nav-link text-sm text-gray-300 light:text-gray-600 hover:text-white light:hover:text-black">Contact</a>
+                </div>
+
+                <!-- Theme Toggle -->
+                <button id="themeToggle" class="flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 light:border-black/20 hover:bg-white/10 light:hover:bg-black/5 transition-all text-white light:text-black" aria-label="Toggle theme">
+                    <svg class="sun-icon w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: none;">
+                        <circle cx="12" cy="12" r="5"/>
+                        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                    </svg>
+                    <svg class="moon-icon w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="min-h-[50vh] flex items-end pb-16 pt-32 px-4">
+        <div class="max-w-7xl mx-auto w-full">
+            <div class="flex flex-col md:flex-row justify-between items-end gap-8">
+                <div>
+                    <p class="text-cyan-glow light:text-orange-accent font-mono text-sm uppercase tracking-widest mb-4">Insights & Articles</p>
+                    <h1 class="font-display text-5xl md:text-7xl font-bold text-white light:text-black leading-tight">
+                        Blog<span class="text-sub light:text-gray-400">.</span>
+                    </h1>
+                    <p class="text-sub light:text-gray-600 text-lg mt-4 max-w-lg">
+                        Thoughts on AI, Engineering, and the future of tech. Deep dives into what actually works.
+                    </p>
+                </div>
+                <div class="flex items-center gap-4">
+                    <span id="blogCount" class="px-4 py-2 rounded-full border border-cyan-glow/30 light:border-orange-accent/30 text-cyan-glow light:text-orange-accent font-mono text-sm">
+                        Loading...
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Grid Section -->
+    <section class="py-16 px-4 bg-[#050505] light:bg-cream">
+        <div class="max-w-7xl mx-auto">
+            <!-- Loading State -->
+            <div id="loading" class="flex flex-col items-center justify-center py-20">
+                <div class="spinner mb-4"></div>
+                <p class="text-sub light:text-gray-500 font-mono text-sm">Loading articles...</p>
+            </div>
+
+            <!-- Blog Grid -->
+            <div id="blogsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Blog cards will be dynamically inserted here -->
+            </div>
+
+            <!-- Empty State -->
+            <div id="emptyState" class="hidden flex-col items-center justify-center py-20 text-center">
+                <svg class="w-16 h-16 text-sub light:text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                </svg>
+                <h3 class="font-display text-2xl font-bold text-white light:text-black mb-2">No articles yet</h3>
+                <p class="text-sub light:text-gray-600">Check back soon for new content.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 px-4 border-t border-white/5 light:border-black/5">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-sub light:text-gray-500 text-sm font-mono">
+                &copy; 2026 Rahul Singh. All rights reserved.
+            </p>
+            <a href="../data-scientist-portfolio.html" class="text-cyan-glow light:text-orange-accent hover:underline text-sm">
+                Back to Portfolio
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        // ============================================
+        // THEME TOGGLE
+        // ============================================
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        const sunIcon = themeToggle.querySelector('.sun-icon');
+        const moonIcon = themeToggle.querySelector('.moon-icon');
+
+        const savedTheme = localStorage.getItem('portfolio-theme') || 'dark';
+        body.setAttribute('data-theme', savedTheme);
+        updateThemeIcons(savedTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('portfolio-theme', newTheme);
+            updateThemeIcons(newTheme);
+        });
+
+        function updateThemeIcons(theme) {
+            if (theme === 'light') {
+                sunIcon.style.display = 'block';
+                moonIcon.style.display = 'none';
+            } else {
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'block';
+            }
+        }
+
+        // ============================================
+        // CUSTOM CURSOR
+        // ============================================
+        const cursor = document.getElementById('cursor');
+        
+        if (window.innerWidth > 768) {
+            document.body.classList.add('cursor-active');
+            
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            });
+
+            document.querySelectorAll('a, button, .blog-card').forEach(el => {
+                el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
+                el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
+            });
+        }
+
+        // ============================================
+        // LOAD BLOGS FROM JSON
+        // ============================================
+        async function loadBlogs() {
+            const blogsGrid = document.getElementById('blogsGrid');
+            const loading = document.getElementById('loading');
+            const emptyState = document.getElementById('emptyState');
+            const blogCount = document.getElementById('blogCount');
+            
+            try {
+                const response = await fetch('./blogs.json');
+                if (!response.ok) throw new Error('Failed to load blogs');
+                
+                const data = await response.json();
+                const blogs = data.blogs;
+                
+                loading.style.display = 'none';
+                
+                if (blogs && blogs.length > 0) {
+                    blogCount.textContent = `${blogs.length} Article${blogs.length > 1 ? 's' : ''}`;
+                    
+                    blogsGrid.innerHTML = blogs.map((blog, index) => `
+                        <article class="blog-card group cursor-pointer" onclick="window.location.href='${blog.slug}.html'" style="transition-delay: ${index * 100}ms">
+                            <div class="aspect-[4/3] bg-[#111] light:bg-white rounded-2xl overflow-hidden relative mb-6 border border-white/10 light:border-black/10">
+                                ${blog.thumbnail ? 
+                                    `<img src="${blog.thumbnail.startsWith('http') ? blog.thumbnail : '../' + blog.thumbnail.replace(/^\.\//, '')}" class="w-full h-full object-cover opacity-70" alt="${blog.title}" loading="lazy">` :
+                                    ''
+                                }
+                                <div class="absolute top-4 left-4 flex gap-2">
+                                    ${(blog.tags || []).slice(0, 2).map(tag => 
+                                        `<span class="tag-pill bg-black/50 backdrop-blur-md px-3 py-1 rounded-full text-xs border border-white/20 text-white">${tag}</span>`
+                                    ).join('')}
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4 text-xs text-sub light:text-gray-600 mb-3 font-mono">
+                                <span>${blog.date || 'Recent'}</span>
+                                <span class="w-1 h-1 rounded-full bg-cyan-glow light:bg-orange-accent"></span>
+                                <span>${blog.readTime || '5 min read'}</span>
+                            </div>
+                            <h3 class="font-display text-xl font-bold text-white light:text-black mb-2 group-hover:text-cyan-glow light:group-hover:text-orange-accent transition-colors line-clamp-2">
+                                ${blog.title}
+                            </h3>
+                            <p class="text-sub light:text-gray-600 text-sm line-clamp-2">
+                                ${blog.excerpt || ''}
+                            </p>
+                        </article>
+                    `).join('');
+
+                    // Animate cards in
+                    setTimeout(() => {
+                        document.querySelectorAll('.blog-card').forEach((card, i) => {
+                            setTimeout(() => card.classList.add('visible'), i * 100);
+                        });
+                    }, 100);
+
+                    // Add cursor hover to new cards
+                    if (window.innerWidth > 768) {
+                        document.querySelectorAll('.blog-card').forEach(el => {
+                            el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
+                            el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
+                        });
+                    }
+                    
+                } else {
+                    blogCount.textContent = '0 Articles';
+                    emptyState.classList.remove('hidden');
+                    emptyState.classList.add('flex');
+                }
+                
+            } catch (error) {
+                console.error('Error loading blogs:', error);
+                loading.style.display = 'none';
+                blogCount.textContent = '0 Articles';
+                emptyState.classList.remove('hidden');
+                emptyState.classList.add('flex');
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', loadBlogs);
+    </script>
+</body>
+</html>
