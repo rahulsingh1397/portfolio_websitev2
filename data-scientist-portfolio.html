@@ -2313,115 +2313,6 @@
                 }
             }, 8000); // Increased from 3000ms to 8000ms for large model
 
-            // PROGRESSIVE LOADING - Start with simplified geometry, then upgrade
-            let progressiveLoadStage = 0;
-            
-            // Stage 1: Load ultra-lightweight placeholder immediately
-            const loadPlaceholder = () => {
-                console.log('Stage 1: Loading placeholder...');
-                const geometry = new THREE.IcosahedronGeometry(1.5, 1);
-                const material = new THREE.MeshStandardMaterial({ 
-                    color: getThemeColors().primary, 
-                    wireframe: true, 
-                    emissive: getThemeColors().primary,
-                    emissiveIntensity: 0.5
-                });
-                annModel = new THREE.Mesh(geometry, material);
-                annModel.position.set(20, 6, 12);
-                annModel.rotation.z = Date.now() * 0.0001;
-                scene.add(annModel);
-                
-                // Hide loading indicator - user sees something immediately
-                const loadingEl = document.getElementById('ann-loading');
-                if(loadingEl) loadingEl.style.display = 'none';
-                
-                // Start loading full model after 500ms
-                setTimeout(() => loadFullModel(), 500);
-            };
-            
-            // Stage 2: Load full model in background
-            const loadFullModel = () => {
-                console.log('Stage 2: Loading full model...');
-                progressiveLoadStage = 1;
-                
-                loader.load('/models/artificial_neural_network_ann/scene.gltf', (gltf) => {
-                    clearTimeout(modelTimeout);
-                    console.log('Full ANN Loaded Successfully');
-                    
-                    // Remove placeholder
-                    if(annModel && annModel.geometry.type === 'IcosahedronGeometry') {
-                        scene.remove(annModel);
-                    }
-                    
-                    annModel = gltf.scene;
-                
-                const box = new THREE.Box3().setFromObject(annModel);
-                const size = new THREE.Vector3();
-                box.getSize(size);
-                const center = new THREE.Vector3();
-                box.getCenter(center);
-                annModel.position.sub(center);
-                
-                const maxDim = Math.max(size.x, size.y, size.z) || 1;
-                const targetSize = 35.0;
-                const scale = targetSize / maxDim;
-                annModel.scale.setScalar(scale);
-                
-                // Position matching reference
-                annModel.position.set(20, 6, 12);
-                
-                annModel.traverse((child) => {
-                    if (child.isMesh) {
-                        const name = child.name.toLowerCase();
-                        if (name.includes('base') || name.includes('plane') || name.includes('floor') || name.includes('ground') || name.includes('platform')) {
-                            child.visible = false;
-                        } else {
-                            const geometryType = child.geometry.type.toLowerCase();
-                            const isNode = geometryType.includes('sphere') || 
-                                          geometryType.includes('icosahedron') || 
-                                          name.includes('node') || 
-                                          name.includes('sphere') ||
-                                          name.includes('ball') ||
-                                          name.includes('neuron');
-
-                            const newMaterial = new THREE.MeshStandardMaterial({
-                                side: THREE.DoubleSide,
-                                wireframe: false,
-                                transparent: true
-                            });
-
-                            if (isNode) {
-                                annNodeMaterials.push(newMaterial);
-                                newMaterial.metalness = 0.6;
-                                newMaterial.roughness = 0.3;
-                                newMaterial.opacity = 0.95;
-                            } else {
-                                newMaterial.color = new THREE.Color(0xFFFFFF);
-                                newMaterial.metalness = 0.8;
-                                newMaterial.roughness = 0.2;
-                                newMaterial.emissive = new THREE.Color(0x000000);
-                                newMaterial.emissiveIntensity = 0;
-                                newMaterial.opacity = 0.80;
-                            }
-                            child.material = newMaterial;
-                        }
-                    }
-                });
-                updateANNMaterials();
-                scene.add(annModel);
-                    progressiveLoadStage = 2; // Full model loaded
-                }, 
-                undefined, 
-                (error) => {
-                    clearTimeout(modelTimeout);
-                    console.error('Error loading ANN:', error);
-                    // Keep placeholder if full model fails
-                    if(progressiveLoadStage === 0) {
-                        loadPlaceholder();
-                    }
-                });
-            };
-            
             // LAZY LOADING - Only load when section is visible
             const achievementsSection = document.getElementById('achievements');
             if(!achievementsSection) {
@@ -2429,11 +2320,89 @@
                 return;
             }
             
+            // Load full model function
+            const loadFullModel = () => {
+                console.log('Loading full CNN model...');
+                loader.load('/models/artificial_neural_network_ann/scene.gltf', (gltf) => {
+                    clearTimeout(modelTimeout);
+                    console.log('CNN Model Loaded Successfully');
+                    
+                    // Hide loading indicator
+                    const loadingEl = document.getElementById('ann-loading');
+                    if(loadingEl) loadingEl.style.display = 'none';
+                    
+                    annModel = gltf.scene;
+                
+                    const box = new THREE.Box3().setFromObject(annModel);
+                    const size = new THREE.Vector3();
+                    box.getSize(size);
+                    const center = new THREE.Vector3();
+                    box.getCenter(center);
+                    annModel.position.sub(center);
+                    
+                    const maxDim = Math.max(size.x, size.y, size.z) || 1;
+                    const targetSize = 35.0;
+                    const scale = targetSize / maxDim;
+                    annModel.scale.setScalar(scale);
+                    
+                    // Position matching reference
+                    annModel.position.set(20, 6, 12);
+                    
+                    annModel.traverse((child) => {
+                        if (child.isMesh) {
+                            const name = child.name.toLowerCase();
+                            if (name.includes('base') || name.includes('plane') || name.includes('floor') || name.includes('ground') || name.includes('platform')) {
+                                child.visible = false;
+                            } else {
+                                const geometryType = child.geometry.type.toLowerCase();
+                                const isNode = geometryType.includes('sphere') || 
+                                              geometryType.includes('icosahedron') || 
+                                              name.includes('node') || 
+                                              name.includes('sphere') ||
+                                              name.includes('ball') ||
+                                              name.includes('neuron');
+
+                                const newMaterial = new THREE.MeshStandardMaterial({
+                                    side: THREE.DoubleSide,
+                                    wireframe: false,
+                                    transparent: true
+                                });
+
+                                if (isNode) {
+                                    annNodeMaterials.push(newMaterial);
+                                    newMaterial.metalness = 0.6;
+                                    newMaterial.roughness = 0.3;
+                                    newMaterial.opacity = 0.95;
+                                } else {
+                                    newMaterial.color = new THREE.Color(0xFFFFFF);
+                                    newMaterial.metalness = 0.8;
+                                    newMaterial.roughness = 0.2;
+                                    newMaterial.emissive = new THREE.Color(0x000000);
+                                    newMaterial.emissiveIntensity = 0;
+                                    newMaterial.opacity = 0.80;
+                                }
+                                child.material = newMaterial;
+                            }
+                        }
+                    });
+                    updateANNMaterials();
+                    scene.add(annModel);
+                }, 
+                undefined, 
+                (error) => {
+                    clearTimeout(modelTimeout);
+                    console.error('Error loading CNN:', error);
+                    // Hide loading indicator on error
+                    const loadingEl = document.getElementById('ann-loading');
+                    if(loadingEl) loadingEl.style.display = 'none';
+                });
+            };
+            
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        console.log('Achievements section visible - starting progressive load...');
-                        loadPlaceholder();
+                        console.log('Achievements section visible - loading full model...');
+                        loadFullModel();
                         observer.disconnect(); // Stop observing after first load
                     }
                 });
