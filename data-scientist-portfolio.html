@@ -2313,14 +2313,47 @@
                 }
             }, 8000); // Increased from 3000ms to 8000ms for large model
 
-            loader.load('/models/artificial_neural_network_ann/scene.gltf', (gltf) => {
-                clearTimeout(modelTimeout);
-                console.log('ANN Loaded Successfully');
+            // PROGRESSIVE LOADING - Start with simplified geometry, then upgrade
+            let progressiveLoadStage = 0;
+            
+            // Stage 1: Load ultra-lightweight placeholder immediately
+            const loadPlaceholder = () => {
+                console.log('Stage 1: Loading placeholder...');
+                const geometry = new THREE.IcosahedronGeometry(1.5, 1);
+                const material = new THREE.MeshStandardMaterial({ 
+                    color: getThemeColors().primary, 
+                    wireframe: true, 
+                    emissive: getThemeColors().primary,
+                    emissiveIntensity: 0.5
+                });
+                annModel = new THREE.Mesh(geometry, material);
+                annModel.position.set(20, 6, 12);
+                annModel.rotation.z = Date.now() * 0.0001;
+                scene.add(annModel);
                 
-                // Hide loading indicator on successful load
+                // Hide loading indicator - user sees something immediately
                 const loadingEl = document.getElementById('ann-loading');
                 if(loadingEl) loadingEl.style.display = 'none';
-                annModel = gltf.scene;
+                
+                // Start loading full model after 500ms
+                setTimeout(() => loadFullModel(), 500);
+            };
+            
+            // Stage 2: Load full model in background
+            const loadFullModel = () => {
+                console.log('Stage 2: Loading full model...');
+                progressiveLoadStage = 1;
+                
+                loader.load('/models/artificial_neural_network_ann/scene.gltf', (gltf) => {
+                    clearTimeout(modelTimeout);
+                    console.log('Full ANN Loaded Successfully');
+                    
+                    // Remove placeholder
+                    if(annModel && annModel.geometry.type === 'IcosahedronGeometry') {
+                        scene.remove(annModel);
+                    }
+                    
+                    annModel = gltf.scene;
                 
                 const box = new THREE.Box3().setFromObject(annModel);
                 const size = new THREE.Vector3();
@@ -2376,23 +2409,40 @@
                 });
                 updateANNMaterials();
                 scene.add(annModel);
-            }, 
-            undefined, 
-            (error) => {
-                clearTimeout(modelTimeout);
-                console.error('Error loading ANN:', error);
-                // Hide loading indicator on error
-                const loadingEl = document.getElementById('ann-loading');
-                if(loadingEl) loadingEl.style.display = 'none';
-                const geometry = new THREE.IcosahedronGeometry(1.5, 1);
-                const material = new THREE.MeshStandardMaterial({ 
-                    color: getThemeColors().primary, 
-                    wireframe: true, 
-                    emissive: getThemeColors().primary 
+                    progressiveLoadStage = 2; // Full model loaded
+                }, 
+                undefined, 
+                (error) => {
+                    clearTimeout(modelTimeout);
+                    console.error('Error loading ANN:', error);
+                    // Keep placeholder if full model fails
+                    if(progressiveLoadStage === 0) {
+                        loadPlaceholder();
+                    }
                 });
-                annModel = new THREE.Mesh(geometry, material);
-                scene.add(annModel);
+            };
+            
+            // LAZY LOADING - Only load when section is visible
+            const achievementsSection = document.getElementById('achievements');
+            if(!achievementsSection) {
+                console.warn('Achievements section not found!');
+                return;
+            }
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        console.log('Achievements section visible - starting progressive load...');
+                        loadPlaceholder();
+                        observer.disconnect(); // Stop observing after first load
+                    }
+                });
+            }, {
+                threshold: 0.1, // Start loading when 10% visible
+                rootMargin: '100px' // Start loading 100px before it comes into view
             });
+            
+            observer.observe(achievementsSection);
 
             const animate = () => {
                 requestAnimationFrame(animate);
