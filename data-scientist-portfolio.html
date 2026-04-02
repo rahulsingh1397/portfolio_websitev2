@@ -2541,7 +2541,7 @@
                     ? (isLight ? '#AF5C00' : '#00f5ff')
                     : (isLight ? '#111111' : '#ffffff');
 
-                ctx.font = `bold ${fontSize}px "Clash Display", sans-serif`;
+                ctx.font = `${fontSize}px "Clash Display", sans-serif`; // Changed from bold to normal
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
                 
