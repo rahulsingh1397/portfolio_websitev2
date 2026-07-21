@@ -1,0 +1,1798 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CDB6DS2XFP"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-CDB6DS2XFP');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self';
+        script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://www.googletagmanager.com https://www.google-analytics.com;
+        style-src 'self' 'unsafe-inline' https://api.fontshare.com https://cdn.fontshare.com https://fonts.googleapis.com https://cdn.tailwindcss.com;
+        font-src 'self' https://cdn.fontshare.com https://api.fontshare.com https://fonts.gstatic.com data:;
+        img-src 'self' data: https: blob:;
+        connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com https://api.github.com https://cdn.fontshare.com blob:;
+        worker-src 'self' blob:;
+        child-src 'self' blob:;
+        frame-src 'self';
+        object-src 'none';
+        base-uri 'self';
+    ">
+
+    <!-- SEO Meta Tags -->
+    <title>Rahul Singh | ML Engineer — LLM Security & Threat Detection AI</title>
+    <meta name="description" content="Rahul Singh builds ML-powered threat detection systems and LLM security platforms — including a GNN alert correlation engine (ARI 0.8224) mapped to MITRE ATT&CK and a production LLM red-teaming auditor covering 6 vulnerability classes.">
+    <meta name="keywords" content="Rahul Singh, ML Engineer, LLM Security Engineer, Threat Detection AI, MITRE ATT&CK, Prompt Injection, LLM Red Teaming, Graph Neural Network Security, Alert Correlation, Senior ML Engineer, SOC ML, Anomaly Detection">
+    <meta name="author" content="Rahul Singh">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://rahulaiportfolio.netlify.app/">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Rahul Singh | ML Engineer — LLM Security & Threat Detection AI">
+    <meta property="og:description" content="ML-powered threat detection, LLM red-teaming, and MITRE ATT&CK alert correlation. GNN research: ARI 0.8224 across 9 security datasets, bridge edge hypothesis proven p=0.021.">
+    <meta property="og:image" content="https://rahulaiportfolio.netlify.app/assets/Rahul.png">
+    <meta property="og:url" content="https://rahulaiportfolio.netlify.app/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Rahul Singh Portfolio">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Rahul Singh | ML Engineer — LLM Security & Threat Detection AI">
+    <meta name="twitter:description" content="ML Engineer — LLM red-teaming, threat detection AI, MITRE ATT&CK systems. MITRE-Core v2: ARI 0.8224, bridge edge p=0.021.">
+    <meta name="twitter:image" content="https://rahulaiportfolio.netlify.app/assets/Rahul.png">
+    <meta name="twitter:creator" content="@rahulsingh1397">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Rahul Singh",
+      "jobTitle": "ML Engineer — LLM Security & Threat Detection AI",
+      "url": "https://rahulaiportfolio.netlify.app/",
+      "image": "https://rahulaiportfolio.netlify.app/assets/Rahul.png",
+      "email": "mailto:rahul.rs1397@gmail.com",
+      "sameAs": [
+        "https://github.com/rahulsingh1397",
+        "https://www.linkedin.com/in/rahulsingh1397",
+        "https://twitter.com/rahulsingh1397"
+      ],
+      "knowsAbout": ["LLM Security", "Threat Detection", "MITRE ATT&CK", "Machine Learning", "Graph Neural Networks", "AI Governance"]
+    }
+    </script>
+
+    <!-- Theme + animation gate (before paint) -->
+    <script>
+      (function () {
+        var t = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', t);
+        var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!reduced) document.documentElement.classList.add('anim');
+        var bootSeen = false;
+        try { bootSeen = sessionStorage.getItem('rs-boot') === '1'; } catch (e) {}
+        if (!reduced && !bootSeen) document.documentElement.classList.add('booting');
+      })();
+    </script>
+
+    <!-- Fonts -->
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Lenis smooth scroll -->
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js" defer></script>
+
+    <style>
+    /* ============================================================
+       SYS://V3.0.0 — MISSION CONTROL / EDITORIAL TERMINAL
+       ============================================================ */
+
+    /* ---------- tokens ---------- */
+    :root, html[data-theme="dark"] {
+        --bg: #06080A;
+        --surface: #0C1014;
+        --surface-2: #10161B;
+        --line: #1C232B;
+        --line-soft: rgba(125, 138, 150, .12);
+        --text: #E8ECEF;
+        --muted: #7D8A96;
+        --accent: #00FF88;
+        --accent-ink: #041208;
+        --accent-dim: rgba(0, 255, 136, .10);
+        --amber: #FFB02E;
+        --danger: #FF5C5C;
+        --graph-node: rgba(150, 170, 185, .55);
+        --graph-line: rgba(125, 150, 165, .35);
+        --grid: rgba(125, 138, 150, .055);
+        --shadow: rgba(0, 0, 0, .5);
+        --ease: cubic-bezier(.22, 1, .36, 1);
+    }
+    html[data-theme="light"] {
+        --bg: #F2F1EC;
+        --surface: #FAF9F5;
+        --surface-2: #EFEDE6;
+        --line: #D8D5CC;
+        --line-soft: rgba(16, 20, 24, .10);
+        --text: #101418;
+        --muted: #5C6670;
+        --accent: #007A4D;
+        --accent-ink: #F2F1EC;
+        --accent-dim: rgba(0, 122, 77, .08);
+        --amber: #B86E00;
+        --danger: #C03434;
+        --graph-node: rgba(60, 75, 85, .5);
+        --graph-line: rgba(60, 75, 85, .3);
+        --grid: rgba(16, 20, 24, .05);
+        --shadow: rgba(0, 0, 0, .12);
+    }
+
+    /* ---------- base ---------- */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-padding-top: 92px; }
+    html.native-smooth { scroll-behavior: smooth; }
+    body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: 'Inter', system-ui, sans-serif;
+        font-size: 16px;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+        transition: background .4s ease, color .4s ease;
+    }
+    ::selection { background: var(--accent); color: var(--accent-ink); }
+    ::-webkit-scrollbar { width: 10px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--line); border-radius: 5px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+    .container { max-width: 1320px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 56px); }
+
+    h1, h2, h3, .display { font-family: 'Clash Display', 'Inter', sans-serif; }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+
+    /* grain */
+    body::after {
+        content: ""; position: fixed; inset: 0; z-index: 9990; pointer-events: none; opacity: .035;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/></svg>");
+    }
+
+    /* labels & chips */
+    .sys-label {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 11px; letter-spacing: .22em; text-transform: uppercase;
+        color: var(--muted); display: flex; align-items: center; gap: 12px;
+    }
+    .sys-label::before { content: ""; width: 34px; height: 1px; background: var(--accent); flex: none; }
+    .chip {
+        font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase;
+        border: 1px solid var(--line); color: var(--muted); padding: 6px 12px; border-radius: 3px;
+        transition: border-color .3s, color .3s; white-space: nowrap;
+    }
+    .chip:hover { border-color: var(--accent); color: var(--text); }
+    .dot-live {
+        width: 7px; height: 7px; border-radius: 50%; background: var(--accent); display: inline-block;
+        box-shadow: 0 0 0 0 var(--accent); animation: ping 2s infinite;
+    }
+    @keyframes ping { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 55%, transparent); } 80%, 100% { box-shadow: 0 0 0 9px transparent; } }
+
+    .cursor-blink { display: inline-block; width: .55em; height: 1em; background: var(--accent); vertical-align: -0.12em; animation: blink 1.05s steps(1) infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    /* buttons */
+    .btn {
+        display: inline-flex; align-items: center; gap: 10px;
+        font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700;
+        letter-spacing: .14em; text-transform: uppercase;
+        padding: 16px 28px; border-radius: 4px; border: 1px solid transparent;
+        transition: transform .3s var(--ease), background .3s, color .3s, border-color .3s, box-shadow .3s;
+        will-change: transform;
+    }
+    .btn-solid { background: var(--accent); color: var(--accent-ink); }
+    .btn-solid:hover { box-shadow: 0 8px 32px color-mix(in srgb, var(--accent) 35%, transparent); transform: translateY(-2px); }
+    .btn-ghost { border-color: var(--line); color: var(--text); background: color-mix(in srgb, var(--surface) 60%, transparent); }
+    .btn-ghost:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .btn-min {
+        font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .16em; text-transform: uppercase;
+        color: var(--muted); border-bottom: 1px solid var(--line); padding-bottom: 4px; transition: color .3s, border-color .3s;
+    }
+    .btn-min:hover { color: var(--accent); border-color: var(--accent); }
+
+    /* reveal system */
+    html.anim [data-reveal] { opacity: 0; transform: translateY(26px); transition: opacity .9s var(--ease), transform .9s var(--ease); transition-delay: var(--d, 0s); }
+    html.anim [data-reveal].in { opacity: 1; transform: none; }
+
+    /* ---------- boot overlay ---------- */
+    #boot {
+        position: fixed; inset: 0; z-index: 10000; background: #06080A;
+        display: none; align-items: center; justify-content: center;
+        transition: opacity .45s ease; font-family: 'JetBrains Mono', monospace;
+    }
+    html.booting #boot { display: flex; }
+    #boot.done { opacity: 0; pointer-events: none; }
+    #boot-inner { width: min(560px, 86vw); }
+    #boot-lines { font-size: 13px; line-height: 2.1; color: #7D8A96; letter-spacing: .04em; min-height: 120px; }
+    #boot-lines .ok { color: #00FF88; }
+    #boot-lines .warn { color: #FFB02E; }
+    #boot-bar { height: 2px; background: #1C232B; margin-top: 22px; overflow: hidden; }
+    #boot-bar i { display: block; height: 100%; width: 0; background: #00FF88; transition: width .25s linear; }
+
+    /* ---------- nav ---------- */
+    #nav {
+        position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 0 clamp(20px, 3.4vw, 48px); height: 76px;
+        border-bottom: 1px solid transparent;
+        transition: background .4s ease, border-color .4s ease, height .4s ease;
+    }
+    #nav.scrolled {
+        background: color-mix(in srgb, var(--bg) 82%, transparent);
+        backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+        border-color: var(--line); height: 64px;
+    }
+    .brand { font-family: 'JetBrains Mono', monospace; font-size: 15px; font-weight: 700; letter-spacing: .06em; }
+    .brand b { color: var(--accent); font-weight: 700; }
+    .nav-links { display: flex; gap: clamp(18px, 2.4vw, 36px); }
+    .nav-links a {
+        font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .16em; text-transform: uppercase;
+        color: var(--muted); position: relative; padding: 6px 0; transition: color .3s;
+    }
+    .nav-links a sup { color: var(--accent); font-size: 8px; margin-right: 5px; letter-spacing: 0; }
+    .nav-links a::after { content: ""; position: absolute; left: 0; bottom: 0; height: 1px; width: 0; background: var(--accent); transition: width .35s var(--ease); }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-actions { display: flex; align-items: center; gap: 14px; }
+    #theme-btn {
+        width: 38px; height: 38px; border: 1px solid var(--line); border-radius: 4px;
+        display: grid; place-items: center; color: var(--muted); transition: border-color .3s, color .3s, transform .4s var(--ease);
+    }
+    #theme-btn:hover { border-color: var(--accent); color: var(--accent); transform: rotate(40deg); }
+    .resume-pill {
+        font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: .14em;
+        border: 1px solid var(--accent); color: var(--accent); padding: 10px 18px; border-radius: 4px;
+        transition: background .3s, color .3s;
+    }
+    .resume-pill:hover { background: var(--accent); color: var(--accent-ink); }
+    #menu-btn { display: none; width: 40px; height: 40px; flex-direction: column; justify-content: center; align-items: center; gap: 6px; }
+    #menu-btn span { display: block; width: 22px; height: 2px; background: var(--text); transition: transform .35s var(--ease), opacity .3s; }
+    #menu-btn.open span:nth-child(1) { transform: translateY(4px) rotate(45deg); }
+    #menu-btn.open span:nth-child(2) { transform: translateY(-4px) rotate(-45deg); }
+
+    #mobile-menu {
+        position: fixed; inset: 0; z-index: 990; background: var(--bg);
+        display: flex; flex-direction: column; justify-content: center; padding: 0 32px; gap: 6px;
+        opacity: 0; pointer-events: none; transition: opacity .4s ease;
+    }
+    #mobile-menu.open { opacity: 1; pointer-events: auto; }
+    #mobile-menu a {
+        font-family: 'Clash Display', sans-serif; font-size: clamp(34px, 9vw, 52px); font-weight: 600;
+        padding: 8px 0; border-bottom: 1px solid var(--line-soft); display: flex; align-items: baseline; gap: 16px;
+        transform: translateY(18px); opacity: 0; transition: transform .5s var(--ease), opacity .5s ease, color .3s;
+    }
+    #mobile-menu.open a { transform: none; opacity: 1; }
+    #mobile-menu a sup { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent); }
+    #mobile-menu a:hover { color: var(--accent); }
+
+    /* ---------- hero ---------- */
+    #home { position: relative; min-height: 100svh; display: flex; flex-direction: column; justify-content: center; overflow: hidden; }
+    #home::before {
+        content: ""; position: absolute; inset: 0; pointer-events: none;
+        background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+        background-size: 72px 72px;
+        -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 45%, black 35%, transparent 100%);
+                mask-image: radial-gradient(ellipse 90% 80% at 50% 45%, black 35%, transparent 100%);
+    }
+    #threat-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .hero-core { position: relative; z-index: 5; text-align: left; padding-top: 90px; padding-bottom: 110px; }
+
+    .telemetry {
+        position: absolute; z-index: 6; font-family: 'JetBrains Mono', monospace;
+        font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted);
+        display: flex; align-items: center; gap: 9px;
+    }
+    .tele-tl { top: 96px; left: clamp(20px, 4vw, 56px); }
+    .tele-tr { top: 96px; right: clamp(20px, 4vw, 56px); }
+    .tele-br { bottom: 86px; right: clamp(20px, 4vw, 56px); }
+
+    .hero-eyebrow { margin-bottom: 28px; }
+    .hl { font-size: clamp(3rem, 9.5vw, 8.6rem); font-weight: 600; line-height: .96; letter-spacing: -0.02em; text-transform: uppercase; }
+    .hl-line { display: block; overflow: hidden; }
+    .hl-inner { display: inline-block; }
+    html.anim .hl-inner { transform: translateY(112%); transition: transform 1s var(--ease); }
+    html.anim .hero-in .hl-inner { transform: none; }
+    html.anim .hero-in .hl-line:nth-child(2) .hl-inner { transition-delay: .1s; }
+    html.anim .hero-in .hl-line:nth-child(3) .hl-inner { transition-delay: .2s; }
+    .hl .accent { color: var(--accent); }
+    .hl .outline { color: transparent; -webkit-text-stroke: 1.5px var(--text); }
+
+    .hero-sub { max-width: 560px; margin-top: 34px; color: var(--muted); font-size: 15.5px; }
+    .hero-sub strong { color: var(--text); font-weight: 500; }
+    .hero-proof {
+        margin-top: 26px; display: inline-flex; gap: 10px; align-items: center; flex-wrap: wrap;
+        font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .1em;
+        color: var(--accent); border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+        background: var(--accent-dim); padding: 9px 14px; border-radius: 3px;
+    }
+    .hero-ctas { margin-top: 40px; display: flex; gap: 16px; flex-wrap: wrap; }
+    html.anim .hero-eyebrow, html.anim .hero-sub, html.anim .hero-proof, html.anim .hero-ctas { opacity: 0; transform: translateY(20px); transition: opacity .9s ease, transform .9s var(--ease); }
+    html.anim .hero-in .hero-eyebrow { opacity: 1; transform: none; transition-delay: .35s; }
+    html.anim .hero-in .hero-sub { opacity: 1; transform: none; transition-delay: .45s; }
+    html.anim .hero-in .hero-proof { opacity: 1; transform: none; transition-delay: .55s; }
+    html.anim .hero-in .hero-ctas { opacity: 1; transform: none; transition-delay: .65s; }
+
+    /* marquee */
+    .marquee { position: absolute; bottom: 0; left: 0; right: 0; z-index: 6; border-top: 1px solid var(--line); background: color-mix(in srgb, var(--bg) 85%, transparent); backdrop-filter: blur(8px); overflow: hidden; padding: 16px 0; }
+    .marquee-track { display: flex; gap: 0; width: max-content; animation: marquee 36s linear infinite; }
+    .marquee:hover .marquee-track { animation-play-state: paused; }
+    .marquee-track span {
+        font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: .26em; text-transform: uppercase;
+        color: var(--muted); padding: 0 28px; display: flex; align-items: center; gap: 28px; white-space: nowrap;
+    }
+    .marquee-track span::after { content: "//"; color: var(--accent); letter-spacing: 0; }
+    @keyframes marquee { to { transform: translateX(-50%); } }
+
+    /* ---------- section scaffolding ---------- */
+    section { position: relative; }
+    .sec-pad { padding: clamp(90px, 11vw, 150px) 0; }
+    .sec-head { display: flex; flex-direction: column; gap: 18px; margin-bottom: clamp(48px, 6vw, 80px); }
+    .sec-title { font-size: clamp(2.4rem, 5.6vw, 4.6rem); font-weight: 600; line-height: 1.02; letter-spacing: -0.02em; text-transform: uppercase; }
+    .sec-title .accent { color: var(--accent); }
+    .hairline { border: none; border-top: 1px solid var(--line); }
+
+    /* ---------- proof readout ---------- */
+    #proof { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--surface); }
+    .proof-grid { display: grid; grid-template-columns: repeat(4, 1fr); }
+    .proof-cell { padding: clamp(36px, 4vw, 56px) clamp(20px, 3vw, 44px); border-left: 1px solid var(--line); }
+    .proof-cell:first-child { border-left: none; }
+    .proof-num { font-family: 'JetBrains Mono', monospace; font-size: clamp(1.9rem, 3.6vw, 3.1rem); font-weight: 700; color: var(--text); letter-spacing: -0.02em; }
+    .proof-num .unit { color: var(--accent); }
+    .proof-cap { margin-top: 10px; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
+    .proof-cap em { display: block; font-style: normal; opacity: .55; margin-top: 4px; font-size: 9.5px; }
+
+    /* ---------- services ---------- */
+    .svc-row {
+        display: grid; grid-template-columns: 90px 1.2fr 1fr; gap: clamp(20px, 3vw, 48px); align-items: start;
+        padding: clamp(30px, 3.6vw, 46px) 0; border-bottom: 1px solid var(--line); transition: padding-left .4s var(--ease);
+    }
+    .svc-row:first-of-type { border-top: 1px solid var(--line); }
+    .svc-row:hover { padding-left: 14px; }
+    .svc-idx { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--muted); padding-top: 10px; transition: color .3s; }
+    .svc-row:hover .svc-idx { color: var(--accent); }
+    .svc-name { font-size: clamp(1.5rem, 2.8vw, 2.3rem); font-weight: 600; line-height: 1.1; letter-spacing: -0.01em; }
+    .svc-body p { color: var(--muted); font-size: 14.5px; max-width: 480px; }
+    .svc-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+
+    .process { margin-top: clamp(60px, 7vw, 100px); display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+    .step { background: var(--surface); padding: clamp(28px, 3vw, 44px); transition: background .35s; }
+    .step:hover { background: var(--surface-2); }
+    .step-no { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--accent); letter-spacing: .2em; }
+    .step h3 { font-size: 1.35rem; font-weight: 600; margin: 14px 0 12px; }
+    .step p { color: var(--muted); font-size: 14px; margin-bottom: 18px; }
+    .step ul { list-style: none; }
+    .step li { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); padding: 8px 0; border-top: 1px solid var(--line-soft); display: flex; gap: 10px; }
+    .step li::before { content: "▹"; color: var(--accent); }
+
+    .fit-row { margin-top: clamp(48px, 5vw, 72px); display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+    .fit-row .lead { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--accent); margin-right: 8px; }
+
+    /* ---------- about ---------- */
+    #about { background: var(--surface); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .about-grid { display: grid; grid-template-columns: minmax(280px, 420px) 1fr; gap: clamp(40px, 6vw, 100px); align-items: start; }
+    .subject-card { position: sticky; top: 110px; }
+    .subject-frame { position: relative; border: 1px solid var(--line); padding: 14px; background: var(--bg); }
+    .subject-frame::before, .subject-frame::after,
+    .subject-img::before, .subject-img::after {
+        content: ""; position: absolute; width: 18px; height: 18px; border-color: var(--accent); border-style: solid; z-index: 2;
+    }
+    .subject-frame::before { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+    .subject-frame::after { top: -1px; right: -1px; border-width: 2px 2px 0 0; }
+    .subject-img::before { bottom: -1px; left: -1px; border-width: 0 0 2px 2px; }
+    .subject-img::after { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+    .subject-img { position: static; }
+    .subject-frame img { width: 100%; aspect-ratio: 4 / 4.6; object-fit: cover; object-position: center 30%; filter: grayscale(1) contrast(1.05); transition: filter .6s ease; }
+    .subject-frame:hover img { filter: grayscale(0); }
+    .subject-meta { margin-top: 14px; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+    .subject-meta b { color: var(--accent); font-weight: 500; }
+
+    .about-copy p { font-size: clamp(16.5px, 1.6vw, 19px); line-height: 1.75; color: var(--muted); margin-bottom: 26px; }
+    .about-copy p strong { color: var(--text); font-weight: 500; }
+    .about-copy .mark { color: var(--accent); font-weight: 500; }
+    .now-box { margin-top: 36px; border: 1px solid var(--line); background: var(--bg); padding: 22px 26px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+    .now-box .sys-label::before { display: none; }
+    .impact-mini { margin-top: 36px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+    .impact-cell { background: var(--surface); padding: 20px 16px; text-align: center; }
+    .impact-cell .n { font-family: 'JetBrains Mono', monospace; font-size: 1.7rem; font-weight: 700; }
+    .impact-cell .n i { font-style: normal; color: var(--accent); }
+    .impact-cell .l { margin-top: 6px; font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+
+    /* ---------- skills ---------- */
+    .skills-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+    .skill-panel { background: var(--surface); padding: clamp(26px, 3vw, 42px); position: relative; overflow: hidden; }
+    .skill-panel h3 { font-size: 1.15rem; font-weight: 600; text-transform: uppercase; letter-spacing: .02em; margin-bottom: 6px; }
+    .skill-panel .panel-id { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: .2em; color: var(--accent); }
+    .skill-chips { margin-top: 20px; display: flex; flex-wrap: wrap; gap: 8px; }
+    #radar { position: absolute; top: 18px; right: 18px; width: 92px; height: 92px; opacity: .85; pointer-events: none; }
+    .skills-marquee { border: 1px solid var(--line); border-top: none; overflow: hidden; padding: 13px 0; background: var(--surface); }
+    .skills-marquee .marquee-track { animation-duration: 60s; }
+    .skills-marquee span { font-size: 11px; color: var(--muted); padding: 0 18px; gap: 18px; letter-spacing: .2em; }
+
+    /* ---------- experience / audit log ---------- */
+    .log-wrap { position: relative; padding-left: clamp(34px, 5vw, 64px); }
+    .log-rail { position: absolute; left: 8px; top: 6px; bottom: 6px; width: 1px; background: var(--line); }
+    .log-rail i { position: absolute; inset: 0; background: var(--accent); transform-origin: top; transform: scaleY(var(--p, 0)); }
+    .log-entry { position: relative; padding: clamp(28px, 3.4vw, 44px) 0; border-bottom: 1px solid var(--line); }
+    .log-entry::before {
+        content: ""; position: absolute; left: calc(-1 * clamp(34px, 5vw, 64px) + 4px); top: clamp(40px, 4.4vw, 58px);
+        width: 9px; height: 9px; border-radius: 50%; background: var(--bg); border: 2px solid var(--accent);
+    }
+    .log-stamp-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 18px; flex-wrap: wrap; }
+    .log-when { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: .14em; color: var(--accent); text-transform: uppercase; }
+    .log-role { font-size: clamp(1.6rem, 3.2vw, 2.5rem); font-weight: 600; line-height: 1.08; margin-top: 10px; text-transform: uppercase; letter-spacing: -0.01em; }
+    .log-org { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); margin-top: 8px; }
+    .log-body { margin-top: 18px; max-width: 760px; }
+    .log-body li, .log-body p { color: var(--muted); font-size: 14.5px; line-height: 1.7; }
+    .log-body ul { list-style: none; }
+    .log-body li { padding: 7px 0 7px 22px; position: relative; }
+    .log-body li::before { content: ">"; position: absolute; left: 0; color: var(--accent); font-family: 'JetBrains Mono', monospace; }
+    .log-body strong { color: var(--text); font-weight: 500; }
+    .stamp {
+        font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: .26em;
+        color: var(--accent); border: 1.5px solid var(--accent); padding: 7px 12px; border-radius: 2px;
+        transform: rotate(-6deg); opacity: .9; flex: none; margin-top: 6px;
+    }
+    html.anim .stamp { opacity: 0; transform: rotate(-6deg) scale(1.7); transition: opacity .45s ease .35s, transform .45s var(--ease) .35s; }
+    html.anim .log-entry.in .stamp { opacity: .9; transform: rotate(-6deg) scale(1); }
+
+    /* ---------- case files ---------- */
+    #work { background: var(--surface); border-top: 1px solid var(--line); }
+    .flagship {
+        border: 1px solid var(--line); background: var(--bg); display: grid; grid-template-columns: 1.15fr .85fr;
+        overflow: hidden; position: relative;
+    }
+    .flagship-info { padding: clamp(30px, 4vw, 56px); display: flex; flex-direction: column; }
+    .cf-meta { display: flex; gap: 18px; flex-wrap: wrap; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+    .cf-meta b { color: var(--accent); font-weight: 500; }
+    .flagship h3 { font-size: clamp(1.9rem, 3.6vw, 3.2rem); font-weight: 600; line-height: 1.04; margin: 20px 0 16px; text-transform: uppercase; }
+    .flagship .desc { color: var(--muted); font-size: 15px; max-width: 520px; }
+    .ari-readout { margin: 30px 0 6px; }
+    .ari-readout .big { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: clamp(3rem, 7vw, 5.4rem); color: var(--accent); letter-spacing: -0.03em; line-height: 1; }
+    .ari-readout .cap { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); margin-top: 8px; }
+    .flagship-actions { margin-top: auto; padding-top: 28px; display: flex; gap: 14px; flex-wrap: wrap; }
+    .flagship-visual { position: relative; border-left: 1px solid var(--line); min-height: 320px; }
+    .flagship-visual img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .5; filter: saturate(.7); transition: opacity .6s, filter .6s, transform 1.2s var(--ease); }
+    .flagship:hover .flagship-visual img { opacity: .85; filter: saturate(1); transform: scale(1.03); }
+    .flagship-visual::after { content: ""; position: absolute; inset: 0; background: linear-gradient(105deg, var(--bg) 0%, transparent 45%); }
+
+    .cf-grid { margin-top: 1px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-top: none; }
+    .cf-card { background: var(--bg); padding: clamp(24px, 2.6vw, 36px); display: flex; flex-direction: column; min-height: 320px; position: relative; overflow: hidden; transition: background .35s; }
+    .cf-card:hover { background: var(--surface-2); }
+    .cf-card::after { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 2px; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform .45s var(--ease); }
+    .cf-card:hover::after { transform: scaleX(1); }
+    .cf-card h4 { font-size: 1.35rem; font-weight: 600; line-height: 1.15; margin: 16px 0 10px; text-transform: uppercase; }
+    .cf-card .desc { color: var(--muted); font-size: 13.5px; flex: 1; }
+    .cf-card .cf-actions { display: flex; gap: 18px; margin-top: 22px; }
+
+    /* ---------- dossier modal ---------- */
+    #dossier { position: fixed; inset: 0; z-index: 2000; display: none; }
+    #dossier.open { display: block; }
+    .dossier-backdrop { position: absolute; inset: 0; background: color-mix(in srgb, #000 72%, transparent); backdrop-filter: blur(6px); }
+    .dossier-panel {
+        position: absolute; inset: clamp(12px, 3vw, 48px); background: var(--bg); border: 1px solid var(--line);
+        display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 30px 90px var(--shadow);
+    }
+    .dossier-head { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 16px clamp(18px, 3vw, 36px); border-bottom: 1px solid var(--line); background: var(--surface); flex: none; }
+    .dossier-head .t { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .dossier-head .t b { color: var(--accent); font-weight: 500; }
+    #dossier-close { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .14em; color: var(--muted); border: 1px solid var(--line); padding: 8px 14px; border-radius: 3px; transition: color .3s, border-color .3s; flex: none; }
+    #dossier-close:hover { color: var(--danger); border-color: var(--danger); }
+    .dossier-body { overflow-y: auto; padding: clamp(26px, 4vw, 56px); }
+    .dossier-body h3 { font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 600; text-transform: uppercase; line-height: 1.05; margin: 12px 0 30px; }
+    .dossier-sec { margin-bottom: 30px; max-width: 860px; }
+    .dossier-sec h5 { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: .24em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+    .dossier-sec p, .dossier-sec li { color: var(--muted); font-size: 15px; line-height: 1.75; }
+    .dossier-sec ul { list-style: none; }
+    .dossier-sec li { padding: 6px 0 6px 22px; position: relative; }
+    .dossier-sec li::before { content: ">"; position: absolute; left: 0; color: var(--accent); font-family: 'JetBrains Mono', monospace; }
+    .dossier-foot { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 40px; }
+
+    /* ---------- github telemetry ---------- */
+    .gh-frame { border: 1px solid var(--line); background: var(--surface); }
+    .gh-bar { display: flex; align-items: center; gap: 10px; padding: 12px 20px; border-bottom: 1px solid var(--line); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+    .gh-bar i { width: 9px; height: 9px; border-radius: 50%; display: block; }
+    .gh-bar i:nth-child(1) { background: var(--danger); } .gh-bar i:nth-child(2) { background: var(--amber); } .gh-bar i:nth-child(3) { background: var(--accent); }
+    .gh-bar .t { margin-left: 10px; }
+    .gh-body { display: grid; grid-template-columns: 320px 1fr; gap: clamp(24px, 3vw, 48px); padding: clamp(24px, 3vw, 44px); align-items: center; }
+    .gh-stats { font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+    .gh-stats .row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--line-soft); color: var(--muted); }
+    .gh-stats .row b { color: var(--text); font-weight: 700; }
+    .gh-chart-wrap { background: var(--bg); border: 1px solid var(--line); padding: 18px; }
+    .gh-chart-wrap img { width: 100%; mix-blend-mode: screen; opacity: .9; }
+    html[data-theme="light"] .gh-chart-wrap img { mix-blend-mode: multiply; }
+
+    /* ---------- blog / dispatches ---------- */
+    .post-row {
+        display: grid; grid-template-columns: 110px 96px 1fr auto; gap: clamp(16px, 2.6vw, 40px); align-items: center;
+        padding: 26px 0; border-bottom: 1px solid var(--line); transition: padding-left .35s var(--ease);
+    }
+    .post-row:first-child { border-top: 1px solid var(--line); }
+    .post-row:hover { padding-left: 14px; }
+    .post-idx, .post-date { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+    .post-thumb { width: 96px; height: 64px; object-fit: cover; border: 1px solid var(--line); filter: grayscale(1); transition: filter .5s; }
+    .post-row:hover .post-thumb { filter: grayscale(0); }
+    .post-title { font-family: 'Clash Display', sans-serif; font-size: clamp(1.1rem, 2.2vw, 1.6rem); font-weight: 600; line-height: 1.2; transition: color .3s; }
+    .post-row:hover .post-title { color: var(--accent); }
+    .post-meta { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-top: 6px; }
+    .post-arrow { font-family: 'JetBrains Mono', monospace; font-size: 18px; color: var(--muted); transition: color .3s, transform .35s var(--ease); }
+    .post-row:hover .post-arrow { color: var(--accent); transform: translateX(6px); }
+
+    /* ---------- contact ---------- */
+    #contact { border-top: 1px solid var(--line); background: var(--surface); overflow: hidden; }
+    .contact-head { font-size: clamp(3rem, 10vw, 8.4rem); font-weight: 600; line-height: .96; text-transform: uppercase; letter-spacing: -0.02em; }
+    .contact-head .accent { color: var(--accent); }
+    .email-mega {
+        display: inline-block; margin-top: 44px; font-family: 'JetBrains Mono', monospace;
+        font-size: clamp(1.05rem, 3.4vw, 2.3rem); font-weight: 500; letter-spacing: -0.01em;
+        border-bottom: 2px solid var(--line); padding-bottom: 10px; transition: color .3s, border-color .3s;
+        word-break: break-all;
+    }
+    .email-mega:hover { color: var(--accent); border-color: var(--accent); }
+    .contact-grid { margin-top: clamp(48px, 6vw, 80px); display: grid; grid-template-columns: 1fr 1fr; gap: clamp(30px, 5vw, 80px); align-items: start; }
+    .contact-note { color: var(--muted); font-size: 14.5px; max-width: 420px; }
+    .contact-ctas { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 26px; }
+    .social-list { list-style: none; }
+    .social-list li { border-bottom: 1px solid var(--line); }
+    .social-list li:first-child { border-top: 1px solid var(--line); }
+    .social-list a { display: flex; justify-content: space-between; align-items: center; padding: 18px 4px; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); transition: color .3s, padding-left .3s var(--ease); }
+    .social-list a:hover { color: var(--accent); padding-left: 14px; }
+
+    /* ---------- footer ---------- */
+    footer { border-top: 1px solid var(--line); padding: 30px 0 36px; }
+    .foot-grid { display: flex; justify-content: space-between; align-items: center; gap: 18px; flex-wrap: wrap; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+    .foot-grid a { transition: color .3s; }
+    .foot-grid a:hover { color: var(--accent); }
+    .foot-grid .v { color: var(--accent); }
+
+    /* ---------- responsive ---------- */
+    @media (max-width: 1024px) {
+        .gh-body { grid-template-columns: 1fr; }
+        .cf-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 860px) {
+        .nav-links { display: none; }
+        .resume-pill { display: none; }
+        #menu-btn { display: flex; }
+        .flagship { grid-template-columns: 1fr; }
+        .flagship-visual { border-left: none; border-top: 1px solid var(--line); min-height: 220px; }
+        .about-grid { grid-template-columns: 1fr; }
+        .subject-card { position: static; max-width: 420px; }
+        .skills-grid { grid-template-columns: 1fr; }
+        .process { grid-template-columns: 1fr; }
+        .svc-row { grid-template-columns: 1fr; gap: 14px; }
+        .svc-idx { padding-top: 0; }
+        .proof-grid { grid-template-columns: repeat(2, 1fr); }
+        .proof-cell:nth-child(3) { border-left: none; }
+        .proof-cell { border-top: 1px solid var(--line); }
+        .proof-cell:nth-child(-n+2) { border-top: none; }
+        .contact-grid { grid-template-columns: 1fr; }
+        .tele-tr { display: none; }
+        .post-row { grid-template-columns: 1fr auto; }
+        .post-idx, .post-thumb { display: none; }
+        .post-date { grid-column: 1 / -1; }
+    }
+    @media (max-width: 560px) {
+        .cf-grid { grid-template-columns: 1fr; }
+        .impact-mini { grid-template-columns: repeat(2, 1fr); }
+        .tele-tl { display: none; }
+        .hero-core { padding-top: 120px; }
+    }
+
+    /* ---------- reduced motion ---------- */
+    @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+        .marquee-track { animation: none; }
+    }
+    </style>
+</head>
+<body>
+
+    <!-- BOOT SEQUENCE -->
+    <div id="boot" aria-hidden="true">
+        <div id="boot-inner">
+            <div id="boot-lines"></div>
+            <div id="boot-bar"><i></i></div>
+        </div>
+    </div>
+
+    <!-- NAV -->
+    <header id="nav">
+        <a class="brand" href="#home">RS<b>://</b>SINGH</a>
+        <nav class="nav-links" aria-label="Primary">
+            <a href="#about"><sup>01</sup>About</a>
+            <a href="#skills"><sup>02</sup>Skills</a>
+            <a href="#experience"><sup>03</sup>Log</a>
+            <a href="#work"><sup>04</sup>Case Files</a>
+            <a href="#blog"><sup>05</sup>Notes</a>
+            <a href="#contact"><sup>06</sup>Contact</a>
+        </nav>
+        <div class="nav-actions">
+            <button id="theme-btn" aria-label="Toggle light/dark theme">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v3M12 20v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M1 12h3M20 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>
+            </button>
+            <a class="resume-pill" href="assets/RAHUL_req.pdf" target="_blank" rel="noopener">Resume ↓</a>
+            <button id="menu-btn" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
+        </div>
+    </header>
+
+    <!-- MOBILE MENU -->
+    <div id="mobile-menu" aria-hidden="true">
+        <a href="#about"><sup>01</sup>About</a>
+        <a href="#skills"><sup>02</sup>Skills</a>
+        <a href="#experience"><sup>03</sup>Log</a>
+        <a href="#work"><sup>04</sup>Case Files</a>
+        <a href="#blog"><sup>05</sup>Notes</a>
+        <a href="#contact"><sup>06</sup>Contact</a>
+        <a href="assets/RAHUL_req.pdf" target="_blank" rel="noopener"><sup>↓</sup>Resume</a>
+    </div>
+
+    <main>
+
+    <!-- ============ HERO ============ -->
+    <section id="home">
+        <canvas id="threat-canvas" aria-hidden="true"></canvas>
+
+        <div class="telemetry tele-tl"><span>SYS://THREAT-DETECTION</span><span style="color:var(--accent)">V3.0</span></div>
+        <div class="telemetry tele-tr"><span id="clock">--:--:--</span></div>
+        <div class="telemetry tele-br"><span class="dot-live"></span><span>Status: open to signal</span></div>
+
+        <div class="container hero-core">
+            <div class="hero-eyebrow sys-label">ML Engineer — LLM Security × Threat Detection</div>
+            <h1 class="hl" id="headline">
+                <span class="hl-line"><span class="hl-inner">I build AI</span></span>
+                <span class="hl-line"><span class="hl-inner">that <span class="outline">hunts</span></span></span>
+                <span class="hl-line"><span class="hl-inner"><span class="accent">threats</span><span class="cursor-blink"></span></span></span>
+            </h1>
+            <p class="hero-sub">
+                ML-powered threat detection systems, LLM security auditing platforms, and
+                <strong>MITRE ATT&amp;CK-mapped correlation engines</strong> — production AI built to find
+                real attacks and expose real vulnerabilities.
+            </p>
+            <div class="hero-proof">ARI 0.8224&nbsp;·&nbsp;p=0.021&nbsp;·&nbsp;9 SECURITY DATASETS</div>
+            <div class="hero-ctas">
+                <a class="btn btn-solid magnetic" href="#work">View case files →</a>
+                <a class="btn btn-ghost magnetic" href="#contact">Open a channel</a>
+            </div>
+        </div>
+
+        <div class="marquee" aria-hidden="true">
+            <div class="marquee-track">
+                <span>LLM Red-Teaming</span><span>GNN Alert Correlation</span><span>MITRE ATT&amp;CK</span><span>Prompt-Injection Defense</span><span>Anomaly Detection</span><span>AI Governance</span><span>SOC Automation</span><span>Production ML</span>
+                <span>LLM Red-Teaming</span><span>GNN Alert Correlation</span><span>MITRE ATT&amp;CK</span><span>Prompt-Injection Defense</span><span>Anomaly Detection</span><span>AI Governance</span><span>SOC Automation</span><span>Production ML</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ PROOF READOUT ============ -->
+    <section id="proof">
+        <div class="proof-grid">
+            <div class="proof-cell" data-reveal>
+                <div class="proof-num"><span class="count" data-target="0.8224" data-decimals="4">0.0000</span></div>
+                <div class="proof-cap">Clustering ARI<em>MITRE-Core v2</em></div>
+            </div>
+            <div class="proof-cell" data-reveal style="--d:.08s">
+                <div class="proof-num"><span class="unit">p=</span><span class="count" data-target="0.021" data-decimals="3">0.000</span></div>
+                <div class="proof-cap">Bridge-edge proof<em>DARPA OpTC</em></div>
+            </div>
+            <div class="proof-cell" data-reveal style="--d:.16s">
+                <div class="proof-num"><span class="count" data-target="61">0</span></div>
+                <div class="proof-cap">Adversarial tests<em>LLM Auditor</em></div>
+            </div>
+            <div class="proof-cell" data-reveal style="--d:.24s">
+                <div class="proof-num"><span class="count" data-target="60">0</span><span class="unit">%</span></div>
+                <div class="proof-cap">SOC effort reduced<em>Sequretek</em></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ CAPABILITIES ============ -->
+    <section id="services" class="sec-pad">
+        <span id="what-i-help-with"></span>
+        <div class="container">
+            <div class="sec-head">
+                <div class="sys-label" data-reveal>Capabilities // 001–004</div>
+                <h2 class="sec-title" data-reveal>Where I <span class="accent">work best</span></h2>
+            </div>
+
+            <div class="svc-row" data-reveal>
+                <div class="svc-idx">001</div>
+                <div class="svc-name">LLM Security &amp; Red Teaming</div>
+                <div class="svc-body">
+                    <p>Prompt injection, jailbreak testing, and data-leakage auditing for production AI systems.</p>
+                    <div class="svc-chips"><span class="chip">Prompt Injection</span><span class="chip">Jailbreaks</span><span class="chip">Data Leakage</span><span class="chip">RAG Security</span></div>
+                </div>
+            </div>
+            <div class="svc-row" data-reveal>
+                <div class="svc-idx">002</div>
+                <div class="svc-name">Threat Detection ML</div>
+                <div class="svc-body">
+                    <p>GNN-based alert correlation, anomaly detection, and MITRE ATT&amp;CK mapping for SOC environments.</p>
+                    <div class="svc-chips"><span class="chip">GNN Correlation</span><span class="chip">Anomaly Detection</span><span class="chip">ATT&amp;CK Mapping</span></div>
+                </div>
+            </div>
+            <div class="svc-row" data-reveal>
+                <div class="svc-idx">003</div>
+                <div class="svc-name">AI in Regulated Environments</div>
+                <div class="svc-body">
+                    <p>Governance frameworks, audit trails, and compliance-ready ML pipelines for healthcare and finance.</p>
+                    <div class="svc-chips"><span class="chip">Governance</span><span class="chip">Audit Trails</span><span class="chip">Compliance</span></div>
+                </div>
+            </div>
+            <div class="svc-row" data-reveal>
+                <div class="svc-idx">004</div>
+                <div class="svc-name">Production AI Systems</div>
+                <div class="svc-body">
+                    <p>End-to-end deployment with security-first architecture — from research prototype to 10k+ daily requests.</p>
+                    <div class="svc-chips"><span class="chip">FastAPI</span><span class="chip">Docker</span><span class="chip">Kubernetes</span></div>
+                </div>
+            </div>
+
+            <div class="process" data-reveal>
+                <div class="step">
+                    <div class="step-no">STEP 01</div>
+                    <h3>Map the Threat Surface</h3>
+                    <p>Identify where ML can detect, correlate, or prevent security events — and define what a true positive looks like.</p>
+                    <ul>
+                        <li>Attack surface analysis</li>
+                        <li>ML feasibility for detection</li>
+                        <li>Data availability assessment</li>
+                    </ul>
+                </div>
+                <div class="step">
+                    <div class="step-no">STEP 02</div>
+                    <h3>Build the Detection System</h3>
+                    <p>Design and implement ML pipelines for threat detection, LLM security testing, or alert correlation.</p>
+                    <ul>
+                        <li>Model training on security data</li>
+                        <li>MITRE ATT&amp;CK integration</li>
+                        <li>FastAPI + Docker deployment</li>
+                    </ul>
+                </div>
+                <div class="step">
+                    <div class="step-no">STEP 03</div>
+                    <h3>Operationalize &amp; Harden</h3>
+                    <p>Outputs actionable for SOC analysts, auditable for compliance, maintainable for engineering.</p>
+                    <ul>
+                        <li>SOC-ready alert formats</li>
+                        <li>Model drift monitoring</li>
+                        <li>Governance &amp; audit trails</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="fit-row" data-reveal>
+                <span class="lead">Best fit //</span>
+                <span class="chip">Enterprise security teams building ML detection</span>
+                <span class="chip">Companies deploying LLMs who need red-team testing</span>
+                <span class="chip">SOC teams with high alert volume</span>
+                <span class="chip">Regulated orgs with AI compliance requirements</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ ABOUT ============ -->
+    <section id="about" class="sec-pad">
+        <div class="container">
+            <div class="sec-head">
+                <div class="sys-label" data-reveal>Personnel file</div>
+                <h2 class="sec-title" data-reveal>Subject: <span class="accent">Singh, Rahul</span></h2>
+            </div>
+            <div class="about-grid">
+                <div class="subject-card" data-reveal>
+                    <div class="subject-frame">
+                        <span class="subject-img"></span>
+                        <img src="assets/Rahul.png" alt="Rahul Singh — ML Engineer specializing in LLM security and threat detection" loading="lazy">
+                    </div>
+                    <div class="subject-meta">
+                        <span>ID: RS-1397</span>
+                        <span>ROLE: <b>ML / SEC</b></span>
+                        <span>LOC: REMOTE</span>
+                    </div>
+                </div>
+                <div class="about-copy">
+                    <p data-reveal>
+                        I build ML systems at the intersection of <strong>AI and cybersecurity</strong> — threat detection
+                        engines, LLM security auditing platforms, and MITRE ATT&amp;CK-mapped correlation systems that
+                        operate in production environments <span class="mark">against real attacks</span>.
+                    </p>
+                    <p data-reveal>
+                        My work spans both sides: at <strong>Sequretek</strong> I built enterprise AI security platforms for
+                        real-time threat detection. At <strong>Syneos Health</strong> I architected LLM pipelines with
+                        governance frameworks for regulated clinical environments. My research project
+                        <strong>MITRE-Core v2</strong> — a heterogeneous GNN alert correlation engine — achieved
+                        <span class="mark">ARI 0.8224 across 9 security datasets</span> with a statistically proven novel
+                        finding (p=0.021, Cohen's d=1.28).
+                    </p>
+                    <p data-reveal>
+                        I build AI security systems that SOC analysts can trust, compliance teams can audit, and
+                        engineering teams can maintain — <strong>from research prototype to production deployment</strong>.
+                    </p>
+                    <div class="now-box" data-reveal>
+                        <span class="dot-live"></span>
+                        <span class="sys-label" style="color:var(--text)">Currently: Senior AI Engineer @ Syneos Health</span>
+                    </div>
+                    <div class="impact-mini" data-reveal>
+                        <div class="impact-cell"><div class="n"><span class="count" data-target="5">0</span><i>+</i></div><div class="l">Years exp</div></div>
+                        <div class="impact-cell"><div class="n"><span class="count" data-target="50">0</span><i>+</i></div><div class="l">Projects</div></div>
+                        <div class="impact-cell"><div class="n"><span class="count" data-target="15">0</span></div><div class="l">Models in prod</div></div>
+                        <div class="impact-cell"><div class="n"><span class="count" data-target="95">0</span><i>%</i></div><div class="l">Accuracy</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ SKILLS / ARSENAL ============ -->
+    <section id="skills" class="sec-pad">
+        <span id="achievements"></span>
+        <div class="container">
+            <div class="sec-head">
+                <div class="sys-label" data-reveal>Loadout</div>
+                <h2 class="sec-title" data-reveal>Technical <span class="accent">arsenal</span></h2>
+            </div>
+            <div class="skills-grid">
+                <div class="skill-panel" data-reveal>
+                    <canvas id="radar" width="184" height="184" aria-hidden="true"></canvas>
+                    <div class="panel-id">MOD-A</div>
+                    <h3>AI &amp; LLM Systems</h3>
+                    <div class="skill-chips">
+                        <span class="chip">LLM Systems</span><span class="chip">LangChain</span><span class="chip">RAG</span><span class="chip">LangGraph</span><span class="chip">NLP</span><span class="chip">OpenAI</span><span class="chip">Anthropic</span><span class="chip">HuggingFace</span><span class="chip">GenAI</span><span class="chip">BERT</span><span class="chip">Vector DBs</span><span class="chip">Prompt Engineering</span><span class="chip">AI Agents</span>
+                    </div>
+                </div>
+                <div class="skill-panel" data-reveal style="--d:.08s">
+                    <div class="panel-id">MOD-B</div>
+                    <h3>AI Security &amp; Governance</h3>
+                    <div class="skill-chips">
+                        <span class="chip">AI Governance</span><span class="chip">Model Monitoring</span><span class="chip">Risk Detection</span><span class="chip">Anomaly Detection</span><span class="chip">AI Reliability</span><span class="chip">Data Security</span><span class="chip">MLOps</span><span class="chip">Observability</span><span class="chip">Compliance</span><span class="chip">AI Auditing</span><span class="chip">Security Testing</span><span class="chip">Enterprise AI</span>
+                    </div>
+                </div>
+                <div class="skill-panel" data-reveal style="--d:.12s">
+                    <div class="panel-id">MOD-C</div>
+                    <h3>Data &amp; Infrastructure</h3>
+                    <div class="skill-chips">
+                        <span class="chip">Snowflake</span><span class="chip">Databricks</span><span class="chip">Azure</span><span class="chip">AWS</span><span class="chip">GCP</span><span class="chip">BigQuery</span><span class="chip">PostgreSQL</span><span class="chip">Airflow</span><span class="chip">Spark</span><span class="chip">ETL</span><span class="chip">Data Pipelines</span><span class="chip">Feature Stores</span><span class="chip">CI/CD</span><span class="chip">Git</span>
+                    </div>
+                </div>
+                <div class="skill-panel" data-reveal style="--d:.16s">
+                    <div class="panel-id">MOD-D</div>
+                    <h3>Deployment &amp; Engineering</h3>
+                    <div class="skill-chips">
+                        <span class="chip">FastAPI</span><span class="chip">Docker</span><span class="chip">Kubernetes</span><span class="chip">Python</span><span class="chip">SQL</span><span class="chip">Edge AI</span><span class="chip">AutoML</span><span class="chip">Time Series</span><span class="chip">Scikit-learn</span><span class="chip">TensorFlow</span><span class="chip">PyTorch</span><span class="chip">Pandas</span><span class="chip">OpenCV</span>
+                    </div>
+                </div>
+            </div>
+            <div class="skills-marquee" aria-hidden="true">
+                <div class="marquee-track">
+                    <span>Python</span><span>PyTorch</span><span>LangChain</span><span>FastAPI</span><span>Kubernetes</span><span>MITRE ATT&amp;CK</span><span>Snowflake</span><span>Airflow</span><span>RAG</span><span>Docker</span><span>TensorFlow</span><span>Spark</span><span>AI Governance</span><span>MLOps</span><span>Anomaly Detection</span><span>Vector DBs</span>
+                    <span>Python</span><span>PyTorch</span><span>LangChain</span><span>FastAPI</span><span>Kubernetes</span><span>MITRE ATT&amp;CK</span><span>Snowflake</span><span>Airflow</span><span>RAG</span><span>Docker</span><span>TensorFlow</span><span>Spark</span><span>AI Governance</span><span>MLOps</span><span>Anomaly Detection</span><span>Vector DBs</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ EXPERIENCE / AUDIT LOG ============ -->
+    <section id="experience" class="sec-pad">
+        <div class="container">
+            <div class="sec-head">
+                <div class="sys-label" data-reveal>Audit log // verified history</div>
+                <h2 class="sec-title" data-reveal>Career <span class="accent">log</span></h2>
+            </div>
+            <div class="log-wrap">
+                <div class="log-rail" aria-hidden="true"><i id="rail-fill"></i></div>
+
+                <article class="log-entry" data-reveal>
+                    <div class="log-stamp-row">
+                        <div>
+                            <div class="log-when">2024-01 → PRESENT</div>
+                            <h3 class="log-role">Senior AI Engineer</h3>
+                            <div class="log-org">// Syneos Health</div>
+                        </div>
+                        <span class="stamp">Verified</span>
+                    </div>
+                    <div class="log-body">
+                        <ul>
+                            <li>Implemented LLM security controls and prompt injection defenses for enterprise AI agent workflows using <strong>LangChain</strong> — deployed in regulated clinical environments with role-based access and audit logging.</li>
+                            <li>Deployed production AI systems with <strong>FastAPI</strong> &amp; <strong>Kubernetes</strong> with model drift detection and anomaly alerting handling 10k+ daily inference requests.</li>
+                            <li>Architected AI governance frameworks for regulated healthcare LLM deployments — covering model behavior auditing, access controls, and compliance documentation.</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <article class="log-entry" data-reveal>
+                    <div class="log-stamp-row">
+                        <div>
+                            <div class="log-when">2022-03 → 2024-01</div>
+                            <h3 class="log-role">Senior ML Engineer</h3>
+                            <div class="log-org">// Sequretek</div>
+                        </div>
+                        <span class="stamp">Verified</span>
+                    </div>
+                    <div class="log-body">
+                        <ul>
+                            <li>Engineered enterprise AI security platforms with <strong>ML-driven real-time threat detection</strong> and automated alert triage — SOC operations experience that directly informed MITRE-Core v2 research (ARI 0.8224, bridge edge p=0.021).</li>
+                            <li>Reduced manual SOC reporting by <strong>60%</strong> through behavioral anomaly scoring pipelines.</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <article class="log-entry" data-reveal>
+                    <div class="log-stamp-row">
+                        <div>
+                            <div class="log-when">2018-09 → 2021-08</div>
+                            <h3 class="log-role">Data Analyst</h3>
+                            <div class="log-org">// Clover Infotech</div>
+                        </div>
+                        <span class="stamp">Verified</span>
+                    </div>
+                    <div class="log-body">
+                        <ul>
+                            <li>Built automated data pipelines and <strong>ML monitoring dashboards</strong> for production systems.</li>
+                            <li>Improved operational efficiency by <strong>20%</strong> through data-driven automation and stakeholder reporting.</li>
+                        </ul>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ CASE FILES ============ -->
+    <section id="work" class="sec-pad">
+        <span id="projects"></span>
+        <div class="container">
+            <div class="sec-head">
+                <div class="sys-label" data-reveal>Case files // declassified</div>
+                <h2 class="sec-title" data-reveal>Field <span class="accent">work</span></h2>
+            </div>
+
+            <!-- Flagship: MITRE-Core -->
+            <div class="flagship" data-reveal>
+                <div class="flagship-info">
+                    <div class="cf-meta"><b>CF-001</b><span>Enterprise Security</span><span>2025</span></div>
+                    <h3>MITRE-Core Attack Correlation Engine</h3>
+                    <p class="desc">A heterogeneous GNN pipeline that correlates raw SOC alerts into MITRE ATT&amp;CK campaigns — turning thousands of disconnected alerts into attack chains analysts can act on in minutes.</p>
+                    <div class="ari-readout">
+                        <div class="big"><span class="count" data-target="0.8224" data-decimals="4">0.0000</span></div>
+                        <div class="cap">Adjusted Rand Index · 9 datasets · bridge edge p=0.021</div>
+                    </div>
+                    <div class="flagship-actions">
+                        <button class="btn btn-solid" onclick="openCaseStudy(event, 'mitre-core')">Open dossier</button>
+                        <a class="btn btn-ghost" href="https://github.com/rahulsingh1397/Mitre-Core" target="_blank" rel="noopener">GitHub ↗</a>
+                    </div>
+                </div>
+                <div class="flagship-visual">
+                    <img src="assets/mitre-core.png" alt="MITRE-Core attack correlation engine visualization" loading="lazy">
+                </div>
+            </div>
+
+            <!-- Case file grid -->
+            <div class="cf-grid">
+                <div class="cf-card" data-reveal>
+                    <div class="cf-meta"><b>CF-002</b><span>AI Security</span><span>2026</span></div>
+                    <h4>Enterprise LLM Security Auditor</h4>
+                    <p class="desc">Automated red-team platform for any LLM endpoint — 61 adversarial tests across 6 vulnerability classes, with executive-ready audit reports in minutes.</p>
+                    <div class="cf-actions">
+                        <button class="btn-min" onclick="openCaseStudy(event, 'enterprise-llm-security-auditor')">Open dossier</button>
+                        <a class="btn-min" href="https://github.com/rahulsingh1397/Enterprise_LLM_Security_Auditor" target="_blank" rel="noopener">GitHub ↗</a>
+                    </div>
+                </div>
+                <div class="cf-card" data-reveal style="--d:.06s">
+                    <div class="cf-meta"><b>CF-003</b><span>Security SOC AI</span><span>2024</span></div>
+                    <h4>RL Logon Anomaly Detection</h4>
+                    <p class="desc">Reinforcement-learning engine that learns from analyst feedback — flagging unusual logon sources, destinations, and time windows at the right sensitivity.</p>
+                    <div class="cf-actions">
+                        <button class="btn-min" onclick="openCaseStudy(event, 'rl-anomaly')">Open dossier</button>
+                        <a class="btn-min" href="https://github.com/rahulsingh1397/Reinforcement_learning_AnomalyDetection" target="_blank" rel="noopener">GitHub ↗</a>
+                    </div>
+                </div>
+                <div class="cf-card" data-reveal style="--d:.12s">
+                    <div class="cf-meta"><b>CF-004</b><span>AI Compliance</span><span>2024</span></div>
+                    <h4>AI Compliance Monitor</h4>
+                    <p class="desc">Six specialized agents keeping enterprise AI provably compliant — wired into QRadar, JIRA, and Slack with automated audit evidence.</p>
+                    <div class="cf-actions">
+                        <button class="btn-min" onclick="openCaseStudy(event, 'ai-compliance')">Open dossier</button>
+                        <a class="btn-min" href="https://github.com/rahulsingh1397/AI_Compliance_Monitor" target="_blank" rel="noopener">GitHub ↗</a>
+                    </div>
+                </div>
+                <div class="cf-card" data-reveal>
+                    <div class="cf-meta"><b>CF-005</b><span>AI Compliance</span><span>2023</span></div>
+                    <h4>Community Rule Classification</h4>
+                    <p class="desc">Rule-aware NLP scoring that flags community violations with 92% precision — context-aware moderation beyond keyword filters.</p>
+                    <div class="cf-actions">
+                        <button class="btn-min" onclick="openCaseStudy(event, 'community-rule')">Open dossier</button>
+                        <a class="btn-min" href="https://github.com/rahulsingh1397/Community_rule_classification" target="_blank" rel="noopener">GitHub ↗</a>
+                    </div>
+                </div>
+                <div class="cf-card" data-reveal style="--d:.06s">
+                    <div class="cf-meta"><b>CF-006</b><span>Forecasting</span><span>2021</span></div>
+                    <h4>Energy Demand Forecasting</h4>
+                    <p class="desc">Stacked ensemble (Prophet, XGBoost, LSTM) predicting 48-hour demand curves at &lt;2% MAPE — with planner-ready scenario simulation.</p>
+                    <div class="cf-actions">
+                        <button class="btn-min" onclick="openCaseStudy(event, 'energy-forecast')">Open dossier</button>
+                        <a class="btn-min" href="https://github.com/rahulsingh1397/Energy_Demand_Forecasting" target="_blank" rel="noopener">GitHub ↗</a>
+                    </div>
+                </div>
+                <div class="cf-card" data-reveal style="--d:.12s">
+                    <div class="cf-meta"><b>CF-007</b><span>NLP Architecture</span><span>2024</span></div>
+                    <h4>Domain-Specific LLM (BERT)</h4>
+                    <p class="desc">Fine-tuning pipeline for specialized corpora — +15% F1 over base BERT, 40% faster inference, deployable on CPU for regulated workflows.</p>
+                    <div class="cf-actions">
+                        <button class="btn-min" onclick="openCaseStudy(event, 'bert')">Open dossier</button>
+                        <a class="btn-min" href="https://github.com/rahulsingh1397/Fine_tune_Bert" target="_blank" rel="noopener">GitHub ↗</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ GITHUB TELEMETRY ============ -->
+    <section id="github" class="sec-pad">
+        <div class="container">
+            <div class="gh-frame" data-reveal>
+                <div class="gh-bar"><i></i><i></i><i></i><span class="t">GIT://TELEMETRY — rahulsingh1397</span></div>
+                <div class="gh-body">
+                    <div class="gh-stats">
+                        <div class="row"><span>REPOSITORIES</span><b id="gh-repos">--</b></div>
+                        <div class="row"><span>FOLLOWERS</span><b id="gh-followers">--</b></div>
+                        <div class="row"><span>PRIMARY LANG</span><b>PYTHON</b></div>
+                        <a class="btn-min" style="display:inline-block;margin-top:22px" href="https://github.com/rahulsingh1397" target="_blank" rel="noopener">view_full_profile() ↗</a>
+                    </div>
+                    <div class="gh-chart-wrap">
+                        <img id="gh-chart" src="https://ghchart.rshah.org/00ff88/rahulsingh1397" alt="GitHub contribution chart for rahulsingh1397" loading="lazy">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ DISPATCHES / BLOG ============ -->
+    <section id="blog" class="sec-pad" style="padding-top:0">
+        <div class="container">
+            <div class="sec-head" style="flex-direction:row;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:24px">
+                <div style="display:flex;flex-direction:column;gap:18px">
+                    <div class="sys-label" data-reveal>Dispatches // field notes</div>
+                    <h2 class="sec-title" data-reveal>Latest <span class="accent">signals</span></h2>
+                </div>
+                <a class="btn btn-ghost" href="blogs/blog.html" data-reveal>All entries →</a>
+            </div>
+            <div id="post-list" data-reveal>
+                <!-- populated from blogs/blogs.json -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ CONTACT ============ -->
+    <section id="contact" class="sec-pad">
+        <div class="container">
+            <div class="sys-label" data-reveal>Transmission // secure channel</div>
+            <h2 class="contact-head" style="margin-top:22px" data-reveal>
+                Open a<br><span class="accent">channel</span><span class="cursor-blink"></span>
+            </h2>
+            <a class="email-mega" href="mailto:rahul.rs1397@gmail.com" data-reveal>rahul.rs1397@gmail.com</a>
+
+            <div class="contact-grid">
+                <div data-reveal>
+                    <p class="contact-note">
+                        No pitch — let's assess whether ML actually solves your threat problem.
+                        Typical response window: under 24 hours.
+                    </p>
+                    <div class="contact-ctas">
+                        <a class="btn btn-solid" href="https://calendly.com/rahul-rs1397/30min" target="_blank" rel="noopener">Book a 30-min call</a>
+                        <a class="btn btn-ghost" href="assets/RAHUL_req.pdf" target="_blank" rel="noopener">Resume ↓</a>
+                    </div>
+                </div>
+                <ul class="social-list" data-reveal>
+                    <li><a href="https://github.com/rahulsingh1397" target="_blank" rel="noopener"><span>GitHub</span><span>↗</span></a></li>
+                    <li><a href="https://www.linkedin.com/in/rahulsingh1397" target="_blank" rel="noopener"><span>LinkedIn</span><span>↗</span></a></li>
+                    <li><a href="https://twitter.com/rahulsingh1397" target="_blank" rel="noopener"><span>Twitter / X</span><span>↗</span></a></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    </main>
+
+    <!-- ============ FOOTER ============ -->
+    <footer>
+        <div class="container foot-grid">
+            <span>© 2026 Rahul Singh — All rights reserved</span>
+            <span>Built with caffeine // no templates <span class="v">SYS:V3.0.0</span></span>
+            <span style="display:flex;gap:22px;flex-wrap:wrap">
+                <a href="blogs/blog.html">Blog</a>
+                <a href="archive/classic.html">View classic version</a>
+                <a href="#home">↑ Top</a>
+            </span>
+        </div>
+    </footer>
+
+    <!-- ============ DOSSIER MODAL ============ -->
+    <div id="dossier" role="dialog" aria-modal="true" aria-labelledby="dossier-title">
+        <div class="dossier-backdrop" data-dossier-close></div>
+        <div class="dossier-panel">
+            <div class="dossier-head">
+                <span class="t"><b id="dossier-cf">CF-000</b> — <span id="dossier-cat">CASE FILE</span></span>
+                <button id="dossier-close" data-dossier-close>ESC / CLOSE ✕</button>
+            </div>
+            <div class="dossier-body">
+                <div class="cf-meta"><span id="dossier-date">—</span></div>
+                <h3 id="dossier-title">—</h3>
+                <div class="dossier-sec"><h5>Problem</h5><p id="dossier-problem"></p></div>
+                <div class="dossier-sec"><h5>Objective</h5><p id="dossier-objective"></p></div>
+                <div class="dossier-sec"><h5>Approach</h5><ul id="dossier-approach"></ul></div>
+                <div class="dossier-sec"><h5>Stack</h5><div class="svc-chips" id="dossier-tech"></div></div>
+                <div class="dossier-sec"><h5>Results</h5><ul id="dossier-results"></ul></div>
+                <div class="dossier-sec"><h5>Why it matters</h5><p id="dossier-why"></p></div>
+                <div class="dossier-foot">
+                    <a class="btn btn-solid" id="dossier-github" href="#" target="_blank" rel="noopener">View source ↗</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    (function () {
+    'use strict';
+    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var docEl = document.documentElement;
+
+    /* ============ CASE STUDY DATA ============ */
+    var caseStudies = {
+        "mitre-core": {
+            cf: "CF-001",
+            category: "Enterprise Security",
+            title: "MITRE-CORE Attack Correlation Engine",
+            date: "2025",
+            problem: "SOC teams drown in thousands of disconnected alerts with no shared context, forcing analysts to guess whether events belong to the same campaign.",
+            objective: "Transform raw SIEM output into MITRE ATT&CK attack chains that highlight true campaigns, anomalies, and remediation paths within minutes.",
+            approach: "Preprocess raw CSV alerts (64–300+ rows) into normalized entities, then feed them into a correlation engine that clusters by host/user/IP relationships.\nMap each grouped event to MITRE ATT&CK tactics/techniques using curated ATT&CK + VERIS references (center-for-threat-informed-defense attack-flow examples).\nLayer anomaly detection + NetworkX visuals so analysts can inspect attack chains, export plots, and ship PDF/PPT briefs straight from Resources/ scripts.",
+            tech: ["Python", "Pandas", "scikit-learn", "NetworkX", "Plotly", "MITRE ATT&CK", "VERIS", "Attack Flow"],
+            results: [
+                "5 attacks (64 alerts) processed in 11s at ARI 0.82 chain accuracy",
+                "40 simulated attacks (301 alerts) correlated in 1m51s with full ATT&CK coverage",
+                "Automated visual reports + PDF/PPT decks for exec-ready briefings",
+                "Plug-and-play project structure (Data/, src/, tests/) for enterprise adoption"
+            ],
+            why: "Instead of eyeballing spreadsheets, analysts get an automated view of how high-end adversaries traverse their estate—accelerating threat response and audit readiness in a single workflow.",
+            github: "https://github.com/rahulsingh1397/Mitre-Core"
+        },
+        "enterprise-llm-security-auditor": {
+            cf: "CF-002",
+            category: "AI Security",
+            title: "Enterprise LLM Security Auditor",
+            date: "2026",
+            problem: "Companies are deploying AI chatbots, copilots, and RAG systems without structured security testing, so prompt injection, jailbreaks, system prompt leakage, data exfiltration, PII exposure, and RAG weaknesses often go undetected until production.",
+            objective: "Create an automated red-team platform that can test any LLM endpoint, evaluate security failures semantically, and produce executive-ready audit reports with risk scoring and remediation guidance in minutes.",
+            approach: "Built a FastAPI backend that orchestrates up to 61 adversarial prompts across six vulnerability classes, persists findings to SQLite, and streams live progress over WebSockets.\nUsed Claude as an analyzer model to evaluate whether each target LLM response actually exposed a vulnerability, avoiding brittle regex-only detection.\nDelivered a React + Vite frontend for new-audit workflows, live scan monitoring, tabbed findings review, and HTML/PDF-ready security reports.",
+            tech: ["FastAPI", "React", "Vite", "WebSockets", "SQLite", "Anthropic Claude"],
+            results: [
+                "Runs 61 adversarial tests across 6 LLM vulnerability categories",
+                "Completes full audits in ~5–10 minutes with real-time scan visibility",
+                "Generates professional audit reports with evidence, risk score, and remediation steps",
+                "Supports consultants and internal security teams with a repeatable LLM assurance workflow"
+            ],
+            why: "LLM security is becoming a real enterprise requirement, but most teams still rely on manual prompt poking or one-off checks. This project turns LLM red-teaming into a production-grade assessment workflow that is faster, more repeatable, and client-ready.",
+            github: "https://github.com/rahulsingh1397/Enterprise_LLM_Security_Auditor"
+        },
+        "community-rule": {
+            cf: "CF-005",
+            category: "AI Compliance",
+            title: "Community Rule Classification",
+            date: "2023",
+            problem: "Online communities struggle to enforce complex, nuance-heavy rules (e.g., 'no hate speech' vs 'no political debates'), and generic content moderation APIs often lack context.",
+            objective: "Build a rule-aware classification system that understands the specific semantic context of a community's guidelines.",
+            approach: "Utilized transfer learning on transformer models, training on a dataset of labeled community violations.\nEmployed 'Explanation-First' design where the model outputs why a post violates a rule.\nBenchmarked against standard toxicity classifiers.",
+            tech: ["Python", "PyTorch", "Transformers", "Kaggle", "NLTK"],
+            results: [
+                "92% precision in flagging violations",
+                "Reduced moderator workload by ~60%",
+                "Consistent enforcement across timezones",
+                "Lower false-positive rate than keyword filters"
+            ],
+            why: "Scalable moderation is key to community health. Context-aware AI moves beyond keyword banning to understanding intent, preserving free speech while stopping abuse.",
+            github: "https://github.com/rahulsingh1397/Community_rule_classification"
+        },
+        "rl-anomaly": {
+            cf: "CF-003",
+            category: "Security SOC AI",
+            title: "RL Logon Anomaly Detection",
+            date: "2024",
+            problem: "Security teams struggle to spot subtle authentication anomalies when thresholds are static and feedback never loops back into the model.",
+            objective: "Continuously learn from analyst feedback so logon anomalies are flagged at the right sensitivity for each user, host, and time window.",
+            approach: "Aggregate authentication logs into 3-hour windows and derive behavior fingerprints for each identity.\nRun anomaly scoring over source IP, destination, and temporal patterns, then feed positive/negative analyst feedback into a reinforcement loop.\nAutomatically update thresholds per day-of-week and publish JSON reports into SIEM pipelines.",
+            tech: ["Python", "Reinforcement Learning", "Pandas", "NumPy", "Matplotlib"],
+            results: [
+                "Adapts detection thresholds in near-real-time",
+                "Differentiates weekday vs weekend identities",
+                "Produces analyst-ready anomaly summaries",
+                "Keeps false positives low via feedback loop"
+            ],
+            why: "Dynamic identity baselines reduce alert fatigue so SOC teams only chase authentications that truly fall outside normal behavior.",
+            github: "https://github.com/rahulsingh1397/Reinforcement_learning_AnomalyDetection"
+        },
+        "ai-compliance": {
+            cf: "CF-004",
+            category: "AI Compliance",
+            title: "AI Compliance Monitor",
+            date: "2024",
+            problem: "Enterprise AI programs were shipping models without a unified way to monitor logs, privacy exposure, or regulatory documentation—leaving SOC2 / ISO auditors with spreadsheets and guesswork.",
+            objective: "Stand up an extensible, agent-based monitoring layer that keeps every AI system provably compliant while plugging directly into existing enterprise tooling.",
+            approach: "Composed six specialized agents (Data Discovery, Monitoring, Privacy, Remediation, Reporting, UI) that coordinate via a shared event bus.\nWired integrations for QRadar, JIRA, Slack/email, and external compliance data feeds so alerts flow into the ops stack teams already use.\nAdded Resources/ scripts to auto-generate PDF + PPT decks from Markdown so audit packets stay in sync with the latest scans.",
+            tech: ["Python 3.9", "FastAPI", "Kafka", "Slack API", "QRadar", "python-pptx", "xhtml2pdf"],
+            results: [
+                "Agent-driven scans discover sensitive assets before audits start",
+                "Automated remediation + reporting loops reduce manual review hours",
+                "Notification bridges (Slack/email) surface violations in real time",
+                "One-click PDF/PPT exports keep regulators supplied with fresh evidence"
+            ],
+            why: "By turning compliance into an always-on workflow—rather than an end-of-quarter scramble—teams can ship AI features faster while still satisfying every regulator in the room.",
+            github: "https://github.com/rahulsingh1397/AI_Compliance_Monitor"
+        },
+        "energy-forecast": {
+            cf: "CF-006",
+            category: "Forecasting",
+            title: "Energy Demand Forecasting",
+            date: "2021",
+            problem: "Utility planners were over-purchasing peak-hour capacity because legacy spreadsheets couldn’t anticipate weather and usage volatility.",
+            objective: "Create an ensemble forecasting system that predicts 48-hour demand curves with actionable confidence intervals.",
+            approach: "Aggregated smart-meter, weather, and tariff data into a feature store processed via Spark.\nTrained stacked regressors (Prophet, XGBoost, LSTM) with auto-weighting based on seasonality regimes.\nDelivered planners a scenario simulator embedded in existing dashboards.",
+            tech: ["Python", "Prophet", "XGBoost", "TensorFlow", "Snowflake"],
+            results: [
+                "Marked reduction in peak over-procurement",
+                "<2% MAPE on day-ahead forecasts",
+                "45 min faster planning cycles",
+                "Dynamic pricing pilots unlocked"
+            ],
+            why: "Precise demand foresight frees capital for growth projects and keeps regulators satisfied with transparent methodology.",
+            github: "https://github.com/rahulsingh1397/Energy_Demand_Forecasting"
+        },
+        "bert": {
+            cf: "CF-007",
+            category: "NLP Architecture",
+            title: "Domain-Specific LLM (BERT)",
+            date: "2024",
+            problem: "General-purpose LLMs often fail to grasp domain-specific jargon (e.g., legal, medical, or proprietary technical docs), leading to hallucinations or surface-level summaries.",
+            objective: "Create a pipeline to fine-tune BERT models on specialized corpora to improve entity extraction and understanding in niche domains.",
+            approach: "Implemented a Masked Language Modeling (MLM) pre-training step on domain documents.\nFollowed by task-specific fine-tuning (NER/Classification).\nOptimized for inference speed using quantization and distillation.",
+            tech: ["HuggingFace", "PyTorch", "Accelerate", "W&B", "Python"],
+            results: [
+                "15% improvement in F1 score over base BERT",
+                "40% faster inference than large generative models",
+                "Deployment-ready on CPU hardware",
+                "Higher privacy (local execution)"
+            ],
+            why: "Even with high-end frontier models hitting the market, a finely tuned BERT delivers tighter accuracy, lower latency, and better data control for regulated workflows—so you get flagship performance without flagship burn.",
+            github: "https://github.com/rahulsingh1397/Fine_tune_Bert"
+        }
+    };
+
+    /* ============ THEME ============ */
+    (function () {
+        var btn = document.getElementById('theme-btn');
+        btn.addEventListener('click', function () {
+            var next = docEl.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            docEl.setAttribute('data-theme', next);
+            try { localStorage.setItem('theme', next); } catch (e) {}
+            document.dispatchEvent(new CustomEvent('themechange'));
+        });
+    })();
+
+    /* ============ SMOOTH SCROLL (Lenis) ============ */
+    var lenis = null;
+    function initLenis() {
+        if (reduced || typeof window.Lenis === 'undefined') {
+            docEl.classList.add('native-smooth');
+            return;
+        }
+        lenis = new Lenis({ duration: 1.1, easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); } });
+        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+        requestAnimationFrame(raf);
+    }
+
+    /* anchor navigation */
+    document.addEventListener('click', function (e) {
+        var a = e.target.closest('a[href^="#"]');
+        if (!a) return;
+        var id = a.getAttribute('href');
+        if (id.length < 2) return;
+        var target = document.querySelector(id);
+        if (!target) return;
+        e.preventDefault();
+        closeMenu();
+        if (lenis) lenis.scrollTo(target, { offset: -80 });
+        else target.scrollIntoView(reduced ? {} : { behavior: 'smooth' });
+        history.replaceState(null, '', id);
+    });
+
+    /* ============ NAV STATE ============ */
+    var nav = document.getElementById('nav');
+    function onScroll() {
+        if (window.scrollY > 30) nav.classList.add('scrolled');
+        else nav.classList.remove('scrolled');
+        updateRail();
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    /* ============ MOBILE MENU ============ */
+    var menuBtn = document.getElementById('menu-btn');
+    var mobileMenu = document.getElementById('mobile-menu');
+    function closeMenu() {
+        menuBtn.classList.remove('open');
+        mobileMenu.classList.remove('open');
+        menuBtn.setAttribute('aria-expanded', 'false');
+        mobileMenu.setAttribute('aria-hidden', 'true');
+    }
+    menuBtn.addEventListener('click', function () {
+        var open = !mobileMenu.classList.contains('open');
+        menuBtn.classList.toggle('open', open);
+        mobileMenu.classList.toggle('open', open);
+        menuBtn.setAttribute('aria-expanded', String(open));
+        mobileMenu.setAttribute('aria-hidden', String(!open));
+    });
+
+    /* ============ CLOCK TELEMETRY ============ */
+    (function () {
+        var el = document.getElementById('clock');
+        function pad(n) { return n < 10 ? '0' + n : '' + n; }
+        function tick() {
+            var d = new Date();
+            var off = -d.getTimezoneOffset();
+            var sign = off >= 0 ? '+' : '-';
+            var oh = Math.floor(Math.abs(off) / 60);
+            el.textContent = pad(d.getHours()) + ':' + pad(d.getMinutes()) + ':' + pad(d.getSeconds()) + ' UTC' + sign + oh;
+        }
+        tick();
+        setInterval(tick, 1000);
+    })();
+
+    /* ============ REVEAL SYSTEM ============ */
+    (function () {
+        var items = document.querySelectorAll('[data-reveal], .log-entry');
+        if (reduced || !('IntersectionObserver' in window)) {
+            items.forEach(function (el) { el.classList.add('in'); });
+            return;
+        }
+        var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (en) {
+                if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+            });
+        }, { rootMargin: '0px 0px -10% 0px', threshold: 0.05 });
+        items.forEach(function (el) { io.observe(el); });
+    })();
+
+    /* ============ COUNTERS ============ */
+    (function () {
+        var counters = document.querySelectorAll('.count');
+        function fmt(el, val) {
+            var dec = parseInt(el.dataset.decimals || '0', 10);
+            el.textContent = val.toFixed(dec);
+        }
+        function animate(el) {
+            var target = parseFloat(el.dataset.target);
+            if (reduced) { fmt(el, target); return; }
+            var t0 = performance.now(), dur = 1500;
+            function tick(now) {
+                var p = Math.min(1, (now - t0) / dur);
+                p = 1 - Math.pow(1 - p, 3);
+                fmt(el, target * p);
+                if (p < 1) requestAnimationFrame(tick);
+            }
+            requestAnimationFrame(tick);
+        }
+        if (!('IntersectionObserver' in window)) {
+            counters.forEach(function (el) { fmt(el, parseFloat(el.dataset.target)); });
+            return;
+        }
+        var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (en) {
+                if (en.isIntersecting) { animate(en.target); io.unobserve(en.target); }
+            });
+        }, { threshold: 0.4 });
+        counters.forEach(function (el) { io.observe(el); });
+    })();
+
+    /* ============ AUDIT RAIL PROGRESS ============ */
+    var railFill = document.getElementById('rail-fill');
+    var logWrap = document.querySelector('.log-wrap');
+    function updateRail() {
+        if (!railFill || !logWrap) return;
+        var rect = logWrap.getBoundingClientRect();
+        var vh = window.innerHeight;
+        var progress = (vh * 0.75 - rect.top) / rect.height;
+        progress = Math.max(0, Math.min(1, progress));
+        railFill.style.setProperty('--p', progress.toFixed(3));
+        railFill.style.transform = 'scaleY(' + progress.toFixed(3) + ')';
+    }
+    updateRail();
+
+    /* ============ THREAT GRAPH CANVAS ============ */
+    (function () {
+        var canvas = document.getElementById('threat-canvas');
+        if (!canvas || !canvas.getContext) return;
+        var ctx = canvas.getContext('2d');
+        var W = 0, H = 0, nodes = [], running = false, started = false;
+        var mouse = { x: -9999, y: -9999 };
+        var colors = {};
+        var lastFlare = 0;
+
+        function readColors() {
+            var s = getComputedStyle(docEl);
+            colors = {
+                node: s.getPropertyValue('--graph-node').trim(),
+                line: s.getPropertyValue('--graph-line').trim(),
+                accent: s.getPropertyValue('--accent').trim(),
+                amber: s.getPropertyValue('--amber').trim()
+            };
+        }
+        readColors();
+        document.addEventListener('themechange', readColors);
+
+        function resize() {
+            var dpr = Math.min(window.devicePixelRatio || 1, 2);
+            W = canvas.clientWidth; H = canvas.clientHeight;
+            canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            seed();
+            if (reduced) draw(performance.now());
+        }
+        function seed() {
+            var area = W * H;
+            var count = Math.round(Math.max(26, Math.min(85, area / 17000)));
+            nodes = [];
+            for (var i = 0; i < count; i++) {
+                nodes.push({
+                    x: Math.random() * W, y: Math.random() * H,
+                    vx: (Math.random() - 0.5) * 0.35, vy: (Math.random() - 0.5) * 0.35,
+                    r: 1.2 + Math.random() * 1.9, state: 0, t: 0
+                });
+            }
+        }
+        function step(now) {
+            for (var i = 0; i < nodes.length; i++) {
+                var n = nodes[i];
+                n.x += n.vx; n.y += n.vy;
+                if (n.x < -10) n.x = W + 10; if (n.x > W + 10) n.x = -10;
+                if (n.y < -10) n.y = H + 10; if (n.y > H + 10) n.y = -10;
+                var dx = n.x - mouse.x, dy = n.y - mouse.y;
+                var d2 = dx * dx + dy * dy;
+                if (d2 < 12100 && d2 > 1) {
+                    var d = Math.sqrt(d2), f = (110 - d) / 110 * 0.6;
+                    n.x += dx / d * f; n.y += dy / d * f;
+                }
+                if (n.state === 1 && now - n.t > 900) { n.state = 2; n.t = now; }
+                else if (n.state === 2 && now - n.t > 2600) { n.state = 0; }
+            }
+            if (now - lastFlare > 1700 && nodes.length) {
+                lastFlare = now;
+                var pick = nodes[Math.floor(Math.random() * nodes.length)];
+                if (pick.state === 0) { pick.state = 1; pick.t = now; }
+            }
+        }
+        function draw(now) {
+            ctx.clearRect(0, 0, W, H);
+            var R = 132;
+            for (var i = 0; i < nodes.length; i++) {
+                for (var j = i + 1; j < nodes.length; j++) {
+                    var a = nodes[i], b = nodes[j];
+                    var dx = a.x - b.x, dy = a.y - b.y;
+                    var d2 = dx * dx + dy * dy;
+                    if (d2 > R * R) continue;
+                    var d = Math.sqrt(d2);
+                    var alpha = (1 - d / R) * 0.3;
+                    var col = colors.line;
+                    if (a.state === 2 || b.state === 2) { col = colors.accent; alpha *= 1.4; }
+                    else if (a.state === 1 || b.state === 1) { col = colors.amber; alpha *= 1.4; }
+                    ctx.globalAlpha = Math.min(0.85, alpha);
+                    ctx.strokeStyle = col;
+                    ctx.lineWidth = 1;
+                    ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+                }
+            }
+            for (var k = 0; k < nodes.length; k++) {
+                var n = nodes[k];
+                var col2 = colors.node, r = n.r, glow = 0;
+                if (n.state === 1) { col2 = colors.amber; r = n.r * 2; glow = 10; }
+                else if (n.state === 2) { col2 = colors.accent; r = n.r * 1.5; glow = 8; }
+                ctx.globalAlpha = 0.95;
+                ctx.shadowBlur = glow; ctx.shadowColor = col2;
+                ctx.fillStyle = col2;
+                ctx.beginPath(); ctx.arc(n.x, n.y, r, 0, Math.PI * 2); ctx.fill();
+                ctx.shadowBlur = 0;
+            }
+            ctx.globalAlpha = 1;
+        }
+        function loop(now) {
+            if (!running) return;
+            step(now); draw(now);
+            requestAnimationFrame(loop);
+        }
+        function setRunning(r) {
+            if (reduced) return;
+            if (r && !running) { running = true; requestAnimationFrame(loop); }
+            else if (!r) running = false;
+        }
+
+        var hero = document.getElementById('home');
+        hero.addEventListener('pointermove', function (e) {
+            var rect = canvas.getBoundingClientRect();
+            mouse.x = e.clientX - rect.left; mouse.y = e.clientY - rect.top;
+        });
+        hero.addEventListener('pointerleave', function () { mouse.x = -9999; mouse.y = -9999; });
+
+        window.addEventListener('resize', resize);
+        resize();
+
+        if ('IntersectionObserver' in window) {
+            new IntersectionObserver(function (entries) {
+                setRunning(entries[0].isIntersecting && !document.hidden);
+            }, { threshold: 0.02 }).observe(hero);
+        } else { setRunning(true); }
+        document.addEventListener('visibilitychange', function () {
+            if (document.hidden) setRunning(false);
+            else { var r = hero.getBoundingClientRect(); setRunning(r.bottom > 0 && r.top < window.innerHeight); }
+        });
+        document.addEventListener('themechange', function () { if (reduced) draw(performance.now()); });
+    })();
+
+    /* ============ RADAR (skills garnish) ============ */
+    (function () {
+        var canvas = document.getElementById('radar');
+        if (!canvas || !canvas.getContext) return;
+        var ctx = canvas.getContext('2d');
+        var size = 92, dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = size * dpr; canvas.height = size * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        var c = size / 2, angle = 0, running = false;
+        var blips = [[0.62, 0.8], [2.4, 0.5], [4.1, 0.65], [5.3, 0.35]];
+        function accent() { return getComputedStyle(docEl).getPropertyValue('--accent').trim(); }
+        function lineCol() { return getComputedStyle(docEl).getPropertyValue('--line').trim(); }
+        function draw() {
+            ctx.clearRect(0, 0, size, size);
+            ctx.strokeStyle = lineCol(); ctx.lineWidth = 1; ctx.globalAlpha = 1;
+            [0.33, 0.66, 1].forEach(function (f) {
+                ctx.beginPath(); ctx.arc(c, c, (c - 2) * f, 0, Math.PI * 2); ctx.stroke();
+            });
+            var ac = accent();
+            var grad = ctx.createLinearGradient(c, c, c + Math.cos(angle) * c, c + Math.sin(angle) * c);
+            grad.addColorStop(0, 'transparent'); grad.addColorStop(1, ac);
+            ctx.strokeStyle = grad; ctx.lineWidth = 1.5;
+            ctx.beginPath(); ctx.moveTo(c, c);
+            ctx.lineTo(c + Math.cos(angle) * (c - 2), c + Math.sin(angle) * (c - 2)); ctx.stroke();
+            ctx.fillStyle = ac;
+            blips.forEach(function (b) {
+                var diff = ((angle - b[0]) % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2);
+                var vis = Math.max(0, 1 - diff / 1.6);
+                if (vis <= 0.02) return;
+                ctx.globalAlpha = vis;
+                ctx.beginPath();
+                ctx.arc(c + Math.cos(b[0]) * (c - 2) * b[1], c + Math.sin(b[0]) * (c - 2) * b[1], 2.2, 0, Math.PI * 2);
+                ctx.fill();
+            });
+            ctx.globalAlpha = 1;
+        }
+        function loop() {
+            if (!running) return;
+            angle += 0.018; draw();
+            requestAnimationFrame(loop);
+        }
+        if (reduced) { angle = 0.9; draw(); return; }
+        if ('IntersectionObserver' in window) {
+            new IntersectionObserver(function (entries) {
+                var r = entries[0].isIntersecting;
+                if (r && !running) { running = true; requestAnimationFrame(loop); }
+                else if (!r) running = false;
+            }, { threshold: 0.1 }).observe(canvas);
+        } else { running = true; requestAnimationFrame(loop); }
+    })();
+
+    /* ============ DOSSIER MODAL ============ */
+    var dossier = document.getElementById('dossier');
+    var lastFocus = null;
+    function fillList(el, items) {
+        el.innerHTML = '';
+        items.forEach(function (t) {
+            var li = document.createElement('li');
+            li.textContent = t;
+            el.appendChild(li);
+        });
+    }
+    window.openCaseStudy = function (e, id) {
+        if (e) e.preventDefault();
+        var d = caseStudies[id];
+        if (!d) return;
+        lastFocus = document.activeElement;
+        document.getElementById('dossier-cf').textContent = d.cf;
+        document.getElementById('dossier-cat').textContent = d.category.toUpperCase();
+        document.getElementById('dossier-date').textContent = 'FILED: ' + d.date;
+        document.getElementById('dossier-title').textContent = d.title;
+        document.getElementById('dossier-problem').textContent = d.problem;
+        document.getElementById('dossier-objective').textContent = d.objective;
+        fillList(document.getElementById('dossier-approach'), d.approach.split('\n'));
+        fillList(document.getElementById('dossier-results'), d.results);
+        var techWrap = document.getElementById('dossier-tech');
+        techWrap.innerHTML = '';
+        d.tech.forEach(function (t) {
+            var s = document.createElement('span');
+            s.className = 'chip'; s.textContent = t;
+            techWrap.appendChild(s);
+        });
+        document.getElementById('dossier-why').textContent = d.why;
+        document.getElementById('dossier-github').href = d.github;
+        dossier.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        if (lenis) lenis.stop();
+        document.getElementById('dossier-close').focus();
+    };
+    function closeDossier() {
+        dossier.classList.remove('open');
+        document.body.style.overflow = '';
+        if (lenis) lenis.start();
+        if (lastFocus) lastFocus.focus();
+    }
+    dossier.addEventListener('click', function (e) {
+        if (e.target.closest('[data-dossier-close]')) closeDossier();
+    });
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+            if (dossier.classList.contains('open')) closeDossier();
+            else closeMenu();
+        }
+        if (e.key === 'Tab' && dossier.classList.contains('open')) {
+            var focusables = dossier.querySelectorAll('button, a[href]');
+            var first = focusables[0], last = focusables[focusables.length - 1];
+            if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+            else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+        }
+    });
+
+    /* ============ BLOG DISPATCHES ============ */
+    (function () {
+        var wrap = document.getElementById('post-list');
+        fetch('blogs/blogs.json')
+            .then(function (r) { if (!r.ok) throw new Error('http ' + r.status); return r.json(); })
+            .then(function (data) {
+                var posts = (data.blogs || []).slice(0, 4);
+                wrap.innerHTML = '';
+                posts.forEach(function (p, i) {
+                    var a = document.createElement('a');
+                    a.className = 'post-row';
+                    a.href = 'blogs/' + p.slug + '.html';
+                    var idx = document.createElement('span');
+                    idx.className = 'post-idx';
+                    idx.textContent = 'LOG-' + String(i + 1).padStart(3, '0');
+                    var img = document.createElement('img');
+                    img.className = 'post-thumb';
+                    img.src = p.thumbnail; img.alt = ''; img.loading = 'lazy';
+                    var mid = document.createElement('span');
+                    var t = document.createElement('span');
+                    t.className = 'post-title'; t.textContent = p.title;
+                    var m = document.createElement('span');
+                    m.className = 'post-meta';
+                    m.textContent = p.date + ' · ' + p.readTime + ' · ' + (p.tags || []).slice(0, 3).join(' / ');
+                    mid.appendChild(t); mid.appendChild(m);
+                    var arrow = document.createElement('span');
+                    arrow.className = 'post-arrow'; arrow.textContent = '→';
+                    a.appendChild(idx); a.appendChild(img); a.appendChild(mid); a.appendChild(arrow);
+                    wrap.appendChild(a);
+                });
+            })
+            .catch(function () {
+                wrap.innerHTML = '<a class="post-row" href="blogs/blog.html"><span class="post-date">ARCHIVE</span><span><span class="post-title">Browse all dispatches →</span></span><span class="post-arrow">→</span></a>';
+            });
+    })();
+
+    /* ============ GITHUB TELEMETRY ============ */
+    (function () {
+        var frame = document.querySelector('.gh-frame');
+        if (!frame) return;
+        var done = false;
+        function load() {
+            if (done) return; done = true;
+            fetch('https://api.github.com/users/rahulsingh1397')
+                .then(function (r) { return r.json(); })
+                .then(function (u) {
+                    if (u.public_repos != null) document.getElementById('gh-repos').textContent = u.public_repos;
+                    if (u.followers != null) document.getElementById('gh-followers').textContent = u.followers;
+                })
+                .catch(function () {});
+        }
+        if ('IntersectionObserver' in window) {
+            new IntersectionObserver(function (entries, io) {
+                if (entries[0].isIntersecting) { load(); io.disconnect(); }
+            }, { rootMargin: '200px' }).observe(frame);
+        } else { load(); }
+    })();
+
+    /* ============ MAGNETIC BUTTONS ============ */
+    (function () {
+        if (reduced || !window.matchMedia('(pointer: fine)').matches) return;
+        document.querySelectorAll('.magnetic').forEach(function (btn) {
+            btn.addEventListener('mousemove', function (e) {
+                var r = btn.getBoundingClientRect();
+                var x = (e.clientX - r.left - r.width / 2) / r.width;
+                var y = (e.clientY - r.top - r.height / 2) / r.height;
+                btn.style.transform = 'translate(' + (x * 8) + 'px,' + (y * 6) + 'px)';
+            });
+            btn.addEventListener('mouseleave', function () { btn.style.transform = ''; });
+        });
+    })();
+
+    /* ============ BOOT SEQUENCE + HERO INTRO ============ */
+    function heroIn() {
+        document.getElementById('home').classList.add('hero-in');
+    }
+    (function () {
+        if (!docEl.classList.contains('booting')) {
+            // no boot: reveal hero immediately (next frame so transitions apply)
+            requestAnimationFrame(function () { requestAnimationFrame(heroIn); });
+            return;
+        }
+        var linesEl = document.getElementById('boot-lines');
+        var bar = document.querySelector('#boot-bar i');
+        var boot = document.getElementById('boot');
+        var seq = [
+            ['> AUTHENTICATING VISITOR .......... ', 'OK', 'ok'],
+            ['> LOADING MODELS .................. ', '15 IN PRODUCTION', 'ok'],
+            ['> CORRELATING ALERT GRAPH ......... ', 'ARI 0.8224', 'warn'],
+            ['> ACCESS GRANTED', '', 'ok']
+        ];
+        var i = 0;
+        function next() {
+            if (i < seq.length) {
+                var row = document.createElement('div');
+                row.appendChild(document.createTextNode(seq[i][0]));
+                if (seq[i][1]) {
+                    var b = document.createElement('span');
+                    b.className = seq[i][2]; b.textContent = seq[i][1];
+                    row.appendChild(b);
+                }
+                if (i === seq.length - 1) row.className = 'ok';
+                linesEl.appendChild(row);
+                bar.style.width = ((i + 1) / seq.length * 100) + '%';
+                i++;
+                setTimeout(next, i === seq.length ? 420 : 260);
+            } else {
+                try { sessionStorage.setItem('rs-boot', '1'); } catch (e) {}
+                boot.classList.add('done');
+                docEl.classList.remove('booting');
+                heroIn();
+                setTimeout(function () { boot.remove(); }, 600);
+            }
+        }
+        setTimeout(next, 180);
+    })();
+
+    /* ============ INIT ============ */
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initLenis);
+    } else {
+        initLenis();
+    }
+    window.addEventListener('load', function () { onScroll(); });
+
+    })();
+    </script>
+</body>
+</html>

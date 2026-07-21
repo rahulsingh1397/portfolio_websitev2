@@ -10,6 +10,11 @@
 
 # Redirect rules
 [[redirects]]
+  from = "/classic"
+  to = "/archive/classic.html"
+  status = 200
+
+[[redirects]]
   from = "/*"
   to = "/data-scientist-portfolio.html"
   status = 200

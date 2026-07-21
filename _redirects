@@ -7,5 +7,8 @@
 /blog  /blogs/blog.html  200
 /blogs  /blogs/blog.html  200
 
+# Classic (v2) design archive — fallback for the v3 redesign
+/classic  /archive/classic.html  200
+
 # Handle 404s - redirect to main page
 /*  /data-scientist-portfolio.html  404
